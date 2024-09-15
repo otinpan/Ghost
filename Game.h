@@ -24,7 +24,7 @@ public:
 	//Hitstop
 	void SetIsHitstop(bool isHitstop) { mIsHitstop = isHitstop; }
 	bool GetIsHitstop() { return mIsHitstop; }
-	void SetHitstio(float hitstopTime);
+	void SetHitstop(float hitstopTime);
 	void UpdateHitstop(float deltaTime);
 
 	//class getter

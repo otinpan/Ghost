@@ -1,1 +1,29 @@
-#pragma once
+﻿#pragma once
+#include"Component.h"
+#include"Siv3D.hpp"
+
+
+class CircleComponent :public Component {
+public:
+	CircleComponent(class Actor* owner);
+	~CircleComponent();
+
+	//void Update(float deltaTime)override;
+
+	void SetRadius(float radius) { mRadius = radius; }
+	void SetCenter(Vec2 pos) { mCenter = pos; }
+	void SetColor(ColorF color) { mColor = color; }
+
+	float GetRadius()const;
+	const Vec2& GetCenter() const;
+
+	void Draw();
+
+
+private:
+	Vec2 mCenter;
+	float mRadius;
+	Color mColor;
+};
+
+bool Intersect(const CircleComponent& a, const CircleComponent& b);
