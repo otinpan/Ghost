@@ -3,6 +3,7 @@
 
 enum class State {
 	Game,
+	CreateStage,
 };
 
 

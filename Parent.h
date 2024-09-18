@@ -6,6 +6,7 @@ class Parent {
 public:
 	enum SeqID {
 		SEQ_GAME,
+		SEQ_CREATESTAGE,
 		SEQ_NONE,
 	};
 

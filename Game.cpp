@@ -48,6 +48,14 @@ void Game::ProcessInput() {
 }
 
 void Game::UpdateGame() {
+	float h = (float)2 / 18, w = (float)2/18*9/16;
+	for (float i = -1.0; i <= 1.0; i += h) {
+		for (float j = -1.0; j <= 1.0; j += w) {
+			Vec2 pos = { (float)j + w / 2,(float)i + h / 2 };
+			DrawRect(pos, w, h, ColorF(0, 0, 0));
+			DrawRectFrame(pos, w, h, 0.02, ColorF(1, 1, 1));
+		}
+	}
 	float deltaTime = Scene::DeltaTime();
 
 	if (mIsHitstop) {

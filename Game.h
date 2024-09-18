@@ -36,8 +36,8 @@ public:
 
 private:
 	void ProcessInput();
-	void UpdateGame();
-	void LoadData();
+    void UpdateGame();
+    void LoadData();
 	void UnloadData();
 
 	// All the actors in the game
