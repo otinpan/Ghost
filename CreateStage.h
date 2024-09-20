@@ -17,8 +17,8 @@ public:
 	bool Initialize();
 	void Shutdown();
 
-	void AddActor(class Actor* actor);
-	void RemoveActor(class Actor* actor);
+	void AddStageObject(class Actor* actor);
+	void RemoveStageObject(class Actor* actor);
 
 	void AddSprite(class SpriteComponent* sprite);
 	void RemoveSprite(class SpriteComponent* sprite);
@@ -40,9 +40,9 @@ private:
 	bool mUpdatingActors;
 
 	// All the actors in the game
-	std::vector<class Actor*> mActors;
+	std::vector<class Actor*> mStageObjects;
 	// Any pending actors
-	std::vector<class Actor*> mPendingActors;
+	std::vector<class Actor*> mPendingStageObjects;
 
 	// All the sprite components drawn
 	std::vector<class SpriteComponent*> mSprites;

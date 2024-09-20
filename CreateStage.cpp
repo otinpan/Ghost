@@ -32,7 +32,7 @@ void CreateStage::ProcessInput() {
 	const std::vector<Input> keyState = Keyboard::GetAllInputs();
 
 	mUpdatingActors = true;
-	for (auto actor : mActors) {
+	for (auto actor : mStageObjects) {
 		actor->ProcessInput(keyState);
 	}
 	mUpdatingActors = false;
@@ -44,18 +44,18 @@ void CreateStage::UpdateGame(){
 
 
 	mUpdatingActors = true;
-	for (auto actor : mActors) {
+	for (auto actor : mStageObjects) {
 		actor->Update(deltaTime);
 	}
 	mUpdatingActors = false;
 
-	for (auto pending : mPendingActors) {
-		mActors.emplace_back(pending);
+	for (auto pending : mPendingStageObjects) {
+		mStageObjects.emplace_back(pending);
 	}
-	mPendingActors.clear();
+	mPendingStageObjects.clear();
 
 	std::vector<Actor*> deadActors;
-	for (auto actor : mActors) {
+	for (auto actor : mStageObjects) {
 		if (actor->GetState() == Actor::EDead) {
 			deadActors.emplace_back(actor);
 		}
@@ -82,8 +82,8 @@ void CreateStage::LoadData() {
 }
 
 void CreateStage::UnloadData() {
-	while (!mActors.empty()) {
-		delete mActors.back();
+	while (!mStageObjects.empty()) {
+		delete mStageObjects.back();
 	}
 }
 
@@ -93,28 +93,28 @@ void CreateStage::Shutdown() {
 }
 
 
-void CreateStage::AddActor(Actor* actor) {
+void CreateStage::AddStageObject(Actor* actor) {
 	if (mUpdatingActors) {
-		mPendingActors.emplace_back(actor);
+		mPendingStageObjects.emplace_back(actor);
 	}
 	else {
-		mActors.emplace_back(actor);
+		mStageObjects.emplace_back(actor);
 	}
 
 }
 
 
-void CreateStage::RemoveActor(Actor* actor) {
-	auto iter = std::find(mPendingActors.begin(), mPendingActors.end(), actor);
-	if (iter != mPendingActors.end()) {
-		std::iter_swap(iter, mPendingActors.end() - 1);
-		mPendingActors.pop_back();
+void CreateStage::RemoveStageObject(Actor* actor) {
+	auto iter = std::find(mPendingStageObjects.begin(), mPendingStageObjects.end(), actor);
+	if (iter != mPendingStageObjects.end()) {
+		std::iter_swap(iter, mPendingStageObjects.end() - 1);
+		mPendingStageObjects.pop_back();
 	}
 
-	iter = std::find(mActors.begin(), mActors.end(), actor);
-	if (iter != mActors.end()) {
-		std::iter_swap(iter, mActors.end() - 1);
-		mActors.pop_back();
+	iter = std::find(mStageObjects.begin(), mStageObjects.end(), actor);
+	if (iter != mStageObjects.end()) {
+		std::iter_swap(iter, mStageObjects.end() - 1);
+		mStageObjects.pop_back();
 	}
 }
 

@@ -165,6 +165,15 @@
     <ClCompile Include="CreateStage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StageObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StageComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -852,6 +861,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CreateStage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StageObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StageComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
