@@ -32,7 +32,7 @@ void CreateStage::ProcessInput() {
 	const std::vector<Input> keyState = Keyboard::GetAllInputs();
 
 	mUpdatingActors = true;
-	for (auto actor : mStageObjects) {
+	for (auto actor : mActors) {
 		actor->ProcessInput(keyState);
 	}
 	mUpdatingActors = false;
@@ -44,18 +44,18 @@ void CreateStage::UpdateGame(){
 
 
 	mUpdatingActors = true;
-	for (auto actor : mStageObjects) {
+	for (auto actor : mActors) {
 		actor->Update(deltaTime);
 	}
 	mUpdatingActors = false;
 
-	for (auto pending : mPendingStageObjects) {
-		mStageObjects.emplace_back(pending);
+	for (auto pending : mPendingActors) {
+		mActors.emplace_back(pending);
 	}
-	mPendingStageObjects.clear();
+	mPendingActors.clear();
 
 	std::vector<Actor*> deadActors;
-	for (auto actor : mStageObjects) {
+	for (auto actor : mActors) {
 		if (actor->GetState() == Actor::EDead) {
 			deadActors.emplace_back(actor);
 		}
@@ -82,8 +82,8 @@ void CreateStage::LoadData() {
 }
 
 void CreateStage::UnloadData() {
-	while (!mStageObjects.empty()) {
-		delete mStageObjects.back();
+	while (!mActors.empty()) {
+		delete mActors.back();
 	}
 }
 
@@ -93,28 +93,28 @@ void CreateStage::Shutdown() {
 }
 
 
-void CreateStage::AddStageObject(Actor* actor) {
+void CreateStage::AddActor(Actor* actor) {
 	if (mUpdatingActors) {
-		mPendingStageObjects.emplace_back(actor);
+		mPendingActors.emplace_back(actor);
 	}
 	else {
-		mStageObjects.emplace_back(actor);
+		mActors.emplace_back(actor);
 	}
 
 }
 
 
-void CreateStage::RemoveStageObject(Actor* actor) {
-	auto iter = std::find(mPendingStageObjects.begin(), mPendingStageObjects.end(), actor);
-	if (iter != mPendingStageObjects.end()) {
-		std::iter_swap(iter, mPendingStageObjects.end() - 1);
-		mPendingStageObjects.pop_back();
+void CreateStage::RemoveActor(Actor* actor) {
+	auto iter = std::find(mPendingActors.begin(), mPendingActors.end(), actor);
+	if (iter != mPendingActors.end()) {
+		std::iter_swap(iter, mPendingActors.end() - 1);
+		mPendingActors.pop_back();
 	}
 
-	iter = std::find(mStageObjects.begin(), mStageObjects.end(), actor);
-	if (iter != mStageObjects.end()) {
-		std::iter_swap(iter, mStageObjects.end() - 1);
-		mStageObjects.pop_back();
+	iter = std::find(mActors.begin(), mActors.end(), actor);
+	if (iter != mActors.end()) {
+		std::iter_swap(iter, mActors.end() - 1);
+		mActors.pop_back();
 	}
 }
 
@@ -159,6 +159,7 @@ void CreateStage::RemoveCircle(CircleComponent* circle) {
 
 void CreateStage::moveTo(Parent* parent, Parent::SeqID id) {
 	if (id == Parent::SEQ_GAME)parent->moveTo(Parent::SEQ_GAME);
+	if (id == Parent::SEQ_CREATESTAGE)parent->moveTo(Parent::SEQ_CREATESTAGE);
 }
 
 

@@ -1,20 +1,35 @@
 ﻿#include"Parent.h"
 #include"Game.h"
+#include"CreateStage.h"
 
 Parent::Parent()
 	:mGame(0)
+	,mCreateStage(0)
 	, mNext(SEQ_NONE)
 {
-	mGame = new Game();
+	//mGame = new Game();
+	mCreateStage = new CreateStage();
 }
 
 Parent::~Parent() {
 	if (mGame)delete mGame;
+	if (mCreateStage)delete mCreateStage;
 }
 
 
 void Parent::update() {
 	if (mGame)mGame->update(this);
+	if (mCreateStage)mCreateStage->update(this);
+
+	switch (mNext) {
+	case SEQ_GAME:
+		if (mCreateStage)delete mCreateStage;
+		break;
+	case SEQ_CREATESTAGE:
+		if (mGame)delete mGame;
+		break;
+	}
+	mNext = SEQ_NONE;
 }
 
 void Parent::moveTo(SeqID next) {

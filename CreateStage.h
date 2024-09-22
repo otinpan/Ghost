@@ -17,8 +17,8 @@ public:
 	bool Initialize();
 	void Shutdown();
 
-	void AddStageObject(class Actor* actor);
-	void RemoveStageObject(class Actor* actor);
+	void AddActor(class Actor* actor);
+	void RemoveActor(class Actor* actor);
 
 	void AddSprite(class SpriteComponent* sprite);
 	void RemoveSprite(class SpriteComponent* sprite);
@@ -27,7 +27,7 @@ public:
 	void RemoveCircle(class CircleComponent* circle);
 
 	//Sequence
-	void moveTo(Parent* paretn, Parent::SeqID id);
+	void moveTo(Parent* parent, Parent::SeqID id);
 	void SetSeqID(Parent::SeqID id) { mSeqID = id; }
 
 private:
@@ -40,9 +40,9 @@ private:
 	bool mUpdatingActors;
 
 	// All the actors in the game
-	std::vector<class Actor*> mStageObjects;
+	std::vector<class Actor*> mActors;
 	// Any pending actors
-	std::vector<class Actor*> mPendingStageObjects;
+	std::vector<class Actor*> mPendingActors;
 
 	// All the sprite components drawn
 	std::vector<class SpriteComponent*> mSprites;

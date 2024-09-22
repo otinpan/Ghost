@@ -11,6 +11,8 @@
 #include "Math.h"
 #include <cstdint>
 #include<Siv3D.hpp>
+#include"Game.h"
+#include"CreateStage.h"
 
 class Actor
 {
@@ -22,15 +24,22 @@ public:
 		EDead
 	};
 
-	Actor(class Game* game);
+	Actor();
 	virtual ~Actor();
+
+	void Initialize_Game(class Game* game);
+	void Initialize_CreateStage(class CreateStage* createstage);
+
+	virtual void InitializeActor_Game(class Game* game);
+	virtual void InitializeActor_CreateStage(class CreateStage* createstage);
 
 	// Update function called from Game (not overridable)
 	void Update(float deltaTime);
 	// Updates all the components attached to the actor (not overridable)
 	void UpdateComponents(float deltaTime);
 	// Any actor-specific update code (overridable)
-	virtual void UpdateActor(float deltaTime);
+	virtual void UpdateActor_Game(float deltaTime);
+	virtual void UpdateActor_CreateStage(float deltaTime);
 
 	// ProcessInput function called from Game (not overridable)
 	void ProcessInput(const std::vector<Input> keyState);
@@ -53,6 +62,7 @@ public:
 	void SetState(State state) { mState = state; }
 
 	class Game* GetGame() { return mGame; }
+	class CreateStage* GetCreateStage(){ return mCreateStage; }
 
 
 	// Add/remove components
@@ -71,4 +81,5 @@ private:
 
 	std::vector<class Component*> mComponents;
 	class Game* mGame;
+	class CreateStage* mCreateStage;
 };

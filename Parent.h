@@ -18,6 +18,7 @@ public:
 
 private:
 	class Game* mGame;
+	class CreateStage* mCreateStage;
 
 	SeqID mNext;
 };

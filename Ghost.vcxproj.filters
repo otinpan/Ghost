@@ -168,10 +168,13 @@
     <ClCompile Include="Stage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StageObject.cpp">
+    <ClCompile Include="Hand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StageComponent.cpp">
+    <ClCompile Include="MoveComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputComponent_Keyboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -866,10 +869,13 @@
     <ClInclude Include="Stage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StageObject.h">
+    <ClInclude Include="Hand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StageComponent.h">
+    <ClInclude Include="MoveComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputComponent_Keyboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

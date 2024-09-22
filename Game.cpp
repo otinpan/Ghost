@@ -191,4 +191,5 @@ void Game::RemoveCircle(CircleComponent* circle) {
 
 void Game::moveTo(Parent* parent, Parent::SeqID id) {
 	if (id == Parent::SEQ_GAME)parent->moveTo(Parent::SEQ_GAME);
+	if (id == Parent::SEQ_CREATESTAGE)parent->moveTo(Parent::SEQ_CREATESTAGE);
 }
