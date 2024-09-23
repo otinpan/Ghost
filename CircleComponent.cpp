@@ -6,12 +6,20 @@ CircleComponent::CircleComponent(class Actor* owner)
 	:Component(owner)
 	, mRadius(0.0f)
 	, mCenter(owner->GetPosition())
+	, mColor(ColorF({ 0.0,0.0,0.0 }))
 {
-	mOwner->GetGame()->AddCircle(this);
 }
 
 CircleComponent::~CircleComponent() {
 	mOwner->GetGame()->RemoveCircle(this);
+}
+
+void CircleComponent::Initialize_CreateStage() {
+	mOwner->GetCreateStage()->AddCircle(this);
+}
+
+void CircleComponent::Initialize_Game() {
+	mOwner->GetGame()->AddCircle(this);
 }
 
 

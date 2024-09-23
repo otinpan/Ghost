@@ -10,6 +10,9 @@ public:
 
 	//void Update(float deltaTime)override;
 
+	void Initialize_Game();
+	void Initialize_CreateStage();
+
 	void SetRadius(float radius) { mRadius = radius; }
 	void SetCenter(Vec2 pos) { mCenter = pos; }
 	void SetColor(ColorF color) { mColor = color; }
@@ -23,7 +26,7 @@ public:
 private:
 	Vec2 mCenter;
 	float mRadius;
-	Color mColor;
+	ColorF mColor;
 };
 
 bool Intersect(const CircleComponent& a, const CircleComponent& b);

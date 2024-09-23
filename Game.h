@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include"Common.h"
 #include"Parent.h"
+#include"SquareComponent.h"
 
 class Game {
 public:
@@ -20,6 +21,9 @@ public:
 
 	void AddCircle(class CircleComponent* circle);
 	void RemoveCircle(class CircleComponent* circle);
+
+	void AddSquare(class SquareComponent* square);
+	void RemoveSquare(class SquareComponent* square);
 
 	//Hitstop
 	void SetIsHitstop(bool isHitstop) { mIsHitstop = isHitstop; }
@@ -50,6 +54,9 @@ private:
 
 	//All the Circle components drawn
 	std::vector<class CircleComponent*> mCircles;
+
+	//All the Square component drawn
+	std::vector<class SquareComponent*> mSquares;
 
 	bool mIsRunning;
 	// Track if we're updating actors right now

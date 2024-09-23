@@ -12,11 +12,19 @@ SpriteComponent::SpriteComponent(Actor* owner, float worldTexWidth,
 	, WorldTexHeight(worldTexHeight)
 	, Diff(diff)
 {
-	mOwner->GetGame()->AddSprite(this);
+
 }
 
 SpriteComponent::~SpriteComponent() {
 	mOwner->GetGame()->RemoveSprite(this);
+}
+
+void SpriteComponent::Initialize_Game() {
+	mOwner->GetGame()->AddSprite(this);
+}
+
+void SpriteComponent::Initialize_CreateStage() {
+	mOwner->GetCreateStage()->AddSprite(this);
 }
 
 void SpriteComponent::Draw() {

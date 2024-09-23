@@ -1,4 +1,6 @@
 ﻿#include"CreateStage.h"
+#include"Hand.h"
+#include"StageObject.h"
 
 CreateStage::CreateStage()
 	:mUpdatingActors(false)
@@ -19,12 +21,14 @@ bool CreateStage::Initialize() {
 
 void CreateStage::update(Parent* parent) {
 	if (mIsRunning) {
+		ClearPrint();
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 		}
 		ProcessInput();
 		UpdateGame();
 		draw();
+		Print(mHand->GetPosition());
 	}
 }
 
@@ -72,13 +76,19 @@ void CreateStage::draw() {
 	for (auto circle : mCircles) {
 		circle->Draw();
 	}
+	for (auto square : mSquares) {
+		square->Draw();
+	}
 	for (auto sprite : mSprites) {
 
 	}
 }
 
 void CreateStage::LoadData() {
-
+	mHand = new Hand();
+	mHand->InitializeActor_CreateStage(this);
+	mStageObject = new StageObject();
+	mStageObject->InitializeActor_CreateStage(this);
 }
 
 void CreateStage::UnloadData() {
@@ -154,6 +164,17 @@ void CreateStage::RemoveCircle(CircleComponent* circle) {
 
 	if (iter != mCircles.end()) {
 		mCircles.erase(iter);
+	}
+}
+
+void CreateStage::AddSquare(SquareComponent* square) {
+	mSquares.emplace_back(square);
+}
+
+void CreateStage::RemoveSquare(SquareComponent* square) {
+	auto iter = std::find(mSquares.begin(), mSquares.end(), square);
+	if (iter != mSquares.end()) {
+		mSquares.erase(iter);
 	}
 }
 

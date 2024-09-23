@@ -13,5 +13,16 @@ public:
 	
 
 private:
+	class CircleComponent* cc;
+	class InputComponent_Keyboard* ic;
 
+	float StandardSpeed;
+
+	InputGroup inputUp;
+	InputGroup inputDown;
+	InputGroup inputRight;
+	InputGroup inputLeft;
+	InputGroup inputDecision;
+	InputGroup inputBack;
 };
+

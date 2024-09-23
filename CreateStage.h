@@ -4,6 +4,7 @@
 #include"Actor.h"
 #include"SpriteComponent.h"
 #include"CircleComponent.h"
+#include"SquareComponent.h"
 
 class CreateStage
 {
@@ -25,6 +26,9 @@ public:
 
 	void AddCircle(class CircleComponent* circle);
 	void RemoveCircle(class CircleComponent* circle);
+
+	void AddSquare(class SquareComponent* square);
+	void RemoveSquare(class SquareComponent* square);
 
 	//Sequence
 	void moveTo(Parent* parent, Parent::SeqID id);
@@ -50,5 +54,12 @@ private:
 	//All the Circle components drawn
 	std::vector<class CircleComponent*> mCircles;
 
+	//All the Square component drawn
+	std::vector<class SquareComponent*> mSquares;
+
 	Parent::SeqID mSeqID;
+
+
+	class Hand* mHand;
+	class StageObject* mStageObject;
 };

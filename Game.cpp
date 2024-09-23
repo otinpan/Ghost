@@ -189,6 +189,17 @@ void Game::RemoveCircle(CircleComponent* circle) {
 	}
 }
 
+void Game::AddSquare(SquareComponent* square) {
+	mSquares.emplace_back(square);
+}
+
+void Game::RemoveSquare(SquareComponent* square) {
+	auto iter = std::find(mSquares.begin(), mSquares.end(), square);
+	if (iter != mSquares.end()) {
+		mSquares.erase(iter);
+	}
+}
+
 void Game::moveTo(Parent* parent, Parent::SeqID id) {
 	if (id == Parent::SEQ_GAME)parent->moveTo(Parent::SEQ_GAME);
 	if (id == Parent::SEQ_CREATESTAGE)parent->moveTo(Parent::SEQ_CREATESTAGE);

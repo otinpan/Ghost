@@ -3,12 +3,15 @@
 
 InputComponent_Keyboard::InputComponent_Keyboard(class Actor* owner)
 	:MoveComponent(owner)
-	, mUpKey(0)
-	, mDownKey(0)
-	, mRightKey(0)
-	, mLeftKey(0)
-	, mClockwiseKey(0)
-	, mCounterClockwiseKey(0)
+	,mMaxAngularSpeed(0.0f)
+	,mMaxXSpeed(0.0f)
+	,mMaxYSpeed(0.0f)
+	, mUpKey()
+	, mDownKey()
+	, mRightKey()
+	, mLeftKey()
+	, mClockwiseKey()
+	, mCounterClockwiseKey()
 {
 
 }
@@ -30,4 +33,5 @@ void InputComponent_Keyboard::ProcessInput(std::vector<Input> keyState) {
 	if (mCounterClockwiseKey.pressed())angularSpeed -= mMaxAngularSpeed;
 	SetAngularSpeed(angularSpeed);
 
+	
 }

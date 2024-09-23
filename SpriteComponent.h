@@ -10,6 +10,9 @@ public:
 		float worldTexHeight, Vec2 diff, int drawOrder = 100);
 	~SpriteComponent();
 
+	void Initialize_Game();
+	void Initialize_CreateStage();
+
 	virtual void Draw();
 	virtual void SetTexture(Texture texture);
 
