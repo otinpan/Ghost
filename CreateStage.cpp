@@ -87,8 +87,7 @@ void CreateStage::draw() {
 void CreateStage::LoadData() {
 	mHand = new Hand();
 	mHand->InitializeActor_CreateStage(this);
-	mStageObject = new StageObject();
-	mStageObject->InitializeActor_CreateStage(this);
+	
 }
 
 void CreateStage::UnloadData() {
@@ -175,6 +174,17 @@ void CreateStage::RemoveSquare(SquareComponent* square) {
 	auto iter = std::find(mSquares.begin(), mSquares.end(), square);
 	if (iter != mSquares.end()) {
 		mSquares.erase(iter);
+	}
+}
+
+void CreateStage::AddStageObject(StageObject* stageobject) {
+	mStageObjects.emplace_back(stageobject);
+}
+
+void CreateStage::RemoveStageObject(StageObject* stageobject) {
+	auto iter = std::find(mStageObjects.begin(), mStageObjects.end(), stageobject);
+	if (iter != mStageObjects.end()) {
+		mStageObjects.erase(iter);
 	}
 }
 

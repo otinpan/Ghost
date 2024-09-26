@@ -1,11 +1,15 @@
 ﻿#include"Hand.h"
 #include"CircleComponent.h"
 #include"InputComponent_Keyboard.h"
+#include"CreateStage.h"
+#include"StageObject.h"
+#include<Siv3D.hpp>
 
 Hand::Hand()
 	:StandardSpeed(0.6)
 	,ic(nullptr)
 	,cc(nullptr)
+	,mIsGrap(false)
 {
 
 }
@@ -49,6 +53,15 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 	if (nowPos.y > 0.9)nowPos.x = 0.9;
 	SetPosition(nowPos);
 	cc->SetCenter(nowPos);
+
+	if (!mIsGrap) {
+		if (inputDecision.down()) {
+			mIsGrap = true;
+			for (auto stageObject : GetCreateStage()->GetStageObjects()) {
+
+			}
+		}
+	}
 }
 
 void Hand::ActorInput(std::vector<Input> keyState) {

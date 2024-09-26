@@ -30,6 +30,13 @@ public:
 	void AddSquare(class SquareComponent* square);
 	void RemoveSquare(class SquareComponent* square);
 
+	void AddStageObject(class StageObject* stageobject);
+	void RemoveStageObject(class StageObject* stageobject);
+
+	class Hand* &GetHand() { return mHand; }
+	std::vector<class StageObject*>& GetStageObjects() { return mStageObjects; }
+
+
 	//Sequence
 	void moveTo(Parent* parent, Parent::SeqID id);
 	void SetSeqID(Parent::SeqID id) { mSeqID = id; }
@@ -61,5 +68,5 @@ private:
 
 
 	class Hand* mHand;
-	class StageObject* mStageObject;
+	std::vector<class StageObject*> mStageObjects;
 };

@@ -10,7 +10,11 @@ public:
 
 	void UpdateActor_CreateStage(float deltaTime)override;
 	void ActorInput(std::vector<Input> keyState)override;
-	
+
+	class CircleComponent* GetCircleComponent() { return cc; }
+
+	bool GetIsGrap() { return mIsGrap; }
+	void SetIsGrap(bool isGrap) { mIsGrap = isGrap; }
 
 private:
 	class CircleComponent* cc;
@@ -24,5 +28,7 @@ private:
 	InputGroup inputLeft;
 	InputGroup inputDecision;
 	InputGroup inputBack;
+
+	bool mIsGrap;
 };
 

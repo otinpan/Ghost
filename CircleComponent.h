@@ -13,6 +13,9 @@ public:
 	void Initialize_Game();
 	void Initialize_CreateStage();
 
+	const Circle GetCircle();
+
+
 	void SetRadius(float radius) { mRadius = radius; }
 	void SetCenter(Vec2 pos) { mCenter = pos; }
 	void SetColor(ColorF color) { mColor = color; }
@@ -29,4 +32,4 @@ private:
 	ColorF mColor;
 };
 
-bool Intersect(const CircleComponent& a, const CircleComponent& b);
+bool IsIntersect_CC(class CircleComponent* a, class CircleComponent* b);

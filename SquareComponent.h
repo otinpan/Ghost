@@ -16,6 +16,8 @@ public:
 	void SetCenter(Vec2 pos) { mCenter = pos; }
 	void SetColor(ColorF color) { mColor = color; }
 
+	const RectF GetRect();
+
 	float GetWidth() const;
 	float GetHeight() const;
 	const Vec2& GetCenter() const;
@@ -28,3 +30,6 @@ private:
 	Vec2 mCenter;
 	ColorF mColor;
 };
+
+bool IsIntersect_SC(class SquareComponent* a, class CircleComponent* b);
+bool IsIntersect_SS(class SquareComponent* a, class SquareComponent* b);

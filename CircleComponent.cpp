@@ -33,17 +33,19 @@ const Vec2& CircleComponent::GetCenter()const {
 }
 
 
-
-
-bool Intersect(const CircleComponent& a, const CircleComponent& b) {
-	Circle aCircle = Circle{ a.GetCenter(), a.GetRadius() };
-	Circle bCircle = Circle{ b.GetCenter(),b.GetRadius() };
-	if (aCircle.intersects(bCircle))return true;
-	else return false;
-}
-
-
 void CircleComponent::Draw() {
 	float mg = GetMagnification();
 	Circle{ ConvertToView(mCenter),mRadius * mg }.draw(mColor);
+}
+
+const Circle CircleComponent::GetCircle() {
+	return Circle{ mCenter,mRadius };
+}
+
+
+bool IsIntersect_CC(class CircleComponent* a, class CircleComponent* b) {
+	Circle aCircle = Circle{ a->GetCenter(), a->GetRadius() };
+	Circle bCircle = Circle{ b->GetCenter(),b->GetRadius() };
+	if (aCircle.intersects(bCircle))return true;
+	else return false;
 }
