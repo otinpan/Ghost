@@ -3,10 +3,10 @@
 
 class StageObject :public Actor {
 public:
-	StageObject();
+	StageObject(Vec2 pos,float width,float height);
 	~StageObject();
 
-	void InitializeActor_CreateStage(class CreateStage* createstage) override;
+	void InitializeActor_CreateStage(class CreateStage* createstage)override;
 
 
 	void UpdateActor_CreateStage(float deltaTime)override;
@@ -21,4 +21,8 @@ public:
 private:
 	class SquareComponent* sqc;
 	bool mIsGripen;
+
+	Vec2 mCenter;
+	float mWidth;
+	float mHeight;
 };

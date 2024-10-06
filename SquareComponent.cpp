@@ -20,8 +20,12 @@ void SquareComponent::Initialize_Game() {
 	mOwner->GetGame()->AddSquare(this);
 }
 
-void SquareComponent::Initialize_CreateStage() {
+void SquareComponent::Initialize_CreateStage
+(Vec2 pos,float width,float height) {
 	mOwner->GetCreateStage()->AddSquare(this);
+	mCenter = pos;
+	mWidth = width;
+	mHeight = height;
 }
 
 float SquareComponent::GetWidth() const{

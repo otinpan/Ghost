@@ -28,6 +28,7 @@ Vec2 ConvertToView(Vec2 pos);
 Vec2 ConvertToWorld(Vec2 pos);
 void DrawRect(Vec2 pos, float width, float height, ColorF color);  //posは中心の座標
 void DrawRectFrame(Vec2 pos, float width, float height, float linewidth, ColorF color);
+void DrawSquareDotLine(Vec2 pos1, Vec2 pos2, float linewidth, ColorF color);
 float GetMagnification();
 float GetScreenHeight();
 float GetScreenWidth();

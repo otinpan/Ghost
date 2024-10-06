@@ -3,6 +3,7 @@
 #include"InputComponent_Keyboard.h"
 #include"CreateStage.h"
 #include"StageObject.h"
+#include"Stage.h"
 #include<Siv3D.hpp>
 
 Hand::Hand()
@@ -10,6 +11,7 @@ Hand::Hand()
 	,ic(nullptr)
 	,cc(nullptr)
 	,mIsGrap(false)
+	,mGrapping(nullptr)
 {
 
 }
@@ -25,7 +27,7 @@ void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 
 	cc = new CircleComponent(this);
 	cc->Initialize_CreateStage();
-	cc->SetRadius(0.04f);
+	cc->SetRadius(0.01f);
 	cc->SetColor({ 0.0,0.0,0.0 });
 
 	inputUp = KeyW;
@@ -50,16 +52,34 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 	if (nowPos.x < -0.9)nowPos.x = -0.9;
 	if (nowPos.x > 0.9)nowPos.x = 0.9;
 	if (nowPos.y < -0.9)nowPos.y = -0.9;
-	if (nowPos.y > 0.9)nowPos.x = 0.9;
+	if (nowPos.y > 0.9)nowPos.y = 0.9;
 	SetPosition(nowPos);
 	cc->SetCenter(nowPos);
 
 	if (!mIsGrap) {
-		if (inputDecision.down()) {
-			mIsGrap = true;
-			for (auto stageObject : GetCreateStage()->GetStageObjects()) {
-
+		for (auto stageObject : GetCreateStage()->GetStageObjects()) {
+			if (stageObject->GetSquareComponent()->GetRect().
+				contains(cc->GetCircle()) && inputDecision.pressed()) {
+				stageObject->SetIsGripen(true);
+				mGrapping = stageObject;
+				mIsGrap = true;
 			}
+		}
+	}
+	else {
+		if (!inputDecision.pressed()) {
+			mGrapping->SetIsGripen(false);
+			//StageのmRectsとの当たり判定
+			for (int i = 0; i < GetCreateStage()->GetStage()->GetVerticalSize(); i++) {
+				for (int j = 0; j < GetCreateStage()->GetStage()->GetSideSize();j++) {
+					if (GetCreateStage()->GetStage()->GetRects()[i][j]
+						.contains(cc->GetCircle())) {
+						GetCreateStage()->GetStage()->SetNewStageObject(i, j);
+					}
+				}
+			}
+			mIsGrap = false;
+			delete mGrapping;
 		}
 	}
 }

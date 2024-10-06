@@ -19,6 +19,7 @@ public:
 private:
 	class CircleComponent* cc;
 	class InputComponent_Keyboard* ic;
+	class StageObject* mGrapping;
 
 	float StandardSpeed;
 

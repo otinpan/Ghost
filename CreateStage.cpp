@@ -1,6 +1,7 @@
 ﻿#include"CreateStage.h"
 #include"Hand.h"
 #include"StageObject.h"
+#include"Stage.h"
 
 CreateStage::CreateStage()
 	:mUpdatingActors(false)
@@ -73,6 +74,7 @@ void CreateStage::UpdateGame(){
 
 
 void CreateStage::draw() {
+	mStage->Draw_CreateStage();
 	for (auto circle : mCircles) {
 		circle->Draw();
 	}
@@ -87,7 +89,10 @@ void CreateStage::draw() {
 void CreateStage::LoadData() {
 	mHand = new Hand();
 	mHand->InitializeActor_CreateStage(this);
-	
+	mStageObject = new StageObject(Vec2({0,0}),0.1f,0.1f);
+	mStageObject->InitializeActor_CreateStage(this);
+	mStage = new Stage(1.4, 1.5);
+	mStage->Initialize_CreateStage(this);
 }
 
 void CreateStage::UnloadData() {

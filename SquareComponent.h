@@ -8,7 +8,7 @@ public:
 	SquareComponent(class Actor* owner);
 	~SquareComponent();
 
-	void Initialize_CreateStage();
+	void Initialize_CreateStage(Vec2 pos,float width,float height);
 	void Initialize_Game();
 
 	void SetWidth(float width) { mWidth = width; }
