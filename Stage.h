@@ -1,9 +1,10 @@
 ﻿#pragma once
 #include"CreateStage.h"
+#include"StageObject.h"
 
 class Stage {
 public:
-	Stage(int width,int height);
+	Stage(float width,float height);
 	~Stage();
 
 	void Initialize_CreateStage(CreateStage* createStage);
@@ -14,12 +15,15 @@ public:
 	int GetVerticalSize() { return mVerticalSize; }
 	int GetSideSize() { return mSideSize; }
 	float GetHeight() { return mHeight; }
+	float GetWidth() { return mWidth; }
+	float GetRectHeight() { return mRectHeight; }
+	float GetRectWidth() { return mRectWidth; }
 
 	RectF GetStageRect() { return mStageRect; }
 	std::vector<std::vector<class StageObject*>>& GetStageObjects() { return mStageObjects; }
 	std::vector<std::vector<RectF>>& GetRects() { return mRects; }
 
-	void SetNewStageObject(int i, int j);
+	void SetNewStageObject(int i, int j,StageObject::Attribute attribute);
 
 private:
 	class CreateStage* mCreateStage;

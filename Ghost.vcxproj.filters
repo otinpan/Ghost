@@ -183,6 +183,12 @@
     <ClCompile Include="SquareComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Brock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -888,6 +894,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SquareComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Brock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

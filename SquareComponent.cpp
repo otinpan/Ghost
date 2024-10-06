@@ -13,6 +13,9 @@ SquareComponent::SquareComponent(class Actor* owner)
 }
 
 SquareComponent::~SquareComponent() {
+	if (mOwner->GetCreateStage()) {
+		mOwner->GetCreateStage()->RemoveSquare(this);
+	}
 
 }
 

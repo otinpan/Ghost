@@ -35,7 +35,7 @@ public:
 
 	class Hand* &GetHand() { return mHand; }
 	std::vector<class StageObject*>& GetStageObjects() { return mStageObjects; }
-	class Stage*& GetStage() { return mStage; }
+	class Stage* &GetStage() { return mStage; }
 
 	//Sequence
 	void moveTo(Parent* parent, Parent::SeqID id);
@@ -71,4 +71,5 @@ private:
 	class StageObject* mStageObject;
 	std::vector<class StageObject*> mStageObjects;
 	class Stage* mStage;
+	class Brock* mBrock;
 };

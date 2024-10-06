@@ -2,6 +2,7 @@
 #include"Hand.h"
 #include"StageObject.h"
 #include"Stage.h"
+#include"Brock.h"
 
 CreateStage::CreateStage()
 	:mUpdatingActors(false)
@@ -29,7 +30,6 @@ void CreateStage::update(Parent* parent) {
 		ProcessInput();
 		UpdateGame();
 		draw();
-		Print(mHand->GetPosition());
 	}
 }
 
@@ -89,10 +89,13 @@ void CreateStage::draw() {
 void CreateStage::LoadData() {
 	mHand = new Hand();
 	mHand->InitializeActor_CreateStage(this);
-	mStageObject = new StageObject(Vec2({0,0}),0.1f,0.1f);
-	mStageObject->InitializeActor_CreateStage(this);
-	mStage = new Stage(1.4, 1.5);
+	//mStageObject = new StageObject(Vec2({0.0f,0.0f}),0.1f,0.1f);
+	//mStageObject->InitializeActor_CreateStage(this);
+	mStage = new Stage(1.7f, 1.6f);
 	mStage->Initialize_CreateStage(this);
+	mBrock = new Brock(Vec2({ 0.0f,0.0f }), mStage->GetRectWidth()
+		, mStage->GetRectHeight());
+	mBrock->InitializeActor_CreateStage(this);
 }
 
 void CreateStage::UnloadData() {

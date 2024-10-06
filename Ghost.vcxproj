@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Brock.cpp" />
     <ClCompile Include="CircleComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CreateStage.cpp" />
@@ -133,6 +134,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\engine\texture\box-shadow\128.png" />
@@ -339,6 +341,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="Brock.h" />
     <ClInclude Include="CircleComponent.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Component.h" />
@@ -353,6 +356,7 @@
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StageObject.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App\example\obj\blacksmith.obj">

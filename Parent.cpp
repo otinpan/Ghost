@@ -83,6 +83,6 @@ void DrawRectFrame(Vec2 pos, float width, float height, float linewidth, ColorF 
 }
 
 void DrawSquareDotLine(Vec2 pos1, Vec2 pos2, float linewidth, ColorF color) {
-	Line{ConvertToWorld(pos1),ConvertToWorld(pos2)}
-	.draw(LineStyle::SquareDot, linewidth * GetMagnification(), color);
+	Line{ConvertToView(pos1),ConvertToView(pos2)}
+	.draw(LineStyle::SquareDot, linewidth * GetMagnification(),color);
 }

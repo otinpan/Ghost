@@ -27,7 +27,7 @@ private:
 	InputGroup inputDown;
 	InputGroup inputRight;
 	InputGroup inputLeft;
-	InputGroup inputDecision;
+	InputGroup inputGrap;
 	InputGroup inputBack;
 
 	bool mIsGrap;

@@ -27,14 +27,14 @@ void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 
 	cc = new CircleComponent(this);
 	cc->Initialize_CreateStage();
-	cc->SetRadius(0.01f);
+	cc->SetRadius(0.003f);
 	cc->SetColor({ 0.0,0.0,0.0 });
 
 	inputUp = KeyW;
 	inputDown = KeyS;
 	inputRight = KeyD;
 	inputLeft = KeyA;
-	inputDecision = KeyK;
+	inputGrap = KeyEnter;
 	inputBack = KeyL;
 
 	ic = new InputComponent_Keyboard(this);
@@ -49,17 +49,18 @@ void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 
 void Hand::UpdateActor_CreateStage(float deltaTime) {
 	Vec2 nowPos = GetPosition();
-	if (nowPos.x < -0.9)nowPos.x = -0.9;
-	if (nowPos.x > 0.9)nowPos.x = 0.9;
-	if (nowPos.y < -0.9)nowPos.y = -0.9;
-	if (nowPos.y > 0.9)nowPos.y = 0.9;
+	if (nowPos.x < -0.95)nowPos.x = -0.95;
+	if (nowPos.x > 0.95)nowPos.x = 0.95;
+	if (nowPos.y < -0.95)nowPos.y = -0.95;
+	if (nowPos.y > 0.95)nowPos.y = 0.95;
 	SetPosition(nowPos);
 	cc->SetCenter(nowPos);
 
 	if (!mIsGrap) {
-		for (auto stageObject : GetCreateStage()->GetStageObjects()) {
+		for (auto &stageObject : GetCreateStage()->GetStageObjects()) {
 			if (stageObject->GetSquareComponent()->GetRect().
-				contains(cc->GetCircle()) && inputDecision.pressed()) {
+				contains(cc->GetCircle()) && inputGrap.pressed()&&
+				stageObject->GetAttribute()!=StageObject::Attribute::Wall) {
 				stageObject->SetIsGripen(true);
 				mGrapping = stageObject;
 				mIsGrap = true;
@@ -67,19 +68,19 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 		}
 	}
 	else {
-		if (!inputDecision.pressed()) {
+		if (!inputGrap.pressed()) {
 			mGrapping->SetIsGripen(false);
 			//StageのmRectsとの当たり判定
 			for (int i = 0; i < GetCreateStage()->GetStage()->GetVerticalSize(); i++) {
 				for (int j = 0; j < GetCreateStage()->GetStage()->GetSideSize();j++) {
 					if (GetCreateStage()->GetStage()->GetRects()[i][j]
 						.contains(cc->GetCircle())) {
-						GetCreateStage()->GetStage()->SetNewStageObject(i, j);
+						GetCreateStage()->GetStage()->SetNewStageObject(i, j,mGrapping->GetAttribute());
 					}
 				}
 			}
-			mIsGrap = false;
 			delete mGrapping;
+			mIsGrap = false;
 		}
 	}
 }

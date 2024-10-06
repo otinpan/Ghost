@@ -46,6 +46,8 @@ public:
 	// Any actor-specific input code (overridable)
 	virtual void ActorInput(const std::vector<Input> keyState);
 
+	void DeleteComponents();
+
 	// Getters/setters
 	const Vec2& GetPosition() const { return mPosition; }
 	void SetPosition(const Vec2& pos) { mPosition = pos; }

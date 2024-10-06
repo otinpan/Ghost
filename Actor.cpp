@@ -28,8 +28,12 @@ Actor::~Actor()
 	if (mCreateStage)mCreateStage->RemoveActor(this);
 	// Need to delete components
 	// Because ~Component calls RemoveComponent, need a different style loop
-	while (!mComponents.empty())
-	{
+
+	DeleteComponents();
+}
+
+void Actor::DeleteComponents() {
+	while (!mComponents.empty()) {
 		delete mComponents.back();
 	}
 }

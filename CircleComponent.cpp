@@ -11,7 +11,9 @@ CircleComponent::CircleComponent(class Actor* owner)
 }
 
 CircleComponent::~CircleComponent() {
-	mOwner->GetGame()->RemoveCircle(this);
+	if (mOwner->GetCreateStage()) {
+		mOwner->GetCreateStage()->RemoveCircle(this);
+	}
 }
 
 void CircleComponent::Initialize_CreateStage() {
