@@ -30,6 +30,7 @@ void CreateStage::update(Parent* parent) {
 		ProcessInput();
 		UpdateGame();
 		draw();
+		Print << GetHand()->GetIsExpand();
 	}
 }
 
@@ -69,17 +70,19 @@ void CreateStage::UpdateGame(){
 	for (auto actor : deadActors) {
 		delete actor;
 	}
+
+	mStage->Update_CreateStage(deltaTime);
 }
 
 
 
 void CreateStage::draw() {
 	mStage->Draw_CreateStage();
-	for (auto circle : mCircles) {
-		circle->Draw();
-	}
 	for (auto square : mSquares) {
 		square->Draw();
+	}
+	for (auto circle : mCircles) {
+		circle->Draw();
 	}
 	for (auto sprite : mSprites) {
 
@@ -102,6 +105,7 @@ void CreateStage::UnloadData() {
 	while (!mActors.empty()) {
 		delete mActors.back();
 	}
+	delete mStage;
 }
 
 

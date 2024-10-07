@@ -15,6 +15,8 @@ public:
 
 	bool GetIsGrap() { return mIsGrap; }
 	void SetIsGrap(bool isGrap) { mIsGrap = isGrap; }
+	bool GetIsExpand() { return mIsExpand; }
+	void SetIsExpand(bool isExpand) { mIsExpand = isExpand; }
 
 private:
 	class CircleComponent* cc;
@@ -30,6 +32,10 @@ private:
 	InputGroup inputGrap;
 	InputGroup inputBack;
 
+	std::vector<int> dx;
+	std::vector<int> dy;
+
 	bool mIsGrap;
+	bool mIsExpand;
 };
 

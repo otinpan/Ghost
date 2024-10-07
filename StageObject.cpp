@@ -6,12 +6,11 @@
 
 StageObject::StageObject(Vec2 pos, float width, float height)
 	:sqc(nullptr)
-	, LeftTopCC(nullptr)
-	, RightBottomCC(nullptr)
 	,mIsGripen(false)
 	,mCenter(pos)
 	,mWidth(width)
 	,mHeight(height)
+	,mIteration({-1,-1})
 {
 	SetPosition(pos);
 }
@@ -30,13 +29,18 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 	sqc = new SquareComponent(this);
 	sqc->Initialize_CreateStage(mCenter,mWidth,mHeight);
 
-	LeftTopCC = new CircleComponent(this);
-	LeftTopCC->Initialize_CreateStage();
-	LeftTopCC->SetRadius((float)mWidth / 3.5);
+	cc.resize(4);
+	for (int i = 0; i < 4; i++) {
+		cc[i] = new CircleComponent(this);
+		cc[i]->Initialize_CreateStage();
+		cc[i]->SetRadius((float)mWidth / 6.0f);
+		cc[i]->SetColor(ColorF(0, 0, 1));
+	}
 
-	RightBottomCC = new CircleComponent(this);
-	RightBottomCC->Initialize_CreateStage();
-	RightBottomCC->SetRadius((float)mWidth / 3.5);
+	float dw = (float)mWidth / 2.0f - cc[0]->GetRadius();
+	float dh = (float)mHeight / 2.0f - cc[0]->GetRadius()*mHeight/mWidth;
+	dx = {-dw,dw,dw,-dw};
+	dy = {dh,dh,-dh,-dh};
 
 }
 
@@ -47,12 +51,38 @@ void StageObject::UpdateActor_CreateStage(float deltaTime) {
 	}
 	
 	sqc->SetCenter(GetPosition());
-	LeftTopCC->SetCenter
-	(Vec2(GetPosition().x - mWidth / 3, GetPosition().y + mHeight / 3));
-	RightBottomCC->SetCenter
-	(Vec2(GetPosition().x + mWidth / 3, GetPosition().y - mHeight / 3));
+	for (int i = 0; i < 4; i++) {
+		cc[i]->
+			SetCenter(Vec2
+			(GetPosition().x + dx[i],
+			GetPosition().y + dy[i]));
+	}
 }
 
 void StageObject::ActorInput(std::vector<Input> keyState) {
 
+}
+
+
+Vec2 StageObject::GetLeftTop() {
+	return Vec2({ GetPosition().x - mWidth / 2.0f,GetPosition().y + mHeight/2.0f});
+}
+
+Vec2 StageObject::GetRightTop() {
+	return Vec2({ GetPosition().x + mWidth / 2.0f,GetPosition().y + mHeight / 2.0f });
+}
+
+Vec2 StageObject::GetRightBottom() {
+	return Vec2({ GetPosition().x + mWidth / 2.0f,GetPosition().y - mHeight / 2.0f });
+}
+
+Vec2 StageObject::GetLeftBottom() {
+	return Vec2({ GetPosition().x - mWidth / 2.0f,GetPosition().y - mHeight / 2.0f });
+}
+
+Vec2 StageObject::GetExpandFulcrum(int i) {
+	if (i == 0)return GetRightBottom();
+	else if (i == 1)return GetLeftBottom();
+	else if (i == 2)return GetLeftTop();
+	else return GetRightTop();
 }

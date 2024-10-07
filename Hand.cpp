@@ -7,10 +7,11 @@
 #include<Siv3D.hpp>
 
 Hand::Hand()
-	:StandardSpeed(0.6)
+	:StandardSpeed(0.4)
 	,ic(nullptr)
 	,cc(nullptr)
 	,mIsGrap(false)
+	,mIsExpand(false)
 	,mGrapping(nullptr)
 {
 
@@ -28,7 +29,7 @@ void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 	cc = new CircleComponent(this);
 	cc->Initialize_CreateStage();
 	cc->SetRadius(0.003f);
-	cc->SetColor({ 0.0,0.0,0.0 });
+	cc->SetColor({ 1.0,0.0,0.0 });
 
 	inputUp = KeyW;
 	inputDown = KeyS;
@@ -45,6 +46,9 @@ void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 	ic->SetMaxXSpeed(StandardSpeed);
 	ic->SetMaxYSpeed(StandardSpeed);
 
+	dx = { -1,1,1,-1 };
+	dy = { 1,1,-1,-1 };
+
 }
 
 void Hand::UpdateActor_CreateStage(float deltaTime) {
@@ -56,18 +60,47 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 	SetPosition(nowPos);
 	cc->SetCenter(nowPos);
 
-	if (!mIsGrap) {
+	if (!mIsGrap&&!mIsExpand) {
 		for (auto &stageObject : GetCreateStage()->GetStageObjects()) {
 			if (stageObject->GetSquareComponent()->GetRect().
 				contains(cc->GetCircle()) && inputGrap.pressed()&&
-				stageObject->GetAttribute()!=StageObject::Attribute::Wall) {
-				stageObject->SetIsGripen(true);
-				mGrapping = stageObject;
-				mIsGrap = true;
+				stageObject->GetAttribute() != StageObject::Attribute::Wall) {
+				//stageの中にある場合拡大可能
+				if (stageObject->GetIsInStage()) {
+					for (int i = 0;
+						i < stageObject->GetCircleComponents().size();
+						i++) {
+						if (stageObject->GetCircleComponents()[i]
+							->GetCircle().contains(cc->GetCircle())) {
+							mIsExpand = true;
+							//支点となる座標をstageが保存
+							GetCreateStage()->GetStage()->
+								SetExpandFulcrumIter(stageObject->GetIteration());
+							//支点となるObjectの属性をstageが保存
+							GetCreateStage()->GetStage()->
+								SetExpandAttribute(stageObject->GetAttribute());
+							return;
+						}
+					}
+				}
+				if (!mIsExpand) {
+					stageObject->SetIsGripen(true);
+					mIsGrap = true;
+					mGrapping = stageObject;
+					return;
+				}
 			}
+			
 		}
 	}
-	else {
+
+	if (mIsExpand) {
+		if (!inputGrap.pressed()) {
+			
+		}
+	}
+
+	if(mIsGrap){
 		if (!inputGrap.pressed()) {
 			mGrapping->SetIsGripen(false);
 			//StageのmRectsとの当たり判定

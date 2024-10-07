@@ -2,7 +2,7 @@
 #include"CreateStage.h"
 #include"StageObject.h"
 
-class Stage {
+class Stage :public Actor{
 public:
 	Stage(float width,float height);
 	~Stage();
@@ -18,12 +18,20 @@ public:
 	float GetWidth() { return mWidth; }
 	float GetRectHeight() { return mRectHeight; }
 	float GetRectWidth() { return mRectWidth; }
+	Vec2 GetExpandFulcrum() { return mExpandFulcrum; }
+	void SetExpandFulcrum(Vec2 pos) { mExpandFulcrum = pos; }
+	std::pair<int, int> GetExpandFulcrumIter() { return mExpandFulcrumIter; }
+	void SetExpandFulcrumIter(std::pair<int, int> iter) { mExpandFulcrumIter = iter; }
+	StageObject::Attribute GetExpandAttribute() { return mExpandAttribute; }
+	void SetExpandAttribute(StageObject::Attribute at) { mExpandAttribute = at; }
+
 
 	RectF GetStageRect() { return mStageRect; }
 	std::vector<std::vector<class StageObject*>>& GetStageObjects() { return mStageObjects; }
 	std::vector<std::vector<RectF>>& GetRects() { return mRects; }
 
 	void SetNewStageObject(int i, int j,StageObject::Attribute attribute);
+	void RemakeStageObject(Vec2 pos);
 
 private:
 	class CreateStage* mCreateStage;
@@ -37,9 +45,17 @@ private:
 	float mLeft;//StageRectの左端
 	float mUp;//StageRectの上端
 	Vec2 mStageCenter;
+	std::pair<int, int> mExpandFulcrumIter; //支点となる位置
+	Vec2 mExpandFulcrum;//拡大のとき支点となる座標
+	StageObject::Attribute mExpandAttribute;//拡大のときのObjectの属性
+	RectF mExpandRect;
+	Vec2 mExpandRectCenter;
+	float mExpandRectWidth;
+	float mExpandRectHeight;
 
 	std::vector<std::vector<class StageObject* >> mStageObjects;
 	std::vector<std::vector<RectF>> mRects;
 	RectF mStageRect;
+	
 
 };

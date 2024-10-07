@@ -18,7 +18,8 @@ public:
 	void UpdateActor_CreateStage(float deltaTime)override;
 	void ActorInput(std::vector<Input> keyState)override;
 
-	class SquareComponent* GetSquareComponent() { return sqc; }
+	class SquareComponent* &GetSquareComponent() { return sqc; }
+	std::vector<CircleComponent*> &GetCircleComponents() { return cc; }
 
 	bool GetIsGripen() { return mIsGripen; }
 	void SetIsGripen(bool b) { mIsGripen = b; }
@@ -26,12 +27,22 @@ public:
 	void SetAttribute(Attribute attribute) { mAttribute = attribute; }
 	bool GetIsInStage() { return mIsInStage; }
 	void SetIsInStage(bool isInStage) { mIsInStage = isInStage; }
+	std::pair<int, int> GetIteration() { return mIteration; }
+	void SetIteration(std::pair<int, int> iter) { mIteration = iter; }
+	Vec2 GetLeftTop();
+	Vec2 GetRightTop();
+	Vec2 GetRightBottom();
+	Vec2 GetLeftBottom();
+	Vec2 GetExpandFulcrum(int i);
 
 
 private:
 	class SquareComponent* sqc;
-	class CircleComponent* LeftTopCC;
-	class CircleComponent* RightBottomCC;
+	std::vector<class CircleComponent*> cc;
+	//0lefttop 1righttop 2rightbottom 3leftbottom
+
+	std::vector<float> dx;
+	std::vector<float> dy;
 
 	bool mIsGripen;
 	bool mIsInStage;//Stageの中にあるか
@@ -41,4 +52,6 @@ private:
 	Vec2 mCenter;
 	float mWidth;
 	float mHeight;
+	std::pair<int, int> mIteration;
+	//stageにある場合stageのどこにあるかを保存
 };
