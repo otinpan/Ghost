@@ -65,19 +65,19 @@ void StageObject::ActorInput(std::vector<Input> keyState) {
 
 
 Vec2 StageObject::GetLeftTop() {
-	return Vec2({ GetPosition().x - mWidth / 2.0f,GetPosition().y + mHeight/2.0f});
+	return Vec2({ GetPosition().x - mWidth / 2.0f-0.001f,GetPosition().y + mHeight/2.0f+0.001f});
 }
 
 Vec2 StageObject::GetRightTop() {
-	return Vec2({ GetPosition().x + mWidth / 2.0f,GetPosition().y + mHeight / 2.0f });
+	return Vec2({ GetPosition().x + mWidth / 2.0f+0.001f,GetPosition().y + mHeight / 2.0f+0.001f });
 }
 
 Vec2 StageObject::GetRightBottom() {
-	return Vec2({ GetPosition().x + mWidth / 2.0f,GetPosition().y - mHeight / 2.0f });
+	return Vec2({ GetPosition().x + mWidth / 2.0f+0.001f,GetPosition().y - mHeight / 2.0f-0.001f });
 }
 
 Vec2 StageObject::GetLeftBottom() {
-	return Vec2({ GetPosition().x - mWidth / 2.0f,GetPosition().y - mHeight / 2.0f });
+	return Vec2({ GetPosition().x - mWidth / 2.0f-0.001f,GetPosition().y - mHeight / 2.0f-0.001f });
 }
 
 Vec2 StageObject::GetExpandFulcrum(int i) {

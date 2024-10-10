@@ -18,8 +18,8 @@ public:
 	float GetWidth() { return mWidth; }
 	float GetRectHeight() { return mRectHeight; }
 	float GetRectWidth() { return mRectWidth; }
-	Vec2 GetExpandFulcrum() { return mExpandFulcrum; }
-	void SetExpandFulcrum(Vec2 pos) { mExpandFulcrum = pos; }
+	Vec2 GetExpandFulcrum() { return mExpandFulcrumPos; }
+	void SetExpandFulcrum(Vec2 pos) { mExpandFulcrumPos = pos; }
 	std::pair<int, int> GetExpandFulcrumIter() { return mExpandFulcrumIter; }
 	void SetExpandFulcrumIter(std::pair<int, int> iter) { mExpandFulcrumIter = iter; }
 	StageObject::Attribute GetExpandAttribute() { return mExpandAttribute; }
@@ -31,7 +31,10 @@ public:
 	std::vector<std::vector<RectF>>& GetRects() { return mRects; }
 
 	void SetNewStageObject(int i, int j,StageObject::Attribute attribute);
-	void RemakeStageObject(Vec2 pos);
+	void RemakeStageObjects();
+	void DeleteStageObjects();
+
+	int GetRevHandToFul(int i, int j); //mHandがmFulcrumに対してどこにあるか
 
 private:
 	class CreateStage* mCreateStage;
@@ -46,7 +49,7 @@ private:
 	float mUp;//StageRectの上端
 	Vec2 mStageCenter;
 	std::pair<int, int> mExpandFulcrumIter; //支点となる位置
-	Vec2 mExpandFulcrum;//拡大のとき支点となる座標
+	Vec2 mExpandFulcrumPos;//拡大のとき支点となる座標
 	StageObject::Attribute mExpandAttribute;//拡大のときのObjectの属性
 	RectF mExpandRect;
 	Vec2 mExpandRectCenter;

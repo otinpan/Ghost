@@ -29,11 +29,13 @@ public:
 	void SetIsInStage(bool isInStage) { mIsInStage = isInStage; }
 	std::pair<int, int> GetIteration() { return mIteration; }
 	void SetIteration(std::pair<int, int> iter) { mIteration = iter; }
+	
 	Vec2 GetLeftTop();
 	Vec2 GetRightTop();
 	Vec2 GetRightBottom();
 	Vec2 GetLeftBottom();
 	Vec2 GetExpandFulcrum(int i);
+
 
 
 private:

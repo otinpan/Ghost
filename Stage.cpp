@@ -13,7 +13,7 @@ Stage::Stage(float width, float height)
 	, mHeight(height)
 	, mLeft(-0.96f)
 	, mUp(0.96f)
-	, mExpandFulcrum{ Vec2{2.0,2.0} }
+	, mExpandFulcrumPos{ Vec2{2.0,2.0} }
 	, mExpandAttribute{ StageObject::Attribute::Wall }
 	,mExpandRectCenter({0,0})
 	,mExpandRectWidth(0.0f)
@@ -30,7 +30,10 @@ void Stage::Initialize_CreateStage(CreateStage* createStage) {
 	mStageObjects.resize(mVerticalSize);
 	for (auto& row : mStageObjects) {
 		row.resize(mSideSize);
+		for (auto& so : row)so = 0;
 	}
+
+	
 
 	mRects.resize(mVerticalSize);
 	for (auto& row : mRects) {
@@ -47,6 +50,7 @@ void Stage::Initialize_CreateStage(CreateStage* createStage) {
 
 	mCreateStage = createStage;
 	mStageRect = RectF({ mLeft,mUp }, mWidth, mHeight);
+
 }
 
 void Stage::SetNewStageObject(int i, int j, StageObject::Attribute attribute) {
@@ -62,19 +66,74 @@ void Stage::SetNewStageObject(int i, int j, StageObject::Attribute attribute) {
 	mStageObjects[i][j]->InitializeActor_CreateStage(mCreateStage);*/
 }
 
-void Stage::RemakeStageObject(Vec2 pos) {
-	
+void Stage::RemakeStageObjects() {
+	DeleteStageObjects();
+	for (int i = 0; i < mVerticalSize; i++) {
+		for (int j = 0; j < mSideSize; j++) {
+			if (mExpandRect.contains(mRects[i][j])) {
+				SetNewStageObject(i, j, mExpandAttribute);
+			}
+		}
+	}
+}
+
+void Stage::DeleteStageObjects() {
+	for (auto& row : mStageObjects) {
+		for (auto& so : row) {
+			if (so!=0&&mExpandRect.contains(so->GetSquareComponent()->GetRect())) {
+				delete so;
+			}
+		}
+	}
 }
 
 void Stage::Update_CreateStage(float delteTime) {
 	if (mCreateStage->GetHand()->GetIsExpand()) {
-		
-		mExpandRectCenter = Vec2{ (mExpandFulcrum.x + mCreateStage->GetHand()->GetPosition().x) / 2
-			,(mExpandFulcrum.y + mCreateStage->GetHand()->GetPosition().y) / 2 };
-		mExpandRectWidth = abs(mExpandFulcrum.x - mCreateStage->GetHand()->GetPosition().x);
-		mExpandRectHeight = abs(mExpandFulcrum.y - mCreateStage->GetHand()->GetPosition().y);
+		if (GetRevHandToFul(mExpandFulcrumIter.first, mExpandFulcrumIter.second) == 1) {
+			mExpandFulcrumPos =
+				mStageObjects[mExpandFulcrumIter.first][mExpandFulcrumIter.second]->GetRightBottom();
+		}
+		else if (GetRevHandToFul(mExpandFulcrumIter.first, mExpandFulcrumIter.second) == 2) {
+			mExpandFulcrumPos =
+				mStageObjects[mExpandFulcrumIter.first][mExpandFulcrumIter.second]->GetLeftBottom();
+		}
+		else if (GetRevHandToFul(mExpandFulcrumIter.first, mExpandFulcrumIter.second) == 3) {
+			mExpandFulcrumPos =
+				mStageObjects[mExpandFulcrumIter.first][mExpandFulcrumIter.second]->GetLeftTop();
+		}
+		else if (GetRevHandToFul(mExpandFulcrumIter.first, mExpandFulcrumIter.second) == 4) {
+			mExpandFulcrumPos =
+				mStageObjects[mExpandFulcrumIter.first][mExpandFulcrumIter.second]->GetRightTop();
+		}
+		mExpandRectCenter = Vec2{ (mExpandFulcrumPos.x + mCreateStage->GetHand()->GetPosition().x) / 2
+			,(mExpandFulcrumPos.y + mCreateStage->GetHand()->GetPosition().y) / 2 };
+		mExpandRectWidth = abs(mExpandFulcrumPos.x - mCreateStage->GetHand()->GetPosition().x);
+		mExpandRectHeight = abs(mExpandFulcrumPos.y - mCreateStage->GetHand()->GetPosition().y);
 		mExpandRect = RectF{ Arg::center(mExpandRectCenter),mExpandRectWidth,mExpandRectHeight };
 	}
+}
+
+int Stage::GetRevHandToFul(int i, int j) {
+	//左上
+	if (mCreateStage->GetHand()->GetPosition().x<mStageObjects[i][j]->GetPosition().x &&
+		mCreateStage->GetHand()->GetPosition().y>mStageObjects[i][j]->GetPosition().y) {
+		return 1;
+	}
+	//右上
+	else if (mCreateStage->GetHand()->GetPosition().x > mStageObjects[i][j]->GetPosition().x &&
+	   mCreateStage->GetHand()->GetPosition().y > mStageObjects[i][j]->GetPosition().y) {
+		return 2;
+	}
+	//右下
+	else if (mCreateStage->GetHand()->GetPosition().x > mStageObjects[i][j]->GetPosition().x &&
+	   mCreateStage->GetHand()->GetPosition().y < mStageObjects[i][j]->GetPosition().y) {
+		return 3;
+	}
+	//左下
+	else {
+		return 4;
+	}
+
 }
 
 void Stage::Draw_CreateStage() {

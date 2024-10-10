@@ -7,7 +7,7 @@
 #include<Siv3D.hpp>
 
 Hand::Hand()
-	:StandardSpeed(0.4)
+	:StandardSpeed(0.3f)
 	,ic(nullptr)
 	,cc(nullptr)
 	,mIsGrap(false)
@@ -63,40 +63,46 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 	if (!mIsGrap&&!mIsExpand) {
 		for (auto &stageObject : GetCreateStage()->GetStageObjects()) {
 			if (stageObject->GetSquareComponent()->GetRect().
-				contains(cc->GetCircle()) && inputGrap.pressed()&&
-				stageObject->GetAttribute() != StageObject::Attribute::Wall) {
+				contains(cc->GetCircle()) && 
+			    stageObject->GetAttribute() != StageObject::Attribute::Wall) {
 				//stageの中にある場合拡大可能
 				if (stageObject->GetIsInStage()) {
-					for (int i = 0;
-						i < stageObject->GetCircleComponents().size();
-						i++) {
-						if (stageObject->GetCircleComponents()[i]
-							->GetCircle().contains(cc->GetCircle())) {
-							mIsExpand = true;
-							//支点となる座標をstageが保存
-							GetCreateStage()->GetStage()->
-								SetExpandFulcrumIter(stageObject->GetIteration());
-							//支点となるObjectの属性をstageが保存
-							GetCreateStage()->GetStage()->
-								SetExpandAttribute(stageObject->GetAttribute());
-							return;
+					if (stageObject->GetAttribute() == StageObject::Attribute::Brock) {
+						for (int i = 0;
+							i < stageObject->GetCircleComponents().size();
+							i++) {
+							if (stageObject->GetCircleComponents()[i]
+								->GetCircle().contains(cc->GetCircle())&&
+								inputGrap.pressed()) {
+								mIsExpand = true;
+								//支点となるItertionをstageが保存
+								GetCreateStage()->GetStage()->
+									SetExpandFulcrumIter(stageObject->GetIteration());
+								//支点となるObjectの属性をstageが保存
+								GetCreateStage()->GetStage()->
+									SetExpandAttribute(stageObject->GetAttribute());
+								return;
+							}
 						}
 					}
 				}
 				if (!mIsExpand) {
-					stageObject->SetIsGripen(true);
-					mIsGrap = true;
-					mGrapping = stageObject;
-					return;
+					if (inputGrap.pressed()) {
+						stageObject->SetIsGripen(true);
+						mIsGrap = true;
+						mGrapping = stageObject;
+						return;
+					}
 				}
 			}
 			
 		}
 	}
-
 	if (mIsExpand) {
+		//拡大の解除
 		if (!inputGrap.pressed()) {
-			
+			GetCreateStage()->GetStage()->RemakeStageObjects();
+			mIsExpand = false;
 		}
 	}
 
@@ -107,7 +113,8 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 			for (int i = 0; i < GetCreateStage()->GetStage()->GetVerticalSize(); i++) {
 				for (int j = 0; j < GetCreateStage()->GetStage()->GetSideSize();j++) {
 					if (GetCreateStage()->GetStage()->GetRects()[i][j]
-						.contains(cc->GetCircle())) {
+						.contains(cc->GetCircle())&&
+						GetCreateStage()->GetStage()->GetStageObjects()[i][j]==nullptr) {
 						GetCreateStage()->GetStage()->SetNewStageObject(i, j,mGrapping->GetAttribute());
 					}
 				}

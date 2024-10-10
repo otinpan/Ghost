@@ -30,7 +30,8 @@ void CreateStage::update(Parent* parent) {
 		ProcessInput();
 		UpdateGame();
 		draw();
-		Print << GetHand()->GetIsExpand();
+		Print << mStageObjects.size();
+		Print << mHand->GetIsExpand();
 	}
 }
 
