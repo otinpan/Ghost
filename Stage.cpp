@@ -30,7 +30,9 @@ void Stage::Initialize_CreateStage(CreateStage* createStage) {
 	mStageObjects.resize(mVerticalSize);
 	for (auto& row : mStageObjects) {
 		row.resize(mSideSize);
-		for (auto& so : row)so = 0;
+		for (auto& so : row) {
+			so = 0;
+		}
 	}
 
 	
@@ -57,38 +59,32 @@ void Stage::SetNewStageObject(int i, int j, StageObject::Attribute attribute) {
 	if (attribute == StageObject::Attribute::Brock) {
 		mStageObjects[i][j] = new Brock(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
 		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
-		mStageObjects[i][j]->InitializeActor_CreateStage(mCreateStage);
 	}
 	mStageObjects[i][j]->SetIsInStage(true);
 	mStageObjects[i][j]->SetIteration(std::pair{ i,j });
-	/*mStageObjects[i][j] = new StageObject(Vec2({(float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp-i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
-	mStageObjects[i][j]->InitializeActor_CreateStage(mCreateStage);*/
+	mStageObjects[i][j]->InitializeActor_CreateStage(mCreateStage);
 }
 
 void Stage::RemakeStageObjects() {
-	DeleteStageObjects();
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
 			if (mExpandRect.contains(mRects[i][j])) {
+				if (mStageObjects[i][j] != 0)DeleteStageObject(i, j);
 				SetNewStageObject(i, j, mExpandAttribute);
 			}
 		}
 	}
 }
 
-void Stage::DeleteStageObjects() {
-	for (auto& row : mStageObjects) {
-		for (auto& so : row) {
-			if (so!=0&&mExpandRect.contains(so->GetSquareComponent()->GetRect())) {
-				delete so;
-			}
-		}
-	}
+void Stage::DeleteStageObject(int i,int j) {
+	if (mStageObjects[i][j] == 0)return;
+	delete mStageObjects[i][j];
+	return;
 }
 
 void Stage::Update_CreateStage(float delteTime) {
 	if (mCreateStage->GetHand()->GetIsExpand()) {
+
 		if (GetRevHandToFul(mExpandFulcrumIter.first, mExpandFulcrumIter.second) == 1) {
 			mExpandFulcrumPos =
 				mStageObjects[mExpandFulcrumIter.first][mExpandFulcrumIter.second]->GetRightBottom();

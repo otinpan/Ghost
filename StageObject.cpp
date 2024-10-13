@@ -3,6 +3,7 @@
 #include"CircleComponent.h"
 #include"CreateStage.h"
 #include"Hand.h"
+#include"Stage.h"
 
 StageObject::StageObject(Vec2 pos, float width, float height)
 	:sqc(nullptr)
@@ -11,6 +12,7 @@ StageObject::StageObject(Vec2 pos, float width, float height)
 	,mWidth(width)
 	,mHeight(height)
 	,mIteration({-1,-1})
+	,mAttribute(Attribute::Brock)
 {
 	SetPosition(pos);
 }
@@ -18,6 +20,9 @@ StageObject::StageObject(Vec2 pos, float width, float height)
 StageObject::~StageObject() {
 	if (GetCreateStage()) {
 		GetCreateStage()->RemoveStageObject(this);
+		if (mIsInStage) {
+			GetCreateStage()->GetStage()->SetStageObject(GetIteration().first, GetIteration().second,0);
+		}
 	}
 
 	DeleteComponents();
@@ -38,9 +43,12 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 	}
 
 	float dw = (float)mWidth / 2.0f - cc[0]->GetRadius();
-	float dh = (float)mHeight / 2.0f - cc[0]->GetRadius()*mHeight/mWidth;
-	dx = {-dw,dw,dw,-dw};
-	dy = {dh,dh,-dh,-dh};
+	float dh = (float)mHeight / 2.0f - cc[0]->GetRadius() * mHeight / mWidth;
+	dx = { -dw,dw,dw,-dw };
+	dy = { dh,dh,-dh,-dh };
+}
+
+void StageObject::InitializeStageObject_CreateStage(class CreateStage* createstage) {
 
 }
 
@@ -49,15 +57,22 @@ void StageObject::UpdateActor_CreateStage(float deltaTime) {
 	if (GetIsGripen()) {
 		SetPosition(GetCreateStage()->GetHand()->GetPosition());
 	}
+
+	UpdateStageObject_CreateStage(deltaTime);
 	
 	sqc->SetCenter(GetPosition());
 	for (int i = 0; i < 4; i++) {
 		cc[i]->
 			SetCenter(Vec2
 			(GetPosition().x + dx[i],
-			GetPosition().y + dy[i]));
+				GetPosition().y + dy[i]));
 	}
 }
+
+void StageObject::UpdateStageObject_CreateStage(float deltaTime) {
+
+}
+
 
 void StageObject::ActorInput(std::vector<Input> keyState) {
 
@@ -65,19 +80,19 @@ void StageObject::ActorInput(std::vector<Input> keyState) {
 
 
 Vec2 StageObject::GetLeftTop() {
-	return Vec2({ GetPosition().x - mWidth / 2.0f-0.001f,GetPosition().y + mHeight/2.0f+0.001f});
+	return Vec2({ GetPosition().x - mWidth / 2.0f - 0.001f,GetPosition().y + mHeight / 2.0f + 0.001f });
 }
 
 Vec2 StageObject::GetRightTop() {
-	return Vec2({ GetPosition().x + mWidth / 2.0f+0.001f,GetPosition().y + mHeight / 2.0f+0.001f });
+	return Vec2({ GetPosition().x + mWidth / 2.0f + 0.001f,GetPosition().y + mHeight / 2.0f + 0.001f });
 }
 
 Vec2 StageObject::GetRightBottom() {
-	return Vec2({ GetPosition().x + mWidth / 2.0f+0.001f,GetPosition().y - mHeight / 2.0f-0.001f });
+	return Vec2({ GetPosition().x + mWidth / 2.0f + 0.001f,GetPosition().y - mHeight / 2.0f - 0.001f });
 }
 
 Vec2 StageObject::GetLeftBottom() {
-	return Vec2({ GetPosition().x - mWidth / 2.0f-0.001f,GetPosition().y - mHeight / 2.0f-0.001f });
+	return Vec2({ GetPosition().x - mWidth / 2.0f - 0.001f,GetPosition().y - mHeight / 2.0f - 0.001f });
 }
 
 Vec2 StageObject::GetExpandFulcrum(int i) {

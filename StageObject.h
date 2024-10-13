@@ -3,23 +3,25 @@
 
 class StageObject :public Actor {
 public:
-	StageObject(Vec2 pos,float width,float height);
+	StageObject(Vec2 pos, float width, float height);
 	~StageObject();
 
 	enum Attribute {
 		Wall,
 		Brock,
 		Door,
+		Patrol,
 	};
 
 	void InitializeActor_CreateStage(class CreateStage* createstage)override;
-
+	virtual void InitializeStageObject_CreateStage(class CreateStage* createStage);
 
 	void UpdateActor_CreateStage(float deltaTime)override;
+	virtual void UpdateStageObject_CreateStage(float deltaTime);
 	void ActorInput(std::vector<Input> keyState)override;
 
-	class SquareComponent* &GetSquareComponent() { return sqc; }
-	std::vector<CircleComponent*> &GetCircleComponents() { return cc; }
+	class SquareComponent*& GetSquareComponent() { return sqc; }
+	std::vector<CircleComponent*>& GetCircleComponents() { return cc; }
 
 	bool GetIsGripen() { return mIsGripen; }
 	void SetIsGripen(bool b) { mIsGripen = b; }
@@ -29,7 +31,9 @@ public:
 	void SetIsInStage(bool isInStage) { mIsInStage = isInStage; }
 	std::pair<int, int> GetIteration() { return mIteration; }
 	void SetIteration(std::pair<int, int> iter) { mIteration = iter; }
-	
+	int GetRotation() { return mRotation; }
+	void SetRotation(int rotation) { mRotation = rotation; }
+
 	Vec2 GetLeftTop();
 	Vec2 GetRightTop();
 	Vec2 GetRightBottom();
@@ -54,6 +58,7 @@ private:
 	Vec2 mCenter;
 	float mWidth;
 	float mHeight;
-	std::pair<int, int> mIteration;
-	//stageにある場合stageのどこにあるかを保存
+	std::pair<int, int> mIteration;//stageにある場合stageのどこにあるかを保存
+	int mRotation;
+	
 };

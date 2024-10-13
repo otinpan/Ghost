@@ -31,7 +31,9 @@ void CreateStage::update(Parent* parent) {
 		UpdateGame();
 		draw();
 		Print << mStageObjects.size();
-		Print << mHand->GetIsExpand();
+
+		//Print << mActors.size();
+		//Print << mHand->GetIsExpand();
 	}
 }
 
@@ -99,7 +101,7 @@ void CreateStage::LoadData() {
 	mStage->Initialize_CreateStage(this);
 	mBrock = new Brock(Vec2({ 0.0f,0.0f }), mStage->GetRectWidth()
 		, mStage->GetRectHeight());
-	mBrock->InitializeActor_CreateStage(this);
+	mBrock->InitializeStageObject_CreateStage(this);
 }
 
 void CreateStage::UnloadData() {

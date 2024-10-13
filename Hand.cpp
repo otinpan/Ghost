@@ -5,6 +5,8 @@
 #include"StageObject.h"
 #include"Stage.h"
 #include<Siv3D.hpp>
+#include"Brock.h"
+#include"Wall.h"
 
 Hand::Hand()
 	:StandardSpeed(0.3f)
@@ -114,7 +116,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 				for (int j = 0; j < GetCreateStage()->GetStage()->GetSideSize();j++) {
 					if (GetCreateStage()->GetStage()->GetRects()[i][j]
 						.contains(cc->GetCircle())&&
-						GetCreateStage()->GetStage()->GetStageObjects()[i][j]==nullptr) {
+						GetCreateStage()->GetStage()->GetStageObjects()[i][j]==0) {
 						GetCreateStage()->GetStage()->SetNewStageObject(i, j,mGrapping->GetAttribute());
 					}
 				}

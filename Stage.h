@@ -28,11 +28,12 @@ public:
 
 	RectF GetStageRect() { return mStageRect; }
 	std::vector<std::vector<class StageObject*>>& GetStageObjects() { return mStageObjects; }
+	void SetStageObject(int i, int j, StageObject* stageObject) { mStageObjects[i][j] = stageObject; }
 	std::vector<std::vector<RectF>>& GetRects() { return mRects; }
 
 	void SetNewStageObject(int i, int j,StageObject::Attribute attribute);
 	void RemakeStageObjects();
-	void DeleteStageObjects();
+	void DeleteStageObject(int i,int j);
 
 	int GetRevHandToFul(int i, int j); //mHandがmFulcrumに対してどこにあるか
 
