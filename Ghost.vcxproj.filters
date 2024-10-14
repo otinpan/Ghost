@@ -195,7 +195,7 @@
     <ClCompile Include="Key.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Buttery.cpp">
+    <ClCompile Include="Battery.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Patrol.cpp">
@@ -920,7 +920,7 @@
     <ClInclude Include="Key.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Buttery.h">
+    <ClInclude Include="Battery.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Patrol.h">

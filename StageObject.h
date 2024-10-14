@@ -7,10 +7,13 @@ public:
 	~StageObject();
 
 	enum Attribute {
+		None,
 		Wall,
 		Brock,
 		Door,
 		Patrol,
+		Battery,
+		Key,
 	};
 
 	void InitializeActor_CreateStage(class CreateStage* createstage)override;
@@ -31,8 +34,8 @@ public:
 	void SetIsInStage(bool isInStage) { mIsInStage = isInStage; }
 	std::pair<int, int> GetIteration() { return mIteration; }
 	void SetIteration(std::pair<int, int> iter) { mIteration = iter; }
-	int GetRotation() { return mRotation; }
-	void SetRotation(int rotation) { mRotation = rotation; }
+	int GetRotation() { return mClockwise; }
+	void SetRotation(int rotation) { mClockwise = rotation; }
 
 	Vec2 GetLeftTop();
 	Vec2 GetRightTop();
@@ -59,6 +62,6 @@ private:
 	float mWidth;
 	float mHeight;
 	std::pair<int, int> mIteration;//stageにある場合stageのどこにあるかを保存
-	int mRotation;
+	int mClockwise;
 	
 };

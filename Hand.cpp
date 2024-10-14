@@ -39,6 +39,9 @@ void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 	inputLeft = KeyA;
 	inputGrap = KeyEnter;
 	inputBack = KeyL;
+	inputClockwise = KeyRight;
+	inputCounterClockwise = KeyLeft;
+	inputDecision = KeySpace;
 
 	ic = new InputComponent_Keyboard(this);
 	ic->SetUpKey(inputUp);

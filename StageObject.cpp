@@ -12,7 +12,7 @@ StageObject::StageObject(Vec2 pos, float width, float height)
 	,mWidth(width)
 	,mHeight(height)
 	,mIteration({-1,-1})
-	,mAttribute(Attribute::Brock)
+	,mAttribute(Attribute::None)
 {
 	SetPosition(pos);
 }

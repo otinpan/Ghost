@@ -31,6 +31,9 @@ private:
 	InputGroup inputLeft;
 	InputGroup inputGrap;
 	InputGroup inputBack;
+	InputGroup inputClockwise;
+	InputGroup inputCounterClockwise;
+	InputGroup inputDecision;
 
 	std::vector<int> dx;
 	std::vector<int> dy;

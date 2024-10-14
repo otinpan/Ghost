@@ -117,7 +117,7 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Brock.cpp" />
-    <ClCompile Include="Buttery.cpp" />
+    <ClCompile Include="Battery.cpp" />
     <ClCompile Include="CircleComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CreateStage.cpp" />
@@ -346,7 +346,7 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Brock.h" />
-    <ClInclude Include="Buttery.h" />
+    <ClInclude Include="Battery.h" />
     <ClInclude Include="CircleComponent.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Component.h" />
