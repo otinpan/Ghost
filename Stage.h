@@ -14,6 +14,8 @@ public:
 
 	int GetVerticalSize() { return mVerticalSize; }
 	int GetSideSize() { return mSideSize; }
+	float GetLeft() { return mLeft; }
+	float GetUp() { return mUp; }
 	float GetHeight() { return mHeight; }
 	float GetWidth() { return mWidth; }
 	float GetRectHeight() { return mRectHeight; }

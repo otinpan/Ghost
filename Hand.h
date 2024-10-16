@@ -17,11 +17,16 @@ public:
 	void SetIsGrap(bool isGrap) { mIsGrap = isGrap; }
 	bool GetIsExpand() { return mIsExpand; }
 	void SetIsExpand(bool isExpand) { mIsExpand = isExpand; }
+	bool GetIsChoose() { return mIsChoose; }
+	void SetIsChoose(bool isChoose) { mIsChoose = isChoose; }
+
+	class StageObject* & GetChoosing() { return mChoosing; }
 
 private:
 	class CircleComponent* cc;
 	class InputComponent_Keyboard* ic;
 	class StageObject* mGrapping;
+	class StageObject* mChoosing;
 
 	float StandardSpeed;
 
@@ -31,14 +36,15 @@ private:
 	InputGroup inputLeft;
 	InputGroup inputGrap;
 	InputGroup inputBack;
-	InputGroup inputClockwise;
-	InputGroup inputCounterClockwise;
-	InputGroup inputDecision;
+	InputGroup inputR;
+	InputGroup inputL;
+	InputGroup inputChoose;
 
 	std::vector<int> dx;
 	std::vector<int> dy;
 
 	bool mIsGrap;
 	bool mIsExpand;
+	bool mIsChoose;
 };
 

@@ -3,6 +3,7 @@
 #include"StageObject.h"
 #include"Stage.h"
 #include"Brock.h"
+#include"StageMenu.h"
 
 CreateStage::CreateStage()
 	:mUpdatingActors(false)
@@ -30,7 +31,7 @@ void CreateStage::update(Parent* parent) {
 		ProcessInput();
 		UpdateGame();
 		draw();
-		Print << mStageObjects.size();
+		Print << mHand->GetChoosing();
 
 		//Print << mActors.size();
 		//Print << mHand->GetIsExpand();
@@ -75,12 +76,14 @@ void CreateStage::UpdateGame(){
 	}
 
 	mStage->Update_CreateStage(deltaTime);
+	mStageMenu->Update_CreateStage(deltaTime);
 }
 
 
 
 void CreateStage::draw() {
 	mStage->Draw_CreateStage();
+	mStageMenu->Draw_CreateStage();
 	for (auto square : mSquares) {
 		square->Draw();
 	}
@@ -95,10 +98,10 @@ void CreateStage::draw() {
 void CreateStage::LoadData() {
 	mHand = new Hand();
 	mHand->InitializeActor_CreateStage(this);
-	//mStageObject = new StageObject(Vec2({0.0f,0.0f}),0.1f,0.1f);
-	//mStageObject->InitializeActor_CreateStage(this);
 	mStage = new Stage(1.7f, 1.6f);
 	mStage->Initialize_CreateStage(this);
+	mStageMenu = new StageMenu();
+	mStageMenu->Initialize_CreateStage(this);
 	mBrock = new Brock(Vec2({ 0.0f,0.0f }), mStage->GetRectWidth()
 		, mStage->GetRectHeight());
 	mBrock->InitializeStageObject_CreateStage(this);

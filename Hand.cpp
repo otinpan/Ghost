@@ -14,7 +14,9 @@ Hand::Hand()
 	,cc(nullptr)
 	,mIsGrap(false)
 	,mIsExpand(false)
+	,mIsChoose(false)
 	,mGrapping(nullptr)
+	,mChoosing(nullptr)
 {
 
 }
@@ -39,9 +41,9 @@ void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 	inputLeft = KeyA;
 	inputGrap = KeyEnter;
 	inputBack = KeyL;
-	inputClockwise = KeyRight;
-	inputCounterClockwise = KeyLeft;
-	inputDecision = KeySpace;
+	inputR = KeyRight;
+	inputL = KeyLeft;
+	inputChoose = KeySpace;
 
 	ic = new InputComponent_Keyboard(this);
 	ic->SetUpKey(inputUp);
@@ -72,6 +74,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 			    stageObject->GetAttribute() != StageObject::Attribute::Wall) {
 				//stageの中にある場合拡大可能
 				if (stageObject->GetIsInStage()) {
+					//Brockは拡大可能
 					if (stageObject->GetAttribute() == StageObject::Attribute::Brock) {
 						for (int i = 0;
 							i < stageObject->GetCircleComponents().size();
@@ -99,8 +102,20 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 						return;
 					}
 				}
+				//Choose
+				if (inputChoose.down() && stageObject->GetIsInStage()) {
+					mIsChoose = true;
+					mChoosing = stageObject;
+					return;
+				}
 			}
 			
+		}
+	}
+	if (mIsChoose) {
+		if (inputChoose.down()) {
+			mChoosing = 0;
+			mIsChoose = false;
 		}
 	}
 	if (mIsExpand) {

@@ -71,5 +71,6 @@ private:
 	class StageObject* mStageObject;
 	std::vector<class StageObject*> mStageObjects;
 	class Stage* mStage;
+	class StageMenu* mStageMenu;
 	class Brock* mBrock;
 };
