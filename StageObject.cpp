@@ -4,15 +4,18 @@
 #include"CreateStage.h"
 #include"Hand.h"
 #include"Stage.h"
+#include"math.h"
 
 StageObject::StageObject(Vec2 pos, float width, float height)
 	:sqc(nullptr)
-	,mIsGripen(false)
-	,mCenter(pos)
-	,mWidth(width)
-	,mHeight(height)
-	,mIteration({-1,-1})
-	,mAttribute(Attribute::None)
+	, mIsGripen(false)
+	, mCenter(pos)
+	, mWidth(width)
+	, mHeight(height)
+	, mIteration({ -1,-1 })
+	, mAttribute(Attribute::None)
+	, mClockwise(0)
+	, mPatrolRange(1)
 {
 	SetPosition(pos);
 }
@@ -33,6 +36,26 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 	GetCreateStage()->AddStageObject(this);
 	sqc = new SquareComponent(this);
 	sqc->Initialize_CreateStage(mCenter,mWidth,mHeight);
+	switch (mAttribute) {
+	case Attribute::Wall:
+		sqc->SetColor(ColorF(0, 0, 0));
+		break;
+	case Attribute::Brock:
+		sqc->SetColor(ColorF(0, 0, 0));
+		break;
+	case Attribute::Door:
+		sqc->SetColor(ColorF(0, 0, 0));
+		break;
+	case Attribute::Patrol:
+		sqc->SetColor(ColorF(0, (float)102/255, 0));
+		break;
+	case Attribute::Key:
+		sqc->SetColor(ColorF((float)204, (float)204 / 255, 0));
+		break;
+	case Attribute::Battery:
+		sqc->SetColor(ColorF(0, 1, 0));
+		break;
+	}
 
 	cc.resize(4);
 	for (int i = 0; i < 4; i++) {
@@ -77,6 +100,47 @@ void StageObject::UpdateStageObject_CreateStage(float deltaTime) {
 void StageObject::ActorInput(std::vector<Input> keyState) {
 
 }
+
+
+void StageObject::RotateClockwise(bool isClockwise) {
+	if (isClockwise) {
+		mClockwise++;
+	}
+	else {
+		mClockwise--;
+	}
+
+	if (mClockwise < 0)mClockwise += 4;
+	mClockwise %= 4;
+	AdjustPatrolRange();
+}
+
+void StageObject::AddPatrolRange(bool isPlus) {
+	if (isPlus)mPatrolRange++;
+	else mPatrolRange--;
+	mPatrolRange = std::max(1, mPatrolRange);
+	AdjustPatrolRange();
+}
+
+void StageObject::AdjustPatrolRange() {
+	switch (mClockwise) {
+	case 0:
+		mPatrolRange = std::min(mPatrolRange,mIteration.first);
+		break;
+	case 1:
+		mPatrolRange = std::min(mPatrolRange,
+			GetCreateStage()->GetStage()->GetSideSize()- mIteration.second);
+		break;
+	case 2:
+		mPatrolRange = std::min(mPatrolRange,
+			GetCreateStage()->GetStage()->GetVerticalSize() - mIteration.first+1);
+		break;
+	case 3:
+		mPatrolRange = std::min(mPatrolRange, mIteration.second+1);
+		break;
+	}
+}
+
 
 
 Vec2 StageObject::GetLeftTop() {

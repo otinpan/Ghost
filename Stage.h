@@ -26,7 +26,7 @@ public:
 	void SetExpandFulcrumIter(std::pair<int, int> iter) { mExpandFulcrumIter = iter; }
 	StageObject::Attribute GetExpandAttribute() { return mExpandAttribute; }
 	void SetExpandAttribute(StageObject::Attribute at) { mExpandAttribute = at; }
-
+	void SetDeleteFulcrumPos(Vec2 pos) { mDeleteFulcrumPos = pos; }
 
 	RectF GetStageRect() { return mStageRect; }
 	std::vector<std::vector<class StageObject*>>& GetStageObjects() { return mStageObjects; }
@@ -36,6 +36,7 @@ public:
 	void SetNewStageObject(int i, int j,StageObject::Attribute attribute);
 	void RemakeStageObjects();
 	void DeleteStageObject(int i,int j);
+	void DeleteStageObjects();
 
 	int GetRevHandToFul(int i, int j); //mHandがmFulcrumに対してどこにあるか
 
@@ -58,10 +59,14 @@ private:
 	Vec2 mExpandRectCenter;
 	float mExpandRectWidth;
 	float mExpandRectHeight;
+	Vec2 mDeleteFulcrumPos;
+	Vec2 mDeleteRectCenter;
+	float mDeleteRectWidth;
+	float mDeleteRectHeight;
 
 	std::vector<std::vector<class StageObject* >> mStageObjects;
 	std::vector<std::vector<RectF>> mRects;
 	RectF mStageRect;
+	RectF mDeleteRect;
 	
-
 };

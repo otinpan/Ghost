@@ -4,7 +4,13 @@
 #include"Brock.h"
 #include"Wall.h"
 #include"Hand.h"
+#include"Door.h"
+#include"Patrol.h"
+#include"Key.h"
+#include"Battery.h"
+
 #include<cmath>
+
 
 Stage::Stage(float width, float height)
 	:mVerticalSize(15)
@@ -18,6 +24,9 @@ Stage::Stage(float width, float height)
 	,mExpandRectCenter({0,0})
 	,mExpandRectWidth(0.0f)
 	,mExpandRectHeight(0.0f)
+	,mDeleteRectCenter({0,0})
+	,mDeleteRectWidth(0.0f)
+	,mDeleteRectHeight(0.0f)
 {
 	mRectWidth = mWidth / mSideSize;
 	mRectHeight = mHeight / mVerticalSize;
@@ -60,9 +69,25 @@ void Stage::SetNewStageObject(int i, int j, StageObject::Attribute attribute) {
 		mStageObjects[i][j] = new Brock(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
 		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
 	}
+	else if (attribute == StageObject::Attribute::Door) {
+		mStageObjects[i][j]=new Door(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
+		(float)mUp - i * mRectHeight + mRectHeight / 2 }),mRectWidth, mRectHeight);
+	}
+	else if (attribute == StageObject::Attribute::Patrol) {
+		mStageObjects[i][j]=new Patrol(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
+		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+	}
+	else if (attribute == StageObject::Attribute::Key) {
+		mStageObjects[i][j] = new Key(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
+		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+	}
+	else if (attribute == StageObject::Attribute::Battery) {
+		mStageObjects[i][j] = new Battery(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
+		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+	}
 	mStageObjects[i][j]->SetIsInStage(true);
 	mStageObjects[i][j]->SetIteration(std::pair{ i,j });
-	mStageObjects[i][j]->InitializeActor_CreateStage(mCreateStage);
+	mStageObjects[i][j]->InitializeStageObject_CreateStage(mCreateStage);
 }
 
 void Stage::RemakeStageObjects() {
@@ -82,9 +107,18 @@ void Stage::DeleteStageObject(int i,int j) {
 	return;
 }
 
+void Stage::DeleteStageObjects() {
+	for (int i = 0; i < mVerticalSize; i++) {
+		for (int j = 0; j < mSideSize; j++) {
+			if (mRects[i][j].intersects(mDeleteRect)) {
+				DeleteStageObject(i, j);
+			}
+		}
+	}
+}
+
 void Stage::Update_CreateStage(float delteTime) {
 	if (mCreateStage->GetHand()->GetIsExpand()) {
-
 		if (GetRevHandToFul(mExpandFulcrumIter.first, mExpandFulcrumIter.second) == 1) {
 			mExpandFulcrumPos =
 				mStageObjects[mExpandFulcrumIter.first][mExpandFulcrumIter.second]->GetRightBottom();
@@ -106,6 +140,14 @@ void Stage::Update_CreateStage(float delteTime) {
 		mExpandRectWidth = abs(mExpandFulcrumPos.x - mCreateStage->GetHand()->GetPosition().x);
 		mExpandRectHeight = abs(mExpandFulcrumPos.y - mCreateStage->GetHand()->GetPosition().y);
 		mExpandRect = RectF{ Arg::center(mExpandRectCenter),mExpandRectWidth,mExpandRectHeight };
+	}
+	if (mCreateStage->GetHand()->GetIsDelete()) {
+		mDeleteRectCenter = Vec2{
+			(mDeleteFulcrumPos.x + mCreateStage->GetHand()->GetPosition().x) / 2
+		,(mDeleteFulcrumPos.y + mCreateStage->GetHand()->GetPosition().y) / 2 };
+		mDeleteRectWidth = abs(mDeleteFulcrumPos.x - mCreateStage->GetHand()->GetPosition().x);
+		mDeleteRectHeight = abs(mDeleteFulcrumPos.y - mCreateStage->GetHand()->GetPosition().y);
+		mDeleteRect = RectF{ Arg::center(mDeleteRectCenter),mDeleteRectWidth,mDeleteRectHeight };
 	}
 }
 
@@ -134,7 +176,7 @@ int Stage::GetRevHandToFul(int i, int j) {
 
 void Stage::Draw_CreateStage() {
 	DrawRectFrame(Vec2{ mLeft + mWidth / 2,mUp - mHeight / 2 },
-		mWidth, mHeight, 0.005, ColorF(0, 0, 0));
+		mWidth, mHeight, 0.003, ColorF(0, 0, 0));
 
 	for (int i = 0; i < mVerticalSize; i++) {
 		DrawSquareDotLine({ mLeft,mUp - i * mRectHeight },
@@ -145,8 +187,69 @@ void Stage::Draw_CreateStage() {
 			{ mLeft + j * mRectWidth,mUp - mHeight }, 0.005, ColorF(0, 0, 0));
 	};
 
-	if (mCreateStage->GetHand()->GetIsExpand()){
+
+	/*if (mCreateStage->GetHand()->GetIsExpand()) {
 		DrawRect(mExpandRectCenter, mExpandRectWidth, mExpandRectHeight, ColorF(0, 1.0, 1.0));
 	}
+	if (mCreateStage->GetHand()->GetIsDelete()) {
+		DrawRect(mDeleteRectCenter, mDeleteRectWidth, mDeleteRectHeight, ColorF(1, 0, 0));
+	}*/
+
+	for (int i = 0; i < mVerticalSize; i++) {
+		for (int j = 0; j < mSideSize; j++) {
+			//Expand
+			if (mCreateStage->GetHand()->GetIsExpand()) {
+				if (mExpandRect.contains(mRects[i][j])) {
+					DrawRectFrame(Vec2{ mLeft + mRectWidth * j + mRectWidth / 2,
+						mUp - mRectHeight * i + mRectHeight / 2 },
+						mRectWidth, mRectHeight,0.003, ColorF(0, 1, 1));
+				}
+			}
+			//Delete
+			if (mCreateStage->GetHand()->GetIsDelete()) {
+				if (mDeleteRect.intersects(mRects[i][j])) {
+					DrawRectFrame(Vec2{ mLeft + mRectWidth * j + mRectWidth / 2,
+						mUp - mRectHeight * i + mRectHeight / 2 },
+						mRectWidth, mRectHeight, 0.003, ColorF(1,0,0));
+				}
+			}
+			//Patrol
+			if (mStageObjects[i][j] != 0 &&
+				mStageObjects[i][j]->GetAttribute() == StageObject::Attribute::Patrol) {
+				switch (mStageObjects[i][j]->GetClockwise()) {
+				case 0:
+					for (int di = 0; di < mStageObjects[i][j]->GetPatrolRange(); di++) {
+						DrawRectFrame(Vec2{ mLeft + mRectWidth * j + mRectWidth / 2,
+						mUp - mRectHeight * (i-di) + mRectHeight / 2},
+						mRectWidth, mRectHeight, 0.003, ColorF(0, (float)102/255, 0));
+					}
+					break;
+				case 1:
+					for (int dj = 0; dj < mStageObjects[i][j]->GetPatrolRange(); dj++) {
+						DrawRectFrame(Vec2{ mLeft + mRectWidth * (j+dj) + mRectWidth / 2,
+						mUp - mRectHeight * i + mRectHeight / 2 },
+						mRectWidth, mRectHeight, 0.003, ColorF(0, (float)102 / 255, 0));
+					}
+					break;
+				case 2:
+					for (int di = 0; di < mStageObjects[i][j]->GetPatrolRange(); di++) {
+						DrawRectFrame(Vec2{ mLeft + mRectWidth * j + mRectWidth / 2,
+						mUp - mRectHeight * (i + di) + mRectHeight / 2 },
+						mRectWidth, mRectHeight, 0.003, ColorF(0, (float)102 / 255, 0));
+					}
+					break;
+				case 3:
+					for (int dj = 0; dj < mStageObjects[i][j]->GetPatrolRange(); dj++) {
+						DrawRectFrame(Vec2{ mLeft + mRectWidth * (j - dj) + mRectWidth / 2,
+						mUp - mRectHeight * i + mRectHeight / 2 },
+				    	mRectWidth, mRectHeight, 0.003, ColorF(0, (float)102 / 255, 0));
+					}
+					break;
+
+				}
+			}
+		}
+	}
+
 }
 

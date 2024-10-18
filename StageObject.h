@@ -34,8 +34,15 @@ public:
 	void SetIsInStage(bool isInStage) { mIsInStage = isInStage; }
 	std::pair<int, int> GetIteration() { return mIteration; }
 	void SetIteration(std::pair<int, int> iter) { mIteration = iter; }
-	int GetRotation() { return mClockwise; }
-	void SetRotation(int rotation) { mClockwise = rotation; }
+	int GetClockwise() { return mClockwise; }
+	void SetClockwise(int rotation) { mClockwise = rotation; }
+	float GetWidth() { return mWidth; }
+	float GetHeight() { return mHeight; }
+	int PatrolRange() { return mPatrolRange; }
+	void SetPatrolRange(int patrolRange) { mPatrolRange = patrolRange; }
+	int GetPatrolRange() { return mPatrolRange; }
+	void AddPatrolRange(bool isPlus);
+	void AdjustPatrolRange();
 
 	Vec2 GetLeftTop();
 	Vec2 GetRightTop();
@@ -43,6 +50,7 @@ public:
 	Vec2 GetLeftBottom();
 	Vec2 GetExpandFulcrum(int i);
 
+	void RotateClockwise(bool isClockwise);
 
 
 private:
@@ -63,5 +71,7 @@ private:
 	float mHeight;
 	std::pair<int, int> mIteration;//stageにある場合stageのどこにあるかを保存
 	int mClockwise;
+
+	int mPatrolRange;
 	
 };

@@ -19,6 +19,8 @@ public:
 	void SetIsExpand(bool isExpand) { mIsExpand = isExpand; }
 	bool GetIsChoose() { return mIsChoose; }
 	void SetIsChoose(bool isChoose) { mIsChoose = isChoose; }
+	bool GetIsDelete() { return mIsDelete; }
+	void SetIsDelete(bool isDelete) { mIsDelete = isDelete; }
 
 	class StageObject* & GetChoosing() { return mChoosing; }
 
@@ -39,6 +41,9 @@ private:
 	InputGroup inputR;
 	InputGroup inputL;
 	InputGroup inputChoose;
+	InputGroup inputDelete;
+	InputGroup inputPatrolPlus;
+	InputGroup inputPatrolMinus;
 
 	std::vector<int> dx;
 	std::vector<int> dy;
@@ -46,5 +51,6 @@ private:
 	bool mIsGrap;
 	bool mIsExpand;
 	bool mIsChoose;
+	bool mIsDelete;
 };
 

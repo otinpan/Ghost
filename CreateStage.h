@@ -73,4 +73,6 @@ private:
 	class Stage* mStage;
 	class StageMenu* mStageMenu;
 	class Brock* mBrock;
+	class Door* mDoor;
+	class Patrol* mPatrol;
 };

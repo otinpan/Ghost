@@ -7,6 +7,7 @@
 #include<Siv3D.hpp>
 #include"Brock.h"
 #include"Wall.h"
+#include"Door.h"
 
 Hand::Hand()
 	:StandardSpeed(0.3f)
@@ -15,6 +16,7 @@ Hand::Hand()
 	,mIsGrap(false)
 	,mIsExpand(false)
 	,mIsChoose(false)
+	,mIsDelete(false)
 	,mGrapping(nullptr)
 	,mChoosing(nullptr)
 {
@@ -28,7 +30,7 @@ Hand::~Hand()
 
 void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 	Initialize_CreateStage(createstage);
-	SetPosition({ 0.0f,0.0f });
+	SetPosition({ 0.0f,-0.7f });
 
 	cc = new CircleComponent(this);
 	cc->Initialize_CreateStage();
@@ -44,6 +46,9 @@ void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 	inputR = KeyRight;
 	inputL = KeyLeft;
 	inputChoose = KeySpace;
+	inputDelete = KeyDelete;
+	inputPatrolPlus = KeyPeriod;
+	inputPatrolMinus = KeyComma;
 
 	ic = new InputComponent_Keyboard(this);
 	ic->SetUpKey(inputUp);
@@ -67,13 +72,13 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 	SetPosition(nowPos);
 	cc->SetCenter(nowPos);
 
-	if (!mIsGrap&&!mIsExpand) {
+	if (!mIsGrap&&!mIsExpand&&!mIsDelete) {
 		for (auto &stageObject : GetCreateStage()->GetStageObjects()) {
 			if (stageObject->GetSquareComponent()->GetRect().
 				contains(cc->GetCircle()) && 
 			    stageObject->GetAttribute() != StageObject::Attribute::Wall) {
 				//stageの中にある場合拡大可能
-				if (stageObject->GetIsInStage()) {
+				if (stageObject->GetIsInStage()&&!mIsDelete) {
 					//Brockは拡大可能
 					if (stageObject->GetAttribute() == StageObject::Attribute::Brock) {
 						for (int i = 0;
@@ -82,6 +87,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 							if (stageObject->GetCircleComponents()[i]
 								->GetCircle().contains(cc->GetCircle())&&
 								inputGrap.pressed()) {
+								mIsChoose = false;
 								mIsExpand = true;
 								//支点となるItertionをstageが保存
 								GetCreateStage()->GetStage()->
@@ -93,15 +99,18 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 							}
 						}
 					}
+					
 				}
-				if (!mIsExpand) {
+				if (!mIsExpand&&!mIsDelete) {
 					if (inputGrap.pressed()) {
 						stageObject->SetIsGripen(true);
 						mIsGrap = true;
+						mIsChoose = false;
 						mGrapping = stageObject;
 						return;
 					}
 				}
+				
 				//Choose
 				if (inputChoose.down() && stageObject->GetIsInStage()) {
 					mIsChoose = true;
@@ -112,11 +121,29 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 			
 		}
 	}
+	if (!mIsGrap && !mIsExpand&&!mIsDelete) {
+		if (inputDelete.pressed()) {
+			mIsDelete = true;
+			mIsChoose = false;
+			GetCreateStage()->GetStage()->SetDeleteFulcrumPos(GetPosition());
+			return;
+		}
+	}
 	if (mIsChoose) {
+		if (mChoosing->GetAttribute() == StageObject::Attribute::Door||
+			mChoosing->GetAttribute()==StageObject::Attribute::Patrol) {
+			if (inputR.down())mChoosing->RotateClockwise(true);
+			if (inputL.down())mChoosing->RotateClockwise(false);
+		}
+		if (mChoosing->GetAttribute() == StageObject::Attribute::Patrol) {
+			if (inputPatrolPlus.down())mChoosing->AddPatrolRange(true);
+			if (inputPatrolMinus.down())mChoosing->AddPatrolRange(false);
+		}
 		if (inputChoose.down()) {
 			mChoosing = 0;
 			mIsChoose = false;
 		}
+		Print << mChoosing->GetPatrolRange();
 	}
 	if (mIsExpand) {
 		//拡大の解除
@@ -125,6 +152,14 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 			mIsExpand = false;
 		}
 	}
+
+	if (mIsDelete) {
+		if (!inputDelete.pressed()) {
+			GetCreateStage()->GetStage()->DeleteStageObjects();
+			mIsDelete = false;
+		}
+	}
+	
 
 	if(mIsGrap){
 		if (!inputGrap.pressed()) {

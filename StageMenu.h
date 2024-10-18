@@ -16,6 +16,8 @@ private:
 
 	float mMenuLeft;
 	float mMenuUp;
+	float mMenuDown;
+	float mMenuRight;
 	float mMenuWidth;
 	float mMenuHeight;
 	RectF mMenuRect;

@@ -4,6 +4,8 @@
 #include"Stage.h"
 #include"Brock.h"
 #include"StageMenu.h"
+#include"Door.h"
+#include"Patrol.h"
 
 CreateStage::CreateStage()
 	:mUpdatingActors(false)
@@ -31,8 +33,7 @@ void CreateStage::update(Parent* parent) {
 		ProcessInput();
 		UpdateGame();
 		draw();
-		Print << mHand->GetChoosing();
-
+		Print << mHand->GetIsChoose();
 		//Print << mActors.size();
 		//Print << mHand->GetIsExpand();
 	}
@@ -102,9 +103,15 @@ void CreateStage::LoadData() {
 	mStage->Initialize_CreateStage(this);
 	mStageMenu = new StageMenu();
 	mStageMenu->Initialize_CreateStage(this);
-	mBrock = new Brock(Vec2({ 0.0f,0.0f }), mStage->GetRectWidth()
+	mBrock = new Brock(Vec2({ 0.0f,-0.7f }), mStage->GetRectWidth()
 		, mStage->GetRectHeight());
 	mBrock->InitializeStageObject_CreateStage(this);
+	mDoor = new Door(Vec2{ 0.4f,-0.7f }, mStage->GetRectWidth()
+		,mStage->GetRectHeight());
+	mDoor->InitializeStageObject_CreateStage(this);
+	mPatrol = new Patrol(Vec2{ 0.2f,-0.7f }, mStage->GetRectWidth()
+		, mStage->GetRectHeight());
+	mPatrol->InitializeStageObject_CreateStage(this);
 }
 
 void CreateStage::UnloadData() {
