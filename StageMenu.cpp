@@ -24,6 +24,8 @@ void StageMenu::Initialize_CreateStage(CreateStage* createStage) {
 	mMenuPos = Vec2{ mMenuLeft + mMenuWidth / 2,mMenuUp - mMenuHeight / 2 };
 
 	mMenuRect = RectF{ mMenuLeft,mMenuUp,mMenuWidth,mMenuHeight };
+
+	
 }
 
 void StageMenu::Update_CreateStage(float deltaTime) {

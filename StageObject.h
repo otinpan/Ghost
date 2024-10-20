@@ -14,6 +14,7 @@ public:
 		Patrol,
 		Battery,
 		Key,
+		TreasureChest,
 	};
 
 	void InitializeActor_CreateStage(class CreateStage* createstage)override;
@@ -51,6 +52,12 @@ public:
 	Vec2 GetExpandFulcrum(int i);
 
 	void RotateClockwise(bool isClockwise);
+
+	//Menu
+	virtual void UpdateStageMenu_CreateStage(float deltaTime);
+	virtual void DrawStageMenu_CreateStage();
+	virtual void InitializeStageMenu_CreateStage();
+	virtual void ShutdownStageMenu_CreateStage();
 
 
 private:

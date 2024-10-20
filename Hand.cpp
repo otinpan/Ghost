@@ -72,22 +72,22 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 	SetPosition(nowPos);
 	cc->SetCenter(nowPos);
 
-	if (!mIsGrap&&!mIsExpand&&!mIsDelete) {
-		for (auto &stageObject : GetCreateStage()->GetStageObjects()) {
+	if (!mIsGrap && !mIsExpand && !mIsDelete) {
+		for (auto& stageObject : GetCreateStage()->GetStageObjects()) {
 			if (stageObject->GetSquareComponent()->GetRect().
-				contains(cc->GetCircle()) && 
-			    stageObject->GetAttribute() != StageObject::Attribute::Wall) {
+				contains(cc->GetCircle()) &&
+				stageObject->GetAttribute() != StageObject::Attribute::Wall) {
 				//stageの中にある場合拡大可能
-				if (stageObject->GetIsInStage()&&!mIsDelete) {
+				if (stageObject->GetIsInStage() && !mIsDelete) {
 					//Brockは拡大可能
 					if (stageObject->GetAttribute() == StageObject::Attribute::Brock) {
 						for (int i = 0;
 							i < stageObject->GetCircleComponents().size();
 							i++) {
 							if (stageObject->GetCircleComponents()[i]
-								->GetCircle().contains(cc->GetCircle())&&
+								->GetCircle().contains(cc->GetCircle()) &&
 								inputGrap.pressed()) {
-								mIsChoose = false;
+								DeleteChoosing();//Chooseを消す
 								mIsExpand = true;
 								//支点となるItertionをstageが保存
 								GetCreateStage()->GetStage()->
@@ -99,9 +99,9 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 							}
 						}
 					}
-					
+
 				}
-				if (!mIsExpand&&!mIsDelete) {
+				if (!mIsExpand && !mIsDelete) {
 					if (inputGrap.pressed()) {
 						stageObject->SetIsGripen(true);
 						mIsGrap = true;
@@ -110,18 +110,17 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 						return;
 					}
 				}
-				
+
 				//Choose
 				if (inputChoose.down() && stageObject->GetIsInStage()) {
-					mIsChoose = true;
-					mChoosing = stageObject;
+					InitChoosing(stageObject);
 					return;
 				}
 			}
-			
+
 		}
 	}
-	if (!mIsGrap && !mIsExpand&&!mIsDelete) {
+	if (!mIsGrap && !mIsExpand && !mIsDelete) {
 		if (inputDelete.pressed()) {
 			mIsDelete = true;
 			mIsChoose = false;
@@ -130,8 +129,8 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 		}
 	}
 	if (mIsChoose) {
-		if (mChoosing->GetAttribute() == StageObject::Attribute::Door||
-			mChoosing->GetAttribute()==StageObject::Attribute::Patrol) {
+		if (mChoosing->GetAttribute() == StageObject::Attribute::Door ||
+			mChoosing->GetAttribute() == StageObject::Attribute::Patrol) {
 			if (inputR.down())mChoosing->RotateClockwise(true);
 			if (inputL.down())mChoosing->RotateClockwise(false);
 		}
@@ -140,10 +139,8 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 			if (inputPatrolMinus.down())mChoosing->AddPatrolRange(false);
 		}
 		if (inputChoose.down()) {
-			mChoosing = 0;
-			mIsChoose = false;
+			DeleteChoosing();
 		}
-		Print << mChoosing->GetPatrolRange();
 	}
 	if (mIsExpand) {
 		//拡大の解除
@@ -159,18 +156,18 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 			mIsDelete = false;
 		}
 	}
-	
 
-	if(mIsGrap){
+
+	if (mIsGrap) {
 		if (!inputGrap.pressed()) {
 			mGrapping->SetIsGripen(false);
 			//StageのmRectsとの当たり判定
 			for (int i = 0; i < GetCreateStage()->GetStage()->GetVerticalSize(); i++) {
-				for (int j = 0; j < GetCreateStage()->GetStage()->GetSideSize();j++) {
+				for (int j = 0; j < GetCreateStage()->GetStage()->GetSideSize(); j++) {
 					if (GetCreateStage()->GetStage()->GetRects()[i][j]
-						.contains(cc->GetCircle())&&
-						GetCreateStage()->GetStage()->GetStageObjects()[i][j]==0) {
-						GetCreateStage()->GetStage()->SetNewStageObject(i, j,mGrapping->GetAttribute());
+						.contains(cc->GetCircle()) &&
+						GetCreateStage()->GetStage()->GetStageObjects()[i][j] == 0) {
+						GetCreateStage()->GetStage()->SetNewStageObject(i, j, mGrapping->GetAttribute());
 					}
 				}
 			}
@@ -180,7 +177,23 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 	}
 }
 
+void Hand::InitChoosing(class StageObject* stageObject) {
+	if (mChoosing != 0) {
+		mChoosing->ShutdownStageMenu_CreateStage();
+	}
+	mChoosing = stageObject;
+	mChoosing->InitializeStageMenu_CreateStage();
+	mIsChoose = true;
+}
+
+void Hand::DeleteChoosing() {
+	if (mChoosing) {
+		mChoosing->ShutdownStageMenu_CreateStage();
+		mChoosing = 0;
+	}
+	mIsChoose = false;
+}
+
 void Hand::ActorInput(std::vector<Input> keyState) {
 
 }
-

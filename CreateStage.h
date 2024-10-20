@@ -36,6 +36,7 @@ public:
 	class Hand* &GetHand() { return mHand; }
 	std::vector<class StageObject*>& GetStageObjects() { return mStageObjects; }
 	class Stage* &GetStage() { return mStage; }
+	class StageMenu*& GetStageMenu() { return mStageMenu; }
 
 	//Sequence
 	void moveTo(Parent* parent, Parent::SeqID id);

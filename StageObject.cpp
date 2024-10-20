@@ -165,3 +165,19 @@ Vec2 StageObject::GetExpandFulcrum(int i) {
 	else if (i == 2)return GetLeftTop();
 	else return GetRightTop();
 }
+
+void StageObject::UpdateStageMenu_CreateStage(float deltaTime) {
+
+}
+
+void StageObject::DrawStageMenu_CreateStage() {
+	
+}
+
+void StageObject::InitializeStageMenu_CreateStage() {
+
+}
+
+void StageObject::ShutdownStageMenu_CreateStage() {
+
+}
