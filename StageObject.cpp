@@ -24,7 +24,12 @@ StageObject::~StageObject() {
 	if (GetCreateStage()) {
 		GetCreateStage()->RemoveStageObject(this);
 		if (mIsInStage) {
-			GetCreateStage()->GetStage()->SetStageObject(GetIteration().first, GetIteration().second,0);
+			if (mAttribute != Attribute::Candle) {
+				GetCreateStage()->GetStage()->SetStageObject(GetIteration().first, GetIteration().second, 0);
+			}
+			else {
+
+			}
 		}
 	}
 
@@ -34,6 +39,7 @@ StageObject::~StageObject() {
 void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 	Initialize_CreateStage(createstage);
 	GetCreateStage()->AddStageObject(this);
+
 	sqc = new SquareComponent(this);
 	sqc->Initialize_CreateStage(mCenter,mWidth,mHeight);
 	switch (mAttribute) {
@@ -55,6 +61,8 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 	case Attribute::Battery:
 		sqc->SetColor(ColorF(0, 1, 0));
 		break;
+	case Attribute::Candle:
+		sqc->SetColor(ColorF(0, 0, 0));
 	}
 
 	cc.resize(4);
@@ -113,6 +121,13 @@ void StageObject::RotateClockwise(bool isClockwise) {
 	if (mClockwise < 0)mClockwise += 4;
 	mClockwise %= 4;
 	AdjustPatrolRange();
+}
+
+void StageObject::SpreadLightRad(bool isPlus) {
+	if (isPlus)mLightRad += GetCreateStage()->GetStage()->GetHeight() / 100.0f;
+	else mLightRad -= GetCreateStage()->GetStage()->GetHeight() / 100.0f;
+	mLightRad = std::min(mLightRad, mMaxLightRad);
+	mLightRad = std::max(mLightRad, mMinLightRad);
 }
 
 void StageObject::AddPatrolRange(bool isPlus) {

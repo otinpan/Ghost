@@ -41,7 +41,7 @@ void CircleComponent::Draw() {
 }
 
 const Circle CircleComponent::GetCircle() {
-	return Circle{ mCenter,mRadius };
+return Circle{ mCenter,mRadius };
 }
 
 

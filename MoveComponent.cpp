@@ -17,7 +17,11 @@ void MoveComponent::Update(float deltaTime) {
 		rot += mAngularSpeed * deltaTime;
 		mOwner->SetRotation(rot);
 	}
+
 	Vec2 pos=mOwner->GetPosition();
+	/*if (Cursor::PosF() != Cursor::PreviousPosF()) {
+		pos = ConvertToWorld(Cursor::PosF());
+	}*/
 	if (mXSpeed != 0.0f) {
 		pos.x += mXSpeed * deltaTime;
 	}

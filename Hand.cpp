@@ -74,6 +74,24 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 
 	if (!mIsGrap && !mIsExpand && !mIsDelete) {
 		for (auto& stageObject : GetCreateStage()->GetStageObjects()) {
+			//Candle
+			if (stageObject->GetAttribute() == StageObject::Attribute::Candle) {
+				//Grap
+				if (stageObject->GetSquareComponent()->GetRect().
+					contains(cc->GetCircle())) {
+					if (inputGrap.pressed()) {
+						stageObject->SetIsGripen(true);
+						mIsGrap = true;
+						DeleteChoosing();
+						mGrapping = stageObject;
+						return;
+					}
+					if (inputChoose.down()) {
+						InitChoosing(stageObject);
+						return;
+					}
+				}
+			}
 			if (stageObject->GetSquareComponent()->GetRect().
 				contains(cc->GetCircle()) &&
 				stageObject->GetAttribute() != StageObject::Attribute::Wall) {
@@ -101,11 +119,12 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 					}
 
 				}
+				//Grap
 				if (!mIsExpand && !mIsDelete) {
 					if (inputGrap.pressed()) {
 						stageObject->SetIsGripen(true);
 						mIsGrap = true;
-						mIsChoose = false;
+						DeleteChoosing();
 						mGrapping = stageObject;
 						return;
 					}
@@ -134,6 +153,10 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 			if (inputR.down())mChoosing->RotateClockwise(true);
 			if (inputL.down())mChoosing->RotateClockwise(false);
 		}
+		if (mChoosing->GetAttribute() == StageObject::Attribute::Candle) {
+			if (inputR.pressed())mChoosing->SpreadLightRad(true);
+			if (inputL.pressed())mChoosing->SpreadLightRad(false);
+		}
 		if (mChoosing->GetAttribute() == StageObject::Attribute::Patrol) {
 			if (inputPatrolPlus.down())mChoosing->AddPatrolRange(true);
 			if (inputPatrolMinus.down())mChoosing->AddPatrolRange(false);
@@ -161,6 +184,18 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 	if (mIsGrap) {
 		if (!inputGrap.pressed()) {
 			mGrapping->SetIsGripen(false);
+			//Candle
+			if (mGrapping->GetAttribute() == StageObject::Attribute::Candle) {
+				if (GetCreateStage()->GetStage()->GetStageRect().
+					contains(mGrapping->GetSquareComponent()->GetRect())) {
+					GetCreateStage()->GetStage()->SetNewCandle(mGrapping);
+				}
+				delete mGrapping;
+				mIsGrap = false;
+				return;
+				
+				
+			}
 			//StageのmRectsとの当たり判定
 			for (int i = 0; i < GetCreateStage()->GetStage()->GetVerticalSize(); i++) {
 				for (int j = 0; j < GetCreateStage()->GetStage()->GetSideSize(); j++) {
@@ -174,6 +209,10 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 			delete mGrapping;
 			mIsGrap = false;
 		}
+	}
+
+	if (Cursor::PosF() != Cursor::PreviousPosF()) {
+		SetPosition(ConvertToWorld(Cursor::PosF()));
 	}
 }
 
@@ -197,3 +236,4 @@ void Hand::DeleteChoosing() {
 void Hand::ActorInput(std::vector<Input> keyState) {
 
 }
+

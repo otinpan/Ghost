@@ -118,6 +118,7 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Brock.cpp" />
     <ClCompile Include="Battery.cpp" />
+    <ClCompile Include="Candle.cpp" />
     <ClCompile Include="CircleComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CreateStage.cpp" />
@@ -349,6 +350,7 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Brock.h" />
     <ClInclude Include="Battery.h" />
+    <ClInclude Include="Candle.h" />
     <ClInclude Include="CircleComponent.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Component.h" />

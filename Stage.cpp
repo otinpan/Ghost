@@ -8,6 +8,7 @@
 #include"Patrol.h"
 #include"Key.h"
 #include"Battery.h"
+#include"Candle.h"
 
 #include<cmath>
 
@@ -44,7 +45,8 @@ void Stage::Initialize_CreateStage(CreateStage* createStage) {
 		}
 	}
 
-	
+	mCandles.assign(20,0);
+
 
 	mRects.resize(mVerticalSize);
 	for (auto& row : mRects) {
@@ -90,6 +92,19 @@ void Stage::SetNewStageObject(int i, int j, StageObject::Attribute attribute) {
 	mStageObjects[i][j]->InitializeStageObject_CreateStage(mCreateStage);
 }
 
+bool Stage::SetNewCandle(class StageObject* candle) {
+	for (int i = 0; i < mCandles.size(); i++) {
+		if (mCandles[i] == 0) {
+			mCandles[i] =
+				new Candle(candle->GetPosition(), candle->GetWidth(), candle->GetHeight(), candle->GetRadius());
+			mCandles[i]->InitializeStageObject_CreateStage(mCreateStage);
+			mCandles[i]->SetIsInStage(true);
+			return true;
+		}
+	}
+	return false;
+}
+
 void Stage::RemakeStageObjects() {
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
@@ -108,6 +123,13 @@ void Stage::DeleteStageObject(int i,int j) {
 }
 
 void Stage::DeleteStageObjects() {
+	for (int i = 0; i < mCandles.size(); i++) {
+		if (mCandles[i] == 0)continue;
+		if (mCandles[i]->GetCircleComponent()->GetCircle().intersects(mDeleteRect)) {
+			delete mCandles[i];
+			mCandles[i] = 0;
+		}
+	}
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
 			if (mRects[i][j].intersects(mDeleteRect)) {

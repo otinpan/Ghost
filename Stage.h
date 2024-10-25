@@ -27,11 +27,14 @@ public:
 	StageObject::Attribute GetExpandAttribute() { return mExpandAttribute; }
 	void SetExpandAttribute(StageObject::Attribute at) { mExpandAttribute = at; }
 	void SetDeleteFulcrumPos(Vec2 pos) { mDeleteFulcrumPos = pos; }
+	bool SetNewCandle(class StageObject* candle);
+	
 
 	RectF GetStageRect() { return mStageRect; }
 	std::vector<std::vector<class StageObject*>>& GetStageObjects() { return mStageObjects; }
 	void SetStageObject(int i, int j, StageObject* stageObject) { mStageObjects[i][j] = stageObject; }
 	std::vector<std::vector<RectF>>& GetRects() { return mRects; }
+	std::vector<class Candle*>& GetCandle() { return mCandles; }
 
 	void SetNewStageObject(int i, int j,StageObject::Attribute attribute);
 	void RemakeStageObjects();
@@ -65,8 +68,10 @@ private:
 	float mDeleteRectHeight;
 
 	std::vector<std::vector<class StageObject* >> mStageObjects;
+	std::vector<class Candle*> mCandles;
 	std::vector<std::vector<RectF>> mRects;
 	RectF mStageRect;
 	RectF mDeleteRect;
+
 	
 };

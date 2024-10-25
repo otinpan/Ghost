@@ -27,6 +27,7 @@ public:
 	void InitChoosing(StageObject* stageObject);
 	void DeleteChoosing();
 
+
 private:
 	class CircleComponent* cc;
 	class InputComponent_Keyboard* ic;

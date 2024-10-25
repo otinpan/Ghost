@@ -6,6 +6,7 @@
 #include"StageMenu.h"
 #include"Door.h"
 #include"Patrol.h"
+#include"Candle.h"
 
 CreateStage::CreateStage()
 	:mUpdatingActors(false)
@@ -99,7 +100,7 @@ void CreateStage::draw() {
 void CreateStage::LoadData() {
 	mHand = new Hand();
 	mHand->InitializeActor_CreateStage(this);
-	mStage = new Stage(1.7f, 1.6f);
+	mStage = new Stage(1.6f, 1.5f);
 	mStage->Initialize_CreateStage(this);
 	mStageMenu = new StageMenu();
 	mStageMenu->Initialize_CreateStage(this);
@@ -112,6 +113,9 @@ void CreateStage::LoadData() {
 	mPatrol = new Patrol(Vec2{ 0.2f,-0.7f }, mStage->GetRectWidth()
 		, mStage->GetRectHeight());
 	mPatrol->InitializeStageObject_CreateStage(this);
+	mCandle = new Candle(Vec2{ -0.2f,-0.7f }, mStage->GetRectWidth() / 3
+	, mStage->GetRectHeight() / 3, mStage->GetHeight() / 5);
+	mCandle->InitializeStageObject_CreateStage(this);
 }
 
 void CreateStage::UnloadData() {
@@ -212,6 +216,8 @@ void CreateStage::RemoveStageObject(StageObject* stageobject) {
 		mStageObjects.erase(iter);
 	}
 }
+
+
 
 void CreateStage::moveTo(Parent* parent, Parent::SeqID id) {
 	if (id == Parent::SEQ_GAME)parent->moveTo(Parent::SEQ_GAME);

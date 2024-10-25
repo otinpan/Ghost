@@ -15,6 +15,7 @@ public:
 		Battery,
 		Key,
 		TreasureChest,
+		Candle,
 	};
 
 	void InitializeActor_CreateStage(class CreateStage* createstage)override;
@@ -44,6 +45,15 @@ public:
 	int GetPatrolRange() { return mPatrolRange; }
 	void AddPatrolRange(bool isPlus);
 	void AdjustPatrolRange();
+	void SetRadius(float rad) { mRadius = rad; }
+	float GetRadius() { return mRadius; }
+	void SetLightRad(float lightRad) { mLightRad = lightRad; }
+	float GetLightRad() { return mLightRad; }
+	void SetMaxLightRad(float maxLightRad) { mMaxLightRad = maxLightRad; }
+	float GetMaxLightRad() { return mMaxLightRad; }
+	void SetMinLightRad(float minLightRad) { mMinLightRad = minLightRad; }
+	float GetMinLightRad() { return mMinLightRad; }
+
 
 	Vec2 GetLeftTop();
 	Vec2 GetRightTop();
@@ -52,6 +62,7 @@ public:
 	Vec2 GetExpandFulcrum(int i);
 
 	void RotateClockwise(bool isClockwise);
+	void SpreadLightRad(bool isPlus);
 
 	//Menu
 	virtual void UpdateStageMenu_CreateStage(float deltaTime);
@@ -76,6 +87,10 @@ private:
 	Vec2 mCenter;
 	float mWidth;
 	float mHeight;
+	float mRadius;
+	float mLightRad;
+	float mMaxLightRad;
+	float mMinLightRad;
 	std::pair<int, int> mIteration;//stageにある場合stageのどこにあるかを保存
 	int mClockwise;
 

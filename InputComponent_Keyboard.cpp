@@ -19,6 +19,7 @@ InputComponent_Keyboard::InputComponent_Keyboard(class Actor* owner)
 
 void InputComponent_Keyboard::ProcessInput(std::vector<Input> keyState) {
 	float xSpeed = 0.0f;
+
 	if (mRightKey.pressed())xSpeed += mMaxXSpeed;
 	if (mLeftKey. pressed())xSpeed -= mMaxXSpeed;
 	SetXSpeed(xSpeed);

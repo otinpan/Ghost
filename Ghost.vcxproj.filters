@@ -207,6 +207,9 @@
     <ClCompile Include="TreasureChest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Candle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -936,6 +939,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TreasureChest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Candle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -33,6 +33,8 @@ public:
 	void AddStageObject(class StageObject* stageobject);
 	void RemoveStageObject(class StageObject* stageobject);
 
+
+
 	class Hand* &GetHand() { return mHand; }
 	std::vector<class StageObject*>& GetStageObjects() { return mStageObjects; }
 	class Stage* &GetStage() { return mStage; }
@@ -71,9 +73,11 @@ private:
 	class Hand* mHand;
 	class StageObject* mStageObject;
 	std::vector<class StageObject*> mStageObjects;
+	std::vector<class Candle*> mCandles;
 	class Stage* mStage;
 	class StageMenu* mStageMenu;
 	class Brock* mBrock;
 	class Door* mDoor;
 	class Patrol* mPatrol;
+	class Candle* mCandle;
 };
