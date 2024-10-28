@@ -31,5 +31,23 @@ private:
 	RectF mMenuRect;
 	Vec2 mMenuPos;
 
+	//StageObject置き場
+	float mObjectMenuLeft;
+	float mObjectMenuRight;
+	float mObjectMenuUp;
+	float mObjectMenuDown;
+	float mObjectMenuWidth;
+	float mObjectMenuHeight;
+	Vec2 mObjectMenuPos;
 
+	int mObjectNum; //Objectの種類数
+	float mObjectEachWidth;
+
+	class Brock* mBrock;
+	class Door* mDoor;
+	class Battery* mBattery;
+	class Patrol* mPatrol;
+	class Key* mKey;
+	class TreasureChest* mTreasureChest;
+	class Candle* mCandle;
 };

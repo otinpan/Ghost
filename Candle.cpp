@@ -8,7 +8,7 @@ Candle::Candle(Vec2 pos,float width,float height,float rad)
 {
 	SetAttribute(Attribute::Candle);
 	SetRadius(rad);
-	SetLightRad(rad * 3.0f);
+	SetLightRad(rad *3.0);
 
 }
 
@@ -21,9 +21,10 @@ void Candle::InitializeStageObject_CreateStage(class CreateStage* createStage) {
 	SetMinLightRad(0.0f);
 
 	cc = new CircleComponent(this);
+	cc->Initialize_CreateStage();
 	cc->SetCenter(GetPosition());
 	cc->SetRadius(GetLightRad());
-	cc->SetColor(ColorF(1, 1, float(202 / 255)));
+	cc->SetColor(ColorF(1, 1, float(202 / 255),0.5));
 }
 
 void Candle::UpdateStageObject_CreateStage(float deltaTime) {

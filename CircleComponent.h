@@ -14,7 +14,7 @@ public:
 	void Initialize_CreateStage();
 
 	const Circle GetCircle();
-
+	const Circle GetViewCircle();
 
 	void SetRadius(float radius) { mRadius = radius; }
 	void SetCenter(Vec2 pos) { mCenter = pos; }

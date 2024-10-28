@@ -17,6 +17,7 @@ public:
 	void SetColor(ColorF color) { mColor = color; }
 
 	const RectF GetRect();
+	const RectF GetViewRect();
 
 	float GetWidth() const;
 	float GetHeight() const;

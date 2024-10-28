@@ -198,15 +198,15 @@ int Stage::GetRevHandToFul(int i, int j) {
 
 void Stage::Draw_CreateStage() {
 	DrawRectFrame(Vec2{ mLeft + mWidth / 2,mUp - mHeight / 2 },
-		mWidth, mHeight, 0.003, ColorF(0, 0, 0));
+		mWidth, mHeight, 0.003, ColorF(1, 1, 1));
 
 	for (int i = 0; i < mVerticalSize; i++) {
 		DrawSquareDotLine({ mLeft,mUp - i * mRectHeight },
-			{ mLeft + mWidth,mUp - i * mRectHeight }, 0.005, ColorF(0, 0, 0));
+			{ mLeft + mWidth,mUp - i * mRectHeight }, 0.005, ColorF(1, 1, 1));
 	}
 	for (int j = 0; j < mSideSize; j++) {
 		DrawSquareDotLine({ mLeft + j * mRectWidth,mUp },
-			{ mLeft + j * mRectWidth,mUp - mHeight }, 0.005, ColorF(0, 0, 0));
+			{ mLeft + j * mRectWidth,mUp - mHeight }, 0.005, ColorF(1, 1, 1));
 	};
 
 
@@ -275,3 +275,7 @@ void Stage::Draw_CreateStage() {
 
 }
 
+
+RectF Stage::GetViewStageRect() {
+	return RectF(ConvertToView(Vec2{ mLeft,mUp }), GetScreenWidth() * mWidth/2.0f, GetScreenHeight() * mHeight/2.0f);
+}

@@ -16,6 +16,8 @@ public:
 	int GetSideSize() { return mSideSize; }
 	float GetLeft() { return mLeft; }
 	float GetUp() { return mUp; }
+	float GetRight() { return mLeft + mWidth; }
+	float GetDown() { return mUp - mHeight; }
 	float GetHeight() { return mHeight; }
 	float GetWidth() { return mWidth; }
 	float GetRectHeight() { return mRectHeight; }
@@ -31,6 +33,7 @@ public:
 	
 
 	RectF GetStageRect() { return mStageRect; }
+	RectF GetViewStageRect();
 	std::vector<std::vector<class StageObject*>>& GetStageObjects() { return mStageObjects; }
 	void SetStageObject(int i, int j, StageObject* stageObject) { mStageObjects[i][j] = stageObject; }
 	std::vector<std::vector<RectF>>& GetRects() { return mRects; }

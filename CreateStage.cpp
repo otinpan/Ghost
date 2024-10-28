@@ -21,6 +21,7 @@ CreateStage::~CreateStage() {
 }
 
 bool CreateStage::Initialize() {
+	Scene::SetBackground(ColorF(0, 0, 0));
 	LoadData();
 	return true;
 }
@@ -31,12 +32,10 @@ void CreateStage::update(Parent* parent) {
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 		}
+		Print << mHand->GetIsChoose();
 		ProcessInput();
 		UpdateGame();
 		draw();
-		Print << mHand->GetIsChoose();
-		//Print << mActors.size();
-		//Print << mHand->GetIsExpand();
 	}
 }
 
@@ -95,6 +94,7 @@ void CreateStage::draw() {
 	for (auto sprite : mSprites) {
 
 	}
+	
 }
 
 void CreateStage::LoadData() {
@@ -104,7 +104,7 @@ void CreateStage::LoadData() {
 	mStage->Initialize_CreateStage(this);
 	mStageMenu = new StageMenu();
 	mStageMenu->Initialize_CreateStage(this);
-	mBrock = new Brock(Vec2({ 0.0f,-0.7f }), mStage->GetRectWidth()
+	/*mBrock = new Brock(Vec2({0.0f,-0.7f}), mStage->GetRectWidth()
 		, mStage->GetRectHeight());
 	mBrock->InitializeStageObject_CreateStage(this);
 	mDoor = new Door(Vec2{ 0.4f,-0.7f }, mStage->GetRectWidth()
@@ -114,8 +114,8 @@ void CreateStage::LoadData() {
 		, mStage->GetRectHeight());
 	mPatrol->InitializeStageObject_CreateStage(this);
 	mCandle = new Candle(Vec2{ -0.2f,-0.7f }, mStage->GetRectWidth() / 3
-	, mStage->GetRectHeight() / 3, mStage->GetHeight() / 5);
-	mCandle->InitializeStageObject_CreateStage(this);
+	, mStage->GetRectHeight() / 3, mStage->GetRectHeight()/6);
+	mCandle->InitializeStageObject_CreateStage(this);*/
 }
 
 void CreateStage::UnloadData() {

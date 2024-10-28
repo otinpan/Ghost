@@ -2,6 +2,13 @@
 #include"CreateStage.h"
 #include"Stage.h"
 #include"Hand.h"
+#include"Brock.h"
+#include"Door.h"
+#include"Patrol.h"
+#include"Battery.h"
+#include"Key.h"
+#include"TreasureChest.h"
+#include"Candle.h"
 
 StageMenu::StageMenu()
 {
@@ -22,10 +29,58 @@ void StageMenu::Initialize_CreateStage(CreateStage* createStage) {
 	mMenuHeight = mMenuUp - mMenuDown;
 
 	mMenuPos = Vec2{ mMenuLeft + mMenuWidth / 2,mMenuUp - mMenuHeight / 2 };
-
 	mMenuRect = RectF{ mMenuLeft,mMenuUp,mMenuWidth,mMenuHeight };
 
+	//ObjectMenu
+	mObjectMenuLeft = mCreateStage->GetStage()->GetLeft();
+	mObjectMenuUp = mCreateStage->GetStage()->GetDown() - 0.1f;
+	mObjectMenuRight = mCreateStage->GetStage()->GetRight();
+	mObjectMenuDown = -0.95f;
+	mObjectMenuPos = Vec2((mObjectMenuLeft + mObjectMenuRight) / 2.0f,
+		(mObjectMenuUp + mObjectMenuDown) / 2.0f);
+	mObjectMenuWidth = mObjectMenuRight - mObjectMenuLeft;
+	mObjectMenuHeight = mObjectMenuUp - mObjectMenuDown;
+
+	mObjectNum = 7;
+	mObjectEachWidth = mObjectMenuWidth / mObjectNum;
+	int i = 0;
+	mBrock = new Brock(Vec2(mObjectEachWidth * i + mObjectEachWidth / 2.0f,
+		(mObjectMenuUp + mObjectMenuDown) / 2.0f),
+		mCreateStage->GetStage()->GetRectWidth(),
+		mCreateStage->GetStage()->GetRectHeight());
+	i++;
+	mDoor = new Door(Vec2(mObjectEachWidth * i + mObjectEachWidth / 2.0f,
+		(mObjectMenuUp + mObjectMenuDown) / 2.0f),
+		mCreateStage->GetStage()->GetRectWidth(),
+		mCreateStage->GetStage()->GetRectHeight());
+	i++;
+	mPatrol = new Patrol(Vec2(mObjectEachWidth * i + mObjectEachWidth / 2.0f,
+		(mObjectMenuUp + mObjectMenuDown) / 2.0f),
+		mCreateStage->GetStage()->GetRectWidth(),
+		mCreateStage->GetStage()->GetRectHeight());
+	i++;
+	mKey = new Key(Vec2(mObjectEachWidth * i + mObjectEachWidth / 2.0f,
+		(mObjectMenuUp + mObjectMenuDown) / 2.0f),
+		mCreateStage->GetStage()->GetRectWidth(),
+		mCreateStage->GetStage()->GetRectHeight());
+	i++;
+	mBattery = new Battery(Vec2(mObjectEachWidth * i + mObjectEachWidth / 2.0f,
+		(mObjectMenuUp + mObjectMenuDown) / 2.0f),
+		mCreateStage->GetStage()->GetRectWidth(),
+		mCreateStage->GetStage()->GetRectHeight());
+	i++;
+	mTreasureChest = new TreasureChest(Vec2(mObjectEachWidth * i + mObjectEachWidth / 2.0f,
+		(mObjectMenuUp + mObjectMenuDown) / 2.0f),
+		mCreateStage->GetStage()->GetRectWidth(),
+		mCreateStage->GetStage()->GetRectHeight());
+	i++;
+	mCandle = new Candle(Vec2(mObjectEachWidth * i + mObjectEachWidth / 2.0f,
+		(mObjectMenuUp + mObjectMenuDown) / 2.0f),
+		 mCreateStage->GetStage()->GetRectWidth() / 3,
+	     mCreateStage->GetStage()->GetRectHeight() / 3,
+		 mCreateStage->GetStage()->GetRectHeight() / 6);
 	
+
 }
 
 void StageMenu::Update_CreateStage(float deltaTime) {
@@ -34,5 +89,5 @@ void StageMenu::Update_CreateStage(float deltaTime) {
 
 
 void StageMenu::Draw_CreateStage() {
-	DrawRectFrame(mMenuPos, mMenuWidth, mMenuHeight, 0.003, ColorF(0, 0, 0));
+	DrawRectFrame(mMenuPos, mMenuWidth, mMenuHeight, 0.003, ColorF(1, 1, 1));
 }

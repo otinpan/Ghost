@@ -44,10 +44,10 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 	sqc->Initialize_CreateStage(mCenter,mWidth,mHeight);
 	switch (mAttribute) {
 	case Attribute::Wall:
-		sqc->SetColor(ColorF(0, 0, 0));
+		sqc->SetColor(ColorF(1, 1, 1));
 		break;
 	case Attribute::Brock:
-		sqc->SetColor(ColorF(0, 0, 0));
+		sqc->SetColor(ColorF(1, 1, 1));
 		break;
 	case Attribute::Door:
 		sqc->SetColor(ColorF(0, 0, 0));
@@ -62,7 +62,7 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 		sqc->SetColor(ColorF(0, 1, 0));
 		break;
 	case Attribute::Candle:
-		sqc->SetColor(ColorF(0, 0, 0));
+		sqc->SetColor(ColorF(1, 1, 1));
 	}
 
 	cc.resize(4);
@@ -124,8 +124,8 @@ void StageObject::RotateClockwise(bool isClockwise) {
 }
 
 void StageObject::SpreadLightRad(bool isPlus) {
-	if (isPlus)mLightRad += GetCreateStage()->GetStage()->GetHeight() / 100.0f;
-	else mLightRad -= GetCreateStage()->GetStage()->GetHeight() / 100.0f;
+	if (isPlus)mLightRad += GetCreateStage()->GetStage()->GetHeight() / 700.0f;
+	else mLightRad -= GetCreateStage()->GetStage()->GetHeight() / 700.0f;
 	mLightRad = std::min(mLightRad, mMaxLightRad);
 	mLightRad = std::max(mLightRad, mMinLightRad);
 }

@@ -44,6 +44,10 @@ const Circle CircleComponent::GetCircle() {
 return Circle{ mCenter,mRadius };
 }
 
+const Circle CircleComponent::GetViewCircle() {
+	return Circle{ ConvertToView(mCenter),GetMagnification() * mRadius };
+}
+
 
 bool IsIntersect_CC(class CircleComponent* a, class CircleComponent* b) {
 	Circle aCircle = Circle{ a->GetCenter(), a->GetRadius() };

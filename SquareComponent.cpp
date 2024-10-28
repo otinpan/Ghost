@@ -52,6 +52,10 @@ const RectF SquareComponent::GetRect() {
 	return RectF{ Arg::center(mCenter),mWidth,mHeight };
 }
 
+const RectF SquareComponent::GetViewRect() {
+	return RectF{ Arg::center(ConvertToView(mCenter)),GetScreenWidth() * mWidth/2.0f,GetScreenHeight() * mHeight/2.0f };
+}
+
 bool IsIntersect_SC(class SquareComponent* a, class CircleComponent* b) {
 	RectF aRect = RectF{ Arg::center(a->GetCenter()),a->GetWidth(),a->GetHeight() };
 	Circle bCircle = Circle{ b->GetCenter(),b->GetRadius() };
