@@ -19,6 +19,8 @@ public:
 	float GetMenuHeight() { return mMenuHeight; }
 	Vec2 GetMenuPos() { return mMenuPos; }
 
+	RectF GetViewStageMenuRect();
+
 private:
 	class CreateStage* mCreateStage;
 

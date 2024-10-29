@@ -56,10 +56,13 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 		sqc->SetColor(ColorF(0, (float)102/255, 0));
 		break;
 	case Attribute::Key:
-		sqc->SetColor(ColorF((float)204, (float)204 / 255, 0));
+		sqc->SetColor(ColorF((float)76/255, (float)0, (float)153/255));
 		break;
 	case Attribute::Battery:
 		sqc->SetColor(ColorF(0, 1, 0));
+		break;
+	case Attribute::TreasureChest:
+		sqc->SetColor(ColorF(1,1,0));
 		break;
 	case Attribute::Candle:
 		sqc->SetColor(ColorF(1, 1, 1));

@@ -2,6 +2,7 @@
 #include"StageObject.h"
 
 class TreasureChest :public StageObject {
+public:
 	TreasureChest(Vec2 pos, float width,float height);
 	~TreasureChest();
 

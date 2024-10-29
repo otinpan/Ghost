@@ -53,7 +53,7 @@ void Game::UpdateGame() {
 		for (float j = -1.0; j <= 1.0; j += w) {
 			Vec2 pos = { (float)j + w / 2,(float)i + h / 2 };
 			DrawRect(pos, w, h, ColorF(0, 0, 0));
-			DrawRectFrame(pos, w, h, 0.01, ColorF(1, 1, 1));
+			DrawRectFrame(pos, w, h, 0.01,0, ColorF(1, 1, 1));
 		}
 	}
 	float deltaTime = Scene::DeltaTime();

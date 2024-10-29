@@ -22,6 +22,21 @@ public:
 	bool GetIsDelete() { return mIsDelete; }
 	void SetIsDelete(bool isDelete) { mIsDelete = isDelete; }
 
+	InputGroup GetInputUp() { return inputUp; }
+	InputGroup GetInputDown() { return inputDown; }
+	InputGroup GetInputRight() { return inputRight; }
+	InputGroup GetInputLeft() { return inputLeft; }
+	InputGroup GetInputGrap() { return inputGrap; }
+	InputGroup GetInputBack() { return inputBack; }
+	InputGroup GetInputR() { return inputR; }
+	InputGroup GetInputL() { return inputL; }
+	InputGroup GetInputU() { return inputU; }
+	InputGroup GetInputD() { return inputD; }
+	InputGroup GetInputChoose() { return inputChoose; }
+	InputGroup GetInputDelete() { return inputDelete; }
+	InputGroup GetInputPlus() { return inputPlus; }
+	InputGroup GetInputMinus() { return inputMinus; }
+
 	class StageObject* & GetChoosing() { return mChoosing; }
 
 	void InitChoosing(StageObject* stageObject);
@@ -44,10 +59,12 @@ private:
 	InputGroup inputBack;
 	InputGroup inputR;
 	InputGroup inputL;
+	InputGroup inputU;
+	InputGroup inputD;
 	InputGroup inputChoose;
 	InputGroup inputDelete;
-	InputGroup inputPatrolPlus;
-	InputGroup inputPatrolMinus;
+	InputGroup inputPlus;
+	InputGroup inputMinus;
 
 	std::vector<int> dx;
 	std::vector<int> dy;

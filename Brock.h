@@ -10,6 +10,12 @@ public:
 
 	void UpdateStageObject_CreateStage(float deltaTime)override;
 
+	enum Material {
+		Stone,
+		Wood,
+		Grass,
+	};
+
 	//Menu
 	void InitializeStageMenu_CreateStage()override;
 	void UpdateStageMenu_CreateStage(float deltaTime)override;
@@ -27,4 +33,7 @@ private:
 	float RectWidth_StageMenu;
 	float RectHeight_StageMenu;
 	float EachWidth_StageMenu;
+	float EachHeight_StageMenu;
+
+	Material mMaterial;
 };

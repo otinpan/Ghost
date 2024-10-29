@@ -7,6 +7,7 @@
 #include"Door.h"
 #include"Patrol.h"
 #include"Candle.h"
+#include"TreasureChest.h"
 
 CreateStage::CreateStage()
 	:mUpdatingActors(false)
@@ -21,7 +22,7 @@ CreateStage::~CreateStage() {
 }
 
 bool CreateStage::Initialize() {
-	Scene::SetBackground(ColorF(0, 0, 0));
+	Scene::SetBackground(ColorF((float)192/255,(float)192/255, (float)192/255));
 	LoadData();
 	return true;
 }
@@ -116,6 +117,7 @@ void CreateStage::LoadData() {
 	mCandle = new Candle(Vec2{ -0.2f,-0.7f }, mStage->GetRectWidth() / 3
 	, mStage->GetRectHeight() / 3, mStage->GetRectHeight()/6);
 	mCandle->InitializeStageObject_CreateStage(this);*/
+	
 }
 
 void CreateStage::UnloadData() {

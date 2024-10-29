@@ -9,6 +9,7 @@
 #include"Key.h"
 #include"Battery.h"
 #include"Candle.h"
+#include"TreasureChest.h"
 
 #include<cmath>
 
@@ -85,6 +86,10 @@ void Stage::SetNewStageObject(int i, int j, StageObject::Attribute attribute) {
 	}
 	else if (attribute == StageObject::Attribute::Battery) {
 		mStageObjects[i][j] = new Battery(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
+		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+	}
+	else if (attribute == StageObject::TreasureChest) {
+		mStageObjects[i][j]=new TreasureChest(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
 		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
 	}
 	mStageObjects[i][j]->SetIsInStage(true);
@@ -197,8 +202,10 @@ int Stage::GetRevHandToFul(int i, int j) {
 }
 
 void Stage::Draw_CreateStage() {
+	DrawRect(Vec2{ mLeft + mWidth / 2,mUp - mHeight / 2 }, mWidth, mHeight, ColorF(0, 0, 0));
 	DrawRectFrame(Vec2{ mLeft + mWidth / 2,mUp - mHeight / 2 },
-		mWidth, mHeight, 0.003, ColorF(1, 1, 1));
+		mWidth, mHeight, 0.003, 0,ColorF(1, 1, 1));
+	
 
 	for (int i = 0; i < mVerticalSize; i++) {
 		DrawSquareDotLine({ mLeft,mUp - i * mRectHeight },
@@ -224,7 +231,7 @@ void Stage::Draw_CreateStage() {
 				if (mExpandRect.contains(mRects[i][j])) {
 					DrawRectFrame(Vec2{ mLeft + mRectWidth * j + mRectWidth / 2,
 						mUp - mRectHeight * i + mRectHeight / 2 },
-						mRectWidth, mRectHeight,0.003, ColorF(0, 1, 1));
+						mRectWidth, mRectHeight,0.003,0, ColorF(0, 1, 1));
 				}
 			}
 			//Delete
@@ -232,7 +239,7 @@ void Stage::Draw_CreateStage() {
 				if (mDeleteRect.intersects(mRects[i][j])) {
 					DrawRectFrame(Vec2{ mLeft + mRectWidth * j + mRectWidth / 2,
 						mUp - mRectHeight * i + mRectHeight / 2 },
-						mRectWidth, mRectHeight, 0.003, ColorF(1,0,0));
+						mRectWidth, mRectHeight, 0.003,0, ColorF(1,0,0));
 				}
 			}
 			//Patrol
@@ -243,28 +250,28 @@ void Stage::Draw_CreateStage() {
 					for (int di = 0; di < mStageObjects[i][j]->GetPatrolRange(); di++) {
 						DrawRectFrame(Vec2{ mLeft + mRectWidth * j + mRectWidth / 2,
 						mUp - mRectHeight * (i-di) + mRectHeight / 2},
-						mRectWidth, mRectHeight, 0.003, ColorF(0, (float)102/255, 0));
+						mRectWidth, mRectHeight, 0.003,0, ColorF(0, (float)102/255, 0));
 					}
 					break;
 				case 1:
 					for (int dj = 0; dj < mStageObjects[i][j]->GetPatrolRange(); dj++) {
 						DrawRectFrame(Vec2{ mLeft + mRectWidth * (j+dj) + mRectWidth / 2,
 						mUp - mRectHeight * i + mRectHeight / 2 },
-						mRectWidth, mRectHeight, 0.003, ColorF(0, (float)102 / 255, 0));
+						mRectWidth, mRectHeight, 0.003,0, ColorF(0, (float)102 / 255, 0));
 					}
 					break;
 				case 2:
 					for (int di = 0; di < mStageObjects[i][j]->GetPatrolRange(); di++) {
 						DrawRectFrame(Vec2{ mLeft + mRectWidth * j + mRectWidth / 2,
 						mUp - mRectHeight * (i + di) + mRectHeight / 2 },
-						mRectWidth, mRectHeight, 0.003, ColorF(0, (float)102 / 255, 0));
+						mRectWidth, mRectHeight, 0.003,0, ColorF(0, (float)102 / 255, 0));
 					}
 					break;
 				case 3:
 					for (int dj = 0; dj < mStageObjects[i][j]->GetPatrolRange(); dj++) {
 						DrawRectFrame(Vec2{ mLeft + mRectWidth * (j - dj) + mRectWidth / 2,
 						mUp - mRectHeight * i + mRectHeight / 2 },
-				    	mRectWidth, mRectHeight, 0.003, ColorF(0, (float)102 / 255, 0));
+				    	mRectWidth, mRectHeight, 0.003,0, ColorF(0, (float)102 / 255, 0));
 					}
 					break;
 

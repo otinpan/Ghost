@@ -76,10 +76,10 @@ void DrawRect(Vec2 pos, float width, float height, ColorF color) {
 		GetScreenHeight() * height / 2).draw(color);
 }
 
-void DrawRectFrame(Vec2 pos, float width, float height, float linewidth, ColorF color) {
+void DrawRectFrame(Vec2 pos, float width, float height, float innerlinewidth,float outerlinewidth, ColorF color) {
 	RectF(Arg::center(ConvertToView(pos)),
 		GetScreenWidth() * width / 2,
-		GetScreenHeight() * height / 2).drawFrame(linewidth * GetMagnification(), color);
+		GetScreenHeight() * height / 2).drawFrame(innerlinewidth * GetMagnification(),outerlinewidth*GetMagnification(), color);
 }
 
 void DrawSquareDotLine(Vec2 pos1, Vec2 pos2, float linewidth, ColorF color) {

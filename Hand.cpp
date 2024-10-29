@@ -8,6 +8,7 @@
 #include"Brock.h"
 #include"Wall.h"
 #include"Door.h"
+#include"StageMenu.h"
 
 Hand::Hand()
 	:StandardSpeed(0.3f)
@@ -45,10 +46,12 @@ void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 	inputBack = KeyL;
 	inputR = KeyRight;
 	inputL = KeyLeft;
+	inputU = KeyUp;
+	inputD = KeyDown;
 	inputChoose = KeySpace;
 	inputDelete = KeyDelete;
-	inputPatrolPlus = KeyPeriod;
-	inputPatrolMinus = KeyComma;
+	inputPlus = KeyPeriod;
+	inputMinus = KeyComma;
 
 	ic = new InputComponent_Keyboard(this);
 	ic->SetUpKey(inputUp);
@@ -148,21 +151,25 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 		}
 	}
 	if (mIsChoose) {
+		mChoosing->UpdateStageMenu_CreateStage(deltaTime);
 		if (mChoosing->GetAttribute() == StageObject::Attribute::Door ||
 			mChoosing->GetAttribute() == StageObject::Attribute::Patrol) {
 			if (inputR.down())mChoosing->RotateClockwise(true);
 			if (inputL.down())mChoosing->RotateClockwise(false);
 		}
 		if (mChoosing->GetAttribute() == StageObject::Attribute::Candle) {
-			if (inputPatrolPlus.pressed())mChoosing->SpreadLightRad(true);
-			if (inputPatrolMinus.pressed())mChoosing->SpreadLightRad(false);
+			if (inputPlus.pressed())mChoosing->SpreadLightRad(true);
+			if (inputMinus.pressed())mChoosing->SpreadLightRad(false);
 		}
 		if (mChoosing->GetAttribute() == StageObject::Attribute::Patrol) {
-			if (inputPatrolPlus.down())mChoosing->AddPatrolRange(true);
-			if (inputPatrolMinus.down())mChoosing->AddPatrolRange(false);
+			if (inputPlus.down())mChoosing->AddPatrolRange(true);
+			if (inputMinus.down())mChoosing->AddPatrolRange(false);
 		}
 		if (inputChoose.down()) {
-			DeleteChoosing();
+			if (!(GetCreateStage()->GetStageMenu()->GetViewStageMenuRect().
+				contains(cc->GetViewCircle()))) {
+				DeleteChoosing();
+			}
 		}
 	}
 	if (mIsExpand) {
