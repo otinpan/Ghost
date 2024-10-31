@@ -53,7 +53,10 @@ public:
 	float GetMaxLightRad() { return mMaxLightRad; }
 	void SetMinLightRad(float minLightRad) { mMinLightRad = minLightRad; }
 	float GetMinLightRad() { return mMinLightRad; }
-
+	void SetIsInObjectMenu(bool isInObjectMenu) { mIsInObjectMenu = isInObjectMenu; }
+	bool GetIsInObjectMenu() { return mIsInObjectMenu; }
+	int GetCandleIteration() { return mCandleIteration; }
+	void SetCandleIteration(int candleIteration) { mCandleIteration = candleIteration; }
 
 	Vec2 GetLeftTop();
 	Vec2 GetRightTop();
@@ -81,6 +84,7 @@ private:
 
 	bool mIsGripen;
 	bool mIsInStage;//Stageの中にあるか
+	bool mIsInObjectMenu;//ObjectMenuの中にあるか
 
 	Attribute mAttribute;
 
@@ -92,6 +96,7 @@ private:
 	float mMaxLightRad;
 	float mMinLightRad;
 	std::pair<int, int> mIteration;//stageにある場合stageのどこにあるかを保存
+	int mCandleIteration;
 	int mClockwise;
 
 	int mPatrolRange;

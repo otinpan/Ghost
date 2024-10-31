@@ -16,6 +16,7 @@ StageObject::StageObject(Vec2 pos, float width, float height)
 	, mAttribute(Attribute::None)
 	, mClockwise(0)
 	, mPatrolRange(1)
+	,mIsInObjectMenu(false)
 {
 	SetPosition(pos);
 }

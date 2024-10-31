@@ -18,6 +18,9 @@ public:
 	float GetMenuWidth() { return mMenuWidth; }
 	float GetMenuHeight() { return mMenuHeight; }
 	Vec2 GetMenuPos() { return mMenuPos; }
+	void RemakeStageObject(class StageObject* stageObject);
+
+	class Brock*& GetBrock() { return mBrock; }
 
 	RectF GetViewStageMenuRect();
 

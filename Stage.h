@@ -30,6 +30,7 @@ public:
 	void SetExpandAttribute(StageObject::Attribute at) { mExpandAttribute = at; }
 	void SetDeleteFulcrumPos(Vec2 pos) { mDeleteFulcrumPos = pos; }
 	bool SetNewCandle(class StageObject* candle);
+	void DeleteCandle(class StageObject* candle);
 	
 
 	RectF GetStageRect() { return mStageRect; }

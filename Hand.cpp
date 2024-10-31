@@ -77,24 +77,6 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 
 	if (!mIsGrap && !mIsExpand && !mIsDelete) {
 		for (auto& stageObject : GetCreateStage()->GetStageObjects()) {
-			//Candle
-			if (stageObject->GetAttribute() == StageObject::Attribute::Candle) {
-				//Grap
-				if (stageObject->GetSquareComponent()->GetRect().
-					contains(cc->GetCircle())) {
-					if (inputGrap.pressed()) {
-						stageObject->SetIsGripen(true);
-						mIsGrap = true;
-						DeleteChoosing();
-						mGrapping = stageObject;
-						return;
-					}
-					if (inputChoose.down() && stageObject->GetIsInStage()) {
-						InitChoosing(stageObject);
-						return;
-					}
-				}
-			}
 			if (stageObject->GetSquareComponent()->GetRect().
 				contains(cc->GetCircle()) &&
 				stageObject->GetAttribute() != StageObject::Attribute::Wall) {
@@ -195,7 +177,16 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 			if (mGrapping->GetAttribute() == StageObject::Attribute::Candle) {
 				if (GetCreateStage()->GetStage()->GetViewStageRect().
 					contains(mGrapping->GetSquareComponent()->GetViewRect())) {
+					if (mGrapping->GetIsInStage()) {
+						GetCreateStage()->GetStage()->DeleteCandle(mGrapping);
+					}
+					
 					GetCreateStage()->GetStage()->SetNewCandle(mGrapping);
+					
+				}
+				//もしmGrappingがObjectMenuから取り出した場合
+				if (mGrapping->GetIsInObjectMenu()) {
+					GetCreateStage()->GetStageMenu()->RemakeStageObject(mGrapping);
 				}
 				delete mGrapping;
 				mIsGrap = false;
@@ -211,7 +202,14 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 					}
 				}
 			}
+
+			//もしmGrappingがObjectMenuから取り出した場合
+			if (mGrapping->GetIsInObjectMenu()) {
+				GetCreateStage()->GetStageMenu()->RemakeStageObject(mGrapping);
+			}
+			
 			delete mGrapping;
+			mGrapping = 0;
 			mIsGrap = false;
 		}
 	}

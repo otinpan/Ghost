@@ -104,10 +104,19 @@ bool Stage::SetNewCandle(class StageObject* candle) {
 				new Candle(candle->GetPosition(), candle->GetWidth(), candle->GetHeight(), candle->GetRadius());
 			mCandles[i]->InitializeStageObject_CreateStage(mCreateStage);
 			mCandles[i]->SetIsInStage(true);
+			mCandles[i]->SetLightRad(candle->GetLightRad());
+			mCandles[i]->SetCandleIteration(i);
+			Print << i;
 			return true;
 		}
 	}
 	return false;
+}
+
+void Stage::DeleteCandle(class StageObject* candle) {
+	mCandles[candle->GetCandleIteration()] = 0;
+	delete mCandles[candle->GetCandleIteration()];
+	return;
 }
 
 void Stage::RemakeStageObjects() {

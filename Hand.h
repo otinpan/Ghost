@@ -38,6 +38,7 @@ public:
 	InputGroup GetInputMinus() { return inputMinus; }
 
 	class StageObject* & GetChoosing() { return mChoosing; }
+	class StageObject*& GetGrapping() { return mGrapping; }
 
 	void InitChoosing(StageObject* stageObject);
 	void DeleteChoosing();
