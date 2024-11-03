@@ -134,11 +134,11 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 	}
 	if (mIsChoose) {
 		mChoosing->UpdateStageMenu_CreateStage(deltaTime);
-		if (mChoosing->GetAttribute() == StageObject::Attribute::Door ||
+		/*if (mChoosing->GetAttribute() == StageObject::Attribute::Door ||
 			mChoosing->GetAttribute() == StageObject::Attribute::Patrol) {
 			if (inputR.down())mChoosing->RotateClockwise(true);
 			if (inputL.down())mChoosing->RotateClockwise(false);
-		}
+		}*/
 		if (mChoosing->GetAttribute() == StageObject::Attribute::Candle) {
 			if (inputPlus.pressed())mChoosing->SpreadLightRad(true);
 			if (inputMinus.pressed())mChoosing->SpreadLightRad(false);
@@ -198,7 +198,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 					if (GetCreateStage()->GetStage()->GetRects()[i][j]
 						.contains(cc->GetCircle()) &&
 						GetCreateStage()->GetStage()->GetStageObjects()[i][j] == 0) {
-						GetCreateStage()->GetStage()->SetNewStageObject(i, j, mGrapping->GetAttribute());
+						GetCreateStage()->GetStage()->SetNewStageObject(i, j, mGrapping);
 					}
 				}
 			}

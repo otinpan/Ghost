@@ -86,3 +86,11 @@ void DrawSquareDotLine(Vec2 pos1, Vec2 pos2, float linewidth, ColorF color) {
 	Line{ConvertToView(pos1),ConvertToView(pos2)}
 	.draw(LineStyle::SquareDot, linewidth * GetMagnification(),color);
 }
+
+void DrawArrow(Vec2 from, Vec2 to, float width, Vec2 headSize,ColorF color) {
+	Shape2D::Arrow(ConvertToView(from), ConvertToView(to), GetMagnification() * width, ConvertToView(headSize)).draw(color);
+}
+
+void DrawTriangle(Vec2 pos, float length,float deg,ColorF color) {
+	Triangle{ ConvertToView(pos),length*GetMagnification(),deg}.draw(color);
+}

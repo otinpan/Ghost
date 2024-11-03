@@ -10,6 +10,11 @@ public:
 
 	void UpdateStageObject_CreateStage(float deltaTime)override;
 
+	void InitializeStageMenu_CreateStage()override;
+	void UpdateStageMenu_CreateStage(float dletaTime)override;
+	void DrawStageMenu_CreateStage()override;
+	void ShutdownStageMenu_CreateStage()override;
+
 	Vec2 GetDoorCenter() { return mDoorCenter; }
 	float GetDoorWidth() { return mDoorWidth; }
 	float GetDoorHeight() { return mDoorHeight; }
@@ -17,11 +22,23 @@ public:
 
 private:
 	SquareComponent* sc;
+	CircleComponent* mUpCC;
+	CircleComponent* mDownCC;
+	CircleComponent* mRightCC;
+	CircleComponent* mLeftCC;
 
 	std::vector<float> DoorRel_dy;
 	std::vector<float> DoorRel_dx;
 	std::vector<float> DoorWidth;
 	std::vector<float> DoorHeight;
+
+	Vec2 mTriCenter;
+	Vec2 mUpTriPos;
+	Vec2 mDownTriPos;
+	Vec2 mRightTriPos;
+	Vec2 mLeftTriPos;
+	float mTriLength;
+	float mTriLengthFromCenter;
 
 
 	Vec2 mDoorCenter;

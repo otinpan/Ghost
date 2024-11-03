@@ -32,3 +32,5 @@ void DrawSquareDotLine(Vec2 pos1, Vec2 pos2, float linewidth, ColorF color);
 float GetMagnification();
 float GetScreenHeight();
 float GetScreenWidth();
+void DrawArrow(Vec2 from, Vec2 to, float width, Vec2 headSize,ColorF color);
+void DrawTriangle(Vec2 pos, float length,float deg,ColorF color);

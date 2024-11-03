@@ -40,7 +40,8 @@ public:
 	std::vector<std::vector<RectF>>& GetRects() { return mRects; }
 	std::vector<class Candle*>& GetCandle() { return mCandles; }
 
-	void SetNewStageObject(int i, int j,StageObject::Attribute attribute);
+	void SetNewStageObject(int i, int j,StageObject* stageObject);
+	void SetNewStageObject_Attribute(int i, int j, StageObject::Attribute attribute);
 	void RemakeStageObjects();
 	void DeleteStageObject(int i,int j);
 	void DeleteStageObjects();

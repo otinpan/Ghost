@@ -38,7 +38,7 @@ void Brock::InitializeStageMenu_CreateStage() {
 	EachWidth_StageMenu = GetCreateStage()->GetStageMenu()->GetMenuWidth() / 3.0f;
 	EachHeight_StageMenu = GetCreateStage()->GetStageMenu()->GetMenuHeight() / 3;
 	RectHeight_StageMenu = EachHeight_StageMenu / 2.0f;
-	RectWidth_StageMenu = RectHeight_StageMenu;
+	RectWidth_StageMenu = RectHeight_StageMenu*GetScreenHeight()/GetScreenWidth();
 	StoneSC = new SquareComponent(this);
 	WoodSC = new SquareComponent(this);
 	GrassSC = new SquareComponent(this);
