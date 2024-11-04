@@ -94,3 +94,17 @@ void DrawArrow(Vec2 from, Vec2 to, float width, Vec2 headSize,ColorF color) {
 void DrawTriangle(Vec2 pos, float length,float deg,ColorF color) {
 	Triangle{ ConvertToView(pos),length*GetMagnification(),deg}.draw(color);
 }
+
+void DrawPlus(float height, float width, Vec2 pos, float angle,ColorF color) {
+	Shape2D::Plus(height * GetMagnification(), width * GetMagnification(), ConvertToView(pos), angle).draw(color);
+}
+
+void AddDeltaTime(bool &mIsLasting, float &mTime, float mLastTime, float deltaTime) {
+	if (mIsLasting) {
+		mTime += deltaTime;
+		if (mLastTime < mTime) {
+			mTime = 0.0f;
+			mIsLasting = false;
+		}
+	}
+}

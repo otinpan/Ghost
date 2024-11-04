@@ -34,3 +34,5 @@ float GetScreenHeight();
 float GetScreenWidth();
 void DrawArrow(Vec2 from, Vec2 to, float width, Vec2 headSize,ColorF color);
 void DrawTriangle(Vec2 pos, float length,float deg,ColorF color);
+void AddDeltaTime(bool&mIsLasting,float &mTime,float mLastTime,float deltaTime);
+void DrawPlus(float hegiht, float width, Vec2 pos, float angle, ColorF color);

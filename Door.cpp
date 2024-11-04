@@ -118,25 +118,25 @@ void Door::UpdateStageMenu_CreateStage(float deltaTime) {
 }
 
 void Door::DrawStageMenu_CreateStage() {
-	if (GetClockwise() == 0) {
+	if (GetClockwise() != 0) {
 		DrawTriangle(mUpTriPos, mTriLength, 0, ColorF(0, 0, 0));
 	}
 	else {
 		DrawTriangle(mUpTriPos, mTriLength, 0, ColorF(1, 1, (float)102 / 255));
 	}
-	if (GetClockwise() == 1) {
+	if (GetClockwise() != 1) {
 		DrawTriangle(mRightTriPos, mTriLength, 90_deg, ColorF(0, 0, 0));
 	}
 	else {
 		DrawTriangle(mRightTriPos, mTriLength, 90_deg, ColorF(1, 1, (float)102 / 255));
 	}
-	if (GetClockwise() == 2) {
+	if (GetClockwise() != 2) {
 		DrawTriangle(mDownTriPos, mTriLength, 180_deg, ColorF(0, 0, 0));
 	}
 	else {
 		DrawTriangle(mDownTriPos, mTriLength, 180_deg, ColorF(1, 1, (float)102 / 255));
 	}
-	if (GetClockwise() == 3) {
+	if (GetClockwise() != 3) {
 		DrawTriangle(mLeftTriPos, mTriLength, 270_deg, ColorF(0, 0, 0));
 	}
 	else {

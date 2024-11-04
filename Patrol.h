@@ -35,4 +35,15 @@ private:
 	Vec2 mMinusPos;
 	Vec2 mAddCenter;
 	float mAddLengthFromCenter;
+	float mPlusWidth;
+	float mPlusHeight;
+	float mMinusWidth;
+	float mMinusHeight;
+
+	float mPlusTime;
+	float mMinusTime;
+	float mPlusLastTime;
+	float mMinusLastTime;
+	bool mIsPlusLasting;
+	bool mIsMinusLasting;
 };
