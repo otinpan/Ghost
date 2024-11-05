@@ -106,6 +106,7 @@ void Patrol::InitializeStageMenu_CreateStage() {
 	mMinusCC->SetRadius(mTriLength);
 	mMinusCC->SetColor(ColorF(1, 1, 0, 0));
 
+
 	mPlusLastTime = 0.03;
 	mMinusLastTime = 0.03;
 }

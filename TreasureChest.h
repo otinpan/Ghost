@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include"StageObject.h"
+#include"Battery.h"
 
 class TreasureChest :public StageObject {
 public:
@@ -9,7 +10,7 @@ public:
 	enum Treasure {
 		None,
 		Key,
-		Baattery,
+		Battery,
 	};
 
 	void InitializeStageObject_CreateStage(class CreateStage* createStage) override;
@@ -25,6 +26,11 @@ private:
 	class SquareComponent* mNoneSC;
 	class SquareComponent* mBatterySC;
 	class SquareComponent* mKeySC;
+	class CircleComponent* mSmallCC;
+	class CircleComponent* mMidCC;
+	class CircleComponent* mBigCC;
+
+	float mMidBatteryRad;
 
 	Vec2 mNonePos;
 	Vec2 mBatteryPos;
@@ -33,6 +39,8 @@ private:
 	float mRectWidth;
 	float mRectHeight;
 	float mEachHeight;
+
+	Battery::BatterySize mBatterySize;
 
 	Vec2 mMidPos;
 

@@ -57,7 +57,7 @@ void Stage::Initialize_CreateStage(CreateStage* createStage) {
 	//mRectsの初期設定
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
-			mRects[i][j] = RectF({ mLeft + mRectWidth * j,mUp - mRectHeight * i },
+			mRects[i][j] = RectF({ mLeft + mRectWidth * j,mUp - mRectHeight * (i+1)},
 				mRectWidth, mRectHeight);
 		}
 	}
@@ -70,30 +70,30 @@ void Stage::Initialize_CreateStage(CreateStage* createStage) {
 void Stage::SetNewStageObject(int i, int j, StageObject* stageObject) {
 	if (stageObject->GetAttribute() == StageObject::Attribute::Brock) {
 		mStageObjects[i][j] = new Brock(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+		(float)mUp - (i+1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
 	}
 	else if (stageObject->GetAttribute() == StageObject::Attribute::Door) {
 		mStageObjects[i][j]=new Door(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - i * mRectHeight + mRectHeight / 2 }),mRectWidth, mRectHeight);
+		(float)mUp - (i+1) * mRectHeight + mRectHeight / 2 }),mRectWidth, mRectHeight);
 		mStageObjects[i][j]->SetClockwise(stageObject->GetClockwise());
 	}
 	else if (stageObject->GetAttribute() == StageObject::Attribute::Patrol) {
 		mStageObjects[i][j]=new Patrol(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+		(float)mUp - (i+1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
 		mStageObjects[i][j]->SetClockwise(stageObject->GetClockwise());
 		mStageObjects[i][j]->SetPatrolRange(stageObject->GetPatrolRange());
 	}
 	else if (stageObject->GetAttribute() == StageObject::Attribute::Key) {
 		mStageObjects[i][j] = new Key(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+		(float)mUp - (i+1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
 	}
 	else if (stageObject->GetAttribute() == StageObject::Attribute::Battery) {
 		mStageObjects[i][j] = new Battery(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+		(float)mUp - (i+1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
 	}
 	else if (stageObject->GetAttribute() == StageObject::TreasureChest) {
 		mStageObjects[i][j]=new TreasureChest(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+		(float)mUp - (i+1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
 	}
 	mStageObjects[i][j]->SetIsInStage(true);
 	mStageObjects[i][j]->SetIteration(std::pair{ i,j });
@@ -103,27 +103,27 @@ void Stage::SetNewStageObject(int i, int j, StageObject* stageObject) {
 void Stage::SetNewStageObject_Attribute(int i, int j, StageObject::Attribute attribute) {
 	if (attribute == StageObject::Attribute::Brock) {
 		mStageObjects[i][j] = new Brock(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+		(float)mUp - (i+1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
 	}
 	else if (attribute == StageObject::Attribute::Door) {
 		mStageObjects[i][j] = new Door(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+		(float)mUp - (i+1) *mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
 	}
 	else if (attribute == StageObject::Attribute::Patrol) {
 		mStageObjects[i][j] = new Patrol(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+		(float)mUp - (i+1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
 	}
 	else if (attribute == StageObject::Attribute::Key) {
 		mStageObjects[i][j] = new Key(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+		(float)mUp - (i+1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
 	}
 	else if (attribute == StageObject::Attribute::Battery) {
 		mStageObjects[i][j] = new Battery(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+		(float)mUp - (i+1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
 	}
 	else if (attribute == StageObject::TreasureChest) {
 		mStageObjects[i][j] = new TreasureChest(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - i * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+		(float)mUp - (i+1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
 	}
 	mStageObjects[i][j]->SetIsInStage(true);
 	mStageObjects[i][j]->SetIteration(std::pair{ i,j });
