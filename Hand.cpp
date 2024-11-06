@@ -139,10 +139,10 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 			if (inputR.down())mChoosing->RotateClockwise(true);
 			if (inputL.down())mChoosing->RotateClockwise(false);
 		}*/
-		if (mChoosing->GetAttribute() == StageObject::Attribute::Candle) {
+		/*if (mChoosing->GetAttribute() == StageObject::Attribute::Candle) {
 			if (inputPlus.pressed())mChoosing->SpreadLightRad(true);
 			if (inputMinus.pressed())mChoosing->SpreadLightRad(false);
-		}
+		}*/
 		/*if (mChoosing->GetAttribute() == StageObject::Attribute::Patrol) {
 			if (inputPlus.down())mChoosing->AddPatrolRange(true);
 			if (inputMinus.down())mChoosing->AddPatrolRange(false);
