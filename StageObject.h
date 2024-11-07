@@ -57,6 +57,8 @@ public:
 	bool GetIsInObjectMenu() { return mIsInObjectMenu; }
 	int GetCandleIteration() { return mCandleIteration; }
 	void SetCandleIteration(int candleIteration) { mCandleIteration = candleIteration; }
+	float GetLightRadRange() { return mLightRadRange; }
+	void SetLightRadRange(float lightRadRange) { mLightRadRange = lightRadRange; }
 
 	Vec2 GetLeftTop();
 	Vec2 GetRightTop();
@@ -95,6 +97,7 @@ private:
 	float mLightRad;
 	float mMaxLightRad;
 	float mMinLightRad;
+	float mLightRadRange;
 	std::pair<int, int> mIteration;//stageにある場合stageのどこにあるかを保存
 	int mCandleIteration;
 	int mClockwise;

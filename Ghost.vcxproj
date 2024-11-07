@@ -123,7 +123,9 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CreateStage.cpp" />
     <ClCompile Include="Door.cpp" />
+    <ClCompile Include="Escapee.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Hand.cpp" />
     <ClCompile Include="InputComponent_Keyboard.cpp" />
     <ClCompile Include="Key.cpp" />
@@ -131,6 +133,7 @@
     <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="Parent.cpp" />
     <ClCompile Include="Patrol.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="SquareComponent.cpp" />
     <ClCompile Include="Stage.cpp" />
@@ -356,13 +359,16 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="CreateStage.h" />
     <ClInclude Include="Door.h" />
+    <ClInclude Include="Escapee.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Ghost.h" />
     <ClInclude Include="Hand.h" />
     <ClInclude Include="InputComponent_Keyboard.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="Parent.h" />
     <ClInclude Include="Patrol.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="SquareComponent.h" />
     <ClInclude Include="Stage.h" />

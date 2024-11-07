@@ -87,6 +87,11 @@ void DrawSquareDotLine(Vec2 pos1, Vec2 pos2, float linewidth, ColorF color) {
 	.draw(LineStyle::SquareDot, linewidth * GetMagnification(),color);
 }
 
+void DrawLine(Vec2 pos1, Vec2 pos2, float lineWidth, ColorF color) {
+	Line{ ConvertToView(pos1),ConvertToView(pos2) }
+	.draw(lineWidth * GetMagnification(), color);
+}
+
 void DrawArrow(Vec2 from, Vec2 to, float width, Vec2 headSize,ColorF color) {
 	Shape2D::Arrow(ConvertToView(from), ConvertToView(to), GetMagnification() * width, ConvertToView(headSize)).draw(color);
 }
@@ -99,6 +104,12 @@ void DrawPlus(float height, float width, Vec2 pos, float angle,ColorF color) {
 	Shape2D::Plus(height * GetMagnification(), width * GetMagnification(), ConvertToView(pos), angle).draw(color);
 }
 
+void DrawGradiationRect(Vec2 pos, float width, float height, ColorF top, ColorF bottom) {
+	RectF(Arg::center(ConvertToView(pos)),
+		GetScreenWidth() * width / 2,
+		GetScreenHeight() * height / 2).draw(Arg::top (top),Arg::bottom (bottom));
+}
+
 void AddDeltaTime(bool &mIsLasting, float &mTime, float mLastTime, float deltaTime) {
 	if (mIsLasting) {
 		mTime += deltaTime;
@@ -108,3 +119,5 @@ void AddDeltaTime(bool &mIsLasting, float &mTime, float mLastTime, float deltaTi
 		}
 	}
 }
+
+

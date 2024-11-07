@@ -22,15 +22,16 @@ private:
 	class SquareComponent* mBarSC_CreateStage;
 
 	Vec2 mCenter;
-	float mMaxLightRadius;
-	float mMinLightRadius;
-	float mLightRadRange;
 
+	//StageMenu
 	Vec2 mBarCenter;
 	Vec2 mBarPos;
 	float mBarMax;
 	float mBarMin;
 	float mBarHeight;
+	Vec2 mGradiationPos;
+	float mGradiationWidth;
+	float mGradiationHeight;
 
 	bool mIsBarGripen;
 

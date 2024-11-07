@@ -21,7 +21,7 @@ void Candle::InitializeStageObject_CreateStage(class CreateStage* createStage) {
 	InitializeActor_CreateStage(createStage);
 	SetMaxLightRad(GetCreateStage()->GetStage()->GetHeight() / 2);
 	SetMinLightRad(0.0f);
-	mLightRadRange = mMaxLightRadius - mMinLightRadius;
+	SetLightRadRange(GetMaxLightRad() - GetMinLightRad());
 
 	cc = new CircleComponent(this);
 	cc->Initialize_CreateStage();
@@ -40,10 +40,17 @@ void Candle::InitializeStageMenu_CreateStage() {
 		GetCreateStage()->GetStageMenu()->GetMenuLeft() + GetCreateStage()->GetStageMenu()->GetMenuWidth() / 3.0f,
 		GetCreateStage()->GetStageMenu()->GetMenuPos().y
 	);
+	mGradiationPos = Vec2(
+		GetCreateStage()->GetStageMenu()->GetMenuLeft() + GetCreateStage()->GetStageMenu()->GetMenuWidth() * 2.0f / 3.0f,
+		mBarCenter.y
+	);
 
-	mBarHeight = GetCreateStage()->GetStageMenu()->GetMenuHeight() * 3.0f / 4.0f;
-	mBarMax = mBarPos.y + mBarHeight / 2.0f;
-	mBarMin = mBarPos.y - mBarHeight / 2.0f;
+	mGradiationWidth = GetCreateStage()->GetStageMenu()->GetMenuWidth() / 5.0f;
+	mGradiationHeight= GetCreateStage()->GetStageMenu()->GetMenuHeight() * 3.0f / 4.0f;
+
+	mBarHeight = mGradiationHeight;
+	mBarMax = mBarCenter.y + mBarHeight / 2.0f;
+	mBarMin = mBarCenter.y - mBarHeight / 2.0f;
 
 	mBarPos = Vec2(
 		mBarCenter.x,
@@ -53,10 +60,10 @@ void Candle::InitializeStageMenu_CreateStage() {
 	mBarSC_CreateStage = new SquareComponent(this);
 	mBarSC_CreateStage->Initialize_CreateStage(mBarPos,
 		GetCreateStage()->GetStageMenu()->GetMenuWidth() / 6.0f,
-		mBarHeight/10.f);
+		mBarHeight/25.0f);
 	mBarSC_CreateStage->SetColor(ColorF(0, 0, 0));
 
-	Print << mBarPos;
+
 }
 
 void Candle::UpdateStageMenu_CreateStage(float deltaTime) {
@@ -79,10 +86,8 @@ void Candle::UpdateStageMenu_CreateStage(float deltaTime) {
 		if (!GetCreateStage()->GetHand()->GetInputChoose().pressed()) {
 			mIsBarGripen = true;
 		}
-		mBarPos = Vec2(
-			mBarCenter.x,
-			GetCreateStage()->GetHand()->GetPosition().y
-		);
+		mBarPos.y =std::min((float)GetCreateStage()->GetHand()->GetPosition().y, mBarMax);
+		mBarPos.y = std::max((float)GetCreateStage()->GetHand()->GetPosition().y, mBarMin);
 		SetLightRad(ConvertToLightRad(mBarPos.y));
 	}
 	mBarSC_CreateStage->SetCenter(mBarPos);
@@ -90,17 +95,18 @@ void Candle::UpdateStageMenu_CreateStage(float deltaTime) {
 }
 
 void Candle::DrawStageMenu_CreateStage() {
-
+	DrawGradiationRect(mGradiationPos, mGradiationWidth, mGradiationHeight, ColorF(1, 1, 0), ColorF(0, 0, 0));
+	DrawLine(Vec2(mBarCenter.x, mBarMin), Vec2(mBarCenter.x, mBarMax), 0.002, ColorF(0, 0, 0));
 }
 
 void Candle::ShutdownStageMenu_CreateStage() {
-
+	delete mBarSC_CreateStage;
 }
 
 
 float Candle::ConvertToBar(float lightRad) {
-	return mBarMin + lightRad / mLightRadRange * mBarHeight;
+	return mBarMin + lightRad / GetLightRadRange() * mBarHeight;
 }
 float Candle::ConvertToLightRad(float bar) {
-	return mMinLightRadius+(bar - mBarMin) / mBarHeight * mLightRadRange;
+	return GetMinLightRad() + (bar - mBarMin) / mBarHeight * GetLightRadRange();
 }
