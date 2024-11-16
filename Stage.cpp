@@ -10,8 +10,11 @@
 #include"Battery.h"
 #include"Candle.h"
 #include"TreasureChest.h"
-
+#include"Ghost_CreateStage.h"
+#include"Escapee_CreateStage.h"
+#include"StageMenu.h"
 #include<cmath>
+using namespace std;
 
 
 Stage::Stage(float width, float height)
@@ -54,6 +57,13 @@ void Stage::Initialize_CreateStage(CreateStage* createStage) {
 		row.resize(mSideSize);
 	}
 
+	mCanBeGone.resize(mVerticalSize);
+	for (auto& row : mCanBeGone) {
+		row.resize(mSideSize);
+	}
+
+	
+
 	//mRectsの初期設定
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
@@ -95,6 +105,22 @@ void Stage::SetNewStageObject(int i, int j, StageObject* stageObject) {
 		mStageObjects[i][j]=new TreasureChest(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
 		(float)mUp - (i+1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
 	}
+	else if (stageObject->GetAttribute() == StageObject::Ghost) {
+		mStageObjects[i][j] = new Ghost_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth/3.0f, mRectHeight);
+	}
+	else if (stageObject->GetAttribute() == StageObject::Escapee1) {
+		mStageObjects[i][j] = new Escapee_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight,1);
+	}
+	else if (stageObject->GetAttribute() == StageObject::Escapee2) {
+		mStageObjects[i][j] = new Escapee_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight,2);
+	}
+	else if (stageObject->GetAttribute() == StageObject::Escapee3) {
+		mStageObjects[i][j] = new Escapee_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight,3);
+	}
 	mStageObjects[i][j]->SetIsInStage(true);
 	mStageObjects[i][j]->SetIteration(std::pair{ i,j });
 	mStageObjects[i][j]->InitializeStageObject_CreateStage(mCreateStage);
@@ -124,6 +150,22 @@ void Stage::SetNewStageObject_Attribute(int i, int j, StageObject::Attribute att
 	else if (attribute == StageObject::TreasureChest) {
 		mStageObjects[i][j] = new TreasureChest(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
 		(float)mUp - (i+1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
+	}
+	else if (attribute == StageObject::Ghost) {
+		mStageObjects[i][j] = new Ghost_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight);
+	}
+	else if (attribute == StageObject::Escapee1) {
+		mStageObjects[i][j] = new Escapee_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight, 1);
+	}
+	else if (attribute == StageObject::Escapee2) {
+		mStageObjects[i][j] = new Escapee_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight, 2);
+	}
+	else if (attribute == StageObject::Escapee3) {
+		mStageObjects[i][j] = new Escapee_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight, 3);
 	}
 	mStageObjects[i][j]->SetIsInStage(true);
 	mStageObjects[i][j]->SetIteration(std::pair{ i,j });
@@ -164,7 +206,14 @@ void Stage::RemakeStageObjects() {
 
 void Stage::DeleteStageObject(int i,int j) {
 	if (mStageObjects[i][j] == 0)return;
+	if (mStageObjects[i][j]->GetAttribute() == StageObject::Ghost||
+		mStageObjects[i][j]->GetAttribute()==StageObject::Escapee1||
+		mStageObjects[i][j]->GetAttribute()==StageObject::Escapee2||
+		mStageObjects[i][j]->GetAttribute()==StageObject::Escapee3) {
+		mCreateStage->GetStageMenu()->RemakePlayer(mStageObjects[i][j]);
+	}
 	delete mStageObjects[i][j];
+	mStageObjects[i][j] = 0;
 	return;
 }
 
@@ -271,7 +320,7 @@ void Stage::Draw_CreateStage() {
 			if (mCreateStage->GetHand()->GetIsExpand()) {
 				if (mExpandRect.contains(mRects[i][j])) {
 					DrawRectFrame(Vec2{ mLeft + mRectWidth * j + mRectWidth / 2,
-						mUp - mRectHeight * i + mRectHeight / 2 },
+						mUp - mRectHeight * (i+1) + mRectHeight / 2 },
 						mRectWidth, mRectHeight,0.003,0, ColorF(0, 1, 1));
 				}
 			}
@@ -279,7 +328,7 @@ void Stage::Draw_CreateStage() {
 			if (mCreateStage->GetHand()->GetIsDelete()) {
 				if (mDeleteRect.intersects(mRects[i][j])) {
 					DrawRectFrame(Vec2{ mLeft + mRectWidth * j + mRectWidth / 2,
-						mUp - mRectHeight * i + mRectHeight / 2 },
+						mUp - mRectHeight * (i+1) + mRectHeight / 2 },
 						mRectWidth, mRectHeight, 0.003,0, ColorF(1,0,0));
 				}
 			}
@@ -290,28 +339,28 @@ void Stage::Draw_CreateStage() {
 				case 0:
 					for (int di = 0; di < mStageObjects[i][j]->GetPatrolRange(); di++) {
 						DrawRectFrame(Vec2{ mLeft + mRectWidth * j + mRectWidth / 2,
-						mUp - mRectHeight * (i-di) + mRectHeight / 2},
+						mUp - mRectHeight * (i+1-di) + mRectHeight / 2},
 						mRectWidth, mRectHeight, 0.003,0, ColorF(0, (float)102/255, 0));
 					}
 					break;
 				case 1:
 					for (int dj = 0; dj < mStageObjects[i][j]->GetPatrolRange(); dj++) {
 						DrawRectFrame(Vec2{ mLeft + mRectWidth * (j+dj) + mRectWidth / 2,
-						mUp - mRectHeight * i + mRectHeight / 2 },
+						mUp - mRectHeight * (i+1) + mRectHeight / 2 },
 						mRectWidth, mRectHeight, 0.003,0, ColorF(0, (float)102 / 255, 0));
 					}
 					break;
 				case 2:
 					for (int di = 0; di < mStageObjects[i][j]->GetPatrolRange(); di++) {
 						DrawRectFrame(Vec2{ mLeft + mRectWidth * j + mRectWidth / 2,
-						mUp - mRectHeight * (i + di) + mRectHeight / 2 },
+						mUp - mRectHeight * (i+1 + di) + mRectHeight / 2 },
 						mRectWidth, mRectHeight, 0.003,0, ColorF(0, (float)102 / 255, 0));
 					}
 					break;
 				case 3:
 					for (int dj = 0; dj < mStageObjects[i][j]->GetPatrolRange(); dj++) {
 						DrawRectFrame(Vec2{ mLeft + mRectWidth * (j - dj) + mRectWidth / 2,
-						mUp - mRectHeight * i + mRectHeight / 2 },
+						mUp - mRectHeight * (i+1) + mRectHeight / 2 },
 				    	mRectWidth, mRectHeight, 0.003,0, ColorF(0, (float)102 / 255, 0));
 					}
 					break;
@@ -326,4 +375,78 @@ void Stage::Draw_CreateStage() {
 
 RectF Stage::GetViewStageRect() {
 	return RectF(ConvertToView(Vec2{ mLeft,mUp }), GetScreenWidth() * mWidth/2.0f, GetScreenHeight() * mHeight/2.0f);
+}
+
+bool Stage::EndCreateStage() {
+	std::pair<int,int>
+		Ghost=std::pair(-1,-1),
+		Escapee1 = std::pair(-1, -1),
+		Escapee2 = std::pair(-1, -1),
+		Escapee3 = std::pair(-1, -1);
+	for (auto& row : mStageObjects) {
+		for (auto& stageObject : row) {
+			if (stageObject == 0)continue;
+			switch (stageObject->GetAttribute()) {
+			case StageObject::Attribute::Ghost:
+				Ghost = stageObject->GetIteration();
+				break;
+			case StageObject::Attribute::Escapee1:
+				Escapee1 = stageObject->GetIteration();
+				break;
+			case StageObject::Attribute::Escapee2:
+				Escapee2 = stageObject->GetIteration();
+				break;
+			case StageObject::Attribute::Escapee3:
+				Escapee3 = stageObject->GetIteration();
+				break;
+			}
+		}
+	}
+
+	if (Ghost == pair(-1, -1) || Escapee1 == pair(-1, -1) || Escapee2 == pair(-1, -1) || Escapee3 == pair(-1, -1)) {
+		return false;
+	}
+
+
+	for (int i = 0; i < mVerticalSize; i++) {
+		for (int j = 0; j < mSideSize; j++) {
+			mCanBeGone[i][j] = false;
+		}
+	}
+
+	queue<pair<int, int>> q;
+	q.emplace(Escapee1);
+	while (!q.empty()) {
+		int ni = q.front().first, nj = q.front().second;
+		q.pop();
+		if (mCanBeGone[ni][nj]) {
+			continue;
+		}
+		mCanBeGone[ni][nj] = true;
+		for (int k = 0; k < 4; k++) {
+			int nxi = ni + di[k], nxj = nj + dj[k];
+			if (nxi < 0 || nxi >= mVerticalSize || nxj < 0 || nxj >= mSideSize)continue;
+			if ((mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::Brock)
+				||(mStageObjects[nxi][nxj]!=0&&mStageObjects[nxi][nxj]->GetAttribute()==StageObject::Attribute::Wall))continue;
+			q.push(pair(nxi, nxj));
+		}
+	}
+
+	Serializer<BinaryWriter> writer{ U"Stage1.bin" };
+	if (not writer) {
+		throw Error{ U"Failed to open file" };
+	}
+	vector<vector<tuple<StageObject::Attribute, int, int,bool>>>
+		mDetails(mVerticalSize, vector<tuple<StageObject::Attribute, int, int,bool>>(mSideSize,tuple(StageObject::Attribute::None,0,0,false)));
+
+	for (int i = 0; i < mVerticalSize; i++) {
+		for (int j = 0; j < mSideSize; j++) {
+			if (mStageObjects[i][j] == 0)mDetails[i][j] = tuple(StageObject::Attribute::None, 0, 0, mCanBeGone[i][j]);
+			mDetails[i][j] = tuple(mStageObjects[i][j]->GetAttribute(), mStageObjects[i][j]->GetClockwise(), mStageObjects[i][j]->GetPatrolRange(),mCanBeGone[i][j]);
+		}
+	}
+
+	writer(mDetails);
+
+	return true;
 }

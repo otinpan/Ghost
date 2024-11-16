@@ -210,13 +210,10 @@
     <ClCompile Include="Candle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="Ghost_CreateStage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Ghost.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Escapee.cpp">
+    <ClCompile Include="Escapee_CreateStage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -953,13 +950,10 @@
     <ClInclude Include="Candle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="Ghost_CreateStage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Ghost.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Escapee.h">
+    <ClInclude Include="Escapee_CreateStage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

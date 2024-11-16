@@ -120,4 +120,12 @@ void AddDeltaTime(bool &mIsLasting, float &mTime, float mLastTime, float deltaTi
 	}
 }
 
+RectF GetViewRect(Vec2 pos, float width, float height) {
+	return RectF{ Arg::center(ConvertToView(pos)),GetScreenWidth() * width / 2.0f,GetScreenHeight() * height / 2.0f };
+}
+
+Circle GetViewCircle(Vec2 pos, float rad) {
+	return Circle{ ConvertToView(pos),GetMagnification() * rad };
+}
+
 

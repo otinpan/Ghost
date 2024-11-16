@@ -57,6 +57,8 @@ public:
 	void SetRotation(float rotation) { mRotation = rotation; }
 	bool GetIsDead() { return mIsDead; }
 	void SetIsDead(bool isDead) { mIsDead = isDead; }
+	float GetSpeed() { return mSpeed; }
+	void SetSpeed(float speed) { mSpeed = speed; }
 
 	Vec2 GetForward() const { return Vec2(Math::Cos(mRotation), -Math::Sin(mRotation)); }
 
@@ -78,6 +80,7 @@ private:
 	Vec2 mPosition;
 	float mScale;
 	float mRotation;
+	float mSpeed;
 
 	bool mIsDead;
 

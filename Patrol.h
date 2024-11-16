@@ -22,6 +22,7 @@ private:
 	class CircleComponent* mLeftCC;
 	class CircleComponent* mPlusCC;
 	class CircleComponent* mMinusCC;
+	class SquareComponent* mBarSC_CreateStage;
 
 	Vec2 mTriCenter;
 	Vec2 mUpTriPos;
@@ -46,4 +47,18 @@ private:
 	float mMinusLastTime;
 	bool mIsPlusLasting;
 	bool mIsMinusLasting;
+
+
+	//Speed
+	Vec2 mBarCenter;
+	Vec2 mBarPos;
+	float mBarWidth;
+	float mBarMin;
+	float mBarMax;
+	bool mIsBarGripen;
+
+	//Font
+	Font mStageMenuFont{ConvertToInt((float)0.05 * GetMagnification())};
+	Font mSpeedFont{ ConvertToInt((float)0.04 * GetMagnification()) };
+
 };

@@ -16,6 +16,10 @@ public:
 		Key,
 		TreasureChest,
 		Candle,
+		Ghost,
+		Escapee1,
+		Escapee2,
+		Escapee3,
 	};
 
 	void InitializeActor_CreateStage(class CreateStage* createstage)override;
@@ -105,3 +109,6 @@ private:
 	int mPatrolRange;
 	
 };
+
+float ConvertToSpeed(float barMin,float barWidth,float pos);
+int ConvertToInt(float f);

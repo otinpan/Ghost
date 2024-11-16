@@ -9,6 +9,8 @@
 #include"Wall.h"
 #include"Door.h"
 #include"StageMenu.h"
+#include"SquareComponent.h"
+#include"CircleComponent.h"
 
 Hand::Hand()
 	:StandardSpeed(0.3f)
@@ -123,7 +125,23 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 			}
 
 		}
+
+		//End
+		if (cc->GetViewCircle().
+			intersects(GetViewRect(GetCreateStage()->GetStageMenu()->GetEndPos(),
+				GetCreateStage()->GetStageMenu()->GetEndRectWidth(),
+				GetCreateStage()->GetStageMenu()->GetEndRectHeight()))) {
+			GetCreateStage()->GetStageMenu()->SetIsEndOver(true);
+			if (inputChoose.down()) {
+				GetCreateStage()->GetStage()->EndCreateStage();
+			}
+		}
+		else {
+			GetCreateStage()->GetStageMenu()->SetIsEndOver(false);
+		}
+		
 	}
+	//Delete
 	if (!mIsGrap && !mIsExpand && !mIsDelete) {
 		if (inputDelete.pressed()) {
 			mIsDelete = true;
@@ -134,19 +152,6 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 	}
 	if (mIsChoose) {
 		mChoosing->UpdateStageMenu_CreateStage(deltaTime);
-		/*if (mChoosing->GetAttribute() == StageObject::Attribute::Door ||
-			mChoosing->GetAttribute() == StageObject::Attribute::Patrol) {
-			if (inputR.down())mChoosing->RotateClockwise(true);
-			if (inputL.down())mChoosing->RotateClockwise(false);
-		}*/
-		/*if (mChoosing->GetAttribute() == StageObject::Attribute::Candle) {
-			if (inputPlus.pressed())mChoosing->SpreadLightRad(true);
-			if (inputMinus.pressed())mChoosing->SpreadLightRad(false);
-		}*/
-		/*if (mChoosing->GetAttribute() == StageObject::Attribute::Patrol) {
-			if (inputPlus.down())mChoosing->AddPatrolRange(true);
-			if (inputMinus.down())mChoosing->AddPatrolRange(false);
-		}*/
 		//stage外でChooseが押された場合mCooseが選択されていない状態にする
 		if (inputChoose.down()) {
 			if (!(GetCreateStage()->GetStageMenu()->GetViewStageMenuRect().
@@ -193,6 +198,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 				mIsGrap = false;
 				return;
 			}
+			mIsSetOnStage = false;
 			//StageのmRectsとの当たり判定
 			for (int i = 0; i < GetCreateStage()->GetStage()->GetVerticalSize(); i++) {
 				for (int j = 0; j < GetCreateStage()->GetStage()->GetSideSize(); j++) {
@@ -200,6 +206,8 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 						.contains(cc->GetCircle()) &&
 						GetCreateStage()->GetStage()->GetStageObjects()[i][j] == 0) {
 						GetCreateStage()->GetStage()->SetNewStageObject(i, j, mGrapping);
+						mIsSetOnStage = true;
+						break;
 					}
 				}
 			}
@@ -208,7 +216,10 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 			if (mGrapping->GetIsInObjectMenu()) {
 				GetCreateStage()->GetStageMenu()->RemakeStageObject(mGrapping);
 			}
-			
+
+			if (!mIsSetOnStage) {
+				GetCreateStage()->GetStageMenu()->RemakePlayer(mGrapping);
+			}
 			delete mGrapping;
 			mGrapping = 0;
 			mIsGrap = false;

@@ -2,9 +2,9 @@
 #include"CreateStage.h"
 #include"StageObject.h"
 
-class Stage :public Actor{
+class Stage :public Actor {
 public:
-	Stage(float width,float height);
+	Stage(float width, float height);
 	~Stage();
 
 	void Initialize_CreateStage(CreateStage* createStage);
@@ -31,7 +31,7 @@ public:
 	void SetDeleteFulcrumPos(Vec2 pos) { mDeleteFulcrumPos = pos; }
 	bool SetNewCandle(class StageObject* candle);
 	void DeleteCandle(class StageObject* candle);
-	
+
 
 	RectF GetStageRect() { return mStageRect; }
 	RectF GetViewStageRect();
@@ -40,13 +40,17 @@ public:
 	std::vector<std::vector<RectF>>& GetRects() { return mRects; }
 	std::vector<class Candle*>& GetCandle() { return mCandles; }
 
-	void SetNewStageObject(int i, int j,StageObject* stageObject);
+	void SetNewStageObject(int i, int j, StageObject* stageObject);
 	void SetNewStageObject_Attribute(int i, int j, StageObject::Attribute attribute);
 	void RemakeStageObjects();
-	void DeleteStageObject(int i,int j);
+	void DeleteStageObject(int i, int j);
 	void DeleteStageObjects();
 
+	//End
+	bool EndCreateStage();
+
 	int GetRevHandToFul(int i, int j); //mHandがmFulcrumに対してどこにあるか
+
 
 private:
 	class CreateStage* mCreateStage;
@@ -77,6 +81,7 @@ private:
 	std::vector<std::vector<RectF>> mRects;
 	RectF mStageRect;
 	RectF mDeleteRect;
-
-	
+	std::vector<std::vector<bool>> mCanBeGone;
+	std::vector<int> di = {0, 0, 1, -1};
+	std::vector<int> dj = { 1,-1,0,0 };
 };

@@ -9,6 +9,7 @@ Patrol::Patrol(Vec2 pos, float width, float height)
 	,mIsMinusLasting(false)
 	,mPlusTime(0.0)
 	,mMinusTime(0.0)
+	,mIsBarGripen(false)
 {
 	SetAttribute(Attribute::Patrol);
 }
@@ -25,9 +26,24 @@ Patrol::~Patrol() {
 }
 
 void Patrol::InitializeStageMenu_CreateStage() {
+	mBarCenter = Vec2(
+		(GetCreateStage()->GetStageMenu()->GetMenuRight() + GetCreateStage()->GetStageMenu()->GetMenuLeft()) / 2.0f,
+		(GetCreateStage()->GetStageMenu()->GetMenuUp() + GetCreateStage()->GetStageMenu()->GetMenuDown()) *4.0f / 5.0f
+	);
+	mBarWidth = GetCreateStage()->GetStageMenu()->GetMenuWidth() * 3.0f / 4.0f;
+	mBarMin = mBarCenter.x - mBarWidth / 2.0f;
+	mBarMax = mBarCenter.x + mBarWidth / 2.0f;
+	mBarPos = mBarCenter;
+	SetSpeed(ConvertToSpeed(mBarMin, mBarWidth, mBarPos.x));
+
+	mBarSC_CreateStage = new SquareComponent(this);
+	mBarSC_CreateStage->Initialize_CreateStage(mBarPos,
+		mBarWidth / 25.0f, GetCreateStage()->GetStageMenu()->GetMenuHeight() / 20.0f);
+	mBarSC_CreateStage->SetColor(ColorF(0, 0, 0));
+
 	mTriCenter = Vec2(
 		(GetCreateStage()->GetStageMenu()->GetMenuRight() + GetCreateStage()->GetStageMenu()->GetMenuLeft()) / 2.0f,
-		(GetCreateStage()->GetStageMenu()->GetMenuUp() + GetCreateStage()->GetStageMenu()->GetMenuDown())*2.0f / 3.0f
+		(GetCreateStage()->GetStageMenu()->GetMenuUp() + GetCreateStage()->GetStageMenu()->GetMenuDown())*2.0f / 4.0f
 	);
 	mTriLength = GetCreateStage()->GetStageMenu()->GetMenuWidth() / 5.0f;
 	mTriLengthFromCenter = GetCreateStage()->GetStageMenu()->GetMenuWidth() / 4.0f;
@@ -76,7 +92,7 @@ void Patrol::InitializeStageMenu_CreateStage() {
 
 	mAddCenter= Vec2(
 		(GetCreateStage()->GetStageMenu()->GetMenuRight() + GetCreateStage()->GetStageMenu()->GetMenuLeft()) / 2.0f,
-		(GetCreateStage()->GetStageMenu()->GetMenuUp() + GetCreateStage()->GetStageMenu()->GetMenuDown()) * 1.0f / 3.0f
+		(GetCreateStage()->GetStageMenu()->GetMenuUp() + GetCreateStage()->GetStageMenu()->GetMenuDown()) * 1.0f / 5.0f
 	);
 	mAddLengthFromCenter= GetCreateStage()->GetStageMenu()->GetMenuWidth() / 4.0f;
 
@@ -109,9 +125,29 @@ void Patrol::InitializeStageMenu_CreateStage() {
 
 	mPlusLastTime = 0.03;
 	mMinusLastTime = 0.03;
+
+	
 }
 
 void Patrol::UpdateStageMenu_CreateStage(float deltaTime) {
+	if (!mIsBarGripen) {
+		if (IsIntersect_SC(mBarSC_CreateStage, GetCreateStage()->GetHand()->GetCircleComponent())) {
+			if (GetCreateStage()->GetHand()->GetInputChoose().pressed()) {
+				mIsBarGripen = true;
+			}
+		}
+	}
+	else {
+		if (!GetCreateStage()->GetHand()->GetInputChoose().pressed()) {
+			mIsBarGripen = false;
+		}
+		mBarPos.x = GetCreateStage()->GetHand()->GetPosition().x;
+		if (mBarPos.x < mBarMin)mBarPos.x = mBarMin;
+		if (mBarPos.x > mBarMax)mBarPos.x = mBarMax;
+		SetSpeed(ConvertToSpeed(mBarMin, mBarWidth, mBarPos.x));
+	}
+	mBarSC_CreateStage->SetCenter(mBarPos);
+
 	if (GetCreateStage()->GetHand()->GetInputU().down()) {
 		SetClockwise(0);
 	}
@@ -162,6 +198,7 @@ void Patrol::UpdateStageMenu_CreateStage(float deltaTime) {
 			mIsMinusLasting = true;
 		}
 	}
+	AdjustPatrolRange();
 }
 
 void Patrol::DrawStageMenu_CreateStage() {
@@ -203,6 +240,13 @@ void Patrol::DrawStageMenu_CreateStage() {
 	else {
 		DrawRect(mMinusPos, mMinusWidth, mMinusHeight, ColorF(0,0,0));
 	}
+	DrawLine(Vec2(mBarMin, mBarCenter.y), Vec2(mBarMax, mBarCenter.y), 0.002, ColorF(0, 0, 0));
+
+	mStageMenuFont(U"Speed").draw(Arg::center(ConvertToView(Vec2(mBarCenter.x, mBarCenter.y + 0.08))), ColorF(0, 0, 0));
+	mSpeedFont(Format((int)GetSpeed())).draw(Arg::center(ConvertToView(Vec2(mBarMax, mBarCenter.y + 0.08))), ColorF(0, 0, 0));
+	mStageMenuFont(U"Way").draw(Arg::center(ConvertToView(Vec2(mTriCenter.x, mTriCenter.y + 0.13f))), ColorF(0, 0, 0));
+	mStageMenuFont(U"Range").draw(Arg::center(ConvertToView(Vec2(mAddCenter.x, mAddCenter.y + 0.09))), ColorF(0, 0, 0));
+	mStageMenuFont(Format(GetPatrolRange())).draw(Arg::center(ConvertToView(Vec2(mMinusPos.x+0.03, mAddCenter.y + 0.09))), ColorF(0, 0, 0));
 }
 
 void Patrol::ShutdownStageMenu_CreateStage() {
@@ -212,4 +256,5 @@ void Patrol::ShutdownStageMenu_CreateStage() {
 	delete mLeftCC;
 	delete mPlusCC;
 	delete mMinusCC;
+	delete mBarSC_CreateStage;
 }

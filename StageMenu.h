@@ -19,6 +19,15 @@ public:
 	float GetMenuHeight() { return mMenuHeight; }
 	Vec2 GetMenuPos() { return mMenuPos; }
 	void RemakeStageObject(class StageObject* stageObject);
+	void RemakePlayer(class StageObject* stageObject);
+
+	//End
+	Vec2 GetEndPos() { return mEndPos; }
+	float GetEndRectWidth() { return mEndRectWidth; }
+	float GetEndRectHeight() { return mEndRectHeight; }
+	bool GetIsEndOver() { return mIsEndOver; }
+	void SetIsEndOver(bool isEndOver) { mIsEndOver = isEndOver; }
+
 
 	class Brock*& GetBrock() { return mBrock; }
 
@@ -26,6 +35,7 @@ public:
 
 private:
 	class CreateStage* mCreateStage;
+	class SquareComponent* mEndSC;
 
 	float mMenuLeft;
 	float mMenuUp;
@@ -45,6 +55,18 @@ private:
 	float mObjectMenuHeight;
 	Vec2 mObjectMenuPos;
 
+	//Player
+	Vec2 mPlayerPos;
+	float mPlayerRectWidth;
+	float mPlayerRectHeight;
+
+	//End
+	Vec2 mEndPos;
+	float mEndRectWidth;
+	float mEndRectHeight;
+	RectF mEndRect;
+	bool mIsEndOver;
+
 	int mObjectNum; //Objectの種類数
 	float mObjectEachWidth;
 
@@ -55,4 +77,8 @@ private:
 	class Key* mKey;
 	class TreasureChest* mTreasureChest;
 	class Candle* mCandle;
+	class Escapee_CreateStage* mEscapee1;
+	class Escapee_CreateStage* mEscapee2;
+	class Escapee_CreateStage* mEscapee3;
+	class Ghost_CreateStage* mGhost;
 };

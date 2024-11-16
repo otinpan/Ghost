@@ -74,5 +74,6 @@ private:
 	bool mIsExpand;
 	bool mIsChoose;
 	bool mIsDelete;
+	bool mIsSetOnStage;
 };
 

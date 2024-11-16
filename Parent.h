@@ -38,3 +38,5 @@ void DrawTriangle(Vec2 pos, float length,float deg,ColorF color);
 void AddDeltaTime(bool&mIsLasting,float &mTime,float mLastTime,float deltaTime);
 void DrawPlus(float hegiht, float width, Vec2 pos, float angle, ColorF color);
 void DrawGradiationRect(Vec2 pos, float width, float height, ColorF top, ColorF bottom);
+RectF GetViewRect(Vec2 pos, float width, float height);
+Circle GetViewCircle(Vec2 pos, float rad);

@@ -55,6 +55,7 @@ void Candle::InitializeStageMenu_CreateStage() {
 	mBarPos = Vec2(
 		mBarCenter.x,
 		ConvertToBar(GetLightRad())
+		
 	);
 
 	mBarSC_CreateStage = new SquareComponent(this);
@@ -84,10 +85,11 @@ void Candle::UpdateStageMenu_CreateStage(float deltaTime) {
 	}
 	else {
 		if (!GetCreateStage()->GetHand()->GetInputChoose().pressed()) {
-			mIsBarGripen = true;
+			mIsBarGripen = false;
 		}
-		mBarPos.y =std::min((float)GetCreateStage()->GetHand()->GetPosition().y, mBarMax);
-		mBarPos.y = std::max((float)GetCreateStage()->GetHand()->GetPosition().y, mBarMin);
+		mBarPos.y = GetCreateStage()->GetHand()->GetPosition().y;
+		if (mBarPos.y > mBarMax) mBarPos.y = mBarMax;
+		if (mBarPos.y < mBarMin)mBarPos.y = mBarMin;
 		SetLightRad(ConvertToLightRad(mBarPos.y));
 	}
 	mBarSC_CreateStage->SetCenter(mBarPos);

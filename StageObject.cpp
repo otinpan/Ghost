@@ -54,19 +54,32 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 		sqc->SetColor(ColorF(0, 0, 0));
 		break;
 	case Attribute::Patrol:
-		sqc->SetColor(ColorF(0, (float)102/255, 0));
+		sqc->SetColor(ColorF(0, (float)102 / 255, 0));
 		break;
 	case Attribute::Key:
-		sqc->SetColor(ColorF((float)76/255, (float)0, (float)153/255));
+		sqc->SetColor(ColorF((float)76 / 255, (float)0, (float)153 / 255));
 		break;
 	case Attribute::Battery:
 		sqc->SetColor(ColorF(0, 1, 128.0f / 255.0f));
 		break;
 	case Attribute::TreasureChest:
-		sqc->SetColor(ColorF(1,1,0));
+		sqc->SetColor(ColorF(1, 1, 0));
 		break;
 	case Attribute::Candle:
 		sqc->SetColor(ColorF(1, 1, 1));
+		break;
+	case Attribute::Ghost:
+		sqc->SetColor(ColorF(76.0f / 255.0f, 0, 204.0f / 255.0f));
+		break;
+	case Attribute::Escapee1:
+		sqc->SetColor(ColorF(204.0f / 255.0f, 0, 204.0f/255.0f));
+		break;
+	case Attribute::Escapee2:
+		sqc->SetColor(ColorF(102.0f / 255.0f, 178.0f/255.0f, 1));
+		break;
+	case Attribute::Escapee3:
+		sqc->SetColor(ColorF(153.0f / 255.0f, 1.0f,153.0f / 255.0f));
+		break;
 	}
 
 	cc.resize(4);
@@ -84,7 +97,7 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 }
 
 void StageObject::InitializeStageObject_CreateStage(class CreateStage* createstage) {
-
+	InitializeActor_CreateStage(createstage);
 }
 
 
@@ -144,7 +157,7 @@ void StageObject::AddPatrolRange(bool isPlus) {
 void StageObject::AdjustPatrolRange() {
 	switch (mClockwise) {
 	case 0:
-		mPatrolRange = std::min(mPatrolRange,mIteration.first);
+		mPatrolRange = std::min(mPatrolRange,mIteration.first+1);
 		break;
 	case 1:
 		mPatrolRange = std::min(mPatrolRange,
@@ -152,7 +165,7 @@ void StageObject::AdjustPatrolRange() {
 		break;
 	case 2:
 		mPatrolRange = std::min(mPatrolRange,
-			GetCreateStage()->GetStage()->GetVerticalSize() - mIteration.first+1);
+			GetCreateStage()->GetStage()->GetVerticalSize() - mIteration.first);
 		break;
 	case 3:
 		mPatrolRange = std::min(mPatrolRange, mIteration.second+1);
@@ -199,4 +212,11 @@ void StageObject::InitializeStageMenu_CreateStage() {
 
 void StageObject::ShutdownStageMenu_CreateStage() {
 
+}
+
+float ConvertToSpeed(float barMin, float barWidth, float pos) {
+	return (pos - barMin) / barWidth * 100.0f;
+}
+int ConvertToInt(float f) {
+	return (int)f;
 }
