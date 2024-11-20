@@ -19,6 +19,7 @@ Actor::Actor()
 	,mGame(0)
 	,mCreateStage(0)
 	,mIsDead(false)
+	,mSpeed(50.0f)
 {
 }
 

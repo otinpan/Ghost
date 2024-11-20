@@ -45,7 +45,7 @@ void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 	inputRight = KeyD;
 	inputLeft = KeyA;
 	inputGrap = KeyEnter;
-	inputBack = KeyL;
+	inputBack = KeyK;
 	inputR = KeyRight;
 	inputL = KeyLeft;
 	inputU = KeyUp;

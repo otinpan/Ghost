@@ -180,3 +180,11 @@ void TreasureChest::ShutdownStageMenu_CreateStage() {
 	delete mMidCC;
 	delete mBigCC;
 }
+
+void TreasureChest::InitializeStageObject_Game(class Game* game) {
+	InitializeActor_Game(game);
+}
+
+void TreasureChest::UpdateStageObject_Game(float deltaTime) {
+
+}

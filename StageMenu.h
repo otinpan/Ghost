@@ -1,4 +1,7 @@
 ﻿#pragma once
+#include<Siv3D.hpp>
+#include"Parent.h"
+#include"StageObject.h"
 
 
 class StageMenu {
@@ -81,4 +84,7 @@ private:
 	class Escapee_CreateStage* mEscapee2;
 	class Escapee_CreateStage* mEscapee3;
 	class Ghost_CreateStage* mGhost;
+
+	//Font
+	Font mEndFont{ ConvertToInt((float)0.08 * GetMagnification()),Typeface::Bold};
 };

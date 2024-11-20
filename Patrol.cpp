@@ -33,8 +33,10 @@ void Patrol::InitializeStageMenu_CreateStage() {
 	mBarWidth = GetCreateStage()->GetStageMenu()->GetMenuWidth() * 3.0f / 4.0f;
 	mBarMin = mBarCenter.x - mBarWidth / 2.0f;
 	mBarMax = mBarCenter.x + mBarWidth / 2.0f;
-	mBarPos = mBarCenter;
-	SetSpeed(ConvertToSpeed(mBarMin, mBarWidth, mBarPos.x));
+	mBarPos = Vec2(
+		mBarMin + mBarWidth * GetSpeed() / 100.0f,
+		mBarCenter.y
+	);
 
 	mBarSC_CreateStage = new SquareComponent(this);
 	mBarSC_CreateStage->Initialize_CreateStage(mBarPos,
@@ -257,4 +259,12 @@ void Patrol::ShutdownStageMenu_CreateStage() {
 	delete mPlusCC;
 	delete mMinusCC;
 	delete mBarSC_CreateStage;
+}
+
+void Patrol::InitializeStageObject_Game(class Game* game) {
+	InitializeActor_Game(game);
+}
+
+void Patrol::UpdateStageObject_Game(float deltaTime) {
+
 }

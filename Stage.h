@@ -8,6 +8,10 @@ public:
 	~Stage();
 
 	void Initialize_CreateStage(CreateStage* createStage);
+	void Initialize_Game(Game* game,FilePath fileName);
+
+	void Update_Game(float deltaTime);
+	void Draw_Game(float deltaTime);
 
 	void Update_CreateStage(float deltaTime);
 	void Draw_CreateStage();
@@ -84,4 +88,17 @@ private:
 	std::vector<std::vector<bool>> mCanBeGone;
 	std::vector<int> di = {0, 0, 1, -1};
 	std::vector<int> dj = { 1,-1,0,0 };
+
+	//Save
+	bool mIsSaveError;
+	Vec2 mSaveErrorPos;
+	float mSaveErrorRectWidth;
+	float mSaveErrorRectHeight;
+
+	//Font
+	const Font mSaveErrorFont{ ConvertToInt(0.05 * GetMagnification()),Typeface::Bold };
+
+	//Game//////////////////////////////////////////////////////////
+	class Game* mGame;
+
 };

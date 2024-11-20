@@ -214,6 +214,18 @@ void StageObject::ShutdownStageMenu_CreateStage() {
 
 }
 
+
+void StageObject::InitializeActor_Game(class Game* game) {
+	Initialize_Game(game);
+}
+
+void StageObject::InitializeStageObject_Game(class Game* game) {
+	InitializeActor_Game(game);
+}
+
+
+
+
 float ConvertToSpeed(float barMin, float barWidth, float pos) {
 	return (pos - barMin) / barWidth * 100.0f;
 }

@@ -25,8 +25,15 @@ public:
 	void InitializeActor_CreateStage(class CreateStage* createstage)override;
 	virtual void InitializeStageObject_CreateStage(class CreateStage* createStage);
 
+	void InitializeActor_Game(class Game* game)override;
+	virtual void InitializeStageObject_Game(class Game* game);
+
 	void UpdateActor_CreateStage(float deltaTime)override;
 	virtual void UpdateStageObject_CreateStage(float deltaTime);
+
+	void UpdateActor_Game(float deltaTime)override;
+	virtual void UpdateStageObject_Game(float deltaTime);
+
 	void ActorInput(std::vector<Input> keyState)override;
 
 	class SquareComponent*& GetSquareComponent() { return sqc; }
@@ -63,6 +70,7 @@ public:
 	void SetCandleIteration(int candleIteration) { mCandleIteration = candleIteration; }
 	float GetLightRadRange() { return mLightRadRange; }
 	void SetLightRadRange(float lightRadRange) { mLightRadRange = lightRadRange; }
+	
 
 	Vec2 GetLeftTop();
 	Vec2 GetRightTop();

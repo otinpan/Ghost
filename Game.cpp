@@ -104,6 +104,9 @@ void Game::draw() {
 	for (auto circle : mCircles) {
 		circle->Draw();
 	}
+	for (auto square : mSquares) {
+		square->Draw();
+	}
 	for (auto sprite : mSprites) {
 		
 	}

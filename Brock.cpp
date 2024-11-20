@@ -127,4 +127,12 @@ void Brock::ShutdownStageMenu_CreateStage() {
 	delete GrassSC;
 }
 
+void Brock::InitializeStageObject_Game(class Game* game) {
+	InitializeActor_Game(game);
+}
+
+void Brock::UpdateStageObject_Game(float deltaTime) {
+
+}
+
 

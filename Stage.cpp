@@ -32,13 +32,27 @@ Stage::Stage(float width, float height)
 	,mDeleteRectCenter({0,0})
 	,mDeleteRectWidth(0.0f)
 	,mDeleteRectHeight(0.0f)
+	,mIsSaveError(false)
 {
 	mRectWidth = mWidth / mSideSize;
 	mRectHeight = mHeight / mVerticalSize;
 
 }
 
-Stage::~Stage() {}
+Stage::~Stage() {
+	for (int i = 0; i < mVerticalSize; i++) {
+		for (int j = 0; j < mSideSize; j++) {
+			if (mStageObjects[i][j] == 0)continue;
+			delete mStageObjects[i][j];
+			mStageObjects[i][j] = 0;
+		}
+	}
+	for (int i = 0; i < mCandles.size(); i++) {
+		if (mCandles[i] == 0)continue;
+		delete mCandles[i];
+		mCandles[i] = 0;
+	}
+}
 
 void Stage::Initialize_CreateStage(CreateStage* createStage) {
 	mStageObjects.resize(mVerticalSize);
@@ -75,6 +89,11 @@ void Stage::Initialize_CreateStage(CreateStage* createStage) {
 	mCreateStage = createStage;
 	mStageRect = RectF({ mLeft,mUp }, mWidth, mHeight);
 
+	//SaveError
+	mSaveErrorRectWidth = 1.0;
+	mSaveErrorRectHeight = 0.4;
+	mSaveErrorPos = Vec2(0, 0);
+
 }
 
 void Stage::SetNewStageObject(int i, int j, StageObject* stageObject) {
@@ -85,13 +104,10 @@ void Stage::SetNewStageObject(int i, int j, StageObject* stageObject) {
 	else if (stageObject->GetAttribute() == StageObject::Attribute::Door) {
 		mStageObjects[i][j]=new Door(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
 		(float)mUp - (i+1) * mRectHeight + mRectHeight / 2 }),mRectWidth, mRectHeight);
-		mStageObjects[i][j]->SetClockwise(stageObject->GetClockwise());
 	}
 	else if (stageObject->GetAttribute() == StageObject::Attribute::Patrol) {
 		mStageObjects[i][j]=new Patrol(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
 		(float)mUp - (i+1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
-		mStageObjects[i][j]->SetClockwise(stageObject->GetClockwise());
-		mStageObjects[i][j]->SetPatrolRange(stageObject->GetPatrolRange());
 	}
 	else if (stageObject->GetAttribute() == StageObject::Attribute::Key) {
 		mStageObjects[i][j] = new Key(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
@@ -121,9 +137,13 @@ void Stage::SetNewStageObject(int i, int j, StageObject* stageObject) {
 		mStageObjects[i][j] = new Escapee_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
 		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight,3);
 	}
+	mStageObjects[i][j]->SetSpeed(stageObject->GetSpeed());
+	mStageObjects[i][j]->SetClockwise(stageObject->GetClockwise());
+	mStageObjects[i][j]->SetPatrolRange(stageObject->GetPatrolRange());
 	mStageObjects[i][j]->SetIsInStage(true);
 	mStageObjects[i][j]->SetIteration(std::pair{ i,j });
 	mStageObjects[i][j]->InitializeStageObject_CreateStage(mCreateStage);
+
 }
 
 void Stage::SetNewStageObject_Attribute(int i, int j, StageObject::Attribute attribute) {
@@ -266,6 +286,13 @@ void Stage::Update_CreateStage(float delteTime) {
 		mDeleteRectHeight = abs(mDeleteFulcrumPos.y - mCreateStage->GetHand()->GetPosition().y);
 		mDeleteRect = RectF{ Arg::center(mDeleteRectCenter),mDeleteRectWidth,mDeleteRectHeight };
 	}
+
+
+	if (mIsSaveError) {
+		if (mCreateStage->GetHand()->GetInputBack().down()) {
+			mIsSaveError = false;
+		}
+	}
 }
 
 int Stage::GetRevHandToFul(int i, int j) {
@@ -370,6 +397,10 @@ void Stage::Draw_CreateStage() {
 		}
 	}
 
+	if (mIsSaveError) {
+		DrawRect(mSaveErrorPos, mSaveErrorRectWidth, mSaveErrorRectHeight, ColorF(1, 1, 1));
+		mSaveErrorFont(U"You don't arrange any players").draw(Arg::center(ConvertToView(mSaveErrorPos)), ColorF(0, 0, 0));
+	}
 }
 
 
@@ -404,6 +435,7 @@ bool Stage::EndCreateStage() {
 	}
 
 	if (Ghost == pair(-1, -1) || Escapee1 == pair(-1, -1) || Escapee2 == pair(-1, -1) || Escapee3 == pair(-1, -1)) {
+		mIsSaveError = true;
 		return false;
 	}
 
@@ -436,17 +468,56 @@ bool Stage::EndCreateStage() {
 	if (not writer) {
 		throw Error{ U"Failed to open file" };
 	}
-	vector<vector<tuple<StageObject::Attribute, int, int,bool>>>
-		mDetails(mVerticalSize, vector<tuple<StageObject::Attribute, int, int,bool>>(mSideSize,tuple(StageObject::Attribute::None,0,0,false)));
+	vector<vector<tuple<StageObject::Attribute, int, int,float,bool>>>
+		mDetails(mVerticalSize, vector<tuple<StageObject::Attribute, int, int,float, bool>>(mSideSize,tuple(StageObject::Attribute::None,0,0,0.0f,false)));
 
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
-			if (mStageObjects[i][j] == 0)mDetails[i][j] = tuple(StageObject::Attribute::None, 0, 0, mCanBeGone[i][j]);
-			mDetails[i][j] = tuple(mStageObjects[i][j]->GetAttribute(), mStageObjects[i][j]->GetClockwise(), mStageObjects[i][j]->GetPatrolRange(),mCanBeGone[i][j]);
+			if (mStageObjects[i][j] == 0)mDetails[i][j] = tuple(StageObject::Attribute::None, 0, 0,0.0f, mCanBeGone[i][j]);
+			else mDetails[i][j] = tuple(mStageObjects[i][j]->GetAttribute(), mStageObjects[i][j]->GetClockwise(), mStageObjects[i][j]->GetPatrolRange(),mStageObjects[i][j]->GetSpeed(),mCanBeGone[i][j]);
 		}
 	}
 
 	writer(mDetails);
 
+	vector<tuple<bool,Vec2, float>> mCandleDetails(mCandles.size(), tuple(false,Vec2(0, 0), 0.0f));
+	for (int i = 0; i < mCandles.size(); i++) {
+		if (mCandles[i] == 0)continue;
+		else mCandleDetails[i] = tuple(true, mCandles[i]->GetPosition(),mCandles[i]-> GetLightRad());
+	}
+	writer(mCandleDetails);
 	return true;
+}
+
+
+
+//Game//////////////////////////////////////////////////////////////////////////////////////
+void Stage::Initialize_Game(class Game* game, FilePath fileName) {
+	mGame = game;
+	Serializer<BinaryReader> reader{ fileName };
+	vector<vector<tuple<StageObject::Attribute, int, int, float, bool>>>
+		mDetails(mVerticalSize, vector<tuple<StageObject::Attribute, int, int, float, bool>>(mSideSize, tuple(StageObject::Attribute::None, 0, 0, 0.0f, false)));
+	vector<tuple<bool, Vec2, float>> mCandleDetails(mCandles.size(), tuple(false, Vec2(0, 0), 0.0f));
+
+	reader(mDetails);
+	reader(mCandleDetails);
+
+	vector<vector<bool>> mCanBeGone(mVerticalSize, vector<bool>(mSideSize));
+
+	for (int i = 0; i < mVerticalSize; i++) {
+		for (int j = 0; j < mSideSize; j++) {
+			if (mDetails[i][j] == tuple(StageObject::Attribute::None, 0, 0, 0.0f, mCanBeGone[i][j])) {
+				mStageObjects[i][j] = 0;
+			}
+			else {
+				SetNewStageObject_Attribute(i, j, get<0>(mDetails[i][j]));
+				mStageObjects[i][j]->SetClockwise(get<1>(mDetails[i][j]));
+				mStageObjects[i][j]->SetPatrolRange(get<2>(mDetails[i][j]));
+				mStageObjects[i][j]->SetSpeed(get<3>(mDetails[i][j]));
+			}
+			mCanBeGone[i][j] = get<4>(mDetails[i][j]);
+		}
+	}
+
+
 }

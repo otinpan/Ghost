@@ -152,3 +152,10 @@ void Door::ShutdownStageMenu_CreateStage() {
 	return;
 }
 
+void Door::InitializeStageObject_Game(class Game* game) {
+	InitializeActor_Game(game);
+}
+
+void Door::UpdateStageObject_Game(float deltaTime) {
+
+}

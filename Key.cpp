@@ -17,3 +17,11 @@ void Key::InitializeStageObject_CreateStage(class CreateStage* createStage) {
 void Key::UpdateStageObject_CreateStage(float deltaTime) {
 
 }
+
+void Key::InitializeStageObject_Game(class Game* game) {
+	InitializeActor_Game(game);
+}
+
+void Key::UpdateStageObject_Game(float deltaTime) {
+
+}

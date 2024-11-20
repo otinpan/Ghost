@@ -112,3 +112,11 @@ float Candle::ConvertToBar(float lightRad) {
 float Candle::ConvertToLightRad(float bar) {
 	return GetMinLightRad() + (bar - mBarMin) / mBarHeight * GetLightRadRange();
 }
+
+void Candle::InitializeStageObject_Game(class Game* game) {
+	InitializeActor_Game(game);
+}
+
+void Candle::UpdateStageObject_Game(float deltaTime) {
+
+}

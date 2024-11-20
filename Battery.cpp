@@ -122,3 +122,10 @@ void Battery::ShutdownStageMenu_CreateStage() {
 	delete mSmallCC;
 }
 
+void Battery::InitializeStageObject_Game(class Game* game) {
+	InitializeActor_Game(game);
+}
+
+void Battery::UpdateStageObject_Game(float deltaTime) {
+
+}

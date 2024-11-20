@@ -29,8 +29,10 @@ void Ghost_CreateStage::InitializeStageMenu_CreateStage() {
 	mBarHeight = GetCreateStage()->GetStageMenu()->GetMenuHeight() * 3.0f / 4.0f;
 	mBarMax = mBarCenter.y + mBarHeight / 2.0f;
 	mBarMin = mBarCenter.y - mBarHeight / 2.0f;
-	mBarPos = mBarCenter;
-	SetSpeed(ConvertToSpeed(mBarMin, mBarHeight, mBarPos.y));
+	mBarPos = Vec2(
+		mBarCenter.x,
+		mBarMin + mBarHeight * GetSpeed() / 100.0f
+	);
 
 	mBarSC_CreateStage = new SquareComponent(this);
 	mBarSC_CreateStage->Initialize_CreateStage(mBarPos,
@@ -49,7 +51,7 @@ void Ghost_CreateStage::UpdateStageMenu_CreateStage(float deltaTime) {
 	}
 	else {
 		if (!GetCreateStage()->GetHand()->GetInputChoose().pressed()) {
-			mIsBarGripen = true;
+			mIsBarGripen = false;
 		}
 		mBarPos.y = GetCreateStage()->GetHand()->GetPosition().y;
 		if (mBarPos.y < mBarMin)mBarPos.y = mBarMin;

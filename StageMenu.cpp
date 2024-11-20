@@ -149,6 +149,7 @@ void StageMenu::Draw_CreateStage() {
 	else {
 		DrawRect(mEndPos, mEndRectWidth, mEndRectHeight, ColorF(1, 1, 1));
 	}
+	mEndFont(U"Save").draw(Arg::center(ConvertToView(mEndPos)), ColorF(0, 0, 0));
 }
 
 RectF StageMenu::GetViewStageMenuRect() {
