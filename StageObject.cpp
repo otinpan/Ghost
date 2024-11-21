@@ -215,15 +215,6 @@ void StageObject::ShutdownStageMenu_CreateStage() {
 }
 
 
-void StageObject::InitializeActor_Game(class Game* game) {
-	Initialize_Game(game);
-}
-
-void StageObject::InitializeStageObject_Game(class Game* game) {
-	InitializeActor_Game(game);
-}
-
-
 
 
 float ConvertToSpeed(float barMin, float barWidth, float pos) {
@@ -231,4 +222,75 @@ float ConvertToSpeed(float barMin, float barWidth, float pos) {
 }
 int ConvertToInt(float f) {
 	return (int)f;
+}
+
+
+//Game///////////////////////////////////////////////////////////////
+void StageObject::InitializeActor_Game(class Game* game) {
+	Initialize_Game(game);
+	sqc = new SquareComponent(this);
+	sqc->Initialize_CreateStage(mCenter, mWidth, mHeight);
+	switch (mAttribute) {
+	case Attribute::Wall:
+		sqc->SetColor(ColorF(1, 1, 1));
+		break;
+	case Attribute::Brock:
+		sqc->SetColor(ColorF(1, 1, 1));
+		break;
+	case Attribute::Door:
+		sqc->SetColor(ColorF(0, 0, 0));
+		break;
+	case Attribute::Patrol:
+		sqc->SetColor(ColorF(0, (float)102 / 255, 0));
+		break;
+	case Attribute::Key:
+		sqc->SetColor(ColorF((float)76 / 255, (float)0, (float)153 / 255));
+		break;
+	case Attribute::Battery:
+		sqc->SetColor(ColorF(0, 1, 128.0f / 255.0f));
+		break;
+	case Attribute::TreasureChest:
+		sqc->SetColor(ColorF(1, 1, 0));
+		break;
+	case Attribute::Candle:
+		sqc->SetColor(ColorF(1, 1, 1));
+		break;
+	case Attribute::Ghost:
+		sqc->SetColor(ColorF(76.0f / 255.0f, 0, 204.0f / 255.0f));
+		break;
+	case Attribute::Escapee1:
+		sqc->SetColor(ColorF(204.0f / 255.0f, 0, 204.0f / 255.0f));
+		break;
+	case Attribute::Escapee2:
+		sqc->SetColor(ColorF(102.0f / 255.0f, 178.0f / 255.0f, 1));
+		break;
+	case Attribute::Escapee3:
+		sqc->SetColor(ColorF(153.0f / 255.0f, 1.0f, 153.0f / 255.0f));
+		break;
+	}
+
+	cc.resize(4);
+	for (int i = 0; i < 4; i++) {
+		cc[i] = new CircleComponent(this);
+		cc[i]->Initialize_CreateStage();
+		cc[i]->SetRadius((float)mWidth / 6.0f);
+		cc[i]->SetColor(ColorF(0, 0, 1));
+	}
+
+	float dw = (float)mWidth / 2.0f - cc[0]->GetRadius();
+	float dh = (float)mHeight / 2.0f - cc[0]->GetRadius() * mHeight / mWidth;
+	dx = { -dw,dw,dw,-dw };
+	dy = { dh,dh,-dh,-dh };
+}
+
+void StageObject::InitializeStageObject_Game(class Game* game) {
+	InitializeActor_Game(game);
+}
+
+void StageObject::UpdateActor_Game(float deltaTime) {
+	UpdateStageObject_Game(deltaTime);
+}
+
+void StageObject::UpdateStageObject_Game(float deltaTime) {
+
 }

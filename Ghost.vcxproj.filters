@@ -216,6 +216,12 @@
     <ClCompile Include="Escapee_CreateStage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Escapee_Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost_Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -954,6 +960,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Escapee_CreateStage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Escapee_Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost_Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

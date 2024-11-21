@@ -52,6 +52,8 @@ Stage::~Stage() {
 		delete mCandles[i];
 		mCandles[i] = 0;
 	}
+	delete mCreateStage;
+	mCreateStage = 0;
 }
 
 void Stage::Initialize_CreateStage(CreateStage* createStage) {
@@ -142,7 +144,8 @@ void Stage::SetNewStageObject(int i, int j, StageObject* stageObject) {
 	mStageObjects[i][j]->SetPatrolRange(stageObject->GetPatrolRange());
 	mStageObjects[i][j]->SetIsInStage(true);
 	mStageObjects[i][j]->SetIteration(std::pair{ i,j });
-	mStageObjects[i][j]->InitializeStageObject_CreateStage(mCreateStage);
+	if (mGame)mStageObjects[i][j]->InitializeStageObject_Game(mGame);
+	if(mCreateStage)mStageObjects[i][j]->InitializeStageObject_CreateStage(mCreateStage);
 
 }
 
@@ -189,7 +192,8 @@ void Stage::SetNewStageObject_Attribute(int i, int j, StageObject::Attribute att
 	}
 	mStageObjects[i][j]->SetIsInStage(true);
 	mStageObjects[i][j]->SetIteration(std::pair{ i,j });
-	mStageObjects[i][j]->InitializeStageObject_CreateStage(mCreateStage);
+	if (mGame)mStageObjects[i][j]->InitializeStageObject_Game(mGame);
+	if (mCreateStage)mStageObjects[i][j]->InitializeStageObject_CreateStage(mCreateStage);
 }
 
 bool Stage::SetNewCandle(class StageObject* candle) {
@@ -494,7 +498,7 @@ bool Stage::EndCreateStage() {
 //Game//////////////////////////////////////////////////////////////////////////////////////
 void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 	mGame = game;
-	Serializer<BinaryReader> reader{ fileName };
+	Deserializer<BinaryReader> reader{ fileName };
 	vector<vector<tuple<StageObject::Attribute, int, int, float, bool>>>
 		mDetails(mVerticalSize, vector<tuple<StageObject::Attribute, int, int, float, bool>>(mSideSize, tuple(StageObject::Attribute::None, 0, 0, 0.0f, false)));
 	vector<tuple<bool, Vec2, float>> mCandleDetails(mCandles.size(), tuple(false, Vec2(0, 0), 0.0f));
@@ -502,11 +506,31 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 	reader(mDetails);
 	reader(mCandleDetails);
 
-	vector<vector<bool>> mCanBeGone(mVerticalSize, vector<bool>(mSideSize));
+	mStageObjects.resize(mVerticalSize);
+	for (auto& row : mStageObjects) {
+		row.resize(mSideSize);
+		for (auto& so : row) {
+			so = 0;
+		}
+	}
+
+	mCandles.assign(20, 0);
+
+
+	mRects.resize(mVerticalSize);
+	for (auto& row : mRects) {
+		row.resize(mSideSize);
+	}
+
+	mCanBeGone.resize(mVerticalSize);
+	for (auto& row : mCanBeGone) {
+		row.resize(mSideSize);
+	}
+	Array<int> mGoalCandidates;
 
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
-			if (mDetails[i][j] == tuple(StageObject::Attribute::None, 0, 0, 0.0f, mCanBeGone[i][j])) {
+			if (get<0>(mDetails[i][j]) == StageObject::Attribute::None) {
 				mStageObjects[i][j] = 0;
 			}
 			else {
@@ -514,10 +538,45 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 				mStageObjects[i][j]->SetClockwise(get<1>(mDetails[i][j]));
 				mStageObjects[i][j]->SetPatrolRange(get<2>(mDetails[i][j]));
 				mStageObjects[i][j]->SetSpeed(get<3>(mDetails[i][j]));
+				if (get<0>(mDetails[i][j]) == StageObject::Attribute::Ghost) {
+					mGhostIteration = pair(i, j);
+					mGhostSpeed = get<3>(mDetails[i][j]);
+				}
+				if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee1) {
+					mEscapee1Iteration = pair(i, j);
+					mEscapee1Speed = get<3>(mDetails[i][j]);
+				}
+				if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee2) {
+					mEscapee2Iteration = pair(i, j);
+					mEscapee2Speed = get<3>(mDetails[i][j]);
+				}
+				if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee3) {
+					mEscapee3Iteration = pair(i, j);
+					mEscapee3Speed = get<3>(mDetails[i][j]);
+				}
 			}
 			mCanBeGone[i][j] = get<4>(mDetails[i][j]);
+			mGoalCandidates<<(i * mVerticalSize + mSideSize);
 		}
 	}
+
+	InitCandle= new Candle(Vec2(0,0),
+		 mCreateStage->GetStage()->GetRectWidth() / 3,
+		 mCreateStage->GetStage()->GetRectHeight() / 3,
+		 mCreateStage->GetStage()->GetRectHeight() / 6);
+	InitCandle->InitializeStageObject_CreateStage(mCreateStage);
+	for (int i = 0; i < mCandles.size(); i++) {
+		if (!get<0>(mCandleDetails[i]))mCandles[i] = 0;
+		InitCandle->SetPosition(get<1>(mCandleDetails[i]));
+		InitCandle->SetLightRad(get<2>(mCandleDetails[i]));
+		SetNewCandle(InitCandle);
+	}
+
+	delete InitCandle;
+	InitCandle = 0;
+
+	int mGoal = mGoalCandidates.choice();
+	mGoalIteration = pair(mGoal / mVerticalSize, mGoal % mSideSize);
 
 
 }

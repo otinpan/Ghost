@@ -38,6 +38,8 @@ public:
 	void moveTo(Parent* paretn, Parent::SeqID id);
 	void SetSeqID(Parent::SeqID id) { mSeqID = id; }
 
+
+
 private:
 	void ProcessInput();
     void UpdateGame();
@@ -67,4 +69,10 @@ private:
 	float mHitstopTime;
 
 	Parent::SeqID mSeqID;
+
+	class Stage* mStage;
+	class Escapee* mEscapee1;
+	class Escapee* mEscapee2;
+	class Escapee* mEscapee3;
+	class Ghost* mGhost;
 };

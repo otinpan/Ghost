@@ -123,8 +123,10 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CreateStage.cpp" />
     <ClCompile Include="Door.cpp" />
+    <ClCompile Include="Escapee_Game.cpp" />
     <ClCompile Include="Escapee_CreateStage.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Ghost_Game.cpp" />
     <ClCompile Include="Ghost_CreateStage.cpp" />
     <ClCompile Include="Hand.cpp" />
     <ClCompile Include="InputComponent_Keyboard.cpp" />
@@ -358,8 +360,10 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="CreateStage.h" />
     <ClInclude Include="Door.h" />
+    <ClInclude Include="Escapee_Game.h" />
     <ClInclude Include="Escapee_CreateStage.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Ghost_Game.h" />
     <ClInclude Include="Ghost_CreateStage.h" />
     <ClInclude Include="Hand.h" />
     <ClInclude Include="InputComponent_Keyboard.h" />

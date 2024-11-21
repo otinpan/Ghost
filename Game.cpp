@@ -4,6 +4,9 @@
 #include"Actor.h"
 #include"CircleComponent.h"
 #include"SpriteComponent.h"
+#include"Stage.h"
+#include"Ghost_Game.h"
+#include"Escapee_Game.h"
 
 
 Game::Game()
@@ -113,7 +116,8 @@ void Game::draw() {
 }
 
 void Game::LoadData() {
-
+	mStage = new Stage(1.92f,1.92f);
+	//mStage->Initialize_Game(this,U"Stage1.bin");
 }
 
 void Game::UnloadData() {

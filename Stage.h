@@ -55,6 +55,16 @@ public:
 
 	int GetRevHandToFul(int i, int j); //mHandがmFulcrumに対してどこにあるか
 
+	//Game////////////////////////////////////////////////////////////////////////
+	std::pair<int, int> GetGhostIteration() { return mGhostIteration; }
+	std::pair<int, int> GetEscapee1Iteration() { return mEscapee1Iteration; }
+	std::pair<int, int> GetEscapee2Iteration() { return mEscapee2Iteration; }
+	std::pair<int, int> GetEscapee3Iteration() { return mEscapee3Iteration; }
+	float GetGhostSpeed() { return mGhostSpeed; }
+	float GetEscapee1Speed() { return mEscapee1Speed; }
+	float GetEscapee2Speed() { return mEscapee2Speed; }
+	float GetEscapee3Speed() { return mEscapee3Speed; }
+
 
 private:
 	class CreateStage* mCreateStage;
@@ -100,5 +110,15 @@ private:
 
 	//Game//////////////////////////////////////////////////////////
 	class Game* mGame;
+	class Candle* InitCandle;
 
+	std::pair<int, int> mGoalIteration;
+	std::pair<int, int> mGhostIteration;
+	std::pair<int, int> mEscapee1Iteration;
+	std::pair<int, int> mEscapee2Iteration;
+	std::pair<int, int> mEscapee3Iteration;
+	float mGhostSpeed;
+	float mEscapee1Speed;
+	float mEscapee2Speed;
+	float mEscapee3Speed;
 };
