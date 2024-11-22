@@ -11,7 +11,7 @@ public:
 	void Initialize_Game(Game* game,FilePath fileName);
 
 	void Update_Game(float deltaTime);
-	void Draw_Game(float deltaTime);
+	void Draw_Game();
 
 	void Update_CreateStage(float deltaTime);
 	void Draw_CreateStage();

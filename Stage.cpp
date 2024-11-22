@@ -201,10 +201,11 @@ bool Stage::SetNewCandle(class StageObject* candle) {
 		if (mCandles[i] == 0) {
 			mCandles[i] =
 				new Candle(candle->GetPosition(), candle->GetWidth(), candle->GetHeight(), candle->GetRadius());
-			mCandles[i]->InitializeStageObject_CreateStage(mCreateStage);
 			mCandles[i]->SetIsInStage(true);
 			mCandles[i]->SetLightRad(candle->GetLightRad());
 			mCandles[i]->SetCandleIteration(i);
+			if (mGame)mCandles[i]->InitializeStageObject_Game(mGame);
+			if (mCreateStage)mCandles[i]->InitializeStageObject_CreateStage(mCreateStage);
 			return true;
 		}
 	}
@@ -499,6 +500,9 @@ bool Stage::EndCreateStage() {
 void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 	mGame = game;
 	Deserializer<BinaryReader> reader{ fileName };
+	if (not reader) {
+		throw Error{ U"Failed to open file" };
+	}
 	vector<vector<tuple<StageObject::Attribute, int, int, float, bool>>>
 		mDetails(mVerticalSize, vector<tuple<StageObject::Attribute, int, int, float, bool>>(mSideSize, tuple(StageObject::Attribute::None, 0, 0, 0.0f, false)));
 	vector<tuple<bool, Vec2, float>> mCandleDetails(mCandles.size(), tuple(false, Vec2(0, 0), 0.0f));
@@ -534,39 +538,41 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 				mStageObjects[i][j] = 0;
 			}
 			else {
-				SetNewStageObject_Attribute(i, j, get<0>(mDetails[i][j]));
-				mStageObjects[i][j]->SetClockwise(get<1>(mDetails[i][j]));
-				mStageObjects[i][j]->SetPatrolRange(get<2>(mDetails[i][j]));
-				mStageObjects[i][j]->SetSpeed(get<3>(mDetails[i][j]));
 				if (get<0>(mDetails[i][j]) == StageObject::Attribute::Ghost) {
 					mGhostIteration = pair(i, j);
 					mGhostSpeed = get<3>(mDetails[i][j]);
 				}
-				if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee1) {
+				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee1) {
 					mEscapee1Iteration = pair(i, j);
 					mEscapee1Speed = get<3>(mDetails[i][j]);
 				}
-				if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee2) {
+				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee2) {
 					mEscapee2Iteration = pair(i, j);
 					mEscapee2Speed = get<3>(mDetails[i][j]);
 				}
-				if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee3) {
+				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee3) {
 					mEscapee3Iteration = pair(i, j);
 					mEscapee3Speed = get<3>(mDetails[i][j]);
 				}
+				else {
+					SetNewStageObject_Attribute(i, j, get<0>(mDetails[i][j]));
+					mStageObjects[i][j]->SetClockwise(get<1>(mDetails[i][j]));
+					mStageObjects[i][j]->SetPatrolRange(get<2>(mDetails[i][j]));
+					mStageObjects[i][j]->SetSpeed(get<3>(mDetails[i][j]));
+				}
 			}
 			mCanBeGone[i][j] = get<4>(mDetails[i][j]);
-			mGoalCandidates<<(i * mVerticalSize + mSideSize);
+			if(mCanBeGone[i][j])mGoalCandidates<<(i * mVerticalSize + mSideSize);
 		}
 	}
 
-	InitCandle= new Candle(Vec2(0,0),
-		 mCreateStage->GetStage()->GetRectWidth() / 3,
-		 mCreateStage->GetStage()->GetRectHeight() / 3,
-		 mCreateStage->GetStage()->GetRectHeight() / 6);
-	InitCandle->InitializeStageObject_CreateStage(mCreateStage);
+	InitCandle = new Candle(Vec2(0, 0),
+		 mRectWidth / 3,
+		 mRectHeight / 3,
+		 mRectHeight / 6);
+	InitCandle->InitializeStageObject_Game(mGame);
 	for (int i = 0; i < mCandles.size(); i++) {
-		if (!get<0>(mCandleDetails[i]))mCandles[i] = 0;
+		if (!get<0>(mCandleDetails[i]))continue;
 		InitCandle->SetPosition(get<1>(mCandleDetails[i]));
 		InitCandle->SetLightRad(get<2>(mCandleDetails[i]));
 		SetNewCandle(InitCandle);
@@ -579,4 +585,24 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 	mGoalIteration = pair(mGoal / mVerticalSize, mGoal % mSideSize);
 
 
+}
+
+void Stage::Update_Game(float deltaTime) {
+
+}
+
+void Stage::Draw_Game() {
+	DrawRect(Vec2{ mLeft + mWidth / 2,mUp - mHeight / 2 }, mWidth, mHeight, ColorF(0, 0, 0));
+	DrawRectFrame(Vec2{ mLeft + mWidth / 2,mUp - mHeight / 2 },
+		mWidth, mHeight, 0.003, 0, ColorF(1, 1, 1));
+
+
+	for (int i = 0; i < mVerticalSize; i++) {
+		DrawSquareDotLine({ mLeft,mUp - i * mRectHeight },
+			{ mLeft + mWidth,mUp - i * mRectHeight }, 0.005, ColorF(1, 1, 1));
+	}
+	for (int j = 0; j < mSideSize; j++) {
+		DrawSquareDotLine({ mLeft + j * mRectWidth,mUp },
+			{ mLeft + j * mRectWidth,mUp - mHeight }, 0.005, ColorF(1, 1, 1));
+	};
 }

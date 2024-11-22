@@ -1,7 +1,6 @@
 ﻿#include<Siv3D.hpp>
 #include"Game.h"
 #include<algorithm>
-#include"Actor.h"
 #include"CircleComponent.h"
 #include"SpriteComponent.h"
 #include"Stage.h"
@@ -24,6 +23,7 @@ Game::~Game() {
 }
 
 bool Game::Initialize() {
+	Scene::SetBackground(ColorF((float)10 / 255, (float)10 / 255, (float)10 / 255));
 	LoadData();
 	return true;
 }
@@ -51,14 +51,6 @@ void Game::ProcessInput() {
 }
 
 void Game::UpdateGame() {
-	float h = (float)2 / 15, w = (float)2/24;
-	for (float i = -1.0; i <= 1.0; i += h) {
-		for (float j = -1.0; j <= 1.0; j += w) {
-			Vec2 pos = { (float)j + w / 2,(float)i + h / 2 };
-			DrawRect(pos, w, h, ColorF(0, 0, 0));
-			DrawRectFrame(pos, w, h, 0.01,0, ColorF(1, 1, 1));
-		}
-	}
 	float deltaTime = Scene::DeltaTime();
 
 	if (mIsHitstop) {
@@ -104,11 +96,12 @@ void Game::UpdateHitstop(float deltaTime) {
 
 
 void Game::draw() {
-	for (auto circle : mCircles) {
-		circle->Draw();
-	}
+	mStage->Draw_Game();
 	for (auto square : mSquares) {
 		square->Draw();
+	}
+	for (auto circle : mCircles) {
+		circle->Draw();
 	}
 	for (auto sprite : mSprites) {
 		
@@ -117,7 +110,32 @@ void Game::draw() {
 
 void Game::LoadData() {
 	mStage = new Stage(1.92f,1.92f);
-	//mStage->Initialize_Game(this,U"Stage1.bin");
+	mStage->Initialize_Game(this,U"Stage1.bin");
+	mGhost = new Ghost_Game(Vec2({(float)mStage->GetLeft() +
+		mStage->GetGhostIteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
+		(float)mStage->GetUp() -
+		(mStage->GetGhostIteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
+		mStage->GetGhostSpeed()
+	);
+	mGhost->InitializePlayer_Game(this);
+	mEscapee1 = new Escapee_Game(Vec2({ (float)mStage->GetLeft() +
+		mStage->GetEscapee1Iteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
+		(float)mStage->GetUp() -
+		(mStage->GetEscapee1Iteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
+		mStage->GetGhostSpeed(),1);
+	mEscapee1->InitializePlayer_Game(this);
+	mEscapee2 = new Escapee_Game(Vec2({ (float)mStage->GetLeft() +
+		mStage->GetEscapee2Iteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
+		(float)mStage->GetUp() -
+		(mStage->GetEscapee2Iteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
+		mStage->GetGhostSpeed(),2);
+	mEscapee2->InitializePlayer_Game(this);
+	mEscapee3 = new Escapee_Game(Vec2({ (float)mStage->GetLeft() +
+		mStage->GetEscapee2Iteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
+		(float)mStage->GetUp() -
+		(mStage->GetEscapee2Iteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
+		mStage->GetGhostSpeed(),3);
+	mEscapee3->InitializePlayer_Game(this);
 }
 
 void Game::UnloadData() {

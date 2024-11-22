@@ -229,7 +229,7 @@ int ConvertToInt(float f) {
 void StageObject::InitializeActor_Game(class Game* game) {
 	Initialize_Game(game);
 	sqc = new SquareComponent(this);
-	sqc->Initialize_CreateStage(mCenter, mWidth, mHeight);
+	sqc->Initialize_Game(mCenter, mWidth, mHeight);
 	switch (mAttribute) {
 	case Attribute::Wall:
 		sqc->SetColor(ColorF(1, 1, 1));
@@ -269,18 +269,24 @@ void StageObject::InitializeActor_Game(class Game* game) {
 		break;
 	}
 
+
 	cc.resize(4);
 	for (int i = 0; i < 4; i++) {
 		cc[i] = new CircleComponent(this);
-		cc[i]->Initialize_CreateStage();
+		cc[i]->Initialize_Game();
 		cc[i]->SetRadius((float)mWidth / 6.0f);
 		cc[i]->SetColor(ColorF(0, 0, 1));
 	}
-
 	float dw = (float)mWidth / 2.0f - cc[0]->GetRadius();
 	float dh = (float)mHeight / 2.0f - cc[0]->GetRadius() * mHeight / mWidth;
 	dx = { -dw,dw,dw,-dw };
 	dy = { dh,dh,-dh,-dh };
+	for (int i = 0; i < 4; i++) {
+		cc[i]->
+			SetCenter(Vec2
+			(GetPosition().x + dx[i],
+				GetPosition().y + dy[i]));
+	}
 }
 
 void StageObject::InitializeStageObject_Game(class Game* game) {

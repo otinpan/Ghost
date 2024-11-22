@@ -135,6 +135,7 @@
     <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="Parent.cpp" />
     <ClCompile Include="Patrol.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="SquareComponent.cpp" />
     <ClCompile Include="Stage.cpp" />
@@ -371,6 +372,7 @@
     <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="Parent.h" />
     <ClInclude Include="Patrol.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="SquareComponent.h" />
     <ClInclude Include="Stage.h" />

@@ -1,13 +1,15 @@
 ﻿#pragma once
-#include"Actor.h"
+#include"Player.h"
 
-class Escapee_Game :public Actor {
+class Escapee_Game :public Player {
 public:
-	Escapee_Game(Vec2 pos,float speed);
+	Escapee_Game(Vec2 pos,float speed,int num);
 	~Escapee_Game();
 
-	void InitializeActor_Game(class Game* game)override;
-	void UpdateActor_Game(float deltaTime)override;
+	void InitializePlayer_Game(class Game* game)override;
+	void UpdatePlayer_Game(float deltaTime)override;
 
 private:
+	CircleComponent* cc;
+
 };

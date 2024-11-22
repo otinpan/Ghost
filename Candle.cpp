@@ -113,8 +113,16 @@ float Candle::ConvertToLightRad(float bar) {
 	return GetMinLightRad() + (bar - mBarMin) / mBarHeight * GetLightRadRange();
 }
 
+
+
+//Game///////////////////////////////////////////////////////////////
 void Candle::InitializeStageObject_Game(class Game* game) {
 	InitializeActor_Game(game);
+	cc = new CircleComponent(this);
+	cc->Initialize_Game();
+	cc->SetCenter(GetPosition());
+	cc->SetRadius(GetLightRad());
+	cc->SetColor(ColorF(1, 1, float(202 / 255), 0.5));
 }
 
 void Candle::UpdateStageObject_Game(float deltaTime) {

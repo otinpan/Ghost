@@ -32,7 +32,11 @@ public:
 	void UpdateHitstop(float deltaTime);
 
 	//class getter
-
+	class Stage* &GetStage() { return mStage; }
+	class Ghost_Game* &GetGhost() { return mGhost; }
+	class Escapee_Game*& GetEscapee1() { return mEscapee1; }
+	class Escapee_Game*& GetEscapee2() { return mEscapee2; }
+	class Escapee_Game*& GetEscapee3() { return mEscapee3; }
 
 	//Sequence
 	void moveTo(Parent* paretn, Parent::SeqID id);
@@ -71,8 +75,8 @@ private:
 	Parent::SeqID mSeqID;
 
 	class Stage* mStage;
-	class Escapee* mEscapee1;
-	class Escapee* mEscapee2;
-	class Escapee* mEscapee3;
-	class Ghost* mGhost;
+	class Escapee_Game* mEscapee1;
+	class Escapee_Game* mEscapee2;
+	class Escapee_Game* mEscapee3;
+	class Ghost_Game* mGhost;
 };
