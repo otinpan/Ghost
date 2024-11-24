@@ -1,4 +1,5 @@
 ﻿#pragma once
+using namespace std;
 #include"Actor.h"
 
 class Player :public Actor {
@@ -22,8 +23,21 @@ public:
 	void SetAttribute(Attribute attribute) { mAttribute = attribute; }
 	Attribute GetAttribute() { return mAttribute; }
 
+	void UpdatePos_Game(float deltaTime);
+
 private:
 	class CircleComponent* cc;
+	vector<vector<class StageObject*>> mStageObjects;
 
 	Attribute mAttribute;
+
+	int mVerticalSize;
+	int mSideSize;
+
+    float mObjectLeft;
+	float mObjectRight;
+	float mObjectUp;
+	float mObjectDown;
+	Vec2 mPos;
+	float mRadius;
 };

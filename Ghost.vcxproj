@@ -125,6 +125,7 @@
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Escapee_Game.cpp" />
     <ClCompile Include="Escapee_CreateStage.cpp" />
+    <ClCompile Include="Flashlight.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Ghost_Game.cpp" />
     <ClCompile Include="Ghost_CreateStage.cpp" />
@@ -363,6 +364,7 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="Escapee_Game.h" />
     <ClInclude Include="Escapee_CreateStage.h" />
+    <ClInclude Include="Flashlight.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Ghost_Game.h" />
     <ClInclude Include="Ghost_CreateStage.h" />

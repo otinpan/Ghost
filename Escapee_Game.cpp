@@ -1,7 +1,9 @@
 ﻿#include"Escapee_Game.h"
+#include"Flashlight.h"
 
-Escapee_Game::Escapee_Game(Vec2 pos,float speed,int num)
-	:Player(pos,speed)
+Escapee_Game::Escapee_Game(Vec2 pos, float speed, int num)
+	:Player(pos, speed)
+	, mFlashlight(nullptr)
 {
 	SetPosition(pos);
 	SetSpeed(speed);

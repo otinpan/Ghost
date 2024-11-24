@@ -17,9 +17,7 @@ public:
 	void DrawStageMenu_CreateStage()override;
 	void ShutdownStageMenu_CreateStage()override;
 
-	Vec2 GetDoorCenter() { return mDoorCenter; }
-	float GetDoorWidth() { return mDoorWidth; }
-	float GetDoorHeight() { return mDoorHeight; }
+	
 
 
 private:
@@ -43,7 +41,5 @@ private:
 	float mTriLengthFromCenter;
 
 
-	Vec2 mDoorCenter;
-	float mDoorWidth;
-	float mDoorHeight;
+	
 };

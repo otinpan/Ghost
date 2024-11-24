@@ -81,6 +81,14 @@ public:
 	void RotateClockwise(bool isClockwise);
 	void SpreadLightRad(bool isPlus);
 
+	Vec2 GetDoorCenter() { return mDoorCenter; }
+	void SetDoorCenter(Vec2 pos) { mDoorCenter = pos; }
+	float GetDoorWidth() { return mDoorWidth; }
+	void SetDoorWidth(float width) { mDoorWidth = width; }
+	float GetDoorHeight() { return mDoorHeight; }
+	void SetDoorHeight(float height) { mDoorHeight = height; }
+
+
 	//Menu
 	virtual void UpdateStageMenu_CreateStage(float deltaTime);
 	virtual void DrawStageMenu_CreateStage();
@@ -115,6 +123,11 @@ private:
 	int mClockwise;
 
 	int mPatrolRange;
+
+	//Door
+	Vec2 mDoorCenter;
+	float mDoorWidth;
+	float mDoorHeight;
 	
 };
 

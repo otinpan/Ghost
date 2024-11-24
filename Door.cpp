@@ -21,17 +21,17 @@ void Door::InitializeStageObject_CreateStage(class CreateStage* createStage) {
 	DoorHeight = { GetHeight() / 4,GetHeight(),GetHeight() / 4,GetHeight() };
 	DoorRel_dx = { 0,GetWidth() * 3 / 8,0,-GetWidth() * 3 / 8 };
 	DoorRel_dy = { GetHeight() * 3 / 8,0,-GetHeight() * 3 / 8,0 };
-	mDoorCenter = Vec2{ GetPosition().x + DoorRel_dx[0],GetPosition().y + DoorRel_dy[0] };
-	sc->Initialize_CreateStage(mDoorCenter, DoorWidth[0], DoorHeight[0]);
+    SetDoorCenter( Vec2{ GetPosition().x + DoorRel_dx[0],GetPosition().y + DoorRel_dy[0] });
+	sc->Initialize_CreateStage(GetDoorCenter(), DoorWidth[0], DoorHeight[0]);
 }
 
 void Door::UpdateStageObject_CreateStage(float deltaTime) {
-	mDoorCenter = Vec2{GetPosition().x + DoorRel_dx[GetClockwise()],GetPosition().y + DoorRel_dy[GetClockwise()]};
-	mDoorHeight = DoorHeight[GetClockwise()];
-	mDoorWidth = DoorWidth[GetClockwise()];
-	sc->SetCenter(mDoorCenter);
-	sc->SetWidth(mDoorWidth);
-	sc->SetHeight(mDoorHeight);
+	SetDoorCenter(Vec2{GetPosition().x + DoorRel_dx[GetClockwise()],GetPosition().y + DoorRel_dy[GetClockwise()]});
+	SetDoorHeight ( DoorHeight[GetClockwise()]);
+	SetDoorWidth  (DoorWidth[GetClockwise()]);
+	sc->SetCenter(GetDoorCenter());
+	sc->SetWidth(GetDoorWidth());
+	sc->SetHeight(GetDoorHeight());
 	sc->SetColor(ColorF(0, 1, 1));
 }
 
