@@ -270,7 +270,7 @@ void StageObject::InitializeActor_Game(class Game* game) {
 	}
 
 
-	cc.resize(4);
+	/*cc.resize(4);
 	for (int i = 0; i < 4; i++) {
 		cc[i] = new CircleComponent(this);
 		cc[i]->Initialize_Game();
@@ -286,7 +286,7 @@ void StageObject::InitializeActor_Game(class Game* game) {
 			SetCenter(Vec2
 			(GetPosition().x + dx[i],
 				GetPosition().y + dy[i]));
-	}
+	}*/
 }
 
 void StageObject::InitializeStageObject_Game(class Game* game) {

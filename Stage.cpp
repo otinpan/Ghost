@@ -583,8 +583,6 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 
 	int mGoal = mGoalCandidates.choice();
 	mGoalIteration = pair(mGoal / mVerticalSize, mGoal % mSideSize);
-
-
 }
 
 void Stage::Update_Game(float deltaTime) {

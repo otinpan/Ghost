@@ -11,6 +11,13 @@ public:
 	void UpdatePlayer_Game(float deltaTime)override;
 
 private:
-	CircleComponent* cc;
+	class CircleComponent* cc;
+	class InputComponent_Keyboard* ic;
 
+	InputGroup inputUp;
+	InputGroup inputDown;
+	InputGroup inputRight;
+	InputGroup inputLeft;
+
+	float StandardSpeed;
 };

@@ -27,7 +27,6 @@ public:
 
 private:
 	class CircleComponent* cc;
-	vector<vector<class StageObject*>> mStageObjects;
 
 	Attribute mAttribute;
 
@@ -38,6 +37,10 @@ private:
 	float mObjectRight;
 	float mObjectUp;
 	float mObjectDown;
+	Line LineL;
+	Line LineR;
+	Line LineU;
+	Line LineD;
 	Vec2 mPos;
 	float mRadius;
 };

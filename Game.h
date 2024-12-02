@@ -79,4 +79,11 @@ private:
 	class Escapee_Game* mEscapee2;
 	class Escapee_Game* mEscapee3;
 	class Ghost_Game* mGhost;
+
+	//RenderTexture
+	RenderTexture renderTexture;
+	RenderTexture renderTextureLight;
+	//Shader
+	VertexShader vs2D;
+	PixelShader ps2DTexture;
 };

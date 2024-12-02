@@ -154,6 +154,16 @@ void Door::ShutdownStageMenu_CreateStage() {
 
 void Door::InitializeStageObject_Game(class Game* game) {
 	InitializeActor_Game(game);
+	sc = new SquareComponent(this);
+	DoorWidth = { GetWidth(),GetWidth() / 4,GetWidth(),GetWidth() / 4 };
+	DoorHeight = { GetHeight() / 4,GetHeight(),GetHeight() / 4,GetHeight() };
+	DoorRel_dx = { 0,GetWidth() * 3 / 8,0,-GetWidth() * 3 / 8 };
+	DoorRel_dy = { GetHeight() * 3 / 8,0,-GetHeight() * 3 / 8,0 };
+	SetDoorCenter(Vec2{ GetPosition().x + DoorRel_dx[GetClockwise()],GetPosition().y + DoorRel_dy[GetClockwise()]});
+	sc->Initialize_Game(GetDoorCenter(), DoorWidth[GetClockwise()], DoorHeight[GetClockwise()]);
+	sc->SetColor(ColorF(0, 0, 1));
+	SetDoorWidth(DoorWidth[GetClockwise()]);
+	SetDoorHeight(DoorHeight[GetClockwise()]);
 }
 
 void Door::UpdateStageObject_Game(float deltaTime) {

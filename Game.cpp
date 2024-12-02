@@ -25,11 +25,24 @@ Game::~Game() {
 bool Game::Initialize() {
 	Scene::SetBackground(ColorF((float)10 / 255, (float)10 / 255, (float)10 / 255));
 	LoadData();
+
+	vs2D = HLSL{ U"example/shader/hlsl/default2d.hlsl", U"VS" }
+	| GLSL{ U"example/shader/glsl/default2d.vert", {{U"VSConstants2D", 0}} };
+	ps2DTexture = HLSL{ U"example/shader/hlsl/multi_texture_mask.hlsl", U"PS" }
+	| GLSL{ U"example/shader/glsl/multi_texture_mask.frag", {{U"PSConstants2D", 0}} };
+
+	if (not vs2D || not ps2DTexture) {
+		throw Error{ U"Failed to load a shader file" };
+	}
+
+	renderTexture = RenderTexture{ Scene::Size() };
+	renderTextureLight = RenderTexture{ Scene::Size() };
 	return true;
 }
 
 void Game::update(Parent* parent) {
 	if (mIsRunning) {
+		ClearPrint();
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 		}
@@ -44,7 +57,7 @@ void Game::ProcessInput() {
 
 	mUpdatingActors = true;
 	for (auto actor : mActors) {
-		
+		actor->ProcessInput(keyState);
 	}
 
 	mUpdatingActors = false;
@@ -96,7 +109,36 @@ void Game::UpdateHitstop(float deltaTime) {
 
 
 void Game::draw() {
-	mStage->Draw_Game();
+	renderTexture.clear(ColorF(0));
+	renderTextureLight.clear(ColorF(0));
+	//renderTexture.resized(Scene::Size());
+	//renderTextureLight.resized(Scene::Size());
+
+	{
+		const ScopedRenderTarget2D target{ renderTextureLight };
+		for (auto circle : mCircles) {
+			circle->Draw();
+		}
+	}
+	renderTextureLight, draw();
+
+	{
+		const ScopedRenderTarget2D target{ renderTexture };
+		mStage->Draw_Game();
+		for (auto square : mSquares) {
+			square->Draw();
+		}
+	}
+
+	Graphics2D::SetPSTexture(1, renderTextureLight);
+	{
+		{
+			const ScopedCustomShader2D shader{ vs2D,ps2DTexture };
+			renderTexture.draw();
+		}
+	}
+
+	/*mStage->Draw_Game();
 	for (auto square : mSquares) {
 		square->Draw();
 	}
@@ -105,7 +147,7 @@ void Game::draw() {
 	}
 	for (auto sprite : mSprites) {
 		
-	}
+	}*/
 }
 
 void Game::LoadData() {
@@ -118,7 +160,7 @@ void Game::LoadData() {
 		mStage->GetGhostSpeed()
 	);
 	mGhost->InitializePlayer_Game(this);
-	mEscapee1 = new Escapee_Game(Vec2({ (float)mStage->GetLeft() +
+	mEscapee1 = new Escapee_Game(Vec2({(float)mStage->GetLeft() +
 		mStage->GetEscapee1Iteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
 		(float)mStage->GetUp() -
 		(mStage->GetEscapee1Iteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
@@ -131,9 +173,9 @@ void Game::LoadData() {
 		mStage->GetGhostSpeed(),2);
 	mEscapee2->InitializePlayer_Game(this);
 	mEscapee3 = new Escapee_Game(Vec2({ (float)mStage->GetLeft() +
-		mStage->GetEscapee2Iteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
+		mStage->GetEscapee3Iteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
 		(float)mStage->GetUp() -
-		(mStage->GetEscapee2Iteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
+		(mStage->GetEscapee3Iteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
 		mStage->GetGhostSpeed(),3);
 	mEscapee3->InitializePlayer_Game(this);
 }
