@@ -35,6 +35,7 @@ float GetScreenHeight();
 float GetScreenWidth();
 void DrawArrow(Vec2 from, Vec2 to, float width, Vec2 headSize,ColorF color);
 void DrawTriangle(Vec2 pos, float length,float deg,ColorF color);
+void DrawTriangle_pos(Vec2 pos0, Vec2 pos1, Vec2 pos2,ColorF color0,ColorF color1,ColorF color2);
 void AddDeltaTime(bool&mIsLasting,float &mTime,float mLastTime,float deltaTime);
 void DrawPlus(float hegiht, float width, Vec2 pos, float angle, ColorF color);
 void DrawGradiationRect(Vec2 pos, float width, float height, ColorF top, ColorF bottom);

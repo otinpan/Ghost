@@ -3,6 +3,7 @@
 #include<algorithm>
 #include"CircleComponent.h"
 #include"SpriteComponent.h"
+#include"TriangleComponent.h"
 #include"Stage.h"
 #include"Ghost_Game.h"
 #include"Escapee_Game.h"
@@ -109,7 +110,7 @@ void Game::UpdateHitstop(float deltaTime) {
 
 
 void Game::draw() {
-	renderTexture.clear(ColorF(0));
+	/*renderTexture.clear(ColorF(0));
 	renderTextureLight.clear(ColorF(0));
 	//renderTexture.resized(Scene::Size());
 	//renderTextureLight.resized(Scene::Size());
@@ -120,7 +121,7 @@ void Game::draw() {
 			circle->Draw();
 		}
 	}
-	renderTextureLight, draw();
+	renderTextureLight. draw(Vec2(0,0));
 
 	{
 		const ScopedRenderTarget2D target{ renderTexture };
@@ -134,11 +135,11 @@ void Game::draw() {
 	{
 		{
 			const ScopedCustomShader2D shader{ vs2D,ps2DTexture };
-			renderTexture.draw();
+			renderTexture.draw(Vec2(0,0));
 		}
-	}
+	}*/
 
-	/*mStage->Draw_Game();
+	mStage->Draw_Game();
 	for (auto square : mSquares) {
 		square->Draw();
 	}
@@ -147,7 +148,7 @@ void Game::draw() {
 	}
 	for (auto sprite : mSprites) {
 		
-	}*/
+	}
 }
 
 void Game::LoadData() {
@@ -264,6 +265,17 @@ void Game::RemoveSquare(SquareComponent* square) {
 	auto iter = std::find(mSquares.begin(), mSquares.end(), square);
 	if (iter != mSquares.end()) {
 		mSquares.erase(iter);
+	}
+}
+
+void Game::AddTriangle(TriangleComponent* tri) {
+	mTriangles.emplace_back(tri);
+}
+
+void Game::RemoveTriangle(TriangleComponent* tri) {
+	auto iter = std::find(mTriangles.begin(), mTriangles.end(), tri);
+	if (iter != mTriangles.end()) {
+		mTriangles.erase(iter);
 	}
 }
 

@@ -100,6 +100,10 @@ void DrawTriangle(Vec2 pos, float length,float deg,ColorF color) {
 	Triangle{ ConvertToView(pos),length*GetMagnification(),deg}.draw(color);
 }
 
+void DrawTriangle_pos(Vec2 pos0, Vec2 pos1, Vec2 pos2,ColorF color0,ColorF color1,ColorF color2) {
+	Triangle{ ConvertToView(pos0),ConvertToView(pos1),ConvertToView(pos2) }.draw(color0, color1, color2);
+}
+
 void DrawPlus(float height, float width, Vec2 pos, float angle,ColorF color) {
 	Shape2D::Plus(height * GetMagnification(), width * GetMagnification(), ConvertToView(pos), angle).draw(color);
 }

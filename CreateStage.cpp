@@ -207,6 +207,17 @@ void CreateStage::RemoveSquare(SquareComponent* square) {
 	}
 }
 
+void CreateStage::AddTriangle(TriangleComponent* tri) {
+	mTriangles.emplace_back(tri);
+}
+
+void CreateStage::RemoveTriangle(TriangleComponent* tri) {
+	auto iter = std::find(mTriangles.begin(), mTriangles.end(), tri);
+	if (iter != mTriangles.end()) {
+		mTriangles.erase(iter);
+	}
+}
+
 void CreateStage::AddStageObject(StageObject* stageobject) {
 	mStageObjects.emplace_back(stageobject);
 }

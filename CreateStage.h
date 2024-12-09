@@ -30,6 +30,9 @@ public:
 	void AddSquare(class SquareComponent* square);
 	void RemoveSquare(class SquareComponent* square);
 
+	void AddTriangle(class TriangleComponent* tri);
+	void RemoveTriangle(class TriangleComponent* tri);
+
 	void AddStageObject(class StageObject* stageobject);
 	void RemoveStageObject(class StageObject* stageobject);
 
@@ -66,6 +69,9 @@ private:
 
 	//All the Square component drawn
 	std::vector<class SquareComponent*> mSquares;
+
+	//All the Triangle components drawn
+	std::vector<class TriangleComponent*> mTriangles;
 
 	Parent::SeqID mSeqID;
 

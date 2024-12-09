@@ -25,6 +25,9 @@ public:
 	void AddSquare(class SquareComponent* square);
 	void RemoveSquare(class SquareComponent* square);
 
+	void AddTriangle(class TriangleComponent* tri);
+	void RemoveTriangle(class TriangleComponent* tri);
+
 	//Hitstop
 	void SetIsHitstop(bool isHitstop) { mIsHitstop = isHitstop; }
 	bool GetIsHitstop() { return mIsHitstop; }
@@ -61,8 +64,11 @@ private:
 	//All the Circle components drawn
 	std::vector<class CircleComponent*> mCircles;
 
-	//All the Square component drawn
+	//All the Square components drawn
 	std::vector<class SquareComponent*> mSquares;
+
+	//All the Triangle components drawn
+	std::vector<class TriangleComponent*> mTriangles;
 
 	bool mIsRunning;
 	// Track if we're updating actors right now

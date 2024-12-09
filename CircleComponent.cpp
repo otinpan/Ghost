@@ -14,6 +14,9 @@ CircleComponent::~CircleComponent() {
 	if (mOwner->GetCreateStage()) {
 		mOwner->GetCreateStage()->RemoveCircle(this);
 	}
+	if (mOwner->GetGame()) {
+		mOwner->GetGame()->RemoveCircle(this);
+	}
 }
 
 void CircleComponent::Initialize_CreateStage() {

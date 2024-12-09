@@ -9,6 +9,8 @@ public:
 	void InitializePlayer_Game(class Game* game)override;
 	void UpdatePlayer_Game(float deltaTime)override;
 
+	class  CircleComponent* GetCircleComponent() { return cc; }
+
 	class Flashlight* GetFlashlight() { return mFlashlight; }
 
 private:

@@ -16,6 +16,9 @@ SquareComponent::~SquareComponent() {
 	if (mOwner->GetCreateStage()) {
 		mOwner->GetCreateStage()->RemoveSquare(this);
 	}
+	if (mOwner->GetGame()) {
+		mOwner->GetGame()->RemoveSquare(this);
+	}
 
 }
 
