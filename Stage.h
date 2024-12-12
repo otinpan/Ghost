@@ -121,4 +121,10 @@ private:
 	float mEscapee1Speed;
 	float mEscapee2Speed;
 	float mEscapee3Speed;
+
+	//TimeLimit
+	float mGameTime; //今の時間
+	float GameLimitTime;  //Gameが愁傷するまでの時間
+	float GoalTime; //goalが潜在するまでの時間
+	bool mIsGoal; //goalが存在するか
 };

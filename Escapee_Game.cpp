@@ -5,6 +5,7 @@ Escapee_Game::Escapee_Game(Vec2 pos, float speed, int num)
 	:Player(pos, speed)
 	, mFlashlight(nullptr)
 {
+	
 	SetPosition(pos);
 	SetSpeed(speed);
 	switch (num) {
@@ -17,8 +18,8 @@ Escapee_Game::Escapee_Game(Vec2 pos, float speed, int num)
 	case 3:
 		SetAttribute(Attribute::Escapee3);
 		break;
-	
 	}
+	SetRotation(3.1415 / 2.0f);
 }
 
 Escapee_Game::~Escapee_Game() {
@@ -27,8 +28,10 @@ Escapee_Game::~Escapee_Game() {
 
 void Escapee_Game::InitializePlayer_Game(class Game* game) {
 	InitializeActor_Game(game);
+	mFlashlight = new Flashlight(this);
+	mFlashlight->Initialize_Game();
 }
 
 void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
-
+	mFlashlight->Update_Game(deltaTime);
 }

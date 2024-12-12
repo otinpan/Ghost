@@ -43,7 +43,7 @@ bool Game::Initialize() {
 
 void Game::update(Parent* parent) {
 	if (mIsRunning) {
-		ClearPrint();
+		//ClearPrint();
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 		}
@@ -93,6 +93,8 @@ void Game::UpdateGame() {
 	for (auto actor : deadActors) {
 		delete actor;
 	}
+
+	mStage->Update_Game(deltaTime);
 }
 
 void Game::SetHitstop(float hitstopTime) {
@@ -145,6 +147,9 @@ void Game::draw() {
 	}
 	for (auto circle : mCircles) {
 		circle->Draw();
+	}
+	for (auto tri : mTriangles) {
+		tri->Draw();
 	}
 	for (auto sprite : mSprites) {
 		

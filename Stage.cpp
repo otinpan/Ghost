@@ -33,6 +33,10 @@ Stage::Stage(float width, float height)
 	,mDeleteRectWidth(0.0f)
 	,mDeleteRectHeight(0.0f)
 	,mIsSaveError(false)
+	,mGameTime(0.0f)
+	,GameLimitTime(180.0f)
+	,GoalTime(1.0f)
+	,mIsGoal(false)
 {
 	mRectWidth = mWidth / mSideSize;
 	mRectHeight = mHeight / mVerticalSize;
@@ -586,14 +590,19 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 }
 
 void Stage::Update_Game(float deltaTime) {
-
+	mGameTime += deltaTime;
+	if (mGameTime > GoalTime) {
+		mIsGoal = true;
+	}
+	if (mGameTime > GameLimitTime) {
+		GetGame()->Shutdown();
+	}
 }
 
 void Stage::Draw_Game() {
 	DrawRect(Vec2{ mLeft + mWidth / 2,mUp - mHeight / 2 }, mWidth, mHeight, ColorF(0, 0, 0));
 	DrawRectFrame(Vec2{ mLeft + mWidth / 2,mUp - mHeight / 2 },
 		mWidth, mHeight, 0.003, 0, ColorF(1, 1, 1));
-
 
 	for (int i = 0; i < mVerticalSize; i++) {
 		DrawSquareDotLine({ mLeft,mUp - i * mRectHeight },
@@ -603,4 +612,11 @@ void Stage::Draw_Game() {
 		DrawSquareDotLine({ mLeft + j * mRectWidth,mUp },
 			{ mLeft + j * mRectWidth,mUp - mHeight }, 0.005, ColorF(1, 1, 1));
 	};
+
+	if (mIsGoal) {
+		DrawRect(Vec2({ (float)mLeft + mGoalIteration.second * mRectWidth + mRectWidth / 2,
+		(float)mUp - (mGoalIteration.first + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight,ColorF(1,0,0));
+	}
 }
+
+

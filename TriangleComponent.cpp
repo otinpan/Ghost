@@ -17,10 +17,10 @@ TriangleComponent::TriangleComponent(class Actor* owner)
 
 TriangleComponent::~TriangleComponent() {
 	if (mOwner->GetCreateStage()) {
-		mOwner->GetCreateStage()->AddTriangle(this);
+		mOwner->GetCreateStage()->RemoveTriangle(this);
 	}
 	if (mOwner->GetGame()) {
-		mOwner->GetGame()->AddTriangle(this);
+		mOwner->GetGame()->RemoveTriangle(this);
 	}
 }
 

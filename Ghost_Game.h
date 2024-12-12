@@ -10,14 +10,23 @@ public:
 
 	void UpdatePlayer_Game(float deltaTime)override;
 
+
 private:
-	class CircleComponent* cc;
 	class InputComponent_Keyboard* ic;
+	class GhostClone_Game* mGhostClone;
 
 	InputGroup inputUp;
 	InputGroup inputDown;
 	InputGroup inputRight;
 	InputGroup inputLeft;
+	InputGroup inputMakeGhost;
 
 	float StandardSpeed;
+
+	bool mCanMakeClone;
+	float mMakeCloneTime;
+	float MakeCloneCoolTime;
+	bool mIsClone;
+	float mCloneTime;
+	float CloneLimitTime;
 };

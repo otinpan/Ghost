@@ -3,13 +3,13 @@
 
 Player::Player(Vec2 pos, float speed)
 	:cc(nullptr)
-	,mObjectLeft(0)
-	,mObjectRight(0)
-	,mObjectDown(0)
-	,mObjectUp(0)
+	, mObjectLeft(0)
+	, mObjectRight(0)
+	, mObjectDown(0)
+	, mObjectUp(0)
+	, mSpeedMagnification(speed)
 {
 	SetPosition(pos);
-	SetSpeed(speed);
 }
 
 Player::~Player() {
@@ -26,6 +26,9 @@ void Player::InitializeActor_Game(class Game* game) {
 	switch (GetAttribute()) {
 	case Attribute::Ghost:
 		cc->SetColor(ColorF(76.0f / 255.0f, 0, 204.0f / 255.0f));
+		break;
+	case Attribute::GhostClone:
+		cc->SetColor(ColorF(43.0f / 255.0f, 0, 110.0f / 255.0f));
 		break;
 	case Attribute::Escapee1:
 		cc->SetColor(ColorF(204.0f / 255.0f, 0, 204.0f / 255.0f));
@@ -55,34 +58,36 @@ void Player::UpdatePlayer_Game(float deltaTime) {
 
 void Player::UpdatePos_Game(float deltaTime) {
 	mPos = GetPosition();
-	
-	for (auto &row : GetGame()->GetStage()->GetStageObjects()) {
-		for (auto& stageObject : row) {
-			if (stageObject == 0)continue;
-			if (!IsIntersect_SC(stageObject->GetSquareComponent(), cc))continue;
-			if (stageObject->GetAttribute() == StageObject::Attribute::Door) {
-				mObjectLeft = stageObject->GetDoorCenter().x - stageObject->GetDoorWidth() / 2.0f;
-				mObjectRight = stageObject->GetDoorCenter().x + stageObject->GetDoorWidth() / 2.0f;
-				mObjectUp = stageObject->GetDoorCenter().y + stageObject->GetDoorHeight() / 2.0f;
-				mObjectDown = stageObject->GetDoorCenter().y - stageObject->GetDoorHeight() / 2.0f;
+
+	if (!GetAttribute() == Attribute::GhostClone) {
+		for (auto& row : GetGame()->GetStage()->GetStageObjects()) {
+			for (auto& stageObject : row) {
+				if (stageObject == 0)continue;
+				if (!IsIntersect_SC(stageObject->GetSquareComponent(), cc))continue;
+				if (stageObject->GetAttribute() == StageObject::Attribute::Door) {
+					mObjectLeft = stageObject->GetDoorCenter().x - stageObject->GetDoorWidth() / 2.0f;
+					mObjectRight = stageObject->GetDoorCenter().x + stageObject->GetDoorWidth() / 2.0f;
+					mObjectUp = stageObject->GetDoorCenter().y + stageObject->GetDoorHeight() / 2.0f;
+					mObjectDown = stageObject->GetDoorCenter().y - stageObject->GetDoorHeight() / 2.0f;
+				}
+				else {
+					mObjectLeft = stageObject->GetPosition().x - stageObject->GetWidth() / 2.0f;
+					mObjectRight = stageObject->GetPosition().x + stageObject->GetWidth() / 2.0f;
+					mObjectUp = stageObject->GetPosition().y + stageObject->GetHeight() / 2.0f;
+					mObjectDown = stageObject->GetPosition().y - stageObject->GetHeight() / 2.0f;
+				}
+				LineL = { {mObjectLeft,mObjectUp},{mObjectLeft,mObjectDown} };
+				LineR = { {mObjectRight,mObjectUp},{mObjectRight,mObjectDown} };
+				LineU = { {mObjectRight,mObjectUp},{mObjectLeft,mObjectUp} };
+				LineD = { {mObjectLeft,mObjectDown},{mObjectRight,mObjectDown} };
+				//Objectとの当たり判定
+				if (cc->GetCircle().intersects(LineL)) mPos.x = mObjectLeft - mRadius - 0.008; //Playerが左
+				if (cc->GetCircle().intersects(LineR))mPos.x = mObjectRight + mRadius + 0.008; //Playerが右
+				if (cc->GetCircle().intersects(LineD))mPos.y = mObjectDown - mRadius - 0.008; //Playerが下
+				if (cc->GetCircle().intersects(LineU))mPos.y = mObjectUp + mRadius + 0.008; //Playerが上
 			}
-			else {
-				mObjectLeft = stageObject->GetPosition().x - stageObject->GetWidth() / 2.0f;
-				mObjectRight = stageObject->GetPosition().x + stageObject->GetWidth() / 2.0f;
-				mObjectUp = stageObject->GetPosition().y + stageObject->GetHeight() / 2.0f;
-				mObjectDown = stageObject->GetPosition().y - stageObject->GetHeight() / 2.0f;
-			}
-			LineL = { {mObjectLeft,mObjectUp},{mObjectLeft,mObjectDown} };
-			LineR = { {mObjectRight,mObjectUp},{mObjectRight,mObjectDown} };
-			LineU = { {mObjectRight,mObjectUp},{mObjectLeft,mObjectUp} };
-			LineD = { {mObjectLeft,mObjectDown},{mObjectRight,mObjectDown} };
-			//Objectとの当たり判定
-			if (cc->GetCircle().intersects(LineL)) mPos.x = mObjectLeft - mRadius - 0.008; //Playerが左
-			if (cc->GetCircle().intersects(LineR))mPos.x = mObjectRight + mRadius + 0.008; //Playerが右
-			if (cc->GetCircle().intersects(LineD))mPos.y = mObjectDown - mRadius - 0.008; //Playerが下
-			if (cc->GetCircle().intersects(LineU))mPos.y = mObjectUp + mRadius + 0.008; //Playerが上
+
 		}
-		
 	}
 
 	//端

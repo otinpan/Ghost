@@ -9,6 +9,7 @@ public:
 
 	enum Attribute {
 		Ghost,
+		GhostClone,
 		Escapee1,
 		Escapee2,
 		Escapee3,
@@ -23,12 +24,19 @@ public:
 	void SetAttribute(Attribute attribute) { mAttribute = attribute; }
 	Attribute GetAttribute() { return mAttribute; }
 
+	class CircleComponent* GetCircleComponent() { return cc; }
+
 	void UpdatePos_Game(float deltaTime);
+
+	float GetSpeedMagnification() { return mSpeedMagnification; }
+	void SetSpeedMagnification(float speedMagnification) { mSpeedMagnification = speedMagnification; }
 
 private:
 	class CircleComponent* cc;
 
 	Attribute mAttribute;
+
+	float mSpeedMagnification;
 
 	int mVerticalSize;
 	int mSideSize;

@@ -25,7 +25,7 @@ private:
 	Vec2 mPos1;
 	Vec2 mPos2;
 
-	void SeekPos0();
-	void SeekPos1();
-	void SeekPos2();
+	void SetLightPos0();
+	void SetLightPos1();
+	void SetLightPos2();
 };
