@@ -17,6 +17,9 @@ public:
 	void SetPos2(Vec2 pos2) { mPos2 = pos2; }
 	Vec2 GetPos2() { return mPos2; }
 
+	void SetIsDraw(bool isDraw) { mIsDraw = isDraw; }
+	bool GetIsDraw() { return mIsDraw; }
+
 	void SetColor0(ColorF color0) { mColor0 = color0; }
 	void SetColor1(ColorF color1) { mColor1 = color1; }
 	void SetColor2(ColorF color2) { mColor2 = color2; }
@@ -30,6 +33,8 @@ private:
 	ColorF mColor0;
 	ColorF mColor1;
 	ColorF mColor2;
+
+	bool mIsDraw;
 
 };
 

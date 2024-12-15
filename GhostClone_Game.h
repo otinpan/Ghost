@@ -10,6 +10,15 @@ public:
 
 	void UpdatePlayer_Game(float deltaTime)override;
 
+	void SetIsLighted(bool isLighted) { mIsLighted = isLighted; }
+	bool GetIsLighted() { return mIsLighted; }
+
+	void SetStopTime(float stopTime) { mStopTime = stopTime; }
+	float GetStopTime() { return mStopTime; }
+	void SetStopLimitTime(float stopLimitTime) { StopLimitTime = stopLimitTime; }
+	float GetStopLimitTime() { return StopLimitTime; }
+
+
 private:
 	class InputComponent_Keyboard* ic;
 
@@ -17,6 +26,14 @@ private:
 	InputGroup inputDown;
 	InputGroup inputRight;
 	InputGroup inputLeft;
+
+	bool mIsLighted;
+
+	//Stop
+	bool mIsStop;
+	void UpdateStop_Game(float deltaTime);
+	float mStopTime;
+	float StopLimitTime;
 
 	float StandardSpeed;
 };

@@ -11,7 +11,10 @@ public:
 
 	void Update_Game(float deltaTime);
 
-	class TriangleComponent* GetTriagleComponent() { return mLightTri; }
+	void SetIsLightOn(bool isLightOn) { mIsLightOn = isLightOn; }
+	bool GetIsLightOn() { return mIsLightOn; }
+
+	class TriangleComponent* &GetTriagleComponent() { return mLightTri; }
 
 private:
 	class Escapee_Game* mOwner;
@@ -24,6 +27,8 @@ private:
 	Vec2 mPos0;
 	Vec2 mPos1;
 	Vec2 mPos2;
+
+	bool mIsLightOn;
 
 	void SetLightPos0();
 	void SetLightPos1();

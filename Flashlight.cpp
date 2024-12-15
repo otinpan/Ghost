@@ -36,6 +36,7 @@ void Flashlight::Update_Game(float deltaTime) {
 	SetLightPos0();
 	SetLightPos1();
 	SetLightPos2();
+	mLightTri->SetIsDraw(mIsLightOn);
 }
 
 

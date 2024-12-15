@@ -617,6 +617,7 @@ void Stage::Draw_Game() {
 		DrawRect(Vec2({ (float)mLeft + mGoalIteration.second * mRectWidth + mRectWidth / 2,
 		(float)mUp - (mGoalIteration.first + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight,ColorF(1,0,0));
 	}
+	
 }
 
 

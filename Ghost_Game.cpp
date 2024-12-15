@@ -12,6 +12,8 @@ Ghost_Game::Ghost_Game(Vec2 pos,float speed)
 	,mIsClone(false)
 	,mCloneTime(0.0f)
 	,CloneLimitTime(7.0f)
+	,StopLimitTime(1.0f)
+	,mStopTime(5.0f)
 {
 	SetPosition(pos);
 	SetSpeed(StandardSpeed+speed/100.0f*StandardSpeed);
@@ -43,14 +45,24 @@ void Ghost_Game::InitializePlayer_Game(class Game* game) {
 
 
 void Ghost_Game::UpdatePlayer_Game(float deltaTime) {
+	//Stop
+	UpdateStop_Game(deltaTime);
+	//Position
+	if (mIsStop)ic->SetIsMove(false);
+	else ic->SetIsMove(true);
 	UpdatePos_Game(deltaTime);
+	//Clone
+	UpdateClone_Game(deltaTime);
+}
+
+void Ghost_Game::UpdateClone_Game(float deltaTime) {
 	if (mCanMakeClone) {
 		if (inputMakeGhost.down()) {
 			mMakeCloneTime = 0.0f;
 			mCanMakeClone = false;
 			mIsClone = true;
 			mCloneTime = 0.0f;
-			mGhostClone = new GhostClone_Game(GetPosition(),GetSpeedMagnification());
+			mGhostClone = new GhostClone_Game(GetPosition(), GetSpeedMagnification());
 			mGhostClone->InitializePlayer_Game(GetGame());
 		}
 	}
@@ -66,6 +78,22 @@ void Ghost_Game::UpdatePlayer_Game(float deltaTime) {
 		if (mCloneTime > CloneLimitTime) {
 			mIsClone = false;
 			delete mGhostClone;
+			mGhostClone = 0;
+		}
+	}
+}
+
+void Ghost_Game::UpdateStop_Game(float deltaTime) {
+	if (mIsLighted) {
+		mIsStop = true;
+	}
+	else {
+		if (mStopTime < StopLimitTime) {
+			mStopTime += deltaTime;
+			mIsStop = true;
+		}
+		else {
+			mIsStop = false;
 		}
 	}
 }

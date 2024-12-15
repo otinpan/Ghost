@@ -13,10 +13,14 @@ public:
 	void SetAngularSpeed(float speed) { mAngularSpeed = speed; }
 	void SetYSpeed(float speed) { mYSpeed = speed; }
 	void SetXSpeed(float speed) { mXSpeed = speed; }
+	void SetIsMove(bool isMove) { mIsMove = isMove; }
+	bool GetIsMove() { return mIsMove; }
 
 private:
 	float mAngularSpeed;
 	float mForwardSpeed;
 	float mYSpeed;
 	float mXSpeed;
+
+	bool mIsMove;
 };

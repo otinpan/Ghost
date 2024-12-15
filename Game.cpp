@@ -43,7 +43,7 @@ bool Game::Initialize() {
 
 void Game::update(Parent* parent) {
 	if (mIsRunning) {
-		//ClearPrint();
+		ClearPrint();
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 		}

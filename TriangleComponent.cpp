@@ -40,6 +40,7 @@ void TriangleComponent::Initialize_CreateStage(Vec2 pos0, Vec2 pos1, Vec2 pos2) 
 }
 
 void TriangleComponent::Draw() {
+	if (!mIsDraw)return;
 	DrawTriangle_pos(mPos0, mPos1, mPos2, mColor0, mColor1, mColor2);
 }
 

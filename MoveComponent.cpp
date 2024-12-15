@@ -7,11 +7,13 @@ MoveComponent::MoveComponent(class Actor* owner, int updateOrder)
 	, mXSpeed(0.0f)
 	, mYSpeed(0.0f)
 	,mForwardSpeed(0.0f)
+	,mIsMove(true)
 {
 
 }
 
 void MoveComponent::Update(float deltaTime) {
+	if (!mIsMove)return;
 	if (mAngularSpeed != 0.0f) {
 		float rot = mOwner->GetRotation();
 		rot += mAngularSpeed * deltaTime;

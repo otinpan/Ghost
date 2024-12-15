@@ -10,8 +10,18 @@ public:
 	void UpdatePlayer_Game(float deltaTime)override;
 
 
-	class Flashlight* GetFlashlight() { return mFlashlight; }
+	class Flashlight* &GetFlashlight() { return mFlashlight; }
 
 private:
 	class Flashlight* mFlashlight;
+
+	//Flashlight
+	bool mIsLightOn;
+	float mBattery;
+	InputGroup inputFlashlight;
+
+	bool mIsAlive;
+
+	void UpdateFlashlight_Game(float deltaTime);
+	void UpdateIntersectGhost_Game(float deltaTime);
 };
