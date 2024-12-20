@@ -22,11 +22,25 @@ public:
 		Escapee3,
 	};
 
+	enum BatterySize {
+		Zero,
+		Small,
+		Mid,
+		Big,
+	};
+
+	enum Treasure {
+		Empty,
+		TreasureKey,
+		TreasureBattery,
+	};
+
 	void InitializeActor_CreateStage(class CreateStage* createstage)override;
 	virtual void InitializeStageObject_CreateStage(class CreateStage* createStage);
 
 	void InitializeActor_Game(class Game* game)override;
 	virtual void InitializeStageObject_Game(class Game* game);
+	virtual void InitializeStage_Game();
 
 	void UpdateActor_CreateStage(float deltaTime)override;
 	virtual void UpdateStageObject_CreateStage(float deltaTime);
@@ -70,7 +84,11 @@ public:
 	void SetCandleIteration(int candleIteration) { mCandleIteration = candleIteration; }
 	float GetLightRadRange() { return mLightRadRange; }
 	void SetLightRadRange(float lightRadRange) { mLightRadRange = lightRadRange; }
-	
+	BatterySize GetBatterySize() { return mBatterySize; }
+	void SetBatterySize(BatterySize batterySize) { mBatterySize = batterySize; }
+	Treasure GetTreasure() { return mTreasure; }
+	void SetTreasure(Treasure treasure) { mTreasure = treasure; }
+
 
 	Vec2 GetLeftTop();
 	Vec2 GetRightTop();
@@ -87,6 +105,24 @@ public:
 	void SetDoorWidth(float width) { mDoorWidth = width; }
 	float GetDoorHeight() { return mDoorHeight; }
 	void SetDoorHeight(float height) { mDoorHeight = height; }
+	float GetObjectLeft() { return mObjectLeft; }
+	void SetObjectLeft(float objectLeft) { mObjectLeft = objectLeft; }
+	float GetObjectRight() { return mObjectRight; }
+	void SetObjectRight(float objectRight) { mObjectRight = objectRight; }
+	float GetObjectUp() { return mObjectUp; }
+	void SetObjectUp(float objectUp) { mObjectUp = objectUp; }
+	float GetObjectDown() { return mObjectDown; }
+	void SetObjectDown(float objectDown) { mObjectDown = objectDown; }
+	Line GetLineL() { return LineL; }
+	void SetLineL(Line lineL) { LineL = lineL; }
+	Line GetLineR() { return LineR; }
+	void SetLineR(Line lineR) { LineR = lineR; }
+	Line GetLineU() { return LineU; }
+	void SetLineU(Line lineU) { LineU = lineU; }
+	Line GetLineD() { return LineD; }
+	void SetLineD(Line lineD) { LineD = lineD; }
+	float GetStandardSpeed() { return StandardSpeed; }
+	void SetStandardSpeed(float standardSpeed) { StandardSpeed = standardSpeed; }
 
 
 	//Menu
@@ -123,12 +159,29 @@ private:
 	int mClockwise;
 
 	int mPatrolRange;
+	float StandardSpeed;
 
 	//Door
 	Vec2 mDoorCenter;
 	float mDoorWidth;
 	float mDoorHeight;
-	
+
+	//Battery
+	BatterySize mBatterySize;
+
+	//Treasure
+	Treasure mTreasure;
+
+	//Object当たり判定
+	float mObjectLeft;
+	float mObjectRight;
+	float mObjectUp;
+	float mObjectDown;
+	Line LineL;
+	Line LineR;
+	Line LineU;
+	Line LineD;
+
 };
 
 float ConvertToSpeed(float barMin,float barWidth,float pos);

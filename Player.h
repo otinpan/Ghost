@@ -27,9 +27,14 @@ public:
 	class CircleComponent* GetCircleComponent() { return cc; }
 
 	void UpdatePos_Game(float deltaTime);
+	virtual void UpdatePlayerPos_Game(float deltaTime);
 
 	float GetSpeedMagnification() { return mSpeedMagnification; }
 	void SetSpeedMagnification(float speedMagnification) { mSpeedMagnification = speedMagnification; }
+	float GetStandardSpeed() { return StandardSpeed; }
+	void SetStandardSpeed(float standardSpeed) { StandardSpeed = standardSpeed; }
+	float GetPlayerRadius() { return mRadius; }
+	void SetPlayerRadius(float radius) { mRadius = radius; }
 
 private:
 	class CircleComponent* cc;
@@ -37,6 +42,8 @@ private:
 	Attribute mAttribute;
 
 	float mSpeedMagnification;
+
+	float StandardSpeed;
 
 	int mVerticalSize;
 	int mSideSize;

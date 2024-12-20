@@ -1,11 +1,12 @@
 ﻿#include"Ghost_Game.h"
 #include"InputComponent_Keyboard.h"
 #include"GhostClone_Game.h"
+#include"Stage.h"
+#include"StageObject.h"
 
 Ghost_Game::Ghost_Game(Vec2 pos,float speed)
 	:Player(pos,speed)
 	,ic(nullptr)
-	,StandardSpeed(0.3f)
 	,MakeCloneCoolTime(30.0f)
 	,mMakeCloneTime(0.0f)
 	,mCanMakeClone(true)
@@ -16,7 +17,8 @@ Ghost_Game::Ghost_Game(Vec2 pos,float speed)
 	,mStopTime(5.0f)
 {
 	SetPosition(pos);
-	SetSpeed(StandardSpeed+speed/100.0f*StandardSpeed);
+	SetSpeed(GetStandardSpeed() + speed / 100.0f * GetStandardSpeed());
+	SetSpeed(0.3f);
 	SetAttribute(Player::Attribute::Ghost);
 }
 
@@ -96,4 +98,30 @@ void Ghost_Game::UpdateStop_Game(float deltaTime) {
 			mIsStop = false;
 		}
 	}
+}
+
+void Ghost_Game::UpdatePlayerPos_Game(float deltaTime) {
+	mPos = GetPosition();
+
+	if (!GetAttribute() == Attribute::GhostClone) {
+		for (auto& row : GetGame()->GetStage()->GetStageObjects()) {
+			for (auto& stageObject : row) {
+				if (stageObject == 0)continue;
+				if (!IsIntersect_SC(stageObject->GetSquareComponent(), GetCircleComponent()))continue;
+				//Objectとの当たり判定
+				if (GetCircleComponent()->GetCircle().intersects(stageObject->GetLineL()))
+					mPos.x = stageObject->GetObjectLeft() - GetPlayerRadius() - 0.008; //Playerが左
+				if (GetCircleComponent()->GetCircle().intersects(stageObject->GetLineR()))
+					mPos.x = stageObject->GetObjectRight() + GetPlayerRadius() + 0.008; //Playerが右
+				if (GetCircleComponent()->GetCircle().intersects(stageObject->GetLineD()))
+					mPos.y = stageObject->GetObjectDown() - GetPlayerRadius() - 0.008; //Playerが下
+				if (GetCircleComponent()->GetCircle().intersects(stageObject->GetLineU()))
+					mPos.y = stageObject->GetObjectUp() + GetPlayerRadius() + 0.008; //Playerが上
+			}
+
+		}
+	}
+
+	SetPosition(mPos);
+	GetCircleComponent()->SetCenter(mPos);
 }

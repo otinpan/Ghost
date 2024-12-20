@@ -161,11 +161,36 @@ void Door::InitializeStageObject_Game(class Game* game) {
 	DoorRel_dy = { GetHeight() * 3 / 8,0,-GetHeight() * 3 / 8,0 };
 	SetDoorCenter(Vec2{ GetPosition().x + DoorRel_dx[GetClockwise()],GetPosition().y + DoorRel_dy[GetClockwise()]});
 	sc->Initialize_Game(GetDoorCenter(), DoorWidth[GetClockwise()], DoorHeight[GetClockwise()]);
-	sc->SetColor(ColorF(0, 0, 1));
 	SetDoorWidth(DoorWidth[GetClockwise()]);
 	SetDoorHeight(DoorHeight[GetClockwise()]);
+	sc->SetColor(ColorF(0, 0, 1));
+	sc->SetCenter(GetDoorCenter());
+	sc->SetWidth(GetDoorWidth());
+	sc->SetHeight(GetDoorHeight());
+	sc->SetColor(ColorF(0, 1, 1));
+	
+}
+
+void Door::InitializeStage_Game() {
+	SetDoorCenter(Vec2{ GetPosition().x + DoorRel_dx[GetClockwise()],GetPosition().y + DoorRel_dy[GetClockwise()] });
+	SetDoorHeight(DoorHeight[GetClockwise()]);
+	SetDoorWidth(DoorWidth[GetClockwise()]);
+	sc->SetCenter(GetDoorCenter());
+	sc->SetWidth(GetDoorWidth());
+	sc->SetHeight(GetDoorHeight());
+	sc->SetColor(ColorF(0, 1, 1));
+
+
+	SetObjectLeft(GetDoorCenter().x - GetDoorWidth() / 2.0f);
+	SetObjectRight(GetDoorCenter().x + GetDoorWidth() / 2.0f);
+	SetObjectUp(GetDoorCenter().y + GetDoorHeight() / 2.0f);
+	SetObjectDown(GetDoorCenter().y - GetDoorHeight() / 2.0f);
+	SetLineL({ {GetObjectLeft(),GetObjectUp()},{GetObjectLeft(),GetObjectDown()} });
+	SetLineR({ {GetObjectRight(),GetObjectUp()},{GetObjectRight(),GetObjectDown()} });
+	SetLineU({ {GetObjectLeft(),GetObjectUp()},{GetObjectRight(),GetObjectUp()} });
+	SetLineD({ {GetObjectLeft(),GetObjectDown()},{GetObjectRight(),GetObjectDown()} });
 }
 
 void Door::UpdateStageObject_Game(float deltaTime) {
-
+	
 }

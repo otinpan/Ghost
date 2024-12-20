@@ -3,7 +3,9 @@
 #include"Hand.h"
 
 TreasureChest::TreasureChest(Vec2 pos, float width, float height)
-	:StageObject(pos,width,height)
+	:StageObject(pos, width, height)
+	, mBatterySize(StageObject::BatterySize::Mid)
+	, mTreasure(StageObject::Treasure::Empty)
 {
 	SetAttribute(Attribute::TreasureChest);
 }
@@ -82,91 +84,92 @@ void TreasureChest::InitializeStageMenu_CreateStage() {
 	mBigCC->SetRadius(mMidBatteryRad*1.2f);
 	mBigCC->SetColor(ColorF(0, 0, 0));
 
-	mTreasure = Treasure::None;
-	mBatterySize = Battery::BatterySize::Mid;
 }
 
 void TreasureChest::UpdateStageMenu_CreateStage(float deltaTime) {
 	if (GetCreateStage()->GetHand()->GetInputChoose().down()) {
 		if (IsIntersect_SC(mNoneSC, GetCreateStage()->GetHand()->GetCircleComponent())) {
-			mTreasure = Treasure::None;
+			mTreasure = StageObject::Treasure::Empty;
 		}
 		if (IsIntersect_SC(mKeySC, GetCreateStage()->GetHand()->GetCircleComponent())) {
-			mTreasure = Treasure::Key;
+			mTreasure = StageObject::Treasure::TreasureKey;
 		}
 		if (IsIntersect_SC(mBatterySC, GetCreateStage()->GetHand()->GetCircleComponent())) {
-			mTreasure = Treasure::Battery;
+			mTreasure = StageObject::Treasure::TreasureBattery;
 		}
 	}
 
-	if (mTreasure == Treasure::None) {
+	if (mTreasure == StageObject::Treasure::Empty) {
 		if (GetCreateStage()->GetHand()->GetInputD().down()) {
-			mTreasure = Treasure::Key;
+			mTreasure = StageObject::Treasure::TreasureKey;
 		}
-	}else if(mTreasure==Treasure::Key){
+	}else if(mTreasure==StageObject::Treasure::TreasureKey){
 		if (GetCreateStage()->GetHand()->GetInputD().down()) {
-			mTreasure = Treasure::Battery;
+			mTreasure = StageObject::Treasure::TreasureBattery;
 		}
 		if (GetCreateStage()->GetHand()->GetInputU().down()) {
-			mTreasure = Treasure::None;
+			mTreasure = StageObject::Treasure::Empty;
 		}
 	}
-	else if (mTreasure == Treasure::Battery) {
+	else if (mTreasure == StageObject::Treasure::TreasureBattery) {
 		if (GetCreateStage()->GetHand()->GetInputU().down()) {
-			mTreasure = Treasure::Key;
+			mTreasure = StageObject::Treasure::TreasureKey;
 		}
 		//BatterySize
-		if (mBatterySize == Battery::BatterySize::Small) {
+		if (mBatterySize == StageObject::BatterySize::Small) {
 			if (GetCreateStage()->GetHand()->GetInputPlus().down()) {
-				mBatterySize = Battery::BatterySize::Mid;
+				mBatterySize = StageObject::BatterySize::Mid;
 			}
 		}
-		if (mBatterySize == Battery::BatterySize::Mid) {
+		if (mBatterySize == StageObject::BatterySize::Mid) {
 			if (GetCreateStage()->GetHand()->GetInputMinus().down()) {
-				mBatterySize = Battery::BatterySize::Small;
+				mBatterySize = StageObject::BatterySize::Small;
 			}
 			if (GetCreateStage()->GetHand()->GetInputPlus().down()) {
-				mBatterySize = Battery::BatterySize::Big;
+				mBatterySize = StageObject::BatterySize::Big;
 			}
 		}
-		if (mBatterySize == Battery::BatterySize::Big) {
+		if (mBatterySize == StageObject::BatterySize::Big) {
 			if (GetCreateStage()->GetHand()->GetInputMinus().down()) {
-				mBatterySize = Battery::BatterySize::Mid;
+				mBatterySize = StageObject::BatterySize::Mid;
 			}
 		}
 	}
 
-	if (mBatterySize == Battery::BatterySize::Small) {
+	if (mBatterySize == StageObject::BatterySize::Small) {
 		mSmallCC->SetColor(ColorF(0, 1, 128.0f / 255.0f));
 	}
 	else {
 		mSmallCC->SetColor(ColorF(0, 0, 0));
 	}
-	if (mBatterySize == Battery::BatterySize::Mid) {
+	if (mBatterySize == StageObject::BatterySize::Mid) {
 		mMidCC->SetColor(ColorF(0, 1, 128.0f / 255.0f));
 	}
 	else {
 		mMidCC->SetColor(ColorF(0, 0, 0));
 	}
-	if (mBatterySize == Battery::BatterySize::Big) {
+	if (mBatterySize == StageObject::BatterySize::Big) {
 		mBigCC->SetColor(ColorF(0, 1, 128.0f / 255.0f));
 	}
 	else {
 		mBigCC->SetColor(ColorF(0, 0, 0));
 	}
 
+	SetTreasure(mTreasure);
+	SetBatterySize(mBatterySize);
+
 }
 
 void TreasureChest::DrawStageMenu_CreateStage() {
 	switch (mTreasure) {
-	case None:
+	case StageObject::Empty:
 		DrawRectFrame(Vec2(mMidPos.x, mMidPos.y + mEachHeight*2.0f/3.0f + mRectHeight / 2.0f),
 		mRectWidth, mRectHeight, 0, 0.002, ColorF(1, 1, 0));
 		break;
-	case Key:
+	case StageObject::TreasureKey:
 		DrawRectFrame(mMidPos, mRectWidth, mRectHeight,0,0.002,ColorF(1,1,0));
 		break;
-	case Battery:
+	case StageObject::TreasureBattery:
 		DrawRectFrame(Vec2(mMidPos.x, mMidPos.y - mEachHeight*2.0f/3.0f - mRectHeight / 2.0f),
 		mRectWidth, mRectHeight,0,0.002,ColorF(1,1,0));
 	}

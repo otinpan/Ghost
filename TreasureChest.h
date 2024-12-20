@@ -7,12 +7,6 @@ public:
 	TreasureChest(Vec2 pos, float width,float height);
 	~TreasureChest();
 
-	enum Treasure {
-		None,
-		Key,
-		Battery,
-	};
-
 	void InitializeStageObject_CreateStage(class CreateStage* createStage) override;
 	void InitializeStageObject_Game(class Game* game)override;
 
@@ -42,9 +36,9 @@ private:
 	float mRectHeight;
 	float mEachHeight;
 
-	Battery::BatterySize mBatterySize;
+	StageObject::BatterySize mBatterySize;
 
 	Vec2 mMidPos;
 
-	Treasure mTreasure;
+	StageObject::Treasure mTreasure;
 };

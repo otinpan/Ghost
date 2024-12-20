@@ -6,12 +6,6 @@ public:
 	Battery(Vec2 pos, float width, float height);
 	~Battery();
 
-	enum BatterySize {
-		Small,
-		Mid,
-		Big,
-	};
-
 	void InitializeStageObject_CreateStage(class CreateStage* createStage)override;
 	void InitializeStageObject_Game(class Game* game)override;
 
@@ -22,6 +16,8 @@ public:
 	void UpdateStageMenu_CreateStage(float deltaTime)override;
 	void DrawStageMenu_CreateStage()override;
 	void ShutdownStageMenu_CreateStage()override;
+
+
 
 private:
 	CircleComponent *mSmallCC;
@@ -35,5 +31,5 @@ private:
 	float mMidRad;
 	float mBigRad;
 
-	BatterySize mBatterySize;
+	StageObject::BatterySize mBatterySize;
 };

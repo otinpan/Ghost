@@ -2,6 +2,7 @@
 #include"CreateStage.h"
 #include"StageMenu.h"
 #include"Hand.h"
+#include"Stage.h"
 
 Patrol::Patrol(Vec2 pos, float width, float height)
 	:StageObject(pos, width, height)
@@ -263,8 +264,130 @@ void Patrol::ShutdownStageMenu_CreateStage() {
 
 void Patrol::InitializeStageObject_Game(class Game* game) {
 	InitializeActor_Game(game);
+
+}
+
+void Patrol::InitializeStage_Game() {
+	SetPatrolRange(GetPatrolRange() - 1);
+	SetSpeed(GetStandardSpeed() + GetSpeed() / 100.0f * GetStandardSpeed());
+	switch (GetClockwise()) {
+	case 0:
+		FromLine = GetLineD();
+		ToPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
+		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1 - GetPatrolRange()) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 });
+		ToLeft = ToPos.x - GetWidth() / 2.0f;
+		ToRight = ToPos.x + GetWidth() / 2.0f;
+		ToUp = ToPos.y + GetHeight() / 2.0f;
+		ToDown = GetPosition().y - GetHeight() / 2.0f;
+		ToLine = { {ToLeft,ToUp},{ToRight,ToUp} };
+		//velocity
+		mVelocity = Vec2(0, GetSpeed());
+		break;
+	case 1:
+		FromLine = GetLineL();
+		ToPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + (GetIteration().second + GetPatrolRange()) * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
+		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 });
+		ToLeft = ToPos.x - GetWidth() / 2.0f;
+		ToRight = ToPos.x + GetWidth() / 2.0f;
+		ToUp = ToPos.y + GetHeight() / 2.0f;
+		ToDown = GetPosition().y - GetHeight() / 2.0f;
+		ToLine = { {ToRight,ToUp},{ToRight,ToDown} };
+		//velocity
+		mVelocity = Vec2( GetSpeed(),0);
+		break;
+	case 2:
+		FromLine = GetLineU();
+		ToPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
+		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1 + GetPatrolRange()) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 });
+		ToLeft = ToPos.x - GetWidth() / 2.0f;
+		ToRight = ToPos.x + GetWidth() / 2.0f;
+		ToUp = ToPos.y + GetHeight() / 2.0f;
+		ToDown = GetPosition().y - GetHeight() / 2.0f;
+		ToLine = { {ToLeft,ToDown},{ToRight,ToDown} };
+		//velocity
+		mVelocity = Vec2(0,-GetSpeed());
+		break;
+	case 3:
+		FromLine = GetLineR();
+		ToPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + (GetIteration().second - GetPatrolRange()) * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
+		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 });
+		ToLeft = ToPos.x - GetWidth() / 2.0f;
+		ToRight = ToPos.x + GetWidth() / 2.0f;
+		ToUp = ToPos.y + GetHeight() / 2.0f;
+		ToDown = GetPosition().y - GetHeight() / 2.0f;
+		ToLine = { {ToLeft,ToUp},{ToLeft,ToDown} };
+		//velocity
+		mVelocity = Vec2(-GetSpeed(),0);
+		break;
+	}
+	mMoveC = new MoveComponent(this);
+	mMoveC->SetXSpeed(mVelocity.x);
+	mMoveC->SetYSpeed(mVelocity.y);
 }
 
 void Patrol::UpdateStageObject_Game(float deltaTime) {
+	Vec2 mPos = GetPosition();
+	for (auto& row : GetGame()->GetStage()->GetStageObjects()) {
+		for (auto& stageObject : row) {
+			if (stageObject == 0)continue;
+			if (!IsIntersect_SS(GetSquareComponent(), stageObject->GetSquareComponent())) continue;
+			if (stageObject == this)continue;
+			switch (GetClockwise()) {
+			case 0:
+				mPos.y = stageObject->GetObjectDown() - GetHeight() - 0.008; //Playerが下
+				mVelocity.y *= -1.0f;
+				SetClockwise(2);
+				break;
+			case 1:
+				mPos.x = stageObject->GetObjectLeft() - GetWidth() - 0.008; //Playerが左
+				mVelocity.x *= -1.0f;
+				SetClockwise(3);
+				break;
+			case 2:
+				mPos.y = stageObject->GetObjectUp() + GetHeight() + 0.008; //Playerが上
+				mVelocity.y *= -1.0f;
+				SetClockwise(0);
+				break;
+			case 3:
+				mPos.x = stageObject->GetObjectRight() + GetWidth() + 0.008; //Playerが右
+				mVelocity.x *= -1.0f;
+				SetClockwise(1);
+				break;
+			}
+		}
+	}
+	/*if (GetSquareComponent()->GetRect().intersects(FromLine) ||
+		GetSquareComponent()->GetRect().intersects(ToLine)) {
+		switch (GetClockwise()) {
+		case 0:
+			mVelocity.y *= -1.0f;
+			break;
+		case 1:
+			mVelocity.x *= -1.0f;
+			break;
+		case 2:
+			mVelocity.y *= -1.0f;
+			break;
+		case 3:
+			mVelocity.x *= -1.0f;
+			break;
+		}
+	}*/
 
+	SetPosition(mPos);
+
+	SetObjectLeft( GetPosition().x - GetWidth() / 2.0f);
+	SetObjectRight( GetPosition().x + GetWidth() / 2.0f);
+	SetObjectUp(GetPosition().y + GetHeight() / 2.0f);
+	SetObjectDown( GetPosition().y - GetHeight() / 2.0f);
+
+	SetLineL({ {GetObjectLeft(),GetObjectUp()}, {GetObjectLeft(),GetObjectDown()} });
+	SetLineR({ {GetObjectRight(),GetObjectUp()}, {GetObjectRight(),GetObjectDown()} });
+	SetLineU({ {GetObjectLeft(),GetObjectUp()}, {GetObjectRight(),GetObjectUp()} });
+	SetLineD({ {GetObjectLeft(),GetObjectDown()}, {GetObjectRight(),GetObjectDown()} });
+
+
+	mMoveC->SetXSpeed(mVelocity.x);
+	mMoveC->SetYSpeed(mVelocity.y);
+	GetSquareComponent()->SetCenter(GetPosition());
 }

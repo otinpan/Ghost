@@ -10,6 +10,8 @@ public:
 
 	void UpdatePlayer_Game(float deltaTime)override;
 
+	void UpdatePlayerPos_Game(float deltaTime)override;
+
 	void SetIsLighted(bool isLighted) { mIsLighted = isLighted; }
 	bool GetIsLighted() { return mIsLighted; }
 	void SetStopTime(float stopTime) { mStopTime = stopTime; }
@@ -29,8 +31,6 @@ private:
 	InputGroup inputLeft;
 	InputGroup inputMakeGhost;
 
-	float StandardSpeed;
-
 	bool mCanMakeClone;
 	float mMakeCloneTime;
 	float MakeCloneCoolTime;
@@ -46,6 +46,9 @@ private:
 	void UpdateStop_Game(float deltaTime);
 	float mStopTime;
 	float StopLimitTime;
+
+	//pos
+	Vec2 mPos;
 
 	void UpdateClone_Game(float deltaTime);
 };

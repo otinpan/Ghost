@@ -8,6 +8,7 @@ Player::Player(Vec2 pos, float speed)
 	, mObjectDown(0)
 	, mObjectUp(0)
 	, mSpeedMagnification(speed)
+	,StandardSpeed(0.3f)
 {
 	SetPosition(pos);
 }
@@ -57,38 +58,8 @@ void Player::UpdatePlayer_Game(float deltaTime) {
 }
 
 void Player::UpdatePos_Game(float deltaTime) {
+	UpdatePlayerPos_Game(deltaTime);
 	mPos = GetPosition();
-
-	if (!GetAttribute() == Attribute::GhostClone) {
-		for (auto& row : GetGame()->GetStage()->GetStageObjects()) {
-			for (auto& stageObject : row) {
-				if (stageObject == 0)continue;
-				if (!IsIntersect_SC(stageObject->GetSquareComponent(), cc))continue;
-				if (stageObject->GetAttribute() == StageObject::Attribute::Door) {
-					mObjectLeft = stageObject->GetDoorCenter().x - stageObject->GetDoorWidth() / 2.0f;
-					mObjectRight = stageObject->GetDoorCenter().x + stageObject->GetDoorWidth() / 2.0f;
-					mObjectUp = stageObject->GetDoorCenter().y + stageObject->GetDoorHeight() / 2.0f;
-					mObjectDown = stageObject->GetDoorCenter().y - stageObject->GetDoorHeight() / 2.0f;
-				}
-				else {
-					mObjectLeft = stageObject->GetPosition().x - stageObject->GetWidth() / 2.0f;
-					mObjectRight = stageObject->GetPosition().x + stageObject->GetWidth() / 2.0f;
-					mObjectUp = stageObject->GetPosition().y + stageObject->GetHeight() / 2.0f;
-					mObjectDown = stageObject->GetPosition().y - stageObject->GetHeight() / 2.0f;
-				}
-				LineL = { {mObjectLeft,mObjectUp},{mObjectLeft,mObjectDown} };
-				LineR = { {mObjectRight,mObjectUp},{mObjectRight,mObjectDown} };
-				LineU = { {mObjectRight,mObjectUp},{mObjectLeft,mObjectUp} };
-				LineD = { {mObjectLeft,mObjectDown},{mObjectRight,mObjectDown} };
-				//Objectとの当たり判定
-				if (cc->GetCircle().intersects(LineL)) mPos.x = mObjectLeft - mRadius - 0.008; //Playerが左
-				if (cc->GetCircle().intersects(LineR))mPos.x = mObjectRight + mRadius + 0.008; //Playerが右
-				if (cc->GetCircle().intersects(LineD))mPos.y = mObjectDown - mRadius - 0.008; //Playerが下
-				if (cc->GetCircle().intersects(LineU))mPos.y = mObjectUp + mRadius + 0.008; //Playerが上
-			}
-
-		}
-	}
 
 	//端
 	if (mPos.x + mRadius > GetGame()->GetStage()->GetRight())
@@ -102,5 +73,9 @@ void Player::UpdatePos_Game(float deltaTime) {
 
 	SetPosition(mPos);
 	cc->SetCenter(mPos);
+}
+
+void Player::UpdatePlayerPos_Game(float deltaTime) {
+
 }
 

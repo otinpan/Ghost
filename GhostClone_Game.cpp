@@ -57,3 +57,7 @@ void GhostClone_Game::UpdateStop_Game(float deltaTime) {
 		}
 	}
 }
+
+void GhostClone_Game::UpdatePlayerPos_Game(float deltaTime) {
+
+}

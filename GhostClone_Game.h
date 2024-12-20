@@ -10,6 +10,8 @@ public:
 
 	void UpdatePlayer_Game(float deltaTime)override;
 
+	void UpdatePlayerPos_Game(float deltaTime)override;
+
 	void SetIsLighted(bool isLighted) { mIsLighted = isLighted; }
 	bool GetIsLighted() { return mIsLighted; }
 

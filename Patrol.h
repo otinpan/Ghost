@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include"StageObject.h"
+#include"MoveComponent.h"
 
 class Patrol :public StageObject{
 public:
@@ -8,6 +9,7 @@ public:
 
 	void InitializeStageObject_CreateStage(class CreateStage* createStage)override;
 	void InitializeStageObject_Game(class Game* game)override;
+	void InitializeStage_Game()override;
 
 	void UpdateStageObject_CreateStage(float deltaTime)override;
 	void UpdateStageObject_Game(float deltaTime)override;
@@ -25,6 +27,8 @@ private:
 	class CircleComponent* mPlusCC;
 	class CircleComponent* mMinusCC;
 	class SquareComponent* mBarSC_CreateStage;
+
+	class MoveComponent* mMoveC;
 
 	Vec2 mTriCenter;
 	Vec2 mUpTriPos;
@@ -62,5 +66,15 @@ private:
 	//Font
 	Font mStageMenuFont{ConvertToInt((float)0.05 * GetMagnification())};
 	Font mSpeedFont{ ConvertToInt((float)0.04 * GetMagnification()) };
+
+	//どこからどこまで動くか
+	Line FromLine;
+	Line ToLine;
+	Vec2 ToPos;
+	float ToLeft;
+	float ToRight;
+	float ToUp;
+	float ToDown;
+	Vec2 mVelocity;
 
 };

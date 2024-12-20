@@ -4,7 +4,7 @@
 
 Battery::Battery(Vec2 pos, float width, float height)
 	:StageObject(pos, width, height)
-	,mBatterySize(BatterySize::Mid)
+	, mBatterySize(StageObject:: BatterySize::Mid)
 {
 	SetAttribute(StageObject::Attribute::Battery);
 }
@@ -91,6 +91,8 @@ void Battery::UpdateStageMenu_CreateStage(float deltaTime) {
 			mBatterySize = BatterySize::Small;
 		}
 	}
+
+	SetBatterySize(mBatterySize);
 
 	if (mBatterySize == BatterySize::Big) {
 		mBigCC->SetColor(ColorF(0, 1, 128.0f / 255.0f));

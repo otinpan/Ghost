@@ -17,6 +17,9 @@ StageObject::StageObject(Vec2 pos, float width, float height)
 	, mClockwise(0)
 	, mPatrolRange(1)
 	,mIsInObjectMenu(false)
+	,mBatterySize(BatterySize::Zero)
+	,mTreasure(Treasure::Empty)
+	,StandardSpeed(0.3f)
 {
 	SetPosition(pos);
 }
@@ -269,28 +272,31 @@ void StageObject::InitializeActor_Game(class Game* game) {
 		break;
 	}
 
-
-	/*cc.resize(4);
-	for (int i = 0; i < 4; i++) {
-		cc[i] = new CircleComponent(this);
-		cc[i]->Initialize_Game();
-		cc[i]->SetRadius((float)mWidth / 6.0f);
-		cc[i]->SetColor(ColorF(0, 0, 1));
+	if (mAttribute == Attribute::Door) {
+		mObjectLeft = GetDoorCenter().x - GetDoorWidth() / 2.0f;
+		mObjectRight = GetDoorCenter().x + GetDoorWidth() / 2.0f;
+		mObjectUp = GetDoorCenter().y + GetDoorHeight() / 2.0f;
+		mObjectDown = GetDoorCenter().y - GetDoorHeight() / 2.0f;
 	}
-	float dw = (float)mWidth / 2.0f - cc[0]->GetRadius();
-	float dh = (float)mHeight / 2.0f - cc[0]->GetRadius() * mHeight / mWidth;
-	dx = { -dw,dw,dw,-dw };
-	dy = { dh,dh,-dh,-dh };
-	for (int i = 0; i < 4; i++) {
-		cc[i]->
-			SetCenter(Vec2
-			(GetPosition().x + dx[i],
-				GetPosition().y + dy[i]));
-	}*/
+	else {
+		mObjectLeft = GetPosition().x - GetWidth() / 2.0f;
+		mObjectRight = GetPosition().x + GetWidth() / 2.0f;
+		mObjectUp = GetPosition().y + GetHeight() / 2.0f;
+		mObjectDown = GetPosition().y - GetHeight() / 2.0f;
+	}
+
+	LineL = { {mObjectLeft,mObjectUp},{mObjectLeft,mObjectDown} };
+	LineR = { {mObjectRight,mObjectUp},{mObjectRight,mObjectDown} };
+	LineU = { {mObjectRight,mObjectUp},{mObjectLeft,mObjectUp} };
+	LineD = { {mObjectLeft,mObjectDown},{mObjectRight,mObjectDown} };
 }
 
 void StageObject::InitializeStageObject_Game(class Game* game) {
 	InitializeActor_Game(game);
+}
+
+void StageObject::InitializeStage_Game() {
+
 }
 
 void StageObject::UpdateActor_Game(float deltaTime) {
