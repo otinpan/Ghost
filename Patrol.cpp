@@ -3,6 +3,7 @@
 #include"StageMenu.h"
 #include"Hand.h"
 #include"Stage.h"
+#include"StageObjectLight.h"
 
 Patrol::Patrol(Vec2 pos, float width, float height)
 	:StageObject(pos, width, height)
@@ -272,50 +273,34 @@ void Patrol::InitializeStage_Game() {
 	SetSpeed(GetStandardSpeed() + GetSpeed() / 100.0f * GetStandardSpeed());
 	switch (GetClockwise()) {
 	case 0:
-		FromLine = GetLineD();
+		FromPos= Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
+		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 -GetHeight()/2.0f});
 		ToPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
-		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1 - GetPatrolRange()) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 });
-		ToLeft = ToPos.x - GetWidth() / 2.0f;
-		ToRight = ToPos.x + GetWidth() / 2.0f;
-		ToUp = ToPos.y + GetHeight() / 2.0f;
-		ToDown = GetPosition().y - GetHeight() / 2.0f;
-		ToLine = { {ToLeft,ToUp},{ToRight,ToUp} };
+		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1 - GetPatrolRange()) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2+GetHeight()/2.0f});
 		//velocity
 		mVelocity = Vec2(0, GetSpeed());
 		break;
 	case 1:
-		FromLine = GetLineL();
-		ToPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + (GetIteration().second + GetPatrolRange()) * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
+		FromPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2-GetWidth()/2.0f,
+		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2  });
+		ToPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + (GetIteration().second + GetPatrolRange()) * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2+GetWidth()/2.0f,
 		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 });
-		ToLeft = ToPos.x - GetWidth() / 2.0f;
-		ToRight = ToPos.x + GetWidth() / 2.0f;
-		ToUp = ToPos.y + GetHeight() / 2.0f;
-		ToDown = GetPosition().y - GetHeight() / 2.0f;
-		ToLine = { {ToRight,ToUp},{ToRight,ToDown} };
 		//velocity
 		mVelocity = Vec2( GetSpeed(),0);
 		break;
 	case 2:
-		FromLine = GetLineU();
+		FromPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
+		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 + GetHeight()/2.0f});
 		ToPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
-		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1 + GetPatrolRange()) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 });
-		ToLeft = ToPos.x - GetWidth() / 2.0f;
-		ToRight = ToPos.x + GetWidth() / 2.0f;
-		ToUp = ToPos.y + GetHeight() / 2.0f;
-		ToDown = GetPosition().y - GetHeight() / 2.0f;
-		ToLine = { {ToLeft,ToDown},{ToRight,ToDown} };
+		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1 + GetPatrolRange()) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 -GetHeight()/2.0f});
 		//velocity
 		mVelocity = Vec2(0,-GetSpeed());
 		break;
 	case 3:
-		FromLine = GetLineR();
-		ToPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + (GetIteration().second - GetPatrolRange()) * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
+		FromPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2+GetWidth()/2.0f,
 		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 });
-		ToLeft = ToPos.x - GetWidth() / 2.0f;
-		ToRight = ToPos.x + GetWidth() / 2.0f;
-		ToUp = ToPos.y + GetHeight() / 2.0f;
-		ToDown = GetPosition().y - GetHeight() / 2.0f;
-		ToLine = { {ToLeft,ToUp},{ToLeft,ToDown} };
+		ToPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + (GetIteration().second - GetPatrolRange()) * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2 - GetWidth()/2.0f,
+		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 });
 		//velocity
 		mVelocity = Vec2(-GetSpeed(),0);
 		break;
@@ -323,9 +308,19 @@ void Patrol::InitializeStage_Game() {
 	mMoveC = new MoveComponent(this);
 	mMoveC->SetXSpeed(mVelocity.x);
 	mMoveC->SetYSpeed(mVelocity.y);
+
+	mStageObjectLight = new StageObjectLight(this);
+	mStageObjectLight->Initialize_Game();
 }
 
 void Patrol::UpdateStageObject_Game(float deltaTime) {
+	mStageObjectLight->Update_Game(deltaTime);
+	if (GetPatrolRange() == 0)return;
+	UpdatePos_Game(deltaTime);
+}
+
+
+void Patrol::UpdatePos_Game(float deltaTime) {
 	Vec2 mPos = GetPosition();
 	for (auto& row : GetGame()->GetStage()->GetStageObjects()) {
 		for (auto& stageObject : row) {
@@ -337,57 +332,76 @@ void Patrol::UpdateStageObject_Game(float deltaTime) {
 				mPos.y = stageObject->GetObjectDown() - GetHeight() - 0.008; //Playerが下
 				mVelocity.y *= -1.0f;
 				SetClockwise(2);
+				std::swap(ToPos, FromPos);
 				break;
 			case 1:
 				mPos.x = stageObject->GetObjectLeft() - GetWidth() - 0.008; //Playerが左
 				mVelocity.x *= -1.0f;
 				SetClockwise(3);
+				std::swap(ToPos, FromPos);
 				break;
 			case 2:
 				mPos.y = stageObject->GetObjectUp() + GetHeight() + 0.008; //Playerが上
 				mVelocity.y *= -1.0f;
 				SetClockwise(0);
+				std::swap(ToPos, FromPos);
 				break;
 			case 3:
 				mPos.x = stageObject->GetObjectRight() + GetWidth() + 0.008; //Playerが右
 				mVelocity.x *= -1.0f;
 				SetClockwise(1);
+				std::swap(ToPos, FromPos);
 				break;
 			}
 		}
 	}
-	/*if (GetSquareComponent()->GetRect().intersects(FromLine) ||
-		GetSquareComponent()->GetRect().intersects(ToLine)) {
+
+	if (GetSquareComponent()->GetRect().intersects(ToPos)) {
 		switch (GetClockwise()) {
-		case 0:
+		case 0://Down to Up
+			mPos.y = ToPos.y - GetHeight()/2.0f - 0.008;
 			mVelocity.y *= -1.0f;
+			SetClockwise(2);
+			std::swap(ToPos, FromPos);
 			break;
-		case 1:
+		case 1://Left to Right
+			mPos.x = ToPos.x - GetWidth()/2.0f - 0.008;
 			mVelocity.x *= -1.0f;
+			SetClockwise(3);
+			std::swap(ToPos, FromPos);
 			break;
-		case 2:
+		case 2://Up to Down
+			mPos.y = ToPos.y + GetHeight()/2.0f + 0.008;
 			mVelocity.y *= -1.0f;
+			SetClockwise(0);
+			std::swap(ToPos, FromPos);
 			break;
-		case 3:
+		case 3://Right to Left
+			mPos.x = ToPos.x + GetWidth()/2.0f + 0.008;
+			SetClockwise(1);
 			mVelocity.x *= -1.0f;
+			std::swap(ToPos, FromPos);
 			break;
 		}
-	}*/
+
+	}
 
 	SetPosition(mPos);
 
-	SetObjectLeft( GetPosition().x - GetWidth() / 2.0f);
-	SetObjectRight( GetPosition().x + GetWidth() / 2.0f);
+	SetObjectLeft(GetPosition().x - GetWidth() / 2.0f);
+	SetObjectRight(GetPosition().x + GetWidth() / 2.0f);
 	SetObjectUp(GetPosition().y + GetHeight() / 2.0f);
-	SetObjectDown( GetPosition().y - GetHeight() / 2.0f);
+	SetObjectDown(GetPosition().y - GetHeight() / 2.0f);
 
 	SetLineL({ {GetObjectLeft(),GetObjectUp()}, {GetObjectLeft(),GetObjectDown()} });
 	SetLineR({ {GetObjectRight(),GetObjectUp()}, {GetObjectRight(),GetObjectDown()} });
 	SetLineU({ {GetObjectLeft(),GetObjectUp()}, {GetObjectRight(),GetObjectUp()} });
 	SetLineD({ {GetObjectLeft(),GetObjectDown()}, {GetObjectRight(),GetObjectDown()} });
 
-
 	mMoveC->SetXSpeed(mVelocity.x);
 	mMoveC->SetYSpeed(mVelocity.y);
 	GetSquareComponent()->SetCenter(GetPosition());
 }
+
+
+

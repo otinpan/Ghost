@@ -68,13 +68,12 @@ private:
 	Font mSpeedFont{ ConvertToInt((float)0.04 * GetMagnification()) };
 
 	//どこからどこまで動くか
-	Line FromLine;
-	Line ToLine;
+	Vec2 FromPos;
 	Vec2 ToPos;
-	float ToLeft;
-	float ToRight;
-	float ToUp;
-	float ToDown;
 	Vec2 mVelocity;
+	void UpdatePos_Game(float deltaTime);
+
+	//PatrolLight
+	class StageObjectLight* mStageObjectLight;
 
 };

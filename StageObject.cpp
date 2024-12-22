@@ -19,7 +19,7 @@ StageObject::StageObject(Vec2 pos, float width, float height)
 	,mIsInObjectMenu(false)
 	,mBatterySize(BatterySize::Zero)
 	,mTreasure(Treasure::Empty)
-	,StandardSpeed(0.3f)
+	,StandardSpeed(0.2f)
 {
 	SetPosition(pos);
 }
