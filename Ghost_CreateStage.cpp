@@ -34,8 +34,8 @@ void Ghost_CreateStage::InitializeStageMenu_CreateStage() {
 		mBarMin + mBarHeight * GetSpeed() / 100.0f
 	);
 
-	mBarSC_CreateStage = new SquareComponent(this);
-	mBarSC_CreateStage->Initialize_CreateStage(mBarPos,
+	mBarSC_CreateStage = new SquareComponent(this,200,true);
+	mBarSC_CreateStage->InitializeDrawing_CreateStage(mBarPos,
 		GetCreateStage()->GetStageMenu()->GetMenuWidth() / 6.0f,
 		mBarHeight / 25.0f);
 	mBarSC_CreateStage->SetColor(ColorF(0, 0, 0));

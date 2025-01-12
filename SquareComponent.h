@@ -1,15 +1,15 @@
 ﻿#pragma once
-#include"Component.h"
+#include"DrawingComponent.h"
 #include<Siv3D.hpp>
 
 
-class SquareComponent :public Component {
+class SquareComponent :public DrawingComponent {
 public:
-	SquareComponent(class Actor* owner);
+	SquareComponent(class Actor* owner, int drawOrder, bool isBackground);
 	~SquareComponent();
 
-	void Initialize_CreateStage(Vec2 pos,float width,float height);
-	void Initialize_Game(Vec2 pos,float width,float height);
+	void InitializeDrawing_Game(Vec2 pos, float width, float height);
+	void InitializeDrawing_CreateStage(Vec2 pos, float width, float height);
 
 	void SetWidth(float width) { mWidth = width; }
 	void SetHeight(float height) { mHeight = height; }
@@ -23,7 +23,7 @@ public:
 	float GetHeight() const;
 	const Vec2& GetCenter() const;
 
-	void Draw();
+	void Draw() override;
 
 private:
 	float mWidth;

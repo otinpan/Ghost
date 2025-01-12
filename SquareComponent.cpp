@@ -2,8 +2,9 @@
 #include"CircleComponent.h"
 #include"Actor.h"
 
-SquareComponent::SquareComponent(class Actor* owner)
-	:Component(owner)
+
+SquareComponent::SquareComponent(class Actor* owner, int drawOrder, bool isBackground)
+	:DrawingComponent(owner,drawOrder,isBackground)
 	,mWidth(0.0f)
 	,mHeight(0.0f)
 	,mCenter(Vec2{0,0})
@@ -22,16 +23,16 @@ SquareComponent::~SquareComponent() {
 
 }
 
-void SquareComponent::Initialize_Game
-(Vec2 pos,float width,float height) {
+void SquareComponent::InitializeDrawing_Game(Vec2 pos,float width,float height) {
+	Initialize_Game();
 	mOwner->GetGame()->AddSquare(this);
 	mCenter = pos;
 	mWidth = width;
 	mHeight = height;
 }
 
-void SquareComponent::Initialize_CreateStage
-(Vec2 pos,float width,float height) {
+void SquareComponent::InitializeDrawing_CreateStage(Vec2 pos,float width,float height) {
+	Initialize_CreateStage();
 	mOwner->GetCreateStage()->AddSquare(this);
 	mCenter = pos;
 	mWidth = width;
@@ -52,6 +53,7 @@ const Vec2& SquareComponent::GetCenter()const {
 
 
 void SquareComponent::Draw() {
+	if (!GetIsDraw())return;
 	DrawRect(mCenter, mWidth, mHeight, mColor);
 }
 

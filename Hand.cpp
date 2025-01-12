@@ -35,8 +35,8 @@ void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 	Initialize_CreateStage(createstage);
 	SetPosition({ 0.0f,-0.7f });
 
-	cc = new CircleComponent(this);
-	cc->Initialize_CreateStage();
+	cc = new CircleComponent(this,300,true);
+	cc->InitializeDrawing_CreateStage();
 	cc->SetRadius(0.003f);
 	cc->SetColor({ 1.0,0.0,0.0 });
 

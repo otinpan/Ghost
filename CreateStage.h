@@ -21,10 +21,10 @@ public:
 	void AddActor(class Actor* actor);
 	void RemoveActor(class Actor* actor);
 
-	void AddSprite(class SpriteComponent* sprite);
-	void RemoveSprite(class SpriteComponent* sprite);
+	void AddDrawing(class DrawingComponent* drawing);
+	void RemoveDrawing(class DrawingComponent* drawing);
 
-	void AddCircle(class CircleComponent* circle);
+ 	void AddCircle(class CircleComponent* circle);
 	void RemoveCircle(class CircleComponent* circle);
 
 	void AddSquare(class SquareComponent* square);
@@ -61,8 +61,9 @@ private:
 	// Any pending actors
 	std::vector<class Actor*> mPendingActors;
 
-	// All the sprite components drawn
-	std::vector<class SpriteComponent*> mSprites;
+	//All the Drwaing
+	std::vector<class DrawingComponent*> mDrawings_Background;
+	std::vector<class DrawingComponent*> mDrawings_Foreground;
 
 	//All the Circle components drawn
 	std::vector<class CircleComponent*> mCircles;

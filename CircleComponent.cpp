@@ -2,8 +2,8 @@
 #include "Actor.h"
 #include "Game.h"
 
-CircleComponent::CircleComponent(class Actor* owner)
-	:Component(owner)
+CircleComponent::CircleComponent(class Actor* owner,int drawOrder,bool isBackground)
+	:DrawingComponent(owner,drawOrder,isBackground)
 	, mRadius(0.0f)
 	, mCenter(owner->GetPosition())
 	, mColor(ColorF({ 0.0,0.0,0.0 }))
@@ -19,11 +19,13 @@ CircleComponent::~CircleComponent() {
 	}
 }
 
-void CircleComponent::Initialize_CreateStage() {
+void CircleComponent::InitializeDrawing_CreateStage() {
+	Initialize_CreateStage();
 	mOwner->GetCreateStage()->AddCircle(this);
 }
 
-void CircleComponent::Initialize_Game() {
+void CircleComponent::InitializeDrawing_Game() {
+	Initialize_Game();
 	mOwner->GetGame()->AddCircle(this);
 }
 
@@ -39,6 +41,7 @@ const Vec2& CircleComponent::GetCenter()const {
 
 
 void CircleComponent::Draw() {
+	if (!GetIsDraw())return;
 	float mg = GetMagnification();
 	Circle{ ConvertToView(mCenter),mRadius * mg }.draw(mColor);
 }

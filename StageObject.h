@@ -123,6 +123,8 @@ public:
 	void SetLineD(Line lineD) { LineD = lineD; }
 	float GetStandardSpeed() { return StandardSpeed; }
 	void SetStandardSpeed(float standardSpeed) { StandardSpeed = standardSpeed; }
+	bool GetIsTurn() { return mIsTurn; }
+	void SetIsTurn(bool isTurn) { mIsTurn = isTurn; }
 
 
 	//Menu
@@ -158,8 +160,10 @@ private:
 	int mCandleIteration;
 	int mClockwise;
 
+	//Patrol
 	int mPatrolRange;
 	float StandardSpeed;
+	bool mIsTurn;
 
 	//Door
 	Vec2 mDoorCenter;
@@ -181,6 +185,7 @@ private:
 	Line LineR;
 	Line LineU;
 	Line LineD;
+
 
 };
 

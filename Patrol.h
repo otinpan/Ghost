@@ -73,6 +73,12 @@ private:
 	Vec2 mVelocity;
 	void UpdatePos_Game(float deltaTime);
 
+	//方向転換
+	void UpdateTurn_Game(float deltaTime);
+	float mTurnTime;
+	float TurnLimitTime;
+	float MicroRad;
+
 	//PatrolLight
 	class StageObjectLight* mStageObjectLight;
 

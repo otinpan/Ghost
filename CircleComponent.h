@@ -1,17 +1,17 @@
 ﻿#pragma once
-#include"Component.h"
+#include"DrawingComponent.h"
 #include"Siv3D.hpp"
 
 
-class CircleComponent :public Component {
+class CircleComponent :public DrawingComponent {
 public:
-	CircleComponent(class Actor* owner);
+	CircleComponent(class Actor* owner,int drawOrder,bool isBackground);
 	~CircleComponent();
 
 	//void Update(float deltaTime)override;
 
-	void Initialize_Game();
-	void Initialize_CreateStage();
+	void InitializeDrawing_Game();
+	void InitializeDrawing_CreateStage();
 
 	const Circle GetCircle();
 	const Circle GetViewCircle();
@@ -23,7 +23,7 @@ public:
 	float GetRadius()const;
 	const Vec2& GetCenter() const;
 
-	void Draw();
+	void Draw() override;
 
 
 private:

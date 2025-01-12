@@ -8,6 +8,7 @@
 #include"Patrol.h"
 #include"Candle.h"
 #include"TreasureChest.h"
+#include"DrawingComponent.h"
 
 CreateStage::CreateStage()
 	:mUpdatingActors(false)
@@ -91,9 +92,7 @@ void CreateStage::draw() {
 	for (auto circle : mCircles) {
 		circle->Draw();
 	}
-	for (auto sprite : mSprites) {
-
-	}
+	
 	
 }
 
@@ -157,31 +156,45 @@ void CreateStage::RemoveActor(Actor* actor) {
 	}
 }
 
-void CreateStage::AddSprite(SpriteComponent* sprite)
+void CreateStage::AddDrawing(DrawingComponent* drawing)
 {
-	// Find the insertion point in the sorted vector
-	// (The first element with a higher draw order than me)
-	int myDrawOrder = sprite->GetDrawOrder();
-	auto iter = mSprites.begin();
-	for (;
-		iter != mSprites.end();
-		++iter)
-	{
-		if (myDrawOrder < (*iter)->GetDrawOrder())
+	int myDrawOrder = drawing->GetDrawOrder();
+	if (drawing->GetIsBackground()) {
+		auto iter = mDrawings_Background.begin();
+		for (;
+			iter != mDrawings_Background.end();
+			++iter)
 		{
-			break;
+			if (myDrawOrder < (*iter)->GetDrawOrder()) {
+				break;
+			}
 		}
+		mDrawings_Background.insert(iter, drawing);
 	}
-
-	// Inserts element before position of iterator
-	mSprites.insert(iter, sprite);
+	else {
+		auto iter = mDrawings_Foreground.begin();
+		for (;
+			iter != mDrawings_Foreground.end();
+			++iter)
+		{
+			if (myDrawOrder < (*iter)->GetDrawOrder()) {
+				break;
+			}
+		}
+		mDrawings_Foreground.insert(iter, drawing);
+	}
 }
 
-void CreateStage::RemoveSprite(SpriteComponent* sprite)
+void CreateStage::RemoveDrawing(DrawingComponent* drawing)
 {
-	// (We can't swap because it ruins ordering)
-	auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
-	mSprites.erase(iter);
+	if (drawing->GetIsBackground()) {
+		auto iter = std::find(mDrawings_Background.begin(), mDrawings_Background.end(), drawing);
+		mDrawings_Background.erase(iter);
+	}
+	else {
+		auto iter = std::find(mDrawings_Foreground.begin(), mDrawings_Foreground.end(), drawing);
+		mDrawings_Foreground.erase(iter);
+	}
 }
 
 void CreateStage::AddCircle(CircleComponent* circle) {

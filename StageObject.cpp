@@ -16,10 +16,11 @@ StageObject::StageObject(Vec2 pos, float width, float height)
 	, mAttribute(Attribute::None)
 	, mClockwise(0)
 	, mPatrolRange(1)
-	,mIsInObjectMenu(false)
-	,mBatterySize(BatterySize::Zero)
-	,mTreasure(Treasure::Empty)
-	,StandardSpeed(0.2f)
+	, mIsInObjectMenu(false)
+	, mBatterySize(BatterySize::Zero)
+	, mTreasure(Treasure::Empty)
+	, StandardSpeed(0.2f)
+	, mIsTurn(false)
 {
 	SetPosition(pos);
 }
@@ -44,8 +45,8 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 	Initialize_CreateStage(createstage);
 	GetCreateStage()->AddStageObject(this);
 
-	sqc = new SquareComponent(this);
-	sqc->Initialize_CreateStage(mCenter,mWidth,mHeight);
+	sqc = new SquareComponent(this,50,true);
+	sqc->InitializeDrawing_CreateStage(mCenter,mWidth,mHeight);
 	switch (mAttribute) {
 	case Attribute::Wall:
 		sqc->SetColor(ColorF(1, 1, 1));
@@ -87,8 +88,8 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 
 	cc.resize(4);
 	for (int i = 0; i < 4; i++) {
-		cc[i] = new CircleComponent(this);
-		cc[i]->Initialize_CreateStage();
+		cc[i] = new CircleComponent(this,70,false);
+		cc[i]->InitializeDrawing_CreateStage();
 		cc[i]->SetRadius((float)mWidth / 6.0f);
 		cc[i]->SetColor(ColorF(0, 0, 1));
 	}
@@ -231,8 +232,8 @@ int ConvertToInt(float f) {
 //Game///////////////////////////////////////////////////////////////
 void StageObject::InitializeActor_Game(class Game* game) {
 	Initialize_Game(game);
-	sqc = new SquareComponent(this);
-	sqc->Initialize_Game(mCenter, mWidth, mHeight);
+	sqc = new SquareComponent(this,50,false);
+	sqc->InitializeDrawing_Game(mCenter, mWidth, mHeight);
 	switch (mAttribute) {
 	case Attribute::Wall:
 		sqc->SetColor(ColorF(1, 1, 1));

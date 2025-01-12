@@ -39,21 +39,21 @@ void Brock::InitializeStageMenu_CreateStage() {
 	EachHeight_StageMenu = GetCreateStage()->GetStageMenu()->GetMenuHeight() / 3;
 	RectHeight_StageMenu = EachHeight_StageMenu / 2.0f;
 	RectWidth_StageMenu = RectHeight_StageMenu*GetScreenHeight()/GetScreenWidth();
-	StoneSC = new SquareComponent(this);
-	WoodSC = new SquareComponent(this);
-	GrassSC = new SquareComponent(this);
+	StoneSC = new SquareComponent(this,200,true);
+	WoodSC = new SquareComponent(this,200,true);
+	GrassSC = new SquareComponent(this,200,true);
 
-	WoodSC->Initialize_CreateStage(Vec2{
+	WoodSC->InitializeDrawing_CreateStage(Vec2{
 		(GetCreateStage()->GetStageMenu()->GetMenuLeft()+GetCreateStage()->GetStageMenu()->GetMenuRight())/2.0f,
 		GetCreateStage()->GetStageMenu()->GetMenuUp()-EachHeight_StageMenu/2.0f },
 		RectWidth_StageMenu, RectHeight_StageMenu);
 	WoodSC->SetColor(ColorF(102.0f / 255.0f, 51.0f / 255.0f,0));
-	StoneSC->Initialize_CreateStage(Vec2{
+	StoneSC->InitializeDrawing_CreateStage(Vec2{
 		(GetCreateStage()->GetStageMenu()->GetMenuLeft() + GetCreateStage()->GetStageMenu()->GetMenuRight()) / 2.0f,
 		GetCreateStage()->GetStageMenu()->GetMenuUp() - EachHeight_StageMenu*3.0f / 2.0f },
 		RectWidth_StageMenu, RectHeight_StageMenu);
 	StoneSC->SetColor(ColorF(128.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f));
-	GrassSC->Initialize_CreateStage(Vec2{
+	GrassSC->InitializeDrawing_CreateStage(Vec2{
 		(GetCreateStage()->GetStageMenu()->GetMenuLeft() + GetCreateStage()->GetStageMenu()->GetMenuRight()) / 2.0f,
 		GetCreateStage()->GetStageMenu()->GetMenuUp() - EachHeight_StageMenu *5.0f/ 2.0f },
 		RectWidth_StageMenu, RectHeight_StageMenu);

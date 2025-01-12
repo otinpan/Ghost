@@ -30,23 +30,23 @@ void TreasureChest::InitializeStageMenu_CreateStage() {
 	mRectHeight = mEachHeight / 3.0f;
 	mRectWidth = mRectHeight * GetScreenHeight() / GetScreenWidth();
 
-	mNoneSC = new SquareComponent(this);
-	mBatterySC = new SquareComponent(this);
-	mKeySC = new SquareComponent(this);
+	mNoneSC = new SquareComponent(this,200,true);
+	mBatterySC = new SquareComponent(this,200,true);
+	mKeySC = new SquareComponent(this,200,true);
 
 	mMidPos = Vec2(
 		(GetCreateStage()->GetStageMenu()->GetMenuLeft() + GetCreateStage()->GetStageMenu()->GetMenuRight()) / 2.0f,
 		(GetCreateStage()->GetStageMenu()->GetMenuUp()+GetCreateStage()->GetStageMenu()->GetMenuDown())/2.0f
 	);
 
-	mNoneSC->Initialize_CreateStage(
+	mNoneSC->InitializeDrawing_CreateStage(
 		Vec2(mMidPos.x,mMidPos.y+mEachHeight*2.0f/3.0f+mRectHeight/2.0f),
 		mRectWidth,mRectHeight
 	);
-	mKeySC->Initialize_CreateStage(
+	mKeySC->InitializeDrawing_CreateStage(
 		mMidPos, mRectWidth, mRectHeight
 	);
-	mBatterySC->Initialize_CreateStage(
+	mBatterySC->InitializeDrawing_CreateStage(
 		Vec2(mMidPos.x, mMidPos.y - mEachHeight*2.0f/3.0f - mRectHeight / 2.0f),
 		mRectWidth, mRectHeight
 	);
@@ -57,8 +57,8 @@ void TreasureChest::InitializeStageMenu_CreateStage() {
 	mBatterySC->SetColor(ColorF(0, 1, 128.0f / 255.0f));
 
 	mMidBatteryRad = mRectWidth / 4.0f;
-	mSmallCC = new CircleComponent(this);
-	mSmallCC->Initialize_CreateStage();
+	mSmallCC = new CircleComponent(this,200,true);
+	mSmallCC->InitializeDrawing_CreateStage();
 	mSmallCC->SetCenter(Vec2(
 		mBatteryPos.x + mRectWidth,
 		mBatteryPos.y - mRectHeight/2.0f)
@@ -66,8 +66,8 @@ void TreasureChest::InitializeStageMenu_CreateStage() {
 	mSmallCC->SetRadius(mMidBatteryRad / 1.5f);
 	mSmallCC->SetColor(ColorF(0, 0, 0));
 
-	mMidCC = new CircleComponent(this);
-	mMidCC->Initialize_CreateStage();
+	mMidCC = new CircleComponent(this,200,true);
+	mMidCC->InitializeDrawing_CreateStage();
 	mMidCC->SetCenter(Vec2(
 		mBatteryPos.x + mRectWidth,
 		mBatteryPos.y)
@@ -75,8 +75,8 @@ void TreasureChest::InitializeStageMenu_CreateStage() {
 	mMidCC->SetRadius(mMidBatteryRad);
 	mMidCC->SetColor(ColorF(0, 0, 0));
 
-	mBigCC = new CircleComponent(this);
-	mBigCC->Initialize_CreateStage();
+	mBigCC = new CircleComponent(this,200,true);
+	mBigCC->InitializeDrawing_CreateStage();
 	mBigCC->SetCenter(Vec2(
 		mBatteryPos.x + mRectWidth,
 		mBatteryPos.y+mRectHeight*5.0f/9.0f)

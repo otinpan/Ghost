@@ -7,6 +7,7 @@
 #include"Stage.h"
 #include"Ghost_Game.h"
 #include"Escapee_Game.h"
+#include"DrawingComponent.h"
 
 
 Game::Game()
@@ -43,7 +44,7 @@ bool Game::Initialize() {
 
 void Game::update(Parent* parent) {
 	if (mIsRunning) {
-		ClearPrint();
+		//ClearPrint();
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 		}
@@ -142,7 +143,7 @@ void Game::draw() {
 	}*/
 
 	mStage->Draw_Game();
-	for (auto square : mSquares) {
+	/*for (auto square : mSquares) {
 		square->Draw();
 	}
 	for (auto circle : mCircles) {
@@ -150,10 +151,15 @@ void Game::draw() {
 	}
 	for (auto tri : mTriangles) {
 		tri->Draw();
+	}*/
+
+	for (auto& drawing : mDrawings_Background) {
+		drawing->Draw();
 	}
-	for (auto sprite : mSprites) {
-		
+	for (auto& drawing : mDrawings_Foreground) {
+		drawing->Draw();
 	}
+	
 }
 
 void Game::LoadData() {
@@ -223,31 +229,43 @@ void Game::RemoveActor(Actor* actor) {
 	}
 }
 
-void Game::AddSprite(SpriteComponent* sprite)
-{
-	// Find the insertion point in the sorted vector
-	// (The first element with a higher draw order than me)
-	int myDrawOrder = sprite->GetDrawOrder();
-	auto iter = mSprites.begin();
-	for (;
-		iter != mSprites.end();
-		++iter)
-	{
-		if (myDrawOrder < (*iter)->GetDrawOrder())
+void Game::AddDrawing(DrawingComponent* drawing) {
+	int myDrawOrder = drawing->GetDrawOrder();
+	if (drawing->GetIsBackground()) {
+		auto iter = mDrawings_Background.begin();
+		for (;
+			iter != mDrawings_Background.end();
+			++iter)
 		{
-			break;
+			if (myDrawOrder < (*iter)->GetDrawOrder()) {
+				break;
+			}
 		}
+		mDrawings_Background.insert(iter, drawing);
 	}
-
-	// Inserts element before position of iterator
-	mSprites.insert(iter, sprite);
+	else {
+		auto iter = mDrawings_Foreground.begin();
+		for (;
+			iter != mDrawings_Foreground.end();
+			++iter)
+		{
+			if (myDrawOrder < (*iter)->GetDrawOrder()) {
+				break;
+			}
+		}
+		mDrawings_Foreground.insert(iter, drawing);
+	}
 }
 
-void Game::RemoveSprite(SpriteComponent* sprite)
-{
-	// (We can't swap because it ruins ordering)
-	auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
-	mSprites.erase(iter);
+void Game::RemoveDrawing(DrawingComponent* drawing) {
+	if (drawing->GetIsBackground()) {
+		auto iter = std::find(mDrawings_Background.begin(), mDrawings_Background.end(), drawing);
+		mDrawings_Background.erase(iter);
+	}
+	else {
+		auto iter = std::find(mDrawings_Foreground.begin(), mDrawings_Foreground.end(), drawing);
+		mDrawings_Foreground.erase(iter);
+	}
 }
 
 void Game::AddCircle(CircleComponent* circle) {
@@ -281,6 +299,16 @@ void Game::RemoveTriangle(TriangleComponent* tri) {
 	auto iter = std::find(mTriangles.begin(), mTriangles.end(), tri);
 	if (iter != mTriangles.end()) {
 		mTriangles.erase(iter);
+	}
+}
+
+void Game::AddPlayer(Player* player) {
+	mPlayers.emplace_back(player);
+}
+void Game::RemovePlayer(Player* player) {
+	auto iter = std::find(mPlayers.begin(), mPlayers.end(), player);
+	if (iter != mPlayers.end()) {
+		mPlayers.erase(iter);
 	}
 }
 

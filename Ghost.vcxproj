@@ -123,6 +123,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CreateStage.cpp" />
     <ClCompile Include="Door.cpp" />
+    <ClCompile Include="DrawingComponent.cpp" />
     <ClCompile Include="Escapee_Game.cpp" />
     <ClCompile Include="Escapee_CreateStage.cpp" />
     <ClCompile Include="Flashlight.cpp" />
@@ -365,6 +366,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="CreateStage.h" />
     <ClInclude Include="Door.h" />
+    <ClInclude Include="DrawingComponent.h" />
     <ClInclude Include="Escapee_Game.h" />
     <ClInclude Include="Escapee_CreateStage.h" />
     <ClInclude Include="Flashlight.h" />

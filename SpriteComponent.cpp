@@ -1,46 +1,44 @@
 ﻿#include "SpriteComponent.h"
 #include "Actor.h"
-#include "Game.h"
 
 
-SpriteComponent::SpriteComponent(Actor* owner, float worldTexWidth,
-	float worldTexHeight, Vec2 diff, int drawOrder)
-	:Component(owner)
+SpriteComponent::SpriteComponent(Actor* owner, int drawOrder,bool isBackground)
+	:DrawingComponent(owner,drawOrder,isBackground)
 	, mTexture()
 	, mDrawOrder(drawOrder)
-	, WorldTexWidth(worldTexWidth)
-	, WorldTexHeight(worldTexHeight)
-	, Diff(diff)
 {
 
 }
 
 SpriteComponent::~SpriteComponent() {
-	mOwner->GetGame()->RemoveSprite(this);
 }
 
-void SpriteComponent::Initialize_Game() {
-	mOwner->GetGame()->AddSprite(this);
+void SpriteComponent::InitializeDrawing_Game(float worldTexWidth, float worldTexHeight, Vec2 diff) {
+	Initialize_Game();
+	mWorldTexWidth = worldTexWidth;
+	mWorldTexHeight = worldTexHeight;
+	mDiff = diff;
 }
 
-void SpriteComponent::Initialize_CreateStage() {
-	mOwner->GetCreateStage()->AddSprite(this);
+void SpriteComponent::InitializeDrawing_CreateStage(float worldTexWidth, float worldTexHeight, Vec2 diff) {
+	Initialize_CreateStage();
 }
 
 void SpriteComponent::Draw() {
-	float WritingWidth = (float)WorldTexWidth / 2.0 *
+	if (!GetIsDraw())return;
+	float WritingWidth = (float)mWorldTexWidth / 2.0 *
 		GetScreenWidth();
-	float WritingHeight = (float)WorldTexHeight / 2.0 *
+	float WritingHeight = (float)mWorldTexHeight / 2.0 *
 		GetScreenHeight();
 
-	Vec2 WritingPos = mOwner->GetPosition() + Diff;
+	Vec2 WritingPos = mOwner->GetPosition() + mDiff;
 
 	mTexture.resized(WritingWidth, WritingHeight).drawAt(ConvertToView(WritingPos));
 }
 
 
 void SpriteComponent::SetTexture(Texture texture) {
-	TexWidth = texture.width();
-	TexHeight = texture.height();
+	mTexWidth = texture.width();
+	mTexHeight = texture.height();
 	mTexture = texture;
 }

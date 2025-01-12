@@ -138,6 +138,9 @@ void Escapee_Game::UpdatePlayerPos_Game(float deltaTime) {
 					return;
 				}
 				break;
+			case StageObject::Attribute::Patrol :
+				if (!stageObject->GetIsTurn())continue;
+				break;
 			case StageObject::Attribute::Battery:
 				switch (stageObject->GetBatterySize()) {
 				case StageObject::BatterySize::Zero:

@@ -16,13 +16,13 @@ Door::~Door() {
 
 void Door::InitializeStageObject_CreateStage(class CreateStage* createStage) {
 	InitializeActor_CreateStage(createStage);
-	sc = new SquareComponent(this);
+	sc = new SquareComponent(this,150,true);
 	DoorWidth = { GetWidth(),GetWidth() / 4,GetWidth(),GetWidth() / 4 };
 	DoorHeight = { GetHeight() / 4,GetHeight(),GetHeight() / 4,GetHeight() };
 	DoorRel_dx = { 0,GetWidth() * 3 / 8,0,-GetWidth() * 3 / 8 };
 	DoorRel_dy = { GetHeight() * 3 / 8,0,-GetHeight() * 3 / 8,0 };
     SetDoorCenter( Vec2{ GetPosition().x + DoorRel_dx[0],GetPosition().y + DoorRel_dy[0] });
-	sc->Initialize_CreateStage(GetDoorCenter(), DoorWidth[0], DoorHeight[0]);
+	sc->InitializeDrawing_CreateStage(GetDoorCenter(), DoorWidth[0], DoorHeight[0]);
 }
 
 void Door::UpdateStageObject_CreateStage(float deltaTime) {
@@ -61,29 +61,33 @@ void Door::InitializeStageMenu_CreateStage() {
 	);
 	
 
-	mUpCC = new CircleComponent(this);
-	mUpCC->Initialize_CreateStage();
+	mUpCC = new CircleComponent(this,10,true);
+	mUpCC->InitializeDrawing_CreateStage();
 	mUpCC->SetCenter(mUpTriPos);
 	mUpCC->SetRadius(mTriLength);
 	mUpCC ->SetColor(ColorF(1.0, 1.0, 0.0, 0));
+	mUpCC->SetIsDraw(false);
 
-	mDownCC = new CircleComponent(this);
-	mDownCC->Initialize_CreateStage();
+	mDownCC = new CircleComponent(this,10,true);
+	mDownCC->InitializeDrawing_CreateStage();
 	mDownCC->SetCenter(mDownTriPos);
 	mDownCC->SetRadius(mTriLength);
 	mDownCC->SetColor(ColorF(1.0, 1.0, 0.0, 0));
+	mDownCC->SetIsDraw(false);
 
-	mRightCC = new CircleComponent(this);
-	mRightCC->Initialize_CreateStage();
+	mRightCC = new CircleComponent(this,10,true);
+	mRightCC->InitializeDrawing_CreateStage();
 	mRightCC->SetCenter(mRightTriPos);
 	mRightCC->SetRadius(mTriLength);
 	mRightCC->SetColor(ColorF(1.0, 1.0, 0.0, 0));
+	mRightCC->SetIsDraw(false);
 
-	mLeftCC = new CircleComponent(this);
-	mLeftCC->Initialize_CreateStage();
+	mLeftCC = new CircleComponent(this,10,true);
+	mLeftCC->InitializeDrawing_CreateStage();
 	mLeftCC->SetCenter(mLeftTriPos);
 	mLeftCC->SetRadius(mTriLength);
 	mLeftCC->SetColor(ColorF(1.0, 1.0, 0.0, 0));
+	mLeftCC->SetIsDraw(false);
 	return;
 }
 
@@ -154,13 +158,13 @@ void Door::ShutdownStageMenu_CreateStage() {
 
 void Door::InitializeStageObject_Game(class Game* game) {
 	InitializeActor_Game(game);
-	sc = new SquareComponent(this);
+	sc = new SquareComponent(this,150,false);
 	DoorWidth = { GetWidth(),GetWidth() / 4,GetWidth(),GetWidth() / 4 };
 	DoorHeight = { GetHeight() / 4,GetHeight(),GetHeight() / 4,GetHeight() };
 	DoorRel_dx = { 0,GetWidth() * 3 / 8,0,-GetWidth() * 3 / 8 };
 	DoorRel_dy = { GetHeight() * 3 / 8,0,-GetHeight() * 3 / 8,0 };
 	SetDoorCenter(Vec2{ GetPosition().x + DoorRel_dx[GetClockwise()],GetPosition().y + DoorRel_dy[GetClockwise()]});
-	sc->Initialize_Game(GetDoorCenter(), DoorWidth[GetClockwise()], DoorHeight[GetClockwise()]);
+	sc->InitializeDrawing_Game(GetDoorCenter(), DoorWidth[GetClockwise()], DoorHeight[GetClockwise()]);
 	SetDoorWidth(DoorWidth[GetClockwise()]);
 	SetDoorHeight(DoorHeight[GetClockwise()]);
 	sc->SetColor(ColorF(0, 0, 1));

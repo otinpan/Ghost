@@ -14,13 +14,19 @@ Player::Player(Vec2 pos, float speed)
 }
 
 Player::~Player() {
-
+	if (GetGame()) {
+		GetGame()->RemovePlayer(this);
+	}
+	if (GetCreateStage()) {
+		
+	}
 }
 
 void Player::InitializeActor_Game(class Game* game) {
 	Initialize_Game(game);
-	cc = new CircleComponent(this);
-	cc->Initialize_Game();
+	GetGame()->AddPlayer(this);
+	cc = new CircleComponent(this,170,false);
+	cc->InitializeDrawing_Game();
 	cc->SetCenter(GetPosition());
 	mRadius = GetGame()->GetStage()->GetRectWidth() * 2.0f / 5.0f;
 	cc->SetRadius(mRadius);

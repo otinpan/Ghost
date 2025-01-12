@@ -4,16 +4,23 @@
 #include"Hand.h"
 #include"Stage.h"
 #include"StageObjectLight.h"
+#include"Ghost_Game.h"
+#include"Escapee_Game.h"
+#define _USE_MATH_DEFINES
+#include<math.h>
 
 Patrol::Patrol(Vec2 pos, float width, float height)
 	:StageObject(pos, width, height)
-	,mIsPlusLasting(false)
-	,mIsMinusLasting(false)
-	,mPlusTime(0.0)
-	,mMinusTime(0.0)
-	,mIsBarGripen(false)
+	, mIsPlusLasting(false)
+	, mIsMinusLasting(false)
+	, mPlusTime(0.0)
+	, mMinusTime(0.0)
+	, mIsBarGripen(false)
+	, mTurnTime(0.0f)
+	, TurnLimitTime(2.0f)
 {
 	SetAttribute(Attribute::Patrol);
+	SetIsTurn(false);
 }
 
 void Patrol::InitializeStageObject_CreateStage(class CreateStage* createStage) {
@@ -40,8 +47,8 @@ void Patrol::InitializeStageMenu_CreateStage() {
 		mBarCenter.y
 	);
 
-	mBarSC_CreateStage = new SquareComponent(this);
-	mBarSC_CreateStage->Initialize_CreateStage(mBarPos,
+	mBarSC_CreateStage = new SquareComponent(this,200,true);
+	mBarSC_CreateStage->InitializeDrawing_CreateStage(mBarPos,
 		mBarWidth / 25.0f, GetCreateStage()->GetStageMenu()->GetMenuHeight() / 20.0f);
 	mBarSC_CreateStage->SetColor(ColorF(0, 0, 0));
 
@@ -70,29 +77,33 @@ void Patrol::InitializeStageMenu_CreateStage() {
 	);
 
 
-	mUpCC = new CircleComponent(this);
-	mUpCC->Initialize_CreateStage();
+	mUpCC = new CircleComponent(this,10,false);
+	mUpCC->InitializeDrawing_CreateStage();
 	mUpCC->SetCenter(mUpTriPos);
 	mUpCC->SetRadius(mTriLength);
 	mUpCC->SetColor(ColorF(1.0, 1.0, 0.0, 0));
+	mUpCC->SetIsDraw(false);
 
-	mDownCC = new CircleComponent(this);
-	mDownCC->Initialize_CreateStage();
+	mDownCC = new CircleComponent(this,10,false);
+	mDownCC->InitializeDrawing_CreateStage();
 	mDownCC->SetCenter(mDownTriPos);
 	mDownCC->SetRadius(mTriLength);
 	mDownCC->SetColor(ColorF(1.0, 1.0, 0.0, 0));
+	mDownCC->SetIsDraw(false);
 
-	mRightCC = new CircleComponent(this);
-	mRightCC->Initialize_CreateStage();
+	mRightCC = new CircleComponent(this,10,false);
+	mRightCC->InitializeDrawing_CreateStage();
 	mRightCC->SetCenter(mRightTriPos);
 	mRightCC->SetRadius(mTriLength);
 	mRightCC->SetColor(ColorF(1.0, 1.0, 0.0, 0));
+	mRightCC->SetIsDraw(false);
 
-	mLeftCC = new CircleComponent(this);
-	mLeftCC->Initialize_CreateStage();
+	mLeftCC = new CircleComponent(this,10,false);
+	mLeftCC->InitializeDrawing_CreateStage();
 	mLeftCC->SetCenter(mLeftTriPos);
 	mLeftCC->SetRadius(mTriLength);
 	mLeftCC->SetColor(ColorF(1.0, 1.0, 0.0, 0));
+	mRightCC->SetIsDraw(false);
 
 	mAddCenter= Vec2(
 		(GetCreateStage()->GetStageMenu()->GetMenuRight() + GetCreateStage()->GetStageMenu()->GetMenuLeft()) / 2.0f,
@@ -114,18 +125,19 @@ void Patrol::InitializeStageMenu_CreateStage() {
 	mMinusWidth= GetCreateStage()->GetStageMenu()->GetMenuWidth() / 4.0f;
 	mMinusHeight = mMinusWidth / 3.0f;
 
-	mPlusCC = new CircleComponent(this);
-	mPlusCC->Initialize_CreateStage();
+	mPlusCC = new CircleComponent(this,10,false);
+	mPlusCC->InitializeDrawing_CreateStage();
 	mPlusCC->SetCenter(mPlusPos);
 	mPlusCC->SetRadius(mTriLength);
 	mPlusCC->SetColor(ColorF(1, 1, 0, 0));
+	mPlusCC->SetIsDraw(false);
 
-	mMinusCC = new CircleComponent(this);
-	mMinusCC->Initialize_CreateStage();
+	mMinusCC = new CircleComponent(this, 10, false);
+	mMinusCC->InitializeDrawing_CreateStage();
 	mMinusCC->SetCenter(mMinusPos);
 	mMinusCC->SetRadius(mTriLength);
 	mMinusCC->SetColor(ColorF(1, 1, 0, 0));
-
+	mMinusCC->SetIsDraw(false);
 
 	mPlusLastTime = 0.03;
 	mMinusLastTime = 0.03;
@@ -254,13 +266,13 @@ void Patrol::DrawStageMenu_CreateStage() {
 }
 
 void Patrol::ShutdownStageMenu_CreateStage() {
-	delete mUpCC;
-	delete mDownCC;
-	delete mRightCC;
-	delete mLeftCC;
-	delete mPlusCC;
-	delete mMinusCC;
-	delete mBarSC_CreateStage;
+	if(mUpCC)delete mUpCC;
+	if(mDownCC)delete mDownCC;
+	if(mRightCC)delete mRightCC;
+	if(mLeftCC)delete mLeftCC;
+	if(mPlusCC)delete mPlusCC;
+	if(mMinusCC)delete mMinusCC;
+	if(mBarSC_CreateStage)delete mBarSC_CreateStage;
 }
 
 void Patrol::InitializeStageObject_Game(class Game* game) {
@@ -268,15 +280,19 @@ void Patrol::InitializeStageObject_Game(class Game* game) {
 
 }
 
+////////////////////////////////////////////////////////////////////////////////////
+
 void Patrol::InitializeStage_Game() {
 	SetPatrolRange(GetPatrolRange() - 1);
 	SetSpeed(GetStandardSpeed() + GetSpeed() / 100.0f * GetStandardSpeed());
 	switch (GetClockwise()) {
 	case 0:
-		FromPos= Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
-		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 -GetHeight()/2.0f});
+		FromPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
+		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 - GetHeight() / 2.0f });
 		ToPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
-		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1 - GetPatrolRange()) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2+GetHeight()/2.0f});
+		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1 - GetPatrolRange()) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 + GetHeight() / 2.0f });
+		//Rotation
+		SetRotation(M_PI / 2.0f);
 		//velocity
 		mVelocity = Vec2(0, GetSpeed());
 		break;
@@ -285,6 +301,8 @@ void Patrol::InitializeStage_Game() {
 		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2  });
 		ToPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + (GetIteration().second + GetPatrolRange()) * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2+GetWidth()/2.0f,
 		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 });
+		//Rotation
+		SetRotation(0.0f);
 		//velocity
 		mVelocity = Vec2( GetSpeed(),0);
 		break;
@@ -293,6 +311,8 @@ void Patrol::InitializeStage_Game() {
 		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 + GetHeight()/2.0f});
 		ToPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
 		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1 + GetPatrolRange()) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 -GetHeight()/2.0f});
+		//Rotation
+		SetRotation(M_PI*3.0f/2.0f);
 		//velocity
 		mVelocity = Vec2(0,-GetSpeed());
 		break;
@@ -301,6 +321,8 @@ void Patrol::InitializeStage_Game() {
 		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 });
 		ToPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + (GetIteration().second - GetPatrolRange()) * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2 - GetWidth()/2.0f,
 		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 });
+		//Rotation
+		SetRotation(M_PI);
 		//velocity
 		mVelocity = Vec2(-GetSpeed(),0);
 		break;
@@ -311,11 +333,17 @@ void Patrol::InitializeStage_Game() {
 
 	mStageObjectLight = new StageObjectLight(this);
 	mStageObjectLight->Initialize_Game();
+
+	MicroRad = (float)M_PI / TurnLimitTime;
 }
 
 void Patrol::UpdateStageObject_Game(float deltaTime) {
 	mStageObjectLight->Update_Game(deltaTime);
 	if (GetPatrolRange() == 0)return;
+	if (GetIsTurn()) {
+		UpdateTurn_Game(deltaTime);
+		return;
+	}
 	UpdatePos_Game(deltaTime);
 }
 
@@ -329,60 +357,104 @@ void Patrol::UpdatePos_Game(float deltaTime) {
 			if (stageObject == this)continue;
 			switch (GetClockwise()) {
 			case 0:
-				mPos.y = stageObject->GetObjectDown() - GetHeight() - 0.008; //Playerが下
+				mPos.y = stageObject->GetObjectDown() - GetHeight()/2.0f - 0.005; //Playerが下
 				mVelocity.y *= -1.0f;
 				SetClockwise(2);
 				std::swap(ToPos, FromPos);
 				break;
 			case 1:
-				mPos.x = stageObject->GetObjectLeft() - GetWidth() - 0.008; //Playerが左
+				mPos.x = stageObject->GetObjectLeft() - GetWidth()/2.0f - 0.005; //Playerが左
 				mVelocity.x *= -1.0f;
 				SetClockwise(3);
 				std::swap(ToPos, FromPos);
 				break;
 			case 2:
-				mPos.y = stageObject->GetObjectUp() + GetHeight() + 0.008; //Playerが上
+				mPos.y = stageObject->GetObjectUp() + GetHeight()/2.0f + 0.005; //Playerが上
 				mVelocity.y *= -1.0f;
 				SetClockwise(0);
 				std::swap(ToPos, FromPos);
 				break;
 			case 3:
-				mPos.x = stageObject->GetObjectRight() + GetWidth() + 0.008; //Playerが右
+				mPos.x = stageObject->GetObjectRight() + GetWidth()/2.0f + 0.005; //Playerが右
 				mVelocity.x *= -1.0f;
 				SetClockwise(1);
 				std::swap(ToPos, FromPos);
 				break;
 			}
+			SetIsTurn(true);
 		}
+	}
+
+	for (auto& player : GetGame()->GetPlayers()) {
+		if (player && IsIntersect_SC(GetSquareComponent(),player->GetCircleComponent())) {
+			switch (GetClockwise()) {
+			case 0:
+				mVelocity.y *= -1.0f;
+				SetClockwise(2);
+				std::swap(ToPos, FromPos);
+				break;
+			case 1:
+				mVelocity.x *= -1.0f;
+				SetClockwise(3);
+				std::swap(ToPos, FromPos);
+				break;
+			case 2:
+				mVelocity.y *= -1.0f;
+				SetClockwise(0);
+				std::swap(ToPos, FromPos);
+				break;
+			case 3:
+				mVelocity.x *= -1.0f;
+				SetClockwise(1);
+				std::swap(ToPos, FromPos);
+				break;
+			}
+			SetIsTurn(true);
+
+			Vec2 mPlayerPos = player->GetPosition();
+
+			if (player->GetCircleComponent()->GetCircle().intersects(GetLineL()))
+				mPlayerPos.x = GetObjectLeft() - player->GetPlayerRadius() - 0.008; //Playerが左
+			if (player->GetCircleComponent()->GetCircle().intersects(GetLineR()))
+				mPlayerPos.x = GetObjectRight() + player->GetPlayerRadius() + 0.008; //Playerが右
+			if (player->GetCircleComponent()->GetCircle().intersects(GetLineD()))
+				mPlayerPos.y = GetObjectDown() - player->GetPlayerRadius() - 0.008; //Playerが下
+			if (player->GetCircleComponent()->GetCircle().intersects(GetLineU()))
+				mPlayerPos.y = GetObjectUp() + player->GetPlayerRadius() + 0.008; //Playerが上
+			player->SetPosition(mPlayerPos);
+			player->GetCircleComponent()->SetCenter(mPlayerPos);
+		}
+
 	}
 
 	if (GetSquareComponent()->GetRect().intersects(ToPos)) {
 		switch (GetClockwise()) {
 		case 0://Down to Up
-			mPos.y = ToPos.y - GetHeight()/2.0f - 0.008;
+			mPos.y = ToPos.y - GetHeight()/2.0f - 0.005;
 			mVelocity.y *= -1.0f;
 			SetClockwise(2);
 			std::swap(ToPos, FromPos);
 			break;
 		case 1://Left to Right
-			mPos.x = ToPos.x - GetWidth()/2.0f - 0.008;
+			mPos.x = ToPos.x - GetWidth()/2.0f - 0.005;
 			mVelocity.x *= -1.0f;
 			SetClockwise(3);
 			std::swap(ToPos, FromPos);
 			break;
 		case 2://Up to Down
-			mPos.y = ToPos.y + GetHeight()/2.0f + 0.008;
+			mPos.y = ToPos.y + GetHeight()/2.0f + 0.005;
 			mVelocity.y *= -1.0f;
 			SetClockwise(0);
 			std::swap(ToPos, FromPos);
 			break;
 		case 3://Right to Left
-			mPos.x = ToPos.x + GetWidth()/2.0f + 0.008;
+			mPos.x = ToPos.x + GetWidth()/2.0f + 0.005;
 			SetClockwise(1);
 			mVelocity.x *= -1.0f;
 			std::swap(ToPos, FromPos);
 			break;
 		}
+		SetIsTurn(true);
 
 	}
 
@@ -405,3 +477,28 @@ void Patrol::UpdatePos_Game(float deltaTime) {
 
 
 
+void Patrol::UpdateTurn_Game(float deltaTime) {
+	if (mTurnTime < TurnLimitTime) {
+		mMoveC->SetIsMove(false);
+		mTurnTime += deltaTime;
+		SetRotation(GetRotation() + MicroRad * deltaTime);
+	}
+	else {
+		mMoveC->SetIsMove(true);
+		switch (GetClockwise()) {
+		case 0:
+			SetRotation(M_PI / 2.0f);
+			break;
+		case 1:
+			SetRotation(0.0f);
+			break;
+		case 2:
+			SetRotation(M_PI * 3.0f / 2.0f);
+			break;
+		case 3:
+			SetRotation(M_PI);
+		}
+		mTurnTime = 0.0f;
+		SetIsTurn(false);
+	}
+}

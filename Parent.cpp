@@ -7,8 +7,8 @@ Parent::Parent()
 	,mCreateStage(0)
 	, mNext(SEQ_NONE)
 {
-	mGame = new Game();
-	//mCreateStage = new CreateStage();
+	//mGame = new Game();
+	mCreateStage = new CreateStage();
 }
 
 Parent::~Parent() {

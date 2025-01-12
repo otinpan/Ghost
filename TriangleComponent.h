@@ -1,14 +1,14 @@
 ﻿#pragma once
-#include"Component.h"
+#include"DrawingComponent.h"
 #include<Siv3D.hpp>
 
-class TriangleComponent :public Component {
+class TriangleComponent :public DrawingComponent {
 public:
-	TriangleComponent(class Actor* owner);
+	TriangleComponent(class Actor* owner, int drawOrder, bool isBackground);
 	~TriangleComponent();
 
-	void Initialize_CreateStage(Vec2 pos0, Vec2 pos1, Vec2 pos2);
-	void Initialize_Game(Vec2 pos0, Vec2 pos1, Vec2 pos2);
+	void InitializeDrawing_CreateStage(Vec2 pos0, Vec2 pos1, Vec2 pos2);
+	void InitializeDrawing_Game(Vec2 pos0, Vec2 pos1, Vec2 pos2);
 
 	void SetPos0(Vec2 pos0) { mPos0 = pos0; }
 	Vec2 GetPos0() { return mPos0; }
@@ -16,9 +16,6 @@ public:
 	Vec2 GetPos1() { return mPos1; }
 	void SetPos2(Vec2 pos2) { mPos2 = pos2; }
 	Vec2 GetPos2() { return mPos2; }
-
-	void SetIsDraw(bool isDraw) { mIsDraw = isDraw; }
-	bool GetIsDraw() { return mIsDraw; }
 
 	void SetColor0(ColorF color0) { mColor0 = color0; }
 	void SetColor1(ColorF color1) { mColor1 = color1; }
@@ -33,8 +30,6 @@ private:
 	ColorF mColor0;
 	ColorF mColor1;
 	ColorF mColor2;
-
-	bool mIsDraw;
 
 };
 

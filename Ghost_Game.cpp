@@ -107,6 +107,9 @@ void Ghost_Game::UpdatePlayerPos_Game(float deltaTime) {
 		for (auto& row : GetGame()->GetStage()->GetStageObjects()) {
 			for (auto& stageObject : row) {
 				if (stageObject == 0)continue;
+				if (stageObject->GetAttribute() == StageObject::Attribute::Patrol) {
+					if (!stageObject->GetIsTurn())continue;
+				}
 				if (!IsIntersect_SC(stageObject->GetSquareComponent(), GetCircleComponent()))continue;
 				//Objectとの当たり判定
 				if (GetCircleComponent()->GetCircle().intersects(stageObject->GetLineL()))

@@ -3,8 +3,8 @@
 #include"SquareComponent.h"
 #include"Actor.h"
 
-TriangleComponent::TriangleComponent(class Actor* owner)
-	:Component(owner)
+TriangleComponent::TriangleComponent(class Actor* owner, int drawOrder, bool isBackground)
+	:DrawingComponent(owner,drawOrder,isBackground)
 	, mPos0(Vec2(0, 0))
 	, mPos1(Vec2(0, 0))
 	, mPos2(Vec2(0, 0))
@@ -25,14 +25,16 @@ TriangleComponent::~TriangleComponent() {
 }
 
 
-void TriangleComponent::Initialize_Game(Vec2 pos0,Vec2 pos1,Vec2 pos2) {
+void TriangleComponent::InitializeDrawing_Game(Vec2 pos0,Vec2 pos1,Vec2 pos2) {
+	Initialize_Game();
 	mOwner->GetGame()->AddTriangle(this);
 	mPos0 = pos0;
 	mPos1 = pos1;
 	mPos2 = pos2;
 }
 
-void TriangleComponent::Initialize_CreateStage(Vec2 pos0, Vec2 pos1, Vec2 pos2) {
+void TriangleComponent::InitializeDrawing_CreateStage(Vec2 pos0, Vec2 pos1, Vec2 pos2) {
+	Initialize_CreateStage();
 	mOwner->GetCreateStage()->AddTriangle(this);
 	mPos0 = pos0;
 	mPos1 = pos1;
@@ -40,7 +42,7 @@ void TriangleComponent::Initialize_CreateStage(Vec2 pos0, Vec2 pos1, Vec2 pos2) 
 }
 
 void TriangleComponent::Draw() {
-	if (!mIsDraw)return;
+	if (!GetIsDraw())return;
 	DrawTriangle_pos(mPos0, mPos1, mPos2, mColor0, mColor1, mColor2);
 }
 

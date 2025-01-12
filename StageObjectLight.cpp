@@ -8,6 +8,9 @@ StageObjectLight::StageObjectLight(class StageObject* owner)
 	if (owner->GetClockwise() == 0 || owner->GetClockwise() == 2) {
 		mHandRange = owner->GetHeight() / 2.0f;
 	}
+	else {
+		mHandRange = owner->GetHeight() / 2.0f;
+	}
 	mLightRange = mHandRange * 2.0f;
 	mLightRad = (float)30.0f / 180.0f * Pi;
 }
@@ -17,11 +20,11 @@ StageObjectLight::~StageObjectLight() {
 }
 
 void StageObjectLight::Initialize_Game() {
-	mLightTri = new TriangleComponent(mOwner);
+	mLightTri = new TriangleComponent(mOwner,200,false);
 	SetLightPos0();
 	SetLightPos1();
 	SetLightPos2();
-	mLightTri->Initialize_Game(mPos0, mPos1, mPos2);
+	mLightTri->InitializeDrawing_Game(mPos0, mPos1, mPos2);
 	mLightTri->SetColor0(ColorF(1, 1, 1));
 	mLightTri->SetColor1(ColorF(245.0f / 255.0f, 1, 87.0f / 255.0f));
 	mLightTri->SetColor2(ColorF(245.0f / 255.0f, 1, 87.0f / 255.0f));
@@ -36,6 +39,9 @@ void StageObjectLight::Update_Game(float deltaTime) {
 	SetLightPos0();
 	SetLightPos1();
 	SetLightPos2();
+	mLightTri->SetPos0(mPos0);
+	mLightTri->SetPos1(mPos1);
+	mLightTri->SetPos2(mPos2);
 }
 
 

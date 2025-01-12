@@ -16,8 +16,8 @@ public:
 	void AddActor(class Actor* actor);
 	void RemoveActor(class Actor* actor);
 
-	void AddSprite(class SpriteComponent* sprite);
-	void RemoveSprite(class SpriteComponent* sprite);
+	void AddDrawing(class DrawingComponent* drawing);
+	void RemoveDrawing(class DrawingComponent* drawing);
 
 	void AddCircle(class CircleComponent* circle);
 	void RemoveCircle(class CircleComponent* circle);
@@ -27,6 +27,9 @@ public:
 
 	void AddTriangle(class TriangleComponent* tri);
 	void RemoveTriangle(class TriangleComponent* tri);
+
+	void AddPlayer(class Player* player);
+	void RemovePlayer(class Player* player);
 
 	//Hitstop
 	void SetIsHitstop(bool isHitstop) { mIsHitstop = isHitstop; }
@@ -40,6 +43,7 @@ public:
 	class Escapee_Game*& GetEscapee1() { return mEscapee1; }
 	class Escapee_Game*& GetEscapee2() { return mEscapee2; }
 	class Escapee_Game*& GetEscapee3() { return mEscapee3; }
+	std::vector<class Player*> &GetPlayers() { return mPlayers; }
 
 	//Sequence
 	void moveTo(Parent* paretn, Parent::SeqID id);
@@ -58,8 +62,12 @@ private:
 	// Any pending actors
 	std::vector<class Actor*> mPendingActors;
 
-	// All the sprite components drawn
-	std::vector<class SpriteComponent*> mSprites;
+	//All the Drwaing
+	std::vector<class DrawingComponent*> mDrawings_Background;
+	std::vector<class DrawingComponent*> mDrawings_Foreground;
+
+	//All the player
+	std::vector<class Player*> mPlayers;
 
 	//All the Circle components drawn
 	std::vector<class CircleComponent*> mCircles;
@@ -69,6 +77,7 @@ private:
 
 	//All the Triangle components drawn
 	std::vector<class TriangleComponent*> mTriangles;
+
 
 	bool mIsRunning;
 	// Track if we're updating actors right now

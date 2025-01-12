@@ -1,36 +1,35 @@
 ﻿#pragma once
-#include "Component.h"
+#include "DrawingComponent.h"
 
 
 //引数は初期値を指定したもの(drawOrder=100)を一番後ろに持ってゆく必要がある
 //そうでないとエラーが出てくる
-class SpriteComponent :public Component {
+class SpriteComponent :public DrawingComponent {
 public:
-	SpriteComponent(class Actor* owner, float worldTexWidth,
-		float worldTexHeight, Vec2 diff, int drawOrder = 100);
+	SpriteComponent(class Actor* owner, int drawOrder,bool isBackground);
 	~SpriteComponent();
 
-	void Initialize_Game();
-	void Initialize_CreateStage();
+	void InitializeDrawing_Game(float worldTexWidth,float worldTexHeight,Vec2 diff);
+	void InitializeDrawing_CreateStage(float worldTexWidth, float worldTexHeight, Vec2 diff);
 
-	virtual void Draw();
-	virtual void SetTexture(Texture texture);
+	void Draw() override;
+    void SetTexture(Texture texture);
 
 	int GetDrawOrder() const { return mDrawOrder; }
-	float GetTexHeight() const { return WorldTexHeight; }
-	float GetTexWidth() const { return WorldTexWidth; }
+	float GetTexHeight() const { return mWorldTexHeight; }
+	float GetTexWidth() const { return mWorldTexWidth; }
 
 private:
 	int mDrawOrder;
-	Vec2 Diff;   //Actorの中心からどれだけ離れたところにあるか
+	Vec2 mDiff;   //Actorの中心からどれだけ離れたところにあるか
 
 	//元の画像の大きさ
-	float TexWidth;
-	float TexHeight;
+	float mTexWidth;
+	float mTexHeight;
 
 	//ワールド座標での画像の大きさ（描画したい画像の大きさ)
-	float WorldTexWidth;
-	float WorldTexHeight;
+	float mWorldTexWidth;
+	float mWorldTexHeight;
 
 	Texture mTexture;
 };
