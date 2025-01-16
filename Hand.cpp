@@ -173,6 +173,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 			GetCreateStage()->GetStage()->DeleteStageObjects();
 			mIsDelete = false;
 		}
+		DeleteChoosing();
 	}
 
 

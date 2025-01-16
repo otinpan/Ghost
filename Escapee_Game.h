@@ -12,6 +12,9 @@ public:
 
 	void UpdatePlayerPos_Game(float deltaTime)override;
 
+	void SetIsItemAvailable(bool isItemAvailable) { mIsItemAvailable = isItemAvailable; }
+	bool GetIsItemAvailable() { return mIsItemAvailable; }
+
 	class Flashlight* &GetFlashlight() { return mFlashlight; }
 
 private:
@@ -39,8 +42,14 @@ private:
 
 	bool mIsAlive;
 
+	//Item
+	bool mIsItemAvailable;
+	float mItemInavailableLimitTime;
+	float mItemInavailableTime;
+
 	void UpdateFlashlight_Game(float deltaTime);
 	void UpdateIntersectGhost_Game(float deltaTime);
+	void UpdateItemAvailable(float deltaTime);
 
 	//intersect
 	Line LineL;

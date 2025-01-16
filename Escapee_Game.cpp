@@ -13,6 +13,9 @@ Escapee_Game::Escapee_Game(Vec2 pos, float speed, int num)
 	, mFlashlight(nullptr)
 	,mBattery(100.0f)
 	,mIsAlive(true)
+	,mIsItemAvailable(true)
+	,mItemInavailableTime(0.0f)
+	,mItemInavailableLimitTime(0.5f)
 {
 	
 	SetPosition(pos);
@@ -58,6 +61,7 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 
 void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 	mFlashlight->Update_Game(deltaTime);
+	UpdateItemAvailable(deltaTime);
 	//Position
 	UpdatePos_Game(deltaTime);
 	//Flashlight Battery
@@ -142,6 +146,7 @@ void Escapee_Game::UpdatePlayerPos_Game(float deltaTime) {
 				if (!stageObject->GetIsTurn())continue;
 				break;
 			case StageObject::Attribute::Battery:
+				if (!mIsItemAvailable)break;
 				switch (stageObject->GetBatterySize()) {
 				case StageObject::BatterySize::Zero:
 					break;
@@ -161,12 +166,14 @@ void Escapee_Game::UpdatePlayerPos_Game(float deltaTime) {
 				return;
 				break;
 			case StageObject::Attribute::Key:
+				if (!mIsItemAvailable)break;
 				mIsKey = true;
 				GetGame()->GetStage()->DeleteStageObject(stageObject->GetIteration().first,
 				stageObject->GetIteration().second);
 				return;
 				break;
 			case StageObject::Attribute::TreasureChest:
+				if (!mIsItemAvailable)break;
 				if (mIsKey) {
 					mIsKey = false;
 					mTreasure = stageObject->GetTreasure();
@@ -174,6 +181,7 @@ void Escapee_Game::UpdatePlayerPos_Game(float deltaTime) {
 					mIteration = stageObject->GetIteration();
 					GetGame()->GetStage()->DeleteStageObject(mIteration.first,
 				    mIteration.second);
+					SetIsItemAvailable(false);
 					switch (mTreasure) {
 					case StageObject::Treasure::TreasureKey:
 						GetGame()->GetStage()->SetNewStageObject_Attribute
@@ -211,3 +219,17 @@ void Escapee_Game::UpdatePlayerPos_Game(float deltaTime) {
 	GetCircleComponent()->SetCenter(mPos);
 }
 
+
+void Escapee_Game::UpdateItemAvailable(float deltaTime){
+	if (mIsItemAvailable)return;
+	else {
+		if (mItemInavailableTime < mItemInavailableLimitTime) {
+			mItemInavailableTime += deltaTime;
+		}
+		else {
+			mItemInavailableTime = 0.0f;
+			mIsItemAvailable = true;
+		}
+	}
+	return;
+}
