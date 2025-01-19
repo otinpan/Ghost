@@ -35,6 +35,10 @@ public:
 	void SetStandardSpeed(float standardSpeed) { StandardSpeed = standardSpeed; }
 	float GetPlayerRadius() { return mRadius; }
 	void SetPlayerRadius(float radius) { mRadius = radius; }
+	bool GetIsAlive() { return mIsAlive; }
+	void SetIsAlive(bool isAlive) { mIsAlive = isAlive; }
+	bool GetIsLighted() { return mIsLighted; }
+	void SetIsLighted(bool isLighted) { mIsLighted = isLighted; }
 
 private:
 	class CircleComponent* cc;
@@ -47,6 +51,10 @@ private:
 
 	int mVerticalSize;
 	int mSideSize;
+
+	//Flashlight
+	bool mIsAlive;
+	bool mIsLighted;
 
     float mObjectLeft;
 	float mObjectRight;

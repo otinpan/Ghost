@@ -65,6 +65,23 @@ const RectF SquareComponent::GetViewRect() {
 	return RectF{ Arg::center(ConvertToView(mCenter)),GetScreenWidth() * mWidth/2.0f,GetScreenHeight() * mHeight/2.0f };
 }
 
+const float SquareComponent::GetLeft() {
+	return mCenter.x - mWidth / 2.0f;
+}
+
+const float SquareComponent::GetRight() {
+	return mCenter.x + mWidth / 2.0f;
+}
+
+const float SquareComponent::GetUp() {
+	return mCenter.y + mHeight / 2.0f;
+}
+
+const float SquareComponent::GetDown() {
+	return mCenter.y - mHeight / 2.0f;
+}
+
+
 bool IsIntersect_SC(class SquareComponent* a, class CircleComponent* b) {
 	RectF aRect = RectF{ Arg::center(a->GetCenter()),a->GetWidth(),a->GetHeight() };
 	Circle bCircle = Circle{ b->GetCenter(),b->GetRadius() };
@@ -74,7 +91,7 @@ bool IsIntersect_SC(class SquareComponent* a, class CircleComponent* b) {
 
 bool IsIntersect_SS(class SquareComponent* a, class SquareComponent* b) {
 	RectF aRect = RectF{ Arg::center(a->GetCenter()),a->GetWidth(),a->GetHeight() };
-	RectF bRect = RectF{ Arg::center(b->GetCenter()),a->GetWidth(),b->GetHeight() };
+	RectF bRect = RectF{ Arg::center(b->GetCenter()),b->GetWidth(),b->GetHeight() };
 	if (aRect.intersects(bRect))return true;
 	else return false;
 }

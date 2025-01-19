@@ -22,7 +22,6 @@ public:
 
 
 private:
-	SquareComponent* sc;
 	CircleComponent* mUpCC;
 	CircleComponent* mDownCC;
 	CircleComponent* mRightCC;

@@ -6,7 +6,6 @@ Flashlight::Flashlight(class Escapee_Game* owner)
 	,Pi(3.141592)
 {
 	mHandRange = owner->GetCircleComponent()->GetRadius();
-	mLightRange = mHandRange * 2.0f;
 	mLightRad = (float)25.0f / 180.0f * Pi;
 }
 
@@ -18,6 +17,7 @@ Flashlight::~Flashlight() {
 
 void Flashlight::Initialize_Game() {
 	mLightTri = new TriangleComponent(mOwner,200,false);
+	SetLightSize(LightSize::LightLarge);
 	SetLightPos0();
 	SetLightPos1();
 	SetLightPos2();
@@ -54,4 +54,22 @@ void Flashlight::SetLightPos1() {
 void Flashlight::SetLightPos2() {
 	mPos2 = Vec2(mPos0.x + mLightRange * cos(mOwner->GetRotation() - mLightRad),
 		mPos0.y + mLightRange * sin(mOwner->GetRotation() - mLightRad));
+}
+
+
+void Flashlight::SetLightSize(LightSize lightSize) {
+	mLightSize = lightSize;
+	switch (mLightSize) {
+	case LightLarge:
+		mLightRange = mHandRange * 4.0f;
+		break;
+	case LightMid:
+		mLightRange = mHandRange * 3.0f;
+		break;
+	case LightSmall:
+		mLightRange = mHandRange*2.0f;
+		break;
+	}
+
+	return;
 }

@@ -39,8 +39,8 @@ public:
 	virtual void InitializeStageObject_CreateStage(class CreateStage* createStage);
 
 	void InitializeActor_Game(class Game* game)override;
-	virtual void InitializeStageObject_Game(class Game* game);
-	virtual void InitializeStage_Game();
+	virtual void InitializeStageObject_Game(class Game* game);//InitializeActor_GameによってStageObjectLeft等が上書きされてしまう
+	virtual void InitializeStage_Game(); //上書きをさらに上書きする
 
 	void UpdateActor_CreateStage(float deltaTime)override;
 	virtual void UpdateStageObject_CreateStage(float deltaTime);

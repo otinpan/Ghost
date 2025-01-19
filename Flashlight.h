@@ -6,6 +6,12 @@ public:
 	Flashlight(class Escapee_Game* owner);
 	~Flashlight();
 
+	enum LightSize {
+		LightLarge,
+		LightMid,
+		LightSmall,
+	};
+
 	void Initialize_Game();
 	void Initialize_CreateStage();
 
@@ -13,8 +19,10 @@ public:
 
 	void SetIsLightOn(bool isLightOn) { mIsLightOn = isLightOn; }
 	bool GetIsLightOn() { return mIsLightOn; }
+	void SetLightSize(LightSize lightSize);
+	LightSize GetLightSize() { return mLightSize; }
 
-	class TriangleComponent* &GetTriagleComponent() { return mLightTri; }
+	class TriangleComponent* &GetTriangleComponent() { return mLightTri; }
 
 private:
 	class Escapee_Game* mOwner;
@@ -29,6 +37,7 @@ private:
 	Vec2 mPos2;
 
 	bool mIsLightOn;
+	LightSize mLightSize;
 
 	void SetLightPos0();
 	void SetLightPos1();

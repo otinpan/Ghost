@@ -9,6 +9,8 @@ Player::Player(Vec2 pos, float speed)
 	, mObjectUp(0)
 	, mSpeedMagnification(speed)
 	,StandardSpeed(0.3f)
+	,mIsAlive(true)
+	,mIsLighted(false)
 {
 	SetPosition(pos);
 }

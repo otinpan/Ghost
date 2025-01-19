@@ -16,23 +16,22 @@ Door::~Door() {
 
 void Door::InitializeStageObject_CreateStage(class CreateStage* createStage) {
 	InitializeActor_CreateStage(createStage);
-	sc = new SquareComponent(this,150,true);
 	DoorWidth = { GetWidth(),GetWidth() / 4,GetWidth(),GetWidth() / 4 };
 	DoorHeight = { GetHeight() / 4,GetHeight(),GetHeight() / 4,GetHeight() };
 	DoorRel_dx = { 0,GetWidth() * 3 / 8,0,-GetWidth() * 3 / 8 };
 	DoorRel_dy = { GetHeight() * 3 / 8,0,-GetHeight() * 3 / 8,0 };
     SetDoorCenter( Vec2{ GetPosition().x + DoorRel_dx[0],GetPosition().y + DoorRel_dy[0] });
-	sc->InitializeDrawing_CreateStage(GetDoorCenter(), DoorWidth[0], DoorHeight[0]);
+	GetSquareComponent()->InitializeDrawing_CreateStage(GetDoorCenter(), DoorWidth[0], DoorHeight[0]);
 }
 
 void Door::UpdateStageObject_CreateStage(float deltaTime) {
 	SetDoorCenter(Vec2{GetPosition().x + DoorRel_dx[GetClockwise()],GetPosition().y + DoorRel_dy[GetClockwise()]});
 	SetDoorHeight ( DoorHeight[GetClockwise()]);
 	SetDoorWidth  (DoorWidth[GetClockwise()]);
-	sc->SetCenter(GetDoorCenter());
-	sc->SetWidth(GetDoorWidth());
-	sc->SetHeight(GetDoorHeight());
-	sc->SetColor(ColorF(0, 1, 1));
+	GetSquareComponent()->SetCenter(GetDoorCenter());
+	GetSquareComponent()->SetWidth(GetDoorWidth());
+	GetSquareComponent()->SetHeight(GetDoorHeight());
+	GetSquareComponent()->SetColor(ColorF(0, 1, 1));
 }
 
 void Door::InitializeStageMenu_CreateStage() {
@@ -158,20 +157,11 @@ void Door::ShutdownStageMenu_CreateStage() {
 
 void Door::InitializeStageObject_Game(class Game* game) {
 	InitializeActor_Game(game);
-	sc = new SquareComponent(this,150,false);
 	DoorWidth = { GetWidth(),GetWidth() / 4,GetWidth(),GetWidth() / 4 };
 	DoorHeight = { GetHeight() / 4,GetHeight(),GetHeight() / 4,GetHeight() };
 	DoorRel_dx = { 0,GetWidth() * 3 / 8,0,-GetWidth() * 3 / 8 };
 	DoorRel_dy = { GetHeight() * 3 / 8,0,-GetHeight() * 3 / 8,0 };
-	SetDoorCenter(Vec2{ GetPosition().x + DoorRel_dx[GetClockwise()],GetPosition().y + DoorRel_dy[GetClockwise()]});
-	sc->InitializeDrawing_Game(GetDoorCenter(), DoorWidth[GetClockwise()], DoorHeight[GetClockwise()]);
-	SetDoorWidth(DoorWidth[GetClockwise()]);
-	SetDoorHeight(DoorHeight[GetClockwise()]);
-	sc->SetColor(ColorF(0, 0, 1));
-	sc->SetCenter(GetDoorCenter());
-	sc->SetWidth(GetDoorWidth());
-	sc->SetHeight(GetDoorHeight());
-	sc->SetColor(ColorF(0, 1, 1));
+	GetSquareComponent()->InitializeDrawing_Game(GetDoorCenter(), DoorWidth[GetClockwise()], DoorHeight[GetClockwise()]);
 	
 }
 
@@ -179,10 +169,10 @@ void Door::InitializeStage_Game() {
 	SetDoorCenter(Vec2{ GetPosition().x + DoorRel_dx[GetClockwise()],GetPosition().y + DoorRel_dy[GetClockwise()] });
 	SetDoorHeight(DoorHeight[GetClockwise()]);
 	SetDoorWidth(DoorWidth[GetClockwise()]);
-	sc->SetCenter(GetDoorCenter());
-	sc->SetWidth(GetDoorWidth());
-	sc->SetHeight(GetDoorHeight());
-	sc->SetColor(ColorF(0, 1, 1));
+	GetSquareComponent()->SetCenter(GetDoorCenter());
+	GetSquareComponent()->SetWidth(GetDoorWidth());
+	GetSquareComponent()->SetHeight(GetDoorHeight());
+	GetSquareComponent()->SetColor(ColorF(0, 1, 1));
 
 
 	SetObjectLeft(GetDoorCenter().x - GetDoorWidth() / 2.0f);

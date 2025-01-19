@@ -15,6 +15,9 @@ public:
 	void SetIsItemAvailable(bool isItemAvailable) { mIsItemAvailable = isItemAvailable; }
 	bool GetIsItemAvailable() { return mIsItemAvailable; }
 
+	void SetIsLighted(bool isLighted) { mIsLighted = isLighted; }
+	bool GetIsLighted() { return mIsLighted; }
+
 	class Flashlight* &GetFlashlight() { return mFlashlight; }
 
 private:
@@ -40,16 +43,23 @@ private:
 	StageObject::BatterySize mBatterySize;
 	std::pair<int,int> mIteration;
 
-	bool mIsAlive;
 
 	//Item
 	bool mIsItemAvailable;
 	float mItemInavailableLimitTime;
 	float mItemInavailableTime;
 
+	//Flashlight
 	void UpdateFlashlight_Game(float deltaTime);
 	void UpdateIntersectGhost_Game(float deltaTime);
+	void UpdateIntersectEscapee_Game(float deltaTime);
+	bool mIsLighted;
+	float mLightedTime;
+	float mLightedLimitTime;
+
 	void UpdateItemAvailable(float deltaTime);
+	void UpdateUnAlive(float deltaTime);
+
 
 	//intersect
 	Line LineL;

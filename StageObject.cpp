@@ -290,6 +290,7 @@ void StageObject::InitializeActor_Game(class Game* game) {
 	LineR = { {mObjectRight,mObjectUp},{mObjectRight,mObjectDown} };
 	LineU = { {mObjectRight,mObjectUp},{mObjectLeft,mObjectUp} };
 	LineD = { {mObjectLeft,mObjectDown},{mObjectRight,mObjectDown} };
+
 }
 
 void StageObject::InitializeStageObject_Game(class Game* game) {

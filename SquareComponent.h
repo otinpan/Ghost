@@ -15,6 +15,10 @@ public:
 	void SetHeight(float height) { mHeight = height; }
 	void SetCenter(Vec2 pos) { mCenter = pos; }
 	void SetColor(ColorF color) { mColor = color; }
+	const float GetLeft();
+	const float GetRight();
+	const float GetUp();
+	const float GetDown();
 
 	const RectF GetRect();
 	const RectF GetViewRect();

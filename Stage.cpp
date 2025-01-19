@@ -582,7 +582,6 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 		}
 	}
 
-	int CandleCnt=0;
 	InitCandle = new Candle(Vec2(0, 0),
 		 mRectWidth / 3,
 		 mRectHeight / 3,
@@ -590,12 +589,10 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 	InitCandle->InitializeStageObject_Game(mGame);
 	for (int i = 0; i < mCandles.size(); i++) {
 		if (!get<0>(mCandleDetails[i]))continue;
-		CandleCnt++;
 		InitCandle->SetPosition(get<1>(mCandleDetails[i]));
 		InitCandle->SetLightRad(get<2>(mCandleDetails[i]));
 		SetNewCandle(InitCandle);
 	}
-	Print << CandleCnt;
 
 	delete InitCandle;
 	InitCandle = 0;

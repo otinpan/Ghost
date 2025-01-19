@@ -12,8 +12,6 @@ public:
 
 	void UpdatePlayerPos_Game(float deltaTime)override;
 
-	void SetIsLighted(bool isLighted) { mIsLighted = isLighted; }
-	bool GetIsLighted() { return mIsLighted; }
 	void SetStopTime(float stopTime) { mStopTime = stopTime; }
 	float GetStopTime() { return mStopTime; }
 	void SetStopLimitTime(float stopLimitTime) { StopLimitTime = stopLimitTime; }
@@ -39,7 +37,6 @@ private:
 	float CloneLimitTime;
 
 	//Flashlight
-	bool mIsLighted;
 
 	//Stop
 	bool mIsStop;

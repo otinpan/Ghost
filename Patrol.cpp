@@ -275,12 +275,12 @@ void Patrol::ShutdownStageMenu_CreateStage() {
 	if(mBarSC_CreateStage)delete mBarSC_CreateStage;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 void Patrol::InitializeStageObject_Game(class Game* game) {
 	InitializeActor_Game(game);
 
 }
-
-////////////////////////////////////////////////////////////////////////////////////
 
 void Patrol::InitializeStage_Game() {
 	SetPatrolRange(GetPatrolRange() - 1);

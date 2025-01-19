@@ -11,11 +11,13 @@
 Escapee_Game::Escapee_Game(Vec2 pos, float speed, int num)
 	:Player(pos, speed)
 	, mFlashlight(nullptr)
-	,mBattery(100.0f)
-	,mIsAlive(true)
-	,mIsItemAvailable(true)
-	,mItemInavailableTime(0.0f)
-	,mItemInavailableLimitTime(0.5f)
+	, mBattery(100.0f)
+	, mIsItemAvailable(true)
+	, mItemInavailableTime(0.0f)
+	, mItemInavailableLimitTime(0.3f)
+	, mIsLighted(false)
+	, mLightedTime(0.0f)
+	, mLightedLimitTime(7.0f)
 {
 	
 	SetPosition(pos);
@@ -61,6 +63,11 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 
 void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 	mFlashlight->Update_Game(deltaTime);
+	if (!GetIsAlive()) {
+		mFlashlight->SetIsLightOn(false);
+		UpdateUnAlive(deltaTime);
+		return;
+	}
 	UpdateItemAvailable(deltaTime);
 	//Position
 	UpdatePos_Game(deltaTime);
@@ -68,9 +75,6 @@ void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 	UpdateFlashlight_Game(deltaTime);
 	//intersect
 	UpdateIntersectGhost_Game(deltaTime);
-
-
-
 }
 
 void Escapee_Game::UpdateFlashlight_Game(float deltaTime) {
@@ -88,47 +92,87 @@ void Escapee_Game::UpdateFlashlight_Game(float deltaTime) {
 
 
 	if (mIsLightOn) {
-		mBattery -= deltaTime * 60.0f / 5.0f;
+		mBattery -= deltaTime * 60.0f / 6.0f;
 	}
 
 	mBattery =std:: max(0.0f, mBattery);
+	mBattery = std::min(100.0f, mBattery);
+
+	if (mBattery < 100.0f / 3.0f)mFlashlight->SetLightSize(Flashlight::LightSize::LightSmall);
+	else if (mBattery < 100.0f * 2.0f / 3.0f)mFlashlight->SetLightSize(Flashlight::LightSize::LightMid);
+	else mFlashlight->SetLightSize(Flashlight::LightSize::LightLarge);
 
 	mFlashlight->SetIsLightOn(mIsLightOn);
 }
 
 void Escapee_Game::UpdateIntersectGhost_Game(float deltaTime) {
-	//Ghostが照らされているとき
+	//初期化
 	GetGame()->GetGhost()->SetIsLighted(false);
 	if (GetGame()->GetGhost()->GetGhostClone()) {
 		GetGame()->GetGhost()->GetGhostClone()->SetIsLighted(false);
 	}
+	//Ghostが照らされているとき
 	if (mIsLightOn) {
-		if (IsIntersect_TC(mFlashlight->GetTriagleComponent()
+		if (IsIntersect_TC(mFlashlight->GetTriangleComponent()
 			, GetGame()->GetGhost()->GetCircleComponent())) {
 			GetGame()->GetGhost()->SetIsLighted(true);
-			GetGame()->GetGhost()->SetStopTime(0.0f);
+			GetGame()->GetGhost()->SetStopTime(0.0f); //Timerを0にする
 		}
 		
-		if (GetGame()->GetGhost()->GetGhostClone() && IsIntersect_TC(mFlashlight->GetTriagleComponent()
+		if (GetGame()->GetGhost()->GetGhostClone() && IsIntersect_TC(mFlashlight->GetTriangleComponent()
 			, GetGame()->GetGhost()->GetGhostClone()->GetCircleComponent())) {
 			GetGame()->GetGhost()->GetGhostClone()->SetIsLighted(true);
 			GetGame()->GetGhost()->GetGhostClone()->SetStopTime(0.0f);
 		}
 	}
 
-
+	
 	if (IsIntersect_CC(GetGame()->GetGhost()->GetCircleComponent(), GetCircleComponent())) {
-		mIsAlive = false;
+		SetIsAlive(false);
+		GetCircleComponent()->SetColor(ColorF(0.5f, 0.5f, 0.5f));
 	}
-	if (GetGame()->GetGhost()->GetGhostClone() 
-		&& IsIntersect_CC( GetCircleComponent(), GetGame()->GetGhost()->GetGhostClone()->GetCircleComponent())) {
-		mIsAlive = false;
+	if (GetGame()->GetGhost()->GetGhostClone()
+		&& IsIntersect_CC(GetCircleComponent(), GetGame()->GetGhost()->GetGhostClone()->GetCircleComponent())) {
+		SetIsAlive(false);
+		GetCircleComponent()->SetColor(ColorF(0.5f, 0.5f, 0.5f));
 	}
+	
+	
+}
+
+void Escapee_Game::UpdateIntersectEscapee_Game(float deltaTime) {
+	if (!mIsLightOn)return;
+	for (auto& player : GetGame()->GetPlayers()) {
+		if (player == this || player->GetAttribute() == Player::Attribute::Ghost
+			|| player->GetAttribute() == Player::Attribute::GhostClone) {
+			continue;
+		}
+		if (player->GetIsAlive())continue;
+		if (IsIntersect_TC(mFlashlight->GetTriangleComponent(), player->GetCircleComponent())) {
+			player->SetIsLighted(true); //player側で最後にfalseにする
+		}
+	}
+	
+}
+
+void Escapee_Game::UpdateUnAlive(float deltaTime) {
+	if (GetIsAlive())return;
+	if (mLightedTime > mLightedLimitTime) {
+		SetIsAlive(true);
+		mLightedTime = 0.0f;
+		return;
+	}
+	if (GetIsLighted()) {
+		mLightedTime += deltaTime;
+	}
+	//1度照らされただけでも照らされ続ける、といったことをなくす
+	SetIsLighted(false);
 }
 
 
 void Escapee_Game::UpdatePlayerPos_Game(float deltaTime) {
 	mPos = GetPosition();
+	
 	for (auto& row : GetGame()->GetStage()->GetStageObjects()) {
 		for (auto& stageObject : row) {
 			if (stageObject == 0)continue;
@@ -146,7 +190,7 @@ void Escapee_Game::UpdatePlayerPos_Game(float deltaTime) {
 				if (!stageObject->GetIsTurn())continue;
 				break;
 			case StageObject::Attribute::Battery:
-				if (!mIsItemAvailable)break;
+				if (!mIsItemAvailable) break;
 				switch (stageObject->GetBatterySize()) {
 				case StageObject::BatterySize::Zero:
 					break;
@@ -167,6 +211,7 @@ void Escapee_Game::UpdatePlayerPos_Game(float deltaTime) {
 				break;
 			case StageObject::Attribute::Key:
 				if (!mIsItemAvailable)break;
+				if (mIsKey)return; //すでにKeyを所有している
 				mIsKey = true;
 				GetGame()->GetStage()->DeleteStageObject(stageObject->GetIteration().first,
 				stageObject->GetIteration().second);

@@ -86,7 +86,7 @@ void Ghost_Game::UpdateClone_Game(float deltaTime) {
 }
 
 void Ghost_Game::UpdateStop_Game(float deltaTime) {
-	if (mIsLighted) {
+	if (GetIsLighted()) {
 		mIsStop = true;
 	}
 	else {
