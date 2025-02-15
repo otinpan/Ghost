@@ -14,7 +14,7 @@ Escapee_Game::Escapee_Game(Vec2 pos, float speed, int num)
 	, mBattery(100.0f)
 	, mIsItemAvailable(true)
 	, mItemInavailableTime(0.0f)
-	, mItemInavailableLimitTime(0.3f)
+	, mItemInavailableLimitTime(0.0f)
 	, mIsLighted(false)
 	, mLightedTime(0.0f)
 	, mLightedLimitTime(7.0f)
@@ -69,6 +69,8 @@ void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 		return;
 	}
 	UpdateItemAvailable(deltaTime);
+	//heartbeat
+	UpdatePlayerHeartbeat(deltaTime);
 	//Position
 	UpdatePos_Game(deltaTime);
 	//Flashlight Battery
@@ -211,7 +213,6 @@ void Escapee_Game::UpdatePlayerPos_Game(float deltaTime) {
 				break;
 			case StageObject::Attribute::Key:
 				if (!mIsItemAvailable)break;
-				if (mIsKey)return; //すでにKeyを所有している
 				mIsKey = true;
 				GetGame()->GetStage()->DeleteStageObject(stageObject->GetIteration().first,
 				stageObject->GetIteration().second);
@@ -226,7 +227,7 @@ void Escapee_Game::UpdatePlayerPos_Game(float deltaTime) {
 					mIteration = stageObject->GetIteration();
 					GetGame()->GetStage()->DeleteStageObject(mIteration.first,
 				    mIteration.second);
-					SetIsItemAvailable(false);
+					mIsItemAvailable=false;
 					switch (mTreasure) {
 					case StageObject::Treasure::TreasureKey:
 						GetGame()->GetStage()->SetNewStageObject_Attribute
@@ -277,4 +278,17 @@ void Escapee_Game::UpdateItemAvailable(float deltaTime){
 		}
 	}
 	return;
+}
+
+void Escapee_Game::UpdatePlayerHeartbeat(float deltaTime) {
+	UpdateHeartbeat(deltaTime);
+	if (IsIntersect_CC(GetBigCircleComponent(), GetGame()->GetGhost()->GetSmallCircleComponent())) {
+		SetHeartbeatLimitTime(0.7f);
+	}
+	else if (IsIntersect_CC(GetMidCircleComponent(), GetGame()->GetGhost()->GetSmallCircleComponent())) {
+		SetHeartbeatLimitTime(0.5f);
+	}
+	else if (IsIntersect_CC(GetSmallCircleComponent(), GetGame()->GetGhost()->GetSmallCircleComponent())) {
+		SetHeartbeatLimitTime(0.2f);
+	}
 }

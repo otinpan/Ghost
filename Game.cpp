@@ -164,7 +164,7 @@ void Game::draw() {
 
 void Game::LoadData() {
 	mStage = new Stage(1.92f,1.92f);
-	mStage->Initialize_Game(this,U"Stage1.bin");
+	mStage->Initialize_Game(this,U"Stage/Stage1.bin");
 	mGhost = new Ghost_Game(Vec2({(float)mStage->GetLeft() +
 		mStage->GetGhostIteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
 		(float)mStage->GetUp() -

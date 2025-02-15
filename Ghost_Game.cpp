@@ -49,6 +49,8 @@ void Ghost_Game::InitializePlayer_Game(class Game* game) {
 void Ghost_Game::UpdatePlayer_Game(float deltaTime) {
 	//Stop
 	UpdateStop_Game(deltaTime);
+	//heartbeat
+	UpdatePlayerHeartbeat(deltaTime);
 	//Position
 	if (mIsStop)ic->SetIsMove(false);
 	else ic->SetIsMove(true);
@@ -127,4 +129,8 @@ void Ghost_Game::UpdatePlayerPos_Game(float deltaTime) {
 
 	SetPosition(mPos);
 	GetCircleComponent()->SetCenter(mPos);
+}
+
+void Ghost_Game::UpdatePlayerHeartbeat(float deltaTime) {
+	UpdateHeartbeat(deltaTime);
 }

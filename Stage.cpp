@@ -14,6 +14,7 @@
 #include"Escapee_CreateStage.h"
 #include"StageMenu.h"
 #include<cmath>
+#include"Player.h"
 using namespace std;
 
 
@@ -475,10 +476,8 @@ bool Stage::EndCreateStage() {
 		}
 	}
 
-	Serializer<BinaryWriter> writer{ U"Stage1.bin" };
-	if (not writer) {
-		throw Error{ U"Failed to open file" };
-	}
+	
+	
 	vector<vector<tuple<StageObject::Attribute, int, int,StageObject::BatterySize,StageObject::Treasure,float,bool>>>
 		mDetails(mVerticalSize, vector<tuple<StageObject::Attribute, int, int,StageObject::BatterySize,StageObject::Treasure,float, bool>>
 			(mSideSize,tuple(StageObject::Attribute::None,0,0,StageObject::BatterySize::Zero,StageObject::Treasure::Empty,0.0f,false)));
@@ -491,13 +490,18 @@ bool Stage::EndCreateStage() {
 		}
 	}
 
-	writer(mDetails);
-
 	vector<tuple<bool,Vec2, float>> mCandleDetails(mCandles.size(), tuple(false,Vec2(0, 0), 0.0f));
 	for (int i = 0; i < mCandles.size(); i++) {
 		if (mCandles[i] == 0)continue;
 		else mCandleDetails[i] = tuple(true, mCandles[i]->GetPosition(),mCandles[i]-> GetLightRad());
 	}
+
+
+	Serializer<BinaryWriter> writer{ U"Stage/Stage2.bin" };
+	if (not writer) {
+		throw Error{ U"Failed to open file" };
+	}
+	writer(mDetails);
 	writer(mCandleDetails);
 	return true;
 }
@@ -601,12 +605,23 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 	mGoalIteration = pair(mGoal / mVerticalSize, mGoal % mSideSize);
 }
 
+//Gameの終了判定
 void Stage::Update_Game(float deltaTime) {
 	mGameTime += deltaTime;
+    bool mIsEscapeesAlive = true;
+	/*for (auto player : GetGame()->GetPlayers()) {
+		if (player->GetIsAlive()) {
+			mIsEscapeesAlive = true;
+		}
+	}*/
+
 	if (mGameTime > GoalTime) {
 		mIsGoal = true;
 	}
 	if (mGameTime > GameLimitTime) {
+		GetGame()->Shutdown();
+	}
+	if (!mIsEscapeesAlive) {
 		GetGame()->Shutdown();
 	}
 }

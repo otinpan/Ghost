@@ -155,14 +155,15 @@ void Door::ShutdownStageMenu_CreateStage() {
 	return;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void Door::InitializeStageObject_Game(class Game* game) {
 	InitializeActor_Game(game);
 	DoorWidth = { GetWidth(),GetWidth() / 4,GetWidth(),GetWidth() / 4 };
 	DoorHeight = { GetHeight() / 4,GetHeight(),GetHeight() / 4,GetHeight() };
 	DoorRel_dx = { 0,GetWidth() * 3 / 8,0,-GetWidth() * 3 / 8 };
 	DoorRel_dy = { GetHeight() * 3 / 8,0,-GetHeight() * 3 / 8,0 };
-	GetSquareComponent()->InitializeDrawing_Game(GetDoorCenter(), DoorWidth[GetClockwise()], DoorHeight[GetClockwise()]);
-	
+	//GetSquareComponent()->InitializeDrawing_Game(GetDoorCenter(), DoorWidth[GetClockwise()], DoorHeight[GetClockwise()]);
 }
 
 void Door::InitializeStage_Game() {

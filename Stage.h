@@ -127,4 +127,7 @@ private:
 	float GameLimitTime;  //Gameが愁傷するまでの時間
 	float GoalTime; //goalが潜在するまでの時間
 	bool mIsGoal; //goalが存在するか
+
+	//void SaveStage(vector<vector<tuple<StageObject::Attribute, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>& details,
+		//vector<tuple<bool, Vec2, float>>& candleDetails);
 };

@@ -3,6 +3,8 @@
 
 Player::Player(Vec2 pos, float speed)
 	:cc(nullptr)
+	,Bigcc(nullptr)
+	,Midcc(nullptr)
 	, mObjectLeft(0)
 	, mObjectRight(0)
 	, mObjectDown(0)
@@ -11,6 +13,8 @@ Player::Player(Vec2 pos, float speed)
 	,StandardSpeed(0.3f)
 	,mIsAlive(true)
 	,mIsLighted(false)
+	,mHeartbeatTime(0.0f)
+	,HeartbeatLimitTime(1.0f)
 {
 	SetPosition(pos);
 }
@@ -32,6 +36,22 @@ void Player::InitializeActor_Game(class Game* game) {
 	cc->SetCenter(GetPosition());
 	mRadius = GetGame()->GetStage()->GetRectWidth() * 2.0f / 5.0f;
 	cc->SetRadius(mRadius);
+	Bigcc = new CircleComponent(this, 170, false);
+	Bigcc->InitializeDrawing_Game();
+	Bigcc->SetCenter(GetPosition());
+	Bigcc->SetRadius(mRadius * 4.0f);
+	Bigcc->SetIsDraw(false);
+	Midcc = new CircleComponent(this, 170, false);
+	Midcc->InitializeDrawing_Game();
+	Midcc->SetCenter(GetPosition());
+	Midcc->SetRadius(mRadius * 3.0f);
+	Midcc->SetIsDraw(false);
+	Smallcc = new CircleComponent(this, 170, false);
+	Smallcc->InitializeDrawing_Game();
+	Smallcc->SetCenter(GetPosition());
+	Smallcc->SetRadius(mRadius*2.0f);
+	Smallcc->SetIsDraw(false);
+
 	switch (GetAttribute()) {
 	case Attribute::Ghost:
 		cc->SetColor(ColorF(76.0f / 255.0f, 0, 204.0f / 255.0f));
@@ -81,6 +101,23 @@ void Player::UpdatePos_Game(float deltaTime) {
 
 	SetPosition(mPos);
 	cc->SetCenter(mPos);
+	Bigcc->SetCenter(mPos);
+	Midcc->SetCenter(mPos);
+	Smallcc->SetCenter(mPos);
+}
+
+//鼓動
+void Player::UpdateHeartbeat(float deltaTime) {
+	if (mHeartbeatTime > HeartbeatLimitTime) {
+		mHeartbeatTime = 0.0f;
+	}
+	else {
+		mHeartbeatTime += deltaTime;
+	}
+}
+
+void Player::UpdatePlayerHeartbeat(float deltaTime) {
+
 }
 
 void Player::UpdatePlayerPos_Game(float deltaTime) {

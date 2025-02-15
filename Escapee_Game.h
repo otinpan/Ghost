@@ -18,7 +18,10 @@ public:
 	void SetIsLighted(bool isLighted) { mIsLighted = isLighted; }
 	bool GetIsLighted() { return mIsLighted; }
 
+	void UpdatePlayerHeartbeat(float deltaTime)override;
+
 	class Flashlight* &GetFlashlight() { return mFlashlight; }
+
 
 private:
 	class Flashlight* mFlashlight;
