@@ -5,6 +5,7 @@
 class Parent {
 public:
 	enum SeqID {
+		SEQ_MAINMENU,
 		SEQ_GAME,
 		SEQ_CREATESTAGE,
 		SEQ_NONE,
@@ -17,6 +18,7 @@ public:
 	void moveTo(SeqID);
 
 private:
+	class MainMenu* mMainMenu;
 	class Game* mGame;
 	class CreateStage* mCreateStage;
 
@@ -26,8 +28,11 @@ private:
 
 Vec2 ConvertToView(Vec2 pos);
 Vec2 ConvertToWorld(Vec2 pos);
+void DrawCircle(Vec2 pos, float rad, ColorF color);
 void DrawRect(Vec2 pos, float width, float height, ColorF color);  //posは中心の座標
+void DrawRoundRect(Vec2 pos, float width, float height, float round, ColorF color);  //roundの半径の円だけけどを丸める
 void DrawRectFrame(Vec2 pos, float width, float height, float innerlinewidth,float outerlinewidth, ColorF color);
+void DrawRoundRectFrame(Vec2 pos, float width, float height, float round, float innerline, float outerline, ColorF color);
 void DrawSquareDotLine(Vec2 pos1, Vec2 pos2, float linewidth, ColorF color);
 void DrawLine(Vec2 pos1, Vec2 pos2, float lineWidth, ColorF color);
 float GetMagnification();

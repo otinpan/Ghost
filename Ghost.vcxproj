@@ -135,6 +135,7 @@
     <ClCompile Include="InputComponent_Keyboard.cpp" />
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="Parent.cpp" />
     <ClCompile Include="Patrol.cpp" />
@@ -377,6 +378,7 @@
     <ClInclude Include="Hand.h" />
     <ClInclude Include="InputComponent_Keyboard.h" />
     <ClInclude Include="Key.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="Parent.h" />
     <ClInclude Include="Patrol.h" />

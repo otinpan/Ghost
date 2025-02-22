@@ -42,8 +42,7 @@ const Vec2& CircleComponent::GetCenter()const {
 
 void CircleComponent::Draw() {
 	if (!GetIsDraw())return;
-	float mg = GetMagnification();
-	Circle{ ConvertToView(mCenter),mRadius * mg }.draw(mColor);
+	DrawCircle(mCenter, mRadius, mColor);
 }
 
 const Circle CircleComponent::GetCircle() {

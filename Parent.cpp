@@ -1,31 +1,42 @@
 ﻿#include"Parent.h"
+#include"MainMenu.h"
 #include"Game.h"
 #include"CreateStage.h"
 
 Parent::Parent()
 	:mGame(0)
 	,mCreateStage(0)
+	,mMainMenu(0)
 	, mNext(SEQ_NONE)
 {
-	mGame = new Game();
+	mMainMenu = new MainMenu();
+	//mGame = new Game();
 	//mCreateStage = new CreateStage();
 }
 
 Parent::~Parent() {
+	if (mMainMenu)delete mMainMenu;
 	if (mGame)delete mGame;
 	if (mCreateStage)delete mCreateStage;
 }
 
 
 void Parent::update() {
+	if (mMainMenu)mMainMenu->update(this);
 	if (mGame)mGame->update(this);
 	if (mCreateStage)mCreateStage->update(this);
 
 	switch (mNext) {
+	case SEQ_MAINMENU:
+		if (mCreateStage)delete mCreateStage;
+		if (mGame)delete mGame;
+		break;
 	case SEQ_GAME:
+		if (mMainMenu)delete mMainMenu;
 		if (mCreateStage)delete mCreateStage;
 		break;
 	case SEQ_CREATESTAGE:
+		if (mMainMenu)delete mMainMenu;
 		if (mGame)delete mGame;
 		break;
 	}
@@ -70,16 +81,34 @@ Vec2 ConvertToWorld(Vec2 pos) {
 	return { X,Y };
 }
 
+void DrawCircle(Vec2 pos, float rad, ColorF color) {
+	Circle{ ConvertToView(pos),rad * GetMagnification()}.draw(color);
+}
+
 void DrawRect(Vec2 pos, float width, float height, ColorF color) {
 	RectF(Arg::center(ConvertToView(pos)),
 		GetScreenWidth() * width / 2,
 		GetScreenHeight() * height / 2).draw(color);
 }
 
+void DrawRoundRect(Vec2 pos, float width, float height, float round, ColorF color) {
+	RoundRect(Arg::center(ConvertToView(pos)),
+		GetScreenWidth() * width / 2.0f,
+		GetScreenHeight() * height / 2.0f,
+		GetMagnification() * round).draw(color);
+}
+
 void DrawRectFrame(Vec2 pos, float width, float height, float innerlinewidth,float outerlinewidth, ColorF color) {
 	RectF(Arg::center(ConvertToView(pos)),
 		GetScreenWidth() * width / 2,
 		GetScreenHeight() * height / 2).drawFrame(innerlinewidth * GetMagnification(),outerlinewidth*GetMagnification(), color);
+}
+
+void DrawRoundRectFrame(Vec2 pos, float width, float height, float round, float innerlinewidth, float outerlinewidth, ColorF color) {
+	RoundRect(Arg::center(ConvertToView(pos)),
+		GetScreenWidth() * width / 2.0f,
+		GetScreenHeight() * height / 2.0f,
+		GetMagnification() * round).drawFrame(innerlinewidth * GetMagnification(), outerlinewidth * GetMagnification(), color);
 }
 
 void DrawSquareDotLine(Vec2 pos1, Vec2 pos2, float linewidth, ColorF color) {
