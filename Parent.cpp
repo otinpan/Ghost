@@ -2,20 +2,24 @@
 #include"MainMenu.h"
 #include"Game.h"
 #include"CreateStage.h"
+#include"StageSelect.h"
 
 Parent::Parent()
 	:mGame(0)
 	,mCreateStage(0)
 	,mMainMenu(0)
+	,mStageSelect(0)
 	, mNext(SEQ_NONE)
 {
 	mMainMenu = new MainMenu();
+	//mStageSelect=new StageSelect();
 	//mGame = new Game();
 	//mCreateStage = new CreateStage();
 }
 
 Parent::~Parent() {
 	if (mMainMenu)delete mMainMenu;
+	if (mStageSelect)delete mStageSelect;
 	if (mGame)delete mGame;
 	if (mCreateStage)delete mCreateStage;
 }
@@ -23,28 +27,37 @@ Parent::~Parent() {
 
 void Parent::update() {
 	if (mMainMenu)mMainMenu->update(this);
+	if (mStageSelect)mStageSelect->update(this);
 	if (mGame)mGame->update(this);
 	if (mCreateStage)mCreateStage->update(this);
 
 	switch (mNext) {
 	case SEQ_MAINMENU:
+		if (mStageSelect)delete mStageSelect;
 		if (mCreateStage)delete mCreateStage;
 		if (mGame)delete mGame;
 		break;
+	case SEQ_STAGESELECT:
+		if (mMainMenu)delete mMainMenu;
+		if (mCreateStage)delete mCreateStage;
+		if (mGame)delete mGame;
 	case SEQ_GAME:
 		if (mMainMenu)delete mMainMenu;
+		if (mStageSelect)delete mStageSelect;
 		if (mCreateStage)delete mCreateStage;
 		break;
 	case SEQ_CREATESTAGE:
 		if (mMainMenu)delete mMainMenu;
+		if (mStageSelect)delete mStageSelect;
 		if (mGame)delete mGame;
 		break;
 	}
 	mNext = SEQ_NONE;
 }
 
-void Parent::moveTo(SeqID next) {
+void Parent::moveTo(SeqID next,SeqID pre) {
 	mNext = next;
+	mPre = pre;
 }
 
 float GetScreenHeight() {

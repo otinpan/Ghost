@@ -23,8 +23,8 @@ void MainMenu::Initialize() {
 
 	mCenterCirclePos = Vec2(0, 0);
 	mCenterCircleRadius = 0.2f;
-	mSelectHeight = 0.6f;
-	mSelectWidth = 0.6f;
+	mSelectHeight = 0.7f;
+	mSelectWidth = 0.7f;
 	mGameRectCenter = Vec2((float)mCenterCirclePos.x - mCenterCircleRadius - mSelectWidth / 2.15f, 0.0);
 	mCreateStageRectCenter = Vec2((float)mCenterCirclePos.x + mCenterCircleRadius + mSelectWidth / 2.15f, 0.0);
 	mRectRound = mSelectWidth / 30.0f;
@@ -97,6 +97,8 @@ void MainMenu::Shutdown() {
 
 
 void MainMenu::moveTo(Parent* parent, Parent::SeqID id) {
-	if (id == Parent::SEQ_GAME)parent->moveTo(Parent::SEQ_GAME);
-	if (id == Parent::SEQ_CREATESTAGE)parent->moveTo(Parent::SEQ_CREATESTAGE);
+	if (id == Parent::SEQ_MAINMENU)parent->moveTo(Parent::SEQ_MAINMENU, Parent::SEQ_MAINMENU);
+	if (id == Parent::SEQ_STAGESELECT)parent->moveTo(Parent::SEQ_STAGESELECT, Parent::SEQ_MAINMENU);
+	if (id == Parent::SEQ_GAME)parent->moveTo(Parent::SEQ_GAME,Parent::SEQ_MAINMENU);
+	if (id == Parent::SEQ_CREATESTAGE)parent->moveTo(Parent::SEQ_CREATESTAGE,Parent::SEQ_MAINMENU);
 }

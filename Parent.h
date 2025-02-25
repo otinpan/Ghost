@@ -6,6 +6,7 @@ class Parent {
 public:
 	enum SeqID {
 		SEQ_MAINMENU,
+		SEQ_STAGESELECT,
 		SEQ_GAME,
 		SEQ_CREATESTAGE,
 		SEQ_NONE,
@@ -15,14 +16,16 @@ public:
 	~Parent();
 	void update();
 
-	void moveTo(SeqID);
+	void moveTo(SeqID next,SeqID pre);
 
 private:
 	class MainMenu* mMainMenu;
+	class StageSelect* mStageSelect;
 	class Game* mGame;
 	class CreateStage* mCreateStage;
 
 	SeqID mNext;
+	SeqID mPre;
 };
 
 
