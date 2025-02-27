@@ -13,7 +13,7 @@ MainMenu::~MainMenu() {
 }
 
 void MainMenu::Initialize() {
-	Scene::SetBackground(ColorF(128.0 / 255.0));
+	Scene::SetBackground(ColorF(180.0 / 255.0));
 	inputLeft = KeyA;
 	inputUp = KeyW;
 	inputDown = KeyS;

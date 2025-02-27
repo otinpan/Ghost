@@ -11,8 +11,8 @@ Parent::Parent()
 	,mStageSelect(0)
 	, mNext(SEQ_NONE)
 {
-	mMainMenu = new MainMenu();
-	//mStageSelect=new StageSelect();
+	//mMainMenu = new MainMenu();
+	mStageSelect=new StageSelect();
 	//mGame = new Game();
 	//mCreateStage = new CreateStage();
 }

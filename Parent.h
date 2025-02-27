@@ -18,6 +18,14 @@ public:
 
 	void moveTo(SeqID next,SeqID pre);
 
+	class MainMenu*& GetMainMenu() { return mMainMenu; }
+	class StageSelect* &GetStageSelect() { return mStageSelect; }
+	class Game*& GetGame() { return mGame; }
+	class CreateStage*& GetCreateStage() { return mCreateStage; }
+
+	SeqID GetNextSeq() { return mNext; }
+	SeqID GetPreSeq() { return mPre; }
+
 private:
 	class MainMenu* mMainMenu;
 	class StageSelect* mStageSelect;

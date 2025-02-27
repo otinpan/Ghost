@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include"Parent.h"
 #include"Actor.h"
+using namespace std;
 
 class StageSelect {
 public:
@@ -8,7 +9,8 @@ public:
 	~StageSelect();
 
 	void update(class Parent*);
-	void draw();
+	void draw_Game();
+	void draw_CreateStage();
 
 	void Initialize();
 	void Shutdown();
@@ -18,7 +20,8 @@ public:
 
 private:
 	void ProcessInput();
-	void UpdateStageSelect();
+	void UpdateStageSelect_Game();
+	void UpdateStageSelect_CreateStage();
 
 	InputGroup inputUp;
 	InputGroup inputDown;
@@ -26,6 +29,30 @@ private:
 	InputGroup inputRight;
 	InputGroup inputDecision;
 	InputGroup inputBack;
+
+	vector<vector<string>> mStageNames; //Stageの名前
+	vector<vector<Vec2>> mStagePoses; //Stageの位置
+	int mVerticalSize;
+	int mSideSize;
+	int mDisplayVerticalSize;
+	int mDisplaySideSize;
+	float mStageWidth; //表示範囲
+	float mStageHeight;
+	float mStageRectWidth; //表示するStageの幅
+	float mStageRectHeight;
+	float mStageEachWidth; //それぞれのRectが所有する範囲
+	float mStageEachHeight;
+	float mStageLeft; //表示範囲の左端
+	float mStageRight;
+	float mStageUp;
+	float mStageDown;
+
+	pair<int, int> mIteration; //いま選択しているstageのIteration
+	int mUpLine; //完全位映りきっている一番上の行
+	int mDownLine; //完全に映りきっている一番下の行
+
+	void UpdateRectPos(int plus); //plusの方向に平行移動する
+
 
 	bool mIsRunning;
 
