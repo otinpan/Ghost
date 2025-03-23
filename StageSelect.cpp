@@ -22,8 +22,14 @@ void StageSelect::Initialize() {
 	inputDecision = KeySpace;
 	inputBack = KeyBackspace;
 
+	mIsinputUp = true;
+	mIsinputDown = true;
+	mIsinputRight = true;
+	mIsinputLeft = true;
+
 	mSideSize = 3;
 	mVerticalSize = 20;
+
 
 	mStageNames.resize(mVerticalSize);
 	for (auto& row : mStageNames) {
@@ -54,6 +60,16 @@ void StageSelect::Initialize() {
 	mStageRectWidth = mStageEachWidth * 2.0 / 3.0;
 	mStageRectHeight = mStageEachHeight * 2.0 / 3.0;
 
+	mTopPos = 0.0f;
+	MaxTopPos = mStageEachHeight * (mVerticalSize-3);
+	MaxDownPos = MaxTopPos + 2.0f;
+
+	//SideBar
+	SideBarUp = 0.9f;
+	SideBarDown = -0.9;
+	mSideBarHeight = 2.0f / MaxDownPos * (SideBarUp - SideBarDown);
+	mSideBarWidth = 0.03f;
+
 	//初期位置の設定
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
@@ -71,9 +87,7 @@ void StageSelect::Initialize() {
 void StageSelect::update(Parent* parent) {
 	if (mIsRunning) {
 		ClearPrint();
-		Print << mIteration;
-		Print << mUpLine;
-		Print << mDownLine;
+		Print << MaxDownPos;
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 		}
@@ -99,6 +113,22 @@ void StageSelect::UpdateStageSelect_Game() {
 				UpdateRectPos(-1);
 			}
 		}
+		mIsinputUp = true;
+		minputUpTime = 0.0f;
+	}
+	if (inputUp.pressed()) {
+		if (!mIsinputUp) {
+			if (mIteration.first != mUpLine) { //表示の一番上以外の行
+				mIteration.first--;
+			}
+			else {
+				if (mUpLine > 0) {
+					mIteration.first--;
+					UpdateRectPos(-1);
+				}
+			}
+		}
+		UpdateinputCooltime(mIsinputUp, minputUpTime, deltaTime);
 	}
 	if (inputDown.down()) {
 		if (mIteration.first != mDownLine) {
@@ -110,18 +140,58 @@ void StageSelect::UpdateStageSelect_Game() {
 				UpdateRectPos(1);
 			}
 		}
+		mIsinputDown = true;
+		minputDownTime = 0.0f;
+		
+	}
+	if (inputDown.pressed()) {
+		if (!mIsinputDown) {
+			if (mIteration.first != mDownLine) {
+				mIteration.first++;
+			}
+			else {
+				if (mDownLine < mVerticalSize - 1) {
+					mIteration.first++;
+					UpdateRectPos(1);
+				}
+			}
+		}
+		UpdateinputCooltime(mIsinputDown, minputDownTime, deltaTime);
+
 	}
 	if (inputRight.down()) {
 		if (mIteration.second < mSideSize - 1) mIteration.second++;
+		mIsinputRight = true;
+		minputRightTime = 0.0f;
 	}
+	if (inputRight.pressed()) {
+		if (!mIsinputRight) {
+			if (mIteration.second < mSideSize - 1) mIteration.second++;
+		}
+		UpdateinputCooltime(mIsinputRight, minputRightTime, deltaTime);
+	}
+
 	if (inputLeft.down()) {
 		if (mIteration.second > 0)mIteration.second--;
+		mIsinputLeft = true;
+		minputLeftTime = 0.0f;
 	}
+	if (inputLeft.pressed()) {
+		if (!mIsinputLeft) {
+			if (mIteration.second > 0)mIteration.second--;
+		}
+		UpdateinputCooltime(mIsinputLeft, minputLeftTime, deltaTime);
+	}
+
+	//SideBar
+	mSideBarUp = SideBarUp-(float)mTopPos / MaxDownPos * (SideBarUp-SideBarDown);
+	mSideBarPos = Vec2(0.9, mSideBarUp - mSideBarHeight / 2.0f);
 }
 
 void StageSelect::UpdateStageSelect_CreateStage() {
 	float deltaTime = Scene::DeltaTime();
 }
+
 
 void StageSelect::UpdateRectPos(int plus) {
 	for (int i = 0; i < mVerticalSize; i++) {
@@ -129,6 +199,8 @@ void StageSelect::UpdateRectPos(int plus) {
 			mStagePoses[i][j].y += plus * mStageEachHeight;
 		}
 	}
+	mTopPos += plus * mStageEachHeight;
+
 	mUpLine+=plus;
 	mDownLine+=plus;
 	mUpLine = max(0, mUpLine);
@@ -137,13 +209,32 @@ void StageSelect::UpdateRectPos(int plus) {
 	mDownLine = min(mVerticalSize - 1, mDownLine);
 }
 
+
+void StageSelect::UpdateinputCooltime(bool &mIsinput, float &minputTime, float deltaTime) {
+	if (mIsinput) {
+		if (minputTime > 0.3f) {
+			mIsinput = false;
+			minputTime = 0.0f;
+			return;
+		}
+		else {
+			minputTime += deltaTime;
+			return;
+		}
+	}
+	else {
+		mIsinput = true;
+		return;
+	}
+}
+
 void StageSelect::draw_Game() {
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
 			DrawRect(mStagePoses[i][j], mStageRectWidth, mStageRectHeight, ColorF((float)i/mVerticalSize));
 		}
 	}
-
+	DrawRoundRect(mSideBarPos, mSideBarWidth, mSideBarHeight,mSideBarWidth/4.0f, ColorF(1, 1, 1));
 	DrawRectFrame(mStagePoses[mIteration.first][mIteration.second], mStageRectWidth, mStageRectHeight, 0, 0.005, ColorF(1, 1, 0));
 }
 

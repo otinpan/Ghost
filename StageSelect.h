@@ -30,6 +30,16 @@ private:
 	InputGroup inputDecision;
 	InputGroup inputBack;
 
+	bool mIsinputUp;
+	bool mIsinputDown;
+	bool mIsinputRight;
+	bool mIsinputLeft;
+	float minputUpTime;
+	float minputDownTime;
+	float minputRightTime;
+	float minputLeftTime;
+
+
 	vector<vector<string>> mStageNames; //Stageの名前
 	vector<vector<Vec2>> mStagePoses; //Stageの位置
 	int mVerticalSize;
@@ -47,11 +57,25 @@ private:
 	float mStageUp;
 	float mStageDown;
 
+	float mTopPos; //一番上の移動量
+	float MaxTopPos;
+	float MaxDownPos;
+
+	Vec2 mSideBarPos;
+	float SideBarUp;
+	float SideBarDown;
+	float mSideBarUp;
+	float mSideBarDown;
+	float mSideBarWidth;
+	float mSideBarHeight;
+
+
 	pair<int, int> mIteration; //いま選択しているstageのIteration
 	int mUpLine; //完全位映りきっている一番上の行
 	int mDownLine; //完全に映りきっている一番下の行
 
 	void UpdateRectPos(int plus); //plusの方向に平行移動する
+	void UpdateinputCooltime(bool &mIsinput, float &minputTime,float deltaTime);
 
 
 	bool mIsRunning;
