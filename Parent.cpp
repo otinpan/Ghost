@@ -12,9 +12,9 @@ Parent::Parent()
 	, mNext(SEQ_NONE)
 {
 	//mMainMenu = new MainMenu();
-	mStageSelect=new StageSelect();
+	//mStageSelect=new StageSelect();
 	//mGame = new Game();
-	//mCreateStage = new CreateStage();
+	mCreateStage = new CreateStage();
 }
 
 Parent::~Parent() {

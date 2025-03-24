@@ -26,6 +26,8 @@ public:
 	float GetWidth() { return mWidth; }
 	float GetRectHeight() { return mRectHeight; }
 	float GetRectWidth() { return mRectWidth; }
+	bool GetIsSaveError() { return mIsSaveError; }
+	void SetIsSaveError(bool isSaveError) { mIsSaveError = isSaveError; }
 	Vec2 GetExpandFulcrum() { return mExpandFulcrumPos; }
 	void SetExpandFulcrum(Vec2 pos) { mExpandFulcrumPos = pos; }
 	std::pair<int, int> GetExpandFulcrumIter() { return mExpandFulcrumIter; }

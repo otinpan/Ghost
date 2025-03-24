@@ -21,7 +21,7 @@ void Door::InitializeStageObject_CreateStage(class CreateStage* createStage) {
 	DoorRel_dx = { 0,GetWidth() * 3 / 8,0,-GetWidth() * 3 / 8 };
 	DoorRel_dy = { GetHeight() * 3 / 8,0,-GetHeight() * 3 / 8,0 };
     SetDoorCenter( Vec2{ GetPosition().x + DoorRel_dx[0],GetPosition().y + DoorRel_dy[0] });
-	GetSquareComponent()->InitializeDrawing_CreateStage(GetDoorCenter(), DoorWidth[0], DoorHeight[0]);
+	//GetSquareComponent()->InitializeDrawing_CreateStage(GetDoorCenter(), DoorWidth[0], DoorHeight[0]);
 }
 
 void Door::UpdateStageObject_CreateStage(float deltaTime) {

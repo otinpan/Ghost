@@ -127,6 +127,11 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 		}
 
 		//End
+		if (GetCreateStage()->GetStage()->GetIsSaveError()) {
+			if (inputChoose.down()) {
+				GetCreateStage()->GetStage()->SetIsSaveError(false);
+			}
+		}
 		if (cc->GetViewCircle().
 			intersects(GetViewRect(GetCreateStage()->GetStageMenu()->GetEndPos(),
 				GetCreateStage()->GetStageMenu()->GetEndRectWidth(),

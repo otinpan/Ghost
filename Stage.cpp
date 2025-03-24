@@ -444,10 +444,12 @@ bool Stage::EndCreateStage() {
 		}
 	}
 
+	
 	if (Ghost == pair(-1, -1) || Escapee1 == pair(-1, -1) || Escapee2 == pair(-1, -1) || Escapee3 == pair(-1, -1)) {
 		mIsSaveError = true;
 		return false;
 	}
+	
 
 
 	for (int i = 0; i < mVerticalSize; i++) {
@@ -496,11 +498,22 @@ bool Stage::EndCreateStage() {
 		else mCandleDetails[i] = tuple(true, mCandles[i]->GetPosition(),mCandles[i]-> GetLightRad());
 	}
 
-
-	Serializer<BinaryWriter> writer{ U"Stage/Stage2.bin" };
+	String StageName = U"Stage3";
+	Serializer<BinaryWriter> writer{ U"Stage/"+StageName+U".bin" };
 	if (not writer) {
 		throw Error{ U"Failed to open file" };
 	}
+	//画像の保存
+	ScreenCapture::RequestCurrentFrame();
+	Image image;
+	ScreenCapture::GetFrame(image);
+	Vec2 LeftTop = ConvertToView(Vec2(mLeft, mUp));
+	Image image2= image.clipped(Rect(LeftTop.x,LeftTop.y,
+		(int32)(mWidth / 2.0 * GetScreenWidth()), (int32)(mHeight / 2.0 * GetScreenHeight())));
+
+	image2.save(U"Stage/"+StageName+U".png");
+
+
 	writer(mDetails);
 	writer(mCandleDetails);
 	return true;

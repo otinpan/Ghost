@@ -86,13 +86,18 @@ void CreateStage::UpdateGame(){
 void CreateStage::draw() {
 	mStage->Draw_CreateStage();
 	mStageMenu->Draw_CreateStage();
-	for (auto square : mSquares) {
+	/*for (auto square : mSquares) {
 		square->Draw();
 	}
 	for (auto circle : mCircles) {
 		circle->Draw();
+	}*/
+	for (auto& drawing : mDrawings_Background) {
+		drawing->Draw();
 	}
-	
+	for (auto& drawing : mDrawings_Foreground) {
+		drawing->Draw();
+	}
 	
 }
 
