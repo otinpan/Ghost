@@ -98,8 +98,8 @@ void Stage::Initialize_CreateStage(CreateStage* createStage) {
 
 	//SaveError
 	mSaveErrorRectWidth = 1.0;
-	mSaveErrorRectHeight = 0.4;
-	mSaveErrorPos = Vec2(0, 0);
+	mSaveErrorRectHeight = 0.5;
+	mSaveErrorPos = Vec2(0.0, 0.0);
 
 }
 
@@ -407,11 +407,16 @@ void Stage::Draw_CreateStage() {
 		}
 	}
 
+	
+}
+
+void Stage::DrawForward_CreateStage() {
 	if (mIsSaveError) {
 		DrawRect(mSaveErrorPos, mSaveErrorRectWidth, mSaveErrorRectHeight, ColorF(1, 1, 1));
 		mSaveErrorFont(U"You don't arrange any players").draw(Arg::center(ConvertToView(mSaveErrorPos)), ColorF(0, 0, 0));
 	}
 }
+
 
 
 RectF Stage::GetViewStageRect() {
@@ -498,7 +503,8 @@ bool Stage::EndCreateStage() {
 		else mCandleDetails[i] = tuple(true, mCandles[i]->GetPosition(),mCandles[i]-> GetLightRad());
 	}
 
-	String StageName = U"Stage3";
+	
+    StageName = U"Stage3";
 	Serializer<BinaryWriter> writer{ U"Stage/"+StageName+U".bin" };
 	if (not writer) {
 		throw Error{ U"Failed to open file" };

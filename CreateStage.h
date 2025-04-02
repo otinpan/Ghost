@@ -5,6 +5,7 @@
 #include"SpriteComponent.h"
 #include"CircleComponent.h"
 #include"SquareComponent.h"
+#include"TextMenu.h"
 
 class CreateStage
 {
@@ -83,6 +84,7 @@ private:
 	std::vector<class Candle*> mCandles;
 	class Stage* mStage;
 	class StageMenu* mStageMenu;
+	std::unique_ptr<TextMenu> mTextMenu;
 	class Brock* mBrock;
 	class Door* mDoor;
 	class Patrol* mPatrol;

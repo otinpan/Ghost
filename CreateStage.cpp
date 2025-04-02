@@ -98,7 +98,8 @@ void CreateStage::draw() {
 	for (auto& drawing : mDrawings_Foreground) {
 		drawing->Draw();
 	}
-	
+
+	mStage->DrawForward_CreateStage();
 }
 
 void CreateStage::LoadData() {

@@ -16,6 +16,8 @@ public:
 	void Update_CreateStage(float deltaTime);
 	void Draw_CreateStage();
 
+	void DrawForward_CreateStage();
+
 	int GetVerticalSize() { return mVerticalSize; }
 	int GetSideSize() { return mSideSize; }
 	float GetLeft() { return mLeft; }
@@ -106,6 +108,7 @@ private:
 	Vec2 mSaveErrorPos;
 	float mSaveErrorRectWidth;
 	float mSaveErrorRectHeight;
+	String StageName;
 
 	//Font
 	const Font mSaveErrorFont{ ConvertToInt(0.05 * GetMagnification()),Typeface::Bold };
