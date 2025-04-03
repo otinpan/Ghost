@@ -37,6 +37,8 @@ public:
 	void AddStageObject(class StageObject* stageobject);
 	void RemoveStageObject(class StageObject* stageobject);
 
+	void OpenTextMenu();
+	void CloseTextMenu();
 
 
 	class Hand* &GetHand() { return mHand; }

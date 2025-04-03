@@ -53,8 +53,10 @@ void CreateStage::ProcessInput() {
 
 void CreateStage::UpdateGame(){
 	float deltaTime = Scene::DeltaTime();
-
-
+	if (mTextMenu) {
+		mTextMenu->Update(deltaTime);
+		return;
+	}
 	mUpdatingActors = true;
 	for (auto actor : mActors) {
 		actor->Update(deltaTime);
@@ -100,6 +102,7 @@ void CreateStage::draw() {
 	}
 
 	mStage->DrawForward_CreateStage();
+	if (mTextMenu)mTextMenu->Draw(40, Scene::CenterF());
 }
 
 void CreateStage::LoadData() {
@@ -248,13 +251,21 @@ void CreateStage::RemoveStageObject(StageObject* stageobject) {
 	}
 }
 
+void CreateStage::OpenTextMenu() {
+	mTextMenu = std::make_unique<TextMenu>(U"Name");
+}
+
+void CreateStage::CloseTextMenu() {
+	if(mTextMenu)mTextMenu.reset();
+}
 
 
 void CreateStage::moveTo(Parent* parent, Parent::SeqID id) {
 	if (id == Parent::SEQ_MAINMENU)parent->moveTo(Parent::SEQ_MAINMENU,Parent::SEQ_CREATESTAGE);
 	if (id == Parent::SEQ_STAGESELECT)parent->moveTo(Parent::SEQ_STAGESELECT, Parent::SEQ_CREATESTAGE);
 	if (id == Parent::SEQ_GAME)parent->moveTo(Parent::SEQ_GAME,Parent::SEQ_CREATESTAGE);
-	if (id == Parent::SEQ_CREATESTAGE)parent->moveTo(Parent::SEQ_CREATESTAGE,Parent::SEQ_CREATESTAGE);
+	if (id == Parent::SEQ_CREATESTAGE)parent->moveTo(Parent::SEQ_CREATESTAGE, Parent::SEQ_CREATESTAGE);
+	if (id == Parent::SEQ_CREATESTAGE)parent->moveTo(Parent::SEQ_GAMERESULT,Parent::SEQ_CREATESTAGE);
 }
 
 

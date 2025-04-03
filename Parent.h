@@ -9,6 +9,7 @@ public:
 		SEQ_STAGESELECT,
 		SEQ_GAME,
 		SEQ_CREATESTAGE,
+		SEQ_GAMERESULT,
 		SEQ_NONE,
 	};
 
@@ -22,6 +23,7 @@ public:
 	class StageSelect* &GetStageSelect() { return mStageSelect; }
 	class Game*& GetGame() { return mGame; }
 	class CreateStage*& GetCreateStage() { return mCreateStage; }
+	class GameResult*& GetGameResult() { return mGameResult; }
 
 	SeqID GetNextSeq() { return mNext; }
 	SeqID GetPreSeq() { return mPre; }
@@ -31,6 +33,7 @@ private:
 	class StageSelect* mStageSelect;
 	class Game* mGame;
 	class CreateStage* mCreateStage;
+	class GameResult* mGameResult;
 
 	SeqID mNext;
 	SeqID mPre;

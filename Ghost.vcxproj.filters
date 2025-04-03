@@ -249,6 +249,9 @@
     <ClCompile Include="TextMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameResult.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -1020,6 +1023,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TextMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameResult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

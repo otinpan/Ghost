@@ -3,6 +3,7 @@
 #include"Game.h"
 #include"CreateStage.h"
 #include"StageSelect.h"
+#include"GameResult.h"
 
 Parent::Parent()
 	:mGame(0)
@@ -14,7 +15,8 @@ Parent::Parent()
 	//mMainMenu = new MainMenu();
 	//mStageSelect=new StageSelect();
 	//mGame = new Game();
-	mCreateStage = new CreateStage();
+	//mCreateStage = new CreateStage();
+	mGameResult = new GameResult();
 }
 
 Parent::~Parent() {
@@ -22,6 +24,7 @@ Parent::~Parent() {
 	if (mStageSelect)delete mStageSelect;
 	if (mGame)delete mGame;
 	if (mCreateStage)delete mCreateStage;
+	if (mGameResult)delete mGameResult;
 }
 
 
@@ -30,27 +33,38 @@ void Parent::update() {
 	if (mStageSelect)mStageSelect->update(this);
 	if (mGame)mGame->update(this);
 	if (mCreateStage)mCreateStage->update(this);
+	if (mGameResult)mGameResult->update(this);
 
 	switch (mNext) {
 	case SEQ_MAINMENU:
 		if (mStageSelect)delete mStageSelect;
 		if (mCreateStage)delete mCreateStage;
 		if (mGame)delete mGame;
+		if (mGameResult)delete mGameResult;
 		break;
 	case SEQ_STAGESELECT:
 		if (mMainMenu)delete mMainMenu;
 		if (mCreateStage)delete mCreateStage;
 		if (mGame)delete mGame;
+		if (mGameResult)delete mGameResult;
 	case SEQ_GAME:
 		if (mMainMenu)delete mMainMenu;
 		if (mStageSelect)delete mStageSelect;
 		if (mCreateStage)delete mCreateStage;
+		if (mGameResult)delete mGameResult;
 		break;
 	case SEQ_CREATESTAGE:
 		if (mMainMenu)delete mMainMenu;
 		if (mStageSelect)delete mStageSelect;
 		if (mGame)delete mGame;
+		if (mGameResult)delete mGameResult;
 		break;
+	case SEQ_GAMERESULT:
+		if (mMainMenu)delete mMainMenu;
+		if (mStageSelect)delete mStageSelect;
+		if (mGame)delete mGame;
+		if (mCreateStage)delete mCreateStage;
+
 	}
 	mNext = SEQ_NONE;
 }

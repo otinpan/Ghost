@@ -2,13 +2,13 @@
 #include"Parent.h"
 
 
-TextMenu::TextMenu(String& text)
+TextMenu::TextMenu(String text)
 	:mIsTextDecide(false)
 	, mText(text)
 	, mCursorPos(text.size())
 	, mTimerNotEditing(StartImmediately::Yes)
 {
-
+	Initialize();
 }
 
 TextMenu::~TextMenu(){}
@@ -20,6 +20,7 @@ void TextMenu::Initialize(){
 	mTextRectColor = ColorF(0, 0.9);
 	mTextColor=ColorF( 0.95 );
 	mCursorWidth = 0.02;
+	mCursorColor = ColorF(Palette::Blue,0.8);
 	EditingTextColor = ColorF{ Palette::White };
 	EditingTextBgColor = ColorF{ Palette::Blue,0.8 };
 	HelpTextColor = ColorF{ Palette::Gray };
@@ -54,11 +55,13 @@ void TextMenu::Update(float deltaTime) {
 void TextMenu::Draw(float fontSize,const Vec2& posDrawAt)const {
 	DrawRect(mTextRectPos, mTextRectWidth, mTextRectHeight, mTextRectColor);
 
+	
 	const auto textRegion = textboxFont()(mText).regionAt(fontSize, posDrawAt);
 
 	//テキストを1文字ずつ描画
 	Vec2 penPos = textRegion.tl();
 	Vec2 CursorPos = penPos;
+	Print << penPos;
 
 	{
 		const ScopedCustomShader2D shader{
@@ -85,8 +88,9 @@ void TextMenu::Draw(float fontSize,const Vec2& posDrawAt)const {
 		textboxFont()(editingText).draw(ConvertToView(CursorPos), EditingTextColor);
 	}
 
+	
 	//カーソル
-	Line{ CursorPos,CursorPos.movedBy(0,textRegion.h) }.draw(mCursorWidth * GetScreenWidth(), mCursorColor);
+	Line{ ConvertToView(CursorPos),ConvertToView(CursorPos.movedBy(0,textRegion.h)) }.draw(mCursorWidth * GetScreenWidth(), mCursorColor);
 
 	//操作説明
 	textboxFont()(U"[Enter],[Escape]キーで決定"). drawAt(ConvertToView(Vec2{ 0, -0.1 }), HelpTextColor);

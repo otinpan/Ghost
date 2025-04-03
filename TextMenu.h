@@ -4,7 +4,7 @@
 
 class TextMenu {
 public:
-	TextMenu(String& text);
+	TextMenu(String text);
 	~TextMenu();
 
 	void Initialize();
@@ -16,6 +16,7 @@ public:
 	void SetIsTextDecide(bool isNameDecide) { mIsTextDecide = isNameDecide; }
 	String GetText() { return mText; }
 	void SetName(String text) { mText = text; }
+	const Vec2 GetTextRectPos() { return mTextRectPos; }
 
 	bool editing() const { return TextInput::GetEditingText() || mTimerNotEditing.sF() < 0.5f; }
 
