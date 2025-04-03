@@ -15,7 +15,7 @@ TextMenu::~TextMenu(){}
 
 void TextMenu::Initialize(){
 	mTextRectPos = Vec2(0, 0.3);
-	mTextRectWidth = 0.8;
+	mTextRectWidth = 1.5;
 	mTextRectHeight = 0.3;
 	mTextRectColor = ColorF(0, 0.9);
 	mTextColor=ColorF( 0.95 );
@@ -24,6 +24,8 @@ void TextMenu::Initialize(){
 	EditingTextColor = ColorF{ Palette::White };
 	EditingTextBgColor = ColorF{ Palette::Blue,0.8 };
 	HelpTextColor = ColorF{ Palette::Gray };
+
+	FontAsset::Register(U"text", FontMethod::MSDF, 40, Typeface::Medium);
 }
 
 void TextMenu::Update(float deltaTime) {
@@ -55,17 +57,18 @@ void TextMenu::Update(float deltaTime) {
 void TextMenu::Draw(float fontSize,const Vec2& posDrawAt)const {
 	DrawRect(mTextRectPos, mTextRectWidth, mTextRectHeight, mTextRectColor);
 
-	
-	const auto textRegion = textboxFont()(mText).regionAt(fontSize, posDrawAt);
+	Print << posDrawAt;
+	Print << fontSize;
+	const RectF textRegion = textboxFont()(mText).regionAt(fontSize, posDrawAt.x,posDrawAt.y);
+	Print << textRegion;
 
 	//テキストを1文字ずつ描画
 	Vec2 penPos = textRegion.tl();
 	Vec2 CursorPos = penPos;
-	Print << penPos;
 
 	{
 		const ScopedCustomShader2D shader{
-			Font::GetPixelShader(textboxFont().method())
+			//Font::GetPixelShader(textboxFont().method())
 		};
 
 		for (auto [charIndex, glyph] : Indexed(textboxFont().getGlyphs(mText))) {

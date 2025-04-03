@@ -37,8 +37,10 @@ private:
 	ColorF EditingTextBgColor;
 	ColorF HelpTextColor{ Palette::Gray };
 
-	FontAsset textboxFont() const {
-		return FontAsset(U"Name");
+	
+	FontAsset textboxFont()const {
+		return FontAsset(U"text");
 	}
+
 
 };
