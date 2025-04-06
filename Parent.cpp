@@ -66,6 +66,9 @@ void Parent::update() {
 		if (mCreateStage)delete mCreateStage;
 
 	}
+	if (preScreenSize != Scene::Size())mIsResizedScreen = true;
+	else mIsResizedScreen = false;
+	preScreenSize = Scene::Size();
 	mNext = SEQ_NONE;
 }
 

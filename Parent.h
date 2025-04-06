@@ -28,6 +28,8 @@ public:
 	SeqID GetNextSeq() { return mNext; }
 	SeqID GetPreSeq() { return mPre; }
 
+	const bool GetIsResizedWindow() { return mIsResizedScreen; }
+
 private:
 	class MainMenu* mMainMenu;
 	class StageSelect* mStageSelect;
@@ -37,6 +39,9 @@ private:
 
 	SeqID mNext;
 	SeqID mPre;
+
+	bool mIsResizedScreen;
+	Size preScreenSize;
 };
 
 

@@ -17,6 +17,8 @@ public:
 	String GetText() { return mText; }
 	void SetName(String text) { mText = text; }
 	const Vec2 GetTextRectPos() { return mTextRectPos; }
+	const float GetTextRectWidth() { return mTextRectWidth; }
+	const float GetTextRectHeight() { return mTextRectHeight; }
 
 	bool editing() const { return TextInput::GetEditingText() || mTimerNotEditing.sF() < 0.5f; }
 
@@ -24,6 +26,7 @@ private:
 	bool mIsTextDecide;
 	String mText;
 	size_t mCursorPos;
+	size_t MaxTextSize;
 	Stopwatch mTimerNotEditing;
 
 	Vec2 mTextRectPos;
@@ -42,5 +45,6 @@ private:
 		return FontAsset(U"text");
 	}
 
+	Font HelpFont;
 
 };
