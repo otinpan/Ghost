@@ -41,10 +41,12 @@ private:
 	ColorF HelpTextColor{ Palette::Gray };
 
 	
+	
 	FontAsset textboxFont()const {
 		return FontAsset(U"text");
 	}
 
 	Font HelpFont;
+	int FontSize;
 
 };

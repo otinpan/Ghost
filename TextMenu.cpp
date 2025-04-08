@@ -26,13 +26,14 @@ void TextMenu::Initialize(){
 	HelpTextColor = ColorF{ Palette::Gray };
 	MaxTextSize = 15;
 
-	int FontSize = 0.12 * GetMagnification();
+	FontSize = 0.12 * GetMagnification();
 	FontAsset::Register(U"text", FontMethod::MSDF, FontSize, Typeface::Medium);
-	FontSize /= 2;
-	HelpFont =Font{ FontMethod::MSDF,FontSize,Typeface::Light};
+	HelpFont =Font{ FontMethod::MSDF,FontSize/2,Typeface::Light};
+	
 }
 
 void TextMenu::Update(float deltaTime) {
+
 	if (TextInput::GetEditingText()) {
 		mTimerNotEditing.reset();
 	}
@@ -68,6 +69,7 @@ void TextMenu::Update(float deltaTime) {
 	//Spaceは受け付けない
 	if (KeySpace.pressed() || KeySpace.up())return;
 	mCursorPos = TextInput::UpdateText(mText, mCursorPos, TextInputMode::AllowBackSpaceDelete);
+
 }
 
 
