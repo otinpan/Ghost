@@ -5,8 +5,11 @@
 
 void Main()
 {
-	Window::SetStyle(WindowStyle::Sizable);
+	
 	Parent* mParent = 0;
+	Window::SetStyle(WindowStyle::Sizable);
+	Scene::SetResizeMode(ResizeMode::Keep);
+
 
 	Scene::SetBackground({ 1,1,1 });
 

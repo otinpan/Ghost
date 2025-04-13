@@ -31,7 +31,7 @@ void MainMenu::Initialize() {
 	mGameRectColor = ColorF(204.0f / 255.0f, 0, 0);
 	mCreateStageRectColor = ColorF(0, 102.0 / 255.0, 204.0 / 255.0);
 
-	float fs= 0.15*GetMagnification();
+	float fs= 0.12*GetMagnification();
 	int32 fontSize = (int32)fs;
 	fontWhite=Font( fontSize,Typeface::Bold );
 	fs *= (float)1.02;
@@ -66,6 +66,9 @@ void MainMenu::UpdateMainMenu() {
 			mSelect = MainSelect::SelectGame;
 		}
 		break;
+	}
+	if (KeyEnter.down()) {
+		mSeqID = Parent::SEQ_CHANGEWINDOWSIZE;
 	}
 }
 
@@ -102,4 +105,5 @@ void MainMenu::moveTo(Parent* parent, Parent::SeqID id) {
 	if (id == Parent::SEQ_GAME)parent->moveTo(Parent::SEQ_GAME,Parent::SEQ_MAINMENU);
 	if (id == Parent::SEQ_CREATESTAGE)parent->moveTo(Parent::SEQ_CREATESTAGE,Parent::SEQ_MAINMENU);
 	if (id == Parent::SEQ_GAMERESULT)parent->moveTo(Parent::SEQ_GAMERESULT, Parent::SEQ_MAINMENU);
+	if (id == Parent::SEQ_CHANGEWINDOWSIZE)parent->moveTo(Parent::SEQ_CHANGEWINDOWSIZE, Parent::SEQ_MAINMENU);
 }

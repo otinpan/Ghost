@@ -4,6 +4,7 @@
 #include"CreateStage.h"
 #include"StageSelect.h"
 #include"GameResult.h"
+#include"ChangeWindowSize.h"
 
 Parent::Parent()
 	:mGame(0)
@@ -12,11 +13,12 @@ Parent::Parent()
 	,mStageSelect(0)
 	, mNext(SEQ_NONE)
 {
-	//mMainMenu = new MainMenu();
+	mMainMenu = new MainMenu();
 	//mStageSelect=new StageSelect();
 	//mGame = new Game();
 	//mCreateStage = new CreateStage();
-	mGameResult = new GameResult();
+	//mGameResult = new GameResult();
+	//mChangeWindowSize=new ChangeWindowSize();
 }
 
 Parent::~Parent() {
@@ -25,6 +27,7 @@ Parent::~Parent() {
 	if (mGame)delete mGame;
 	if (mCreateStage)delete mCreateStage;
 	if (mGameResult)delete mGameResult;
+	if (mChangeWindowSize)delete mChangeWindowSize;
 }
 
 
@@ -34,6 +37,8 @@ void Parent::update() {
 	if (mGame)mGame->update(this);
 	if (mCreateStage)mCreateStage->update(this);
 	if (mGameResult)mGameResult->update(this);
+    if (mChangeWindowSize)mChangeWindowSize->update(this);
+	
 
 	switch (mNext) {
 	case SEQ_MAINMENU:
@@ -41,30 +46,49 @@ void Parent::update() {
 		if (mCreateStage)delete mCreateStage;
 		if (mGame)delete mGame;
 		if (mGameResult)delete mGameResult;
+		if (mChangeWindowSize)delete mChangeWindowSize;
+		mMainMenu = new MainMenu();
 		break;
 	case SEQ_STAGESELECT:
 		if (mMainMenu)delete mMainMenu;
 		if (mCreateStage)delete mCreateStage;
 		if (mGame)delete mGame;
+		if (mChangeWindowSize)delete mChangeWindowSize;
 		if (mGameResult)delete mGameResult;
+		mStageSelect = new StageSelect();
+		break;
 	case SEQ_GAME:
 		if (mMainMenu)delete mMainMenu;
 		if (mStageSelect)delete mStageSelect;
 		if (mCreateStage)delete mCreateStage;
+		if (mChangeWindowSize)delete mChangeWindowSize;
 		if (mGameResult)delete mGameResult;
+		mGame = new Game();
 		break;
 	case SEQ_CREATESTAGE:
 		if (mMainMenu)delete mMainMenu;
 		if (mStageSelect)delete mStageSelect;
 		if (mGame)delete mGame;
+		if (mChangeWindowSize)delete mChangeWindowSize;
 		if (mGameResult)delete mGameResult;
+		mCreateStage = new CreateStage();
 		break;
 	case SEQ_GAMERESULT:
 		if (mMainMenu)delete mMainMenu;
 		if (mStageSelect)delete mStageSelect;
 		if (mGame)delete mGame;
+		if (mChangeWindowSize)delete mChangeWindowSize;
 		if (mCreateStage)delete mCreateStage;
-
+		mGameResult = new GameResult();
+		break;
+	case SEQ_CHANGEWINDOWSIZE:
+		if (mMainMenu)delete mMainMenu;
+		if (mStageSelect)delete mStageSelect;
+		if (mGame)delete mGame;
+		if (mGameResult)delete mGameResult;
+		if (mCreateStage)delete mCreateStage;
+		mChangeWindowSize = new ChangeWindowSize();
+		break;
 	}
 	
 	mNext = SEQ_NONE;
@@ -74,6 +98,9 @@ void Parent::moveTo(SeqID next,SeqID pre) {
 	mNext = next;
 	mPre = pre;
 }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 float GetScreenHeight() {
 	return (float)Scene::Height();

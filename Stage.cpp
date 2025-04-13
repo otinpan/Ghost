@@ -504,8 +504,8 @@ bool Stage::EndCreateStage() {
 	}
 
 	
-    StageName = U"Stage3";
-	Serializer<BinaryWriter> writer{ U"Stage/"+StageName+U".bin" };
+    StageName = U"Stage1";
+	Serializer<BinaryWriter> writer{ U"Stage/"+StageName+U"/"+U"Data.bin"};
 	if (not writer) {
 		throw Error{ U"Failed to open file" };
 	}
@@ -517,8 +517,7 @@ bool Stage::EndCreateStage() {
 	Image image2= image.clipped(Rect(LeftTop.x,LeftTop.y,
 		(int32)(mWidth / 2.0 * GetScreenWidth()), (int32)(mHeight / 2.0 * GetScreenHeight())));
 
-	image2.save(U"Stage/"+StageName+U".png");
-
+	image2.save(U"Stage/"+StageName+U"/" + U"Image.png");
 
 	writer(mDetails);
 	writer(mCandleDetails);
@@ -527,7 +526,7 @@ bool Stage::EndCreateStage() {
 
 
 
-//Game//////////////////////////////////////////////////////////////////////////////////////
+//Game/////////////////////////////////////////////////////////////////////////////////////////////
 void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 	mGame = game;
 	Deserializer<BinaryReader> reader{ fileName };

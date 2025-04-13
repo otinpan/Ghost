@@ -10,6 +10,7 @@ public:
 		SEQ_GAME,
 		SEQ_CREATESTAGE,
 		SEQ_GAMERESULT,
+		SEQ_CHANGEWINDOWSIZE,
 		SEQ_NONE,
 	};
 
@@ -17,13 +18,14 @@ public:
 	~Parent();
 	void update();
 
-	void moveTo(SeqID next,SeqID pre);
+	void moveTo(SeqID next, SeqID pre);
 
 	class MainMenu*& GetMainMenu() { return mMainMenu; }
-	class StageSelect* &GetStageSelect() { return mStageSelect; }
+	class StageSelect*& GetStageSelect() { return mStageSelect; }
 	class Game*& GetGame() { return mGame; }
 	class CreateStage*& GetCreateStage() { return mCreateStage; }
 	class GameResult*& GetGameResult() { return mGameResult; }
+	class ChangeWindowSize*& GetChangeWindowSize() { return mChangeWindowSize;}
 
 	SeqID GetNextSeq() { return mNext; }
 	SeqID GetPreSeq() { return mPre; }
@@ -35,6 +37,7 @@ private:
 	class Game* mGame;
 	class CreateStage* mCreateStage;
 	class GameResult* mGameResult;
+	class ChangeWindowSize* mChangeWindowSize;
 
 	SeqID mNext;
 	SeqID mPre;
