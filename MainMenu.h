@@ -12,6 +12,7 @@ public:
 	enum MainSelect {
 		SelectGame,
 		SelectCreateStage,
+		SelectSubMenu,
 	};
 
 	void update(class Parent*);
@@ -38,19 +39,18 @@ private:
 	float mCenterCircleRadius;
 	Vec2 mGameRectCenter;
 	Vec2 mCreateStageRectCenter;
+	Vec2 mSubMenuRectCenter;
+
 	float mSelectWidth;
 	float mSelectHeight;
 	float mRectRound;
 	ColorF mGameRectColor;
 	ColorF mCreateStageRectColor;
+	ColorF mSubMenuRectColor;
 
 	MainSelect mSelect;
 
 	Parent::SeqID mSeqID;
 
 	bool mIsRunning;
-
-	//Font
-	Font fontWhite;
-    Font fontBlack;
 };

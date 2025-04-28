@@ -26,7 +26,7 @@ void TextMenu::Initialize(){
 	HelpTextColor = ColorF{ Palette::Gray };
 	MaxTextSize = 15;
 
-	FontSize = 0.12 * GetMagnification();
+	FontSize = 0.12 * GetScreenHeight();
 	FontAsset::Register(U"text", FontMethod::MSDF, FontSize, Typeface::Medium);
 	HelpFont =Font{ FontMethod::MSDF,FontSize/2,Typeface::Light};
 	

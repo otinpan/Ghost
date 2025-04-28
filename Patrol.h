@@ -64,8 +64,8 @@ private:
 	bool mIsBarGripen;
 
 	//Font
-	Font mStageMenuFont{ConvertToInt((float)0.05 * GetMagnification())};
-	Font mSpeedFont{ ConvertToInt((float)0.04 * GetMagnification()) };
+	Font mStageMenuFont{ConvertToInt((float)0.05 * GetScreenHeight())};
+	Font mSpeedFont{ ConvertToInt((float)0.04 * GetScreenHeight()) };
 
 	//どこからどこまで動くか
 	Vec2 FromPos;

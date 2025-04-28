@@ -50,7 +50,7 @@ return Circle{ mCenter,mRadius };
 }
 
 const Circle CircleComponent::GetViewCircle() {
-	return Circle{ ConvertToView(mCenter),GetMagnification() * mRadius };
+	return Circle{ ConvertToView(mCenter),GetScreenHeight() * mRadius };
 }
 
 

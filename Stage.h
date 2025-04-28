@@ -111,7 +111,7 @@ private:
 	String StageName;
 
 	//Font
-	const Font mSaveErrorFont{ ConvertToInt(0.05 * GetMagnification()),Typeface::Bold };
+	const Font mSaveErrorFont{ ConvertToInt(0.05 * GetScreenHeight()),Typeface::Bold };
 
 	//Game//////////////////////////////////////////////////////////
 	class Game* mGame;

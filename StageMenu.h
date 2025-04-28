@@ -86,5 +86,5 @@ private:
 	class Ghost_CreateStage* mGhost;
 
 	//Font
-	Font mEndFont{ ConvertToInt((float)0.08 * GetMagnification()),Typeface::Bold};
+	Font mEndFont{ ConvertToInt((float)0.08 * GetScreenHeight()),Typeface::Bold};
 };

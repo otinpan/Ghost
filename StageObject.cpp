@@ -90,7 +90,7 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 	for (int i = 0; i < 4; i++) {
 		cc[i] = new CircleComponent(this,70,false);
 		cc[i]->InitializeDrawing_CreateStage();
-		cc[i]->SetRadius((float)mWidth / 6.0f);
+		cc[i]->SetRadius((float)mWidth / 7.0f);
 		cc[i]->SetColor(ColorF(0, 0, 1));
 	}
 

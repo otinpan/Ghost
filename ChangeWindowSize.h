@@ -20,8 +20,8 @@ private:
 	void ProcessInput();
 	void UpdateChangeWindowSize();
 
+	Size mSceneSize;
+
 	Parent::SeqID mSeqID;
 	bool mIsRunning;
-
-	Font HelpFont;
 };

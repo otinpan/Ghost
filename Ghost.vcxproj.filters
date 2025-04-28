@@ -255,6 +255,9 @@
     <ClCompile Include="ChangeWindowSize.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SubMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -1032,6 +1035,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ChangeWindowSize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SubMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

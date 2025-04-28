@@ -20,7 +20,7 @@ using namespace std;
 
 Stage::Stage(float width, float height)
 	:mVerticalSize(15)
-	, mSideSize(24)
+	, mSideSize(22)
 	, mWidth(width)
 	, mHeight(height)
 	, mLeft(-0.96f)

@@ -5,15 +5,20 @@
 #include"StageSelect.h"
 #include"GameResult.h"
 #include"ChangeWindowSize.h"
+#include"SubMenu.h"
 
 Parent::Parent()
 	:mGame(0)
 	,mCreateStage(0)
 	,mMainMenu(0)
+	,mGameResult(0)
+	,mChangeWindowSize(0)
+	,mSubMenu(0)
 	,mStageSelect(0)
 	, mNext(SEQ_NONE)
 {
 	mMainMenu = new MainMenu();
+	//mSubMenu = new SubMenu();
 	//mStageSelect=new StageSelect();
 	//mGame = new Game();
 	//mCreateStage = new CreateStage();
@@ -23,6 +28,7 @@ Parent::Parent()
 
 Parent::~Parent() {
 	if (mMainMenu)delete mMainMenu;
+	if (mSubMenu)delete mSubMenu;
 	if (mStageSelect)delete mStageSelect;
 	if (mGame)delete mGame;
 	if (mCreateStage)delete mCreateStage;
@@ -32,66 +38,78 @@ Parent::~Parent() {
 
 
 void Parent::update() {
-	if (mMainMenu)mMainMenu->update(this);
-	if (mStageSelect)mStageSelect->update(this);
-	if (mGame)mGame->update(this);
-	if (mCreateStage)mCreateStage->update(this);
-	if (mGameResult)mGameResult->update(this);
-    if (mChangeWindowSize)mChangeWindowSize->update(this);
-	
-
 	switch (mNext) {
 	case SEQ_MAINMENU:
-		if (mStageSelect)delete mStageSelect;
-		if (mCreateStage)delete mCreateStage;
-		if (mGame)delete mGame;
-		if (mGameResult)delete mGameResult;
-		if (mChangeWindowSize)delete mChangeWindowSize;
+		SafeDelete();
 		mMainMenu = new MainMenu();
 		break;
+	case SEQ_SUBMENU:
+		SafeDelete();
+		mSubMenu = new SubMenu();
+		break;
 	case SEQ_STAGESELECT:
-		if (mMainMenu)delete mMainMenu;
-		if (mCreateStage)delete mCreateStage;
-		if (mGame)delete mGame;
-		if (mChangeWindowSize)delete mChangeWindowSize;
-		if (mGameResult)delete mGameResult;
+		SafeDelete();
 		mStageSelect = new StageSelect();
 		break;
 	case SEQ_GAME:
-		if (mMainMenu)delete mMainMenu;
-		if (mStageSelect)delete mStageSelect;
-		if (mCreateStage)delete mCreateStage;
-		if (mChangeWindowSize)delete mChangeWindowSize;
-		if (mGameResult)delete mGameResult;
+		SafeDelete();
 		mGame = new Game();
 		break;
 	case SEQ_CREATESTAGE:
-		if (mMainMenu)delete mMainMenu;
-		if (mStageSelect)delete mStageSelect;
-		if (mGame)delete mGame;
-		if (mChangeWindowSize)delete mChangeWindowSize;
-		if (mGameResult)delete mGameResult;
+		SafeDelete();
 		mCreateStage = new CreateStage();
 		break;
 	case SEQ_GAMERESULT:
-		if (mMainMenu)delete mMainMenu;
-		if (mStageSelect)delete mStageSelect;
-		if (mGame)delete mGame;
-		if (mChangeWindowSize)delete mChangeWindowSize;
-		if (mCreateStage)delete mCreateStage;
+		SafeDelete();
 		mGameResult = new GameResult();
 		break;
 	case SEQ_CHANGEWINDOWSIZE:
-		if (mMainMenu)delete mMainMenu;
-		if (mStageSelect)delete mStageSelect;
-		if (mGame)delete mGame;
-		if (mGameResult)delete mGameResult;
-		if (mCreateStage)delete mCreateStage;
+		SafeDelete();
 		mChangeWindowSize = new ChangeWindowSize();
 		break;
 	}
 	
 	mNext = SEQ_NONE;
+
+	if (mMainMenu)mMainMenu->update(this);
+	if (mSubMenu)mSubMenu->update(this);
+	if (mStageSelect)mStageSelect->update(this);
+	if (mGame)mGame->update(this);
+	if (mCreateStage)mCreateStage->update(this);
+	if (mGameResult)mGameResult->update(this);
+	if (mChangeWindowSize)mChangeWindowSize->update(this);
+
+}
+
+void Parent::SafeDelete() {
+	if (mMainMenu) {
+		delete mMainMenu;
+		mMainMenu = nullptr;
+	}
+	if (mSubMenu) {
+		delete mSubMenu;
+		mSubMenu = nullptr;
+	}
+	if (mStageSelect) {
+		delete mStageSelect;
+		mStageSelect = nullptr;
+	}
+	if (mGame) {
+		delete mGame;
+		mGame = nullptr;
+	}
+	if (mCreateStage) {
+		delete mCreateStage;
+		mCreateStage = nullptr;
+	}
+	if (mGameResult) {
+		delete mGameResult;
+		mGameResult = nullptr;
+	}
+	if (mChangeWindowSize) {
+		delete mChangeWindowSize;
+		mChangeWindowSize = nullptr;
+	}
 }
 
 void Parent::moveTo(SeqID next,SeqID pre) {
@@ -110,9 +128,6 @@ float GetScreenWidth() {
 	return (float)Scene::Width();
 }
 
-float GetMagnification() {
-	return (float)(Scene::Height() + Scene::Width()) / 4;
-}
 
 Vec2 ConvertToView(Vec2 pos) {
 	float X = pos.x, Y = pos.y;
@@ -137,7 +152,7 @@ Vec2 ConvertToWorld(Vec2 pos) {
 }
 
 void DrawCircle(Vec2 pos, float rad, ColorF color) {
-	Circle{ ConvertToView(pos),rad * GetMagnification()}.draw(color);
+	Circle{ ConvertToView(pos),rad * GetScreenHeight()}.draw(color);
 }
 
 void DrawRect(Vec2 pos, float width, float height, ColorF color) {
@@ -150,38 +165,38 @@ void DrawRoundRect(Vec2 pos, float width, float height, float round, ColorF colo
 	RoundRect(Arg::center(ConvertToView(pos)),
 		GetScreenWidth() * width / 2.0f,
 		GetScreenHeight() * height / 2.0f,
-		GetMagnification() * round).draw(color);
+		GetScreenHeight() * round).draw(color);
 }
 
 void DrawRectFrame(Vec2 pos, float width, float height, float innerlinewidth,float outerlinewidth, ColorF color) {
 	RectF(Arg::center(ConvertToView(pos)),
 		GetScreenWidth() * width / 2,
-		GetScreenHeight() * height / 2).drawFrame(innerlinewidth * GetMagnification(),outerlinewidth*GetMagnification(), color);
+		GetScreenHeight() * height / 2).drawFrame(innerlinewidth * GetScreenHeight(),outerlinewidth*GetScreenHeight(), color);
 }
 
 void DrawRoundRectFrame(Vec2 pos, float width, float height, float round, float innerlinewidth, float outerlinewidth, ColorF color) {
 	RoundRect(Arg::center(ConvertToView(pos)),
 		GetScreenWidth() * width / 2.0f,
 		GetScreenHeight() * height / 2.0f,
-		GetMagnification() * round).drawFrame(innerlinewidth * GetMagnification(), outerlinewidth * GetMagnification(), color);
+		GetScreenHeight() * round).drawFrame(innerlinewidth * GetScreenHeight(), outerlinewidth * GetScreenHeight(), color);
 }
 
 void DrawSquareDotLine(Vec2 pos1, Vec2 pos2, float linewidth, ColorF color) {
 	Line{ConvertToView(pos1),ConvertToView(pos2)}
-	.draw(LineStyle::SquareDot, linewidth * GetMagnification(),color);
+	.draw(LineStyle::SquareDot, linewidth * GetScreenHeight(),color);
 }
 
 void DrawLine(Vec2 pos1, Vec2 pos2, float lineWidth, ColorF color) {
 	Line{ ConvertToView(pos1),ConvertToView(pos2) }
-	.draw(lineWidth * GetMagnification(), color);
+	.draw(lineWidth * GetScreenHeight(), color);
 }
 
 void DrawArrow(Vec2 from, Vec2 to, float width, Vec2 headSize,ColorF color) {
-	Shape2D::Arrow(ConvertToView(from), ConvertToView(to), GetMagnification() * width, ConvertToView(headSize)).draw(color);
+	Shape2D::Arrow(ConvertToView(from), ConvertToView(to), GetScreenHeight() * width, ConvertToView(headSize)).draw(color);
 }
 
 void DrawTriangle(Vec2 pos, float length,float deg,ColorF color) {
-	Triangle{ ConvertToView(pos),length*GetMagnification(),deg}.draw(color);
+	Triangle{ ConvertToView(pos),length*GetScreenHeight(),deg}.draw(color);
 }
 
 void DrawTriangle_pos(Vec2 pos0, Vec2 pos1, Vec2 pos2,ColorF color0,ColorF color1,ColorF color2) {
@@ -189,7 +204,7 @@ void DrawTriangle_pos(Vec2 pos0, Vec2 pos1, Vec2 pos2,ColorF color0,ColorF color
 }
 
 void DrawPlus(float height, float width, Vec2 pos, float angle,ColorF color) {
-	Shape2D::Plus(height * GetMagnification(), width * GetMagnification(), ConvertToView(pos), angle).draw(color);
+	Shape2D::Plus(height * GetScreenHeight(), width * GetScreenHeight(), ConvertToView(pos), angle).draw(color);
 }
 
 void DrawGradiationRect(Vec2 pos, float width, float height, ColorF top, ColorF bottom) {
@@ -213,7 +228,7 @@ RectF GetViewRect(Vec2 pos, float width, float height) {
 }
 
 Circle GetViewCircle(Vec2 pos, float rad) {
-	return Circle{ ConvertToView(pos),GetMagnification() * rad };
+	return Circle{ ConvertToView(pos),GetScreenHeight() * rad };
 }
 
 

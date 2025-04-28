@@ -7,8 +7,10 @@ void Main()
 {
 	
 	Parent* mParent = 0;
-	Window::SetStyle(WindowStyle::Sizable);
-	Scene::SetResizeMode(ResizeMode::Keep);
+	//Scene::Resize(16*60, 9*60);
+	Scene::Resize(16 * 60,  9 * 60);
+	Window::Resize(16 * 60, 9 * 60);
+	Window::SetStyle(WindowStyle::Fixed);
 
 
 	Scene::SetBackground({ 1,1,1 });

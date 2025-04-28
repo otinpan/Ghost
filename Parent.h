@@ -6,6 +6,7 @@ class Parent {
 public:
 	enum SeqID {
 		SEQ_MAINMENU,
+		SEQ_SUBMENU,
 		SEQ_STAGESELECT,
 		SEQ_GAME,
 		SEQ_CREATESTAGE,
@@ -21,6 +22,7 @@ public:
 	void moveTo(SeqID next, SeqID pre);
 
 	class MainMenu*& GetMainMenu() { return mMainMenu; }
+	class SubMenu*& GetSubMenu() { return mSubMenu; }
 	class StageSelect*& GetStageSelect() { return mStageSelect; }
 	class Game*& GetGame() { return mGame; }
 	class CreateStage*& GetCreateStage() { return mCreateStage; }
@@ -33,6 +35,7 @@ public:
 
 private:
 	class MainMenu* mMainMenu;
+	class SubMenu* mSubMenu;
 	class StageSelect* mStageSelect;
 	class Game* mGame;
 	class CreateStage* mCreateStage;
@@ -42,6 +45,7 @@ private:
 	SeqID mNext;
 	SeqID mPre;
 
+	void SafeDelete();
 	
 };
 
@@ -55,7 +59,6 @@ void DrawRectFrame(Vec2 pos, float width, float height, float innerlinewidth,flo
 void DrawRoundRectFrame(Vec2 pos, float width, float height, float round, float innerline, float outerline, ColorF color);
 void DrawSquareDotLine(Vec2 pos1, Vec2 pos2, float linewidth, ColorF color);
 void DrawLine(Vec2 pos1, Vec2 pos2, float lineWidth, ColorF color);
-float GetMagnification();
 float GetScreenHeight();
 float GetScreenWidth();
 void DrawArrow(Vec2 from, Vec2 to, float width, Vec2 headSize,ColorF color);
