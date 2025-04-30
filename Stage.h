@@ -73,6 +73,10 @@ public:
 private:
 	class CreateStage* mCreateStage;
 
+	void SaveStage();
+	void LoadStage();
+	void SearchCanBeGone(std::vector<std::vector<bool>> &can_be_gone,std::pair<int,int> inint_pos);
+
 	int mVerticalSize;//要素数(縦)
 	int mSideSize;//要素数(横)
 	float mHeight;//全体の高さ
@@ -100,6 +104,10 @@ private:
 	RectF mStageRect;
 	RectF mDeleteRect;
 	std::vector<std::vector<bool>> mCanBeGone;
+	std::vector<std::vector<bool>> mGhostCanBeGone;
+	std::vector<std::vector<bool>> mEscapee1CanBeGone;
+	std::vector<std::vector<bool>> mEscapee2CanBeGone;
+	std::vector<std::vector<bool>> mEscapee3CanBeGone;
 	std::vector<int> di = {0, 0, 1, -1};
 	std::vector<int> dj = { 1,-1,0,0 };
 

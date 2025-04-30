@@ -425,32 +425,32 @@ RectF Stage::GetViewStageRect() {
 
 bool Stage::EndCreateStage() {
 	std::pair<int,int>
-		Ghost=std::pair(-1,-1),
-		Escapee1 = std::pair(-1, -1),
-		Escapee2 = std::pair(-1, -1),
-		Escapee3 = std::pair(-1, -1);
+		initGhost=std::pair(-1,-1),
+		initEscapee1 = std::pair(-1, -1),
+		initEscapee2 = std::pair(-1, -1),
+		initEscapee3 = std::pair(-1, -1);
 	for (auto& row : mStageObjects) {
 		for (auto& stageObject : row) {
 			if (stageObject == 0)continue;
 			switch (stageObject->GetAttribute()) {
 			case StageObject::Attribute::Ghost:
-				Ghost = stageObject->GetIteration();
+				initGhost = stageObject->GetIteration();
 				break;
 			case StageObject::Attribute::Escapee1:
-				Escapee1 = stageObject->GetIteration();
+				initEscapee1 = stageObject->GetIteration();
 				break;
 			case StageObject::Attribute::Escapee2:
-				Escapee2 = stageObject->GetIteration();
+				initEscapee2 = stageObject->GetIteration();
 				break;
 			case StageObject::Attribute::Escapee3:
-				Escapee3 = stageObject->GetIteration();
+				initEscapee3 = stageObject->GetIteration();
 				break;
 			}
 		}
 	}
 
 	
-	if (Ghost == pair(-1, -1) || Escapee1 == pair(-1, -1) || Escapee2 == pair(-1, -1) || Escapee3 == pair(-1, -1)) {
+	if (initGhost == pair(-1, -1) || initEscapee1 == pair(-1, -1) || initEscapee2 == pair(-1, -1) || initEscapee3 == pair(-1, -1)) {
 		mIsSaveError = true;
 		return false;
 	}
@@ -463,33 +463,19 @@ bool Stage::EndCreateStage() {
 		}
 	}
 
-	queue<pair<int, int>> q;
-	q.emplace(Escapee1);
-	while (!q.empty()) {
-		int ni = q.front().first, nj = q.front().second;
-		q.pop();
-		if (mCanBeGone[ni][nj]) {
-			continue;
-		}
-		mCanBeGone[ni][nj] = true;
-		for (int k = 0; k < 4; k++) {
-			int nxi = ni + di[k], nxj = nj + dj[k];
-			if (nxi < 0 || nxi >= mVerticalSize || nxj < 0 || nxj >= mSideSize)continue;
-			if ((mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::Brock)
-				||(mStageObjects[nxi][nxj]!=0&&mStageObjects[nxi][nxj]->GetAttribute()==StageObject::Attribute::Wall)
-				||(mStageObjects[nxi][nxj]!=0&&mStageObjects[nxi][nxj]->GetAttribute()==StageObject::Attribute::Patrol)
-				|| (mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::TreasureChest))continue;
-			q.push(pair(nxi, nxj));
-		}
-	}
+	//到達可能なところをmCanBeGoneに保存
+	SearchCanBeGone(mGhostCanBeGone, initGhost);
+	SearchCanBeGone(mEscapee1CanBeGone, initEscapee1);
+	SearchCanBeGone(mEscapee2CanBeGone, initEscapee2);
+	SearchCanBeGone(mEscapee3CanBeGone, initEscapee3);
 
 	
-	
+	//Attribute  Clockwise  PatrolRange  BatterySize  Treasure  Speed  CanBeGone
 	vector<vector<tuple<StageObject::Attribute, int, int,StageObject::BatterySize,StageObject::Treasure,float,bool>>>
 		mDetails(mVerticalSize, vector<tuple<StageObject::Attribute, int, int,StageObject::BatterySize,StageObject::Treasure,float, bool>>
 			(mSideSize,tuple(StageObject::Attribute::None,0,0,StageObject::BatterySize::Zero,StageObject::Treasure::Empty,0.0f,false)));
-	//Attribute  Clockwise  PatrolRange  BatterySize  Treasure  Speed  CanBeGone
 
+	//保存
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
 			if (mStageObjects[i][j] == 0)mDetails[i][j] = tuple(StageObject::Attribute::None, 0, 0,StageObject::BatterySize::Zero,StageObject::Treasure::Empty,0.0f, mCanBeGone[i][j]);
@@ -497,13 +483,15 @@ bool Stage::EndCreateStage() {
 		}
 	}
 
+	//Candle
 	vector<tuple<bool,Vec2, float>> mCandleDetails(mCandles.size(), tuple(false,Vec2(0, 0), 0.0f));
+	//保存
 	for (int i = 0; i < mCandles.size(); i++) {
 		if (mCandles[i] == 0)continue;
 		else mCandleDetails[i] = tuple(true, mCandles[i]->GetPosition(),mCandles[i]-> GetLightRad());
 	}
 
-	
+	//バイナリファイルに保存
     StageName = U"Stage1";
 	Serializer<BinaryWriter> writer{ U"Stage/"+StageName+U"/"+U"Data.bin"};
 	if (not writer) {
@@ -522,6 +510,30 @@ bool Stage::EndCreateStage() {
 	writer(mDetails);
 	writer(mCandleDetails);
 	return true;
+}
+
+void Stage::SearchCanBeGone(vector<vector<bool>>& can_be_gone, pair<int, int> init_pos) {
+	queue<pair<int, int>> q;
+	q.emplace(init_pos);
+	while (!q.empty()) {
+		int ni = q.front().first, nj = q.front().second;
+		q.pop();
+		if (can_be_gone[ni][nj])continue;
+		can_be_gone[ni][nj] = true;
+		for (int k = 0; k<4; k++) {
+			int nxi = ni + di[k], nxj=nj + dj[k];
+			if ((mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::Brock)
+				|| (mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::Wall)
+				|| (mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::Patrol)
+				|| (mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::TreasureChest))continue;
+			q.push(pair(nxi, nxj));
+		}
+	}
+
+}
+
+void Stage::SaveStage() {
+	
 }
 
 
@@ -621,6 +633,10 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 
 	int mGoal = mGoalCandidates.choice();
 	mGoalIteration = pair(mGoal / mVerticalSize, mGoal % mSideSize);
+}
+
+void Stage::LoadStage() {
+
 }
 
 //Gameの終了判定
