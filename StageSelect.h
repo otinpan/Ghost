@@ -22,6 +22,7 @@ private:
 	void ProcessInput();
 	void UpdateStageSelect_Game();
 	void UpdateStageSelect_CreateStage();
+	bool InitializeStages();   //Initialize mStageNames
 
 	InputGroup inputUp;
 	InputGroup inputDown;
@@ -41,7 +42,8 @@ private:
 
 
 	vector<vector<string>> mStageNames; //Stageの名前
-	vector<vector<Vec2>> mStagePoses; //Stageの位置
+	vector<vector<bool>> mIsInStage;  //Stageが入っているか
+	vector<vector<Vec2>> mStagePoses; //Stageの位置(中心座標)
 	int mVerticalSize;
 	int mSideSize;
 	int mDisplayVerticalSize;

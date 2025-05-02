@@ -17,11 +17,11 @@ Parent::Parent()
 	,mStageSelect(0)
 	, mNext(SEQ_NONE)
 {
-	mMainMenu = new MainMenu();
+	//mMainMenu = new MainMenu();
 	//mSubMenu = new SubMenu();
 	//mStageSelect=new StageSelect();
 	//mGame = new Game();
-	//mCreateStage = new CreateStage();
+	mCreateStage = new CreateStage();
 	//mGameResult = new GameResult();
 	//mChangeWindowSize=new ChangeWindowSize();
 }

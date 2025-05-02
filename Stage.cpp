@@ -83,6 +83,26 @@ void Stage::Initialize_CreateStage(CreateStage* createStage) {
 		row.resize(mSideSize);
 	}
 
+	mGhostCanBeGone.resize(mVerticalSize);
+	for (auto& row : mGhostCanBeGone) {
+		row.resize(mSideSize);
+	}
+
+	mEscapee1CanBeGone.resize(mVerticalSize);
+	for (auto& row : mEscapee1CanBeGone) {
+		row.resize(mSideSize);
+	}
+
+	mEscapee2CanBeGone.resize(mVerticalSize);
+	for (auto& row : mEscapee2CanBeGone) {
+		row.resize(mSideSize);
+	}
+
+	mEscapee3CanBeGone.resize(mVerticalSize);
+	for (auto& row : mEscapee3CanBeGone) {
+		row.resize(mSideSize);
+	}
+
 	
 
 	//mRectsの初期設定
@@ -460,6 +480,10 @@ bool Stage::EndCreateStage() {
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
 			mCanBeGone[i][j] = false;
+			mGhostCanBeGone[i][j] = false;
+			mEscapee1CanBeGone[i][j] = false;
+			mEscapee2CanBeGone[i][j] = false;
+			mEscapee3CanBeGone[i][j] = false;
 		}
 	}
 
@@ -469,46 +493,18 @@ bool Stage::EndCreateStage() {
 	SearchCanBeGone(mEscapee2CanBeGone, initEscapee2);
 	SearchCanBeGone(mEscapee3CanBeGone, initEscapee3);
 
-	
-	//Attribute  Clockwise  PatrolRange  BatterySize  Treasure  Speed  CanBeGone
-	vector<vector<tuple<StageObject::Attribute, int, int,StageObject::BatterySize,StageObject::Treasure,float,bool>>>
-		mDetails(mVerticalSize, vector<tuple<StageObject::Attribute, int, int,StageObject::BatterySize,StageObject::Treasure,float, bool>>
-			(mSideSize,tuple(StageObject::Attribute::None,0,0,StageObject::BatterySize::Zero,StageObject::Treasure::Empty,0.0f,false)));
-
-	//保存
+	int cnt = 0;
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
-			if (mStageObjects[i][j] == 0)mDetails[i][j] = tuple(StageObject::Attribute::None, 0, 0,StageObject::BatterySize::Zero,StageObject::Treasure::Empty,0.0f, mCanBeGone[i][j]);
-			else mDetails[i][j] = tuple(mStageObjects[i][j]->GetAttribute(), mStageObjects[i][j]->GetClockwise(), mStageObjects[i][j]->GetPatrolRange(),mStageObjects[i][j]->GetBatterySize(),mStageObjects[i][j]->GetTreasure(),mStageObjects[i][j]->GetSpeed(),mCanBeGone[i][j]);
+			if (mGhostCanBeGone[i][j] && mEscapee1CanBeGone[i][j] && mEscapee2CanBeGone[i][j] && mEscapee3CanBeGone[i][j]) {
+				cnt++;
+				mCanBeGone[i][j] = true;
+			}
 		}
 	}
+	if (cnt < 3)return false;
 
-	//Candle
-	vector<tuple<bool,Vec2, float>> mCandleDetails(mCandles.size(), tuple(false,Vec2(0, 0), 0.0f));
-	//保存
-	for (int i = 0; i < mCandles.size(); i++) {
-		if (mCandles[i] == 0)continue;
-		else mCandleDetails[i] = tuple(true, mCandles[i]->GetPosition(),mCandles[i]-> GetLightRad());
-	}
-
-	//バイナリファイルに保存
-    StageName = U"Stage1";
-	Serializer<BinaryWriter> writer{ U"Stage/"+StageName+U"/"+U"Data.bin"};
-	if (not writer) {
-		throw Error{ U"Failed to open file" };
-	}
-	//画像の保存
-	ScreenCapture::RequestCurrentFrame();
-	Image image;
-	ScreenCapture::GetFrame(image);
-	Vec2 LeftTop = ConvertToView(Vec2(mLeft, mUp));
-	Image image2= image.clipped(Rect(LeftTop.x,LeftTop.y,
-		(int32)(mWidth / 2.0 * GetScreenWidth()), (int32)(mHeight / 2.0 * GetScreenHeight())));
-
-	image2.save(U"Stage/"+StageName+U"/" + U"Image.png");
-
-	writer(mDetails);
-	writer(mCandleDetails);
+	SaveStage();
 	return true;
 }
 
@@ -522,6 +518,7 @@ void Stage::SearchCanBeGone(vector<vector<bool>>& can_be_gone, pair<int, int> in
 		can_be_gone[ni][nj] = true;
 		for (int k = 0; k<4; k++) {
 			int nxi = ni + di[k], nxj=nj + dj[k];
+			if (nxi < 0 || nxi >= mVerticalSize || nxj < 0 || nxj >= mSideSize)continue;
 			if ((mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::Brock)
 				|| (mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::Wall)
 				|| (mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::Patrol)
@@ -532,8 +529,62 @@ void Stage::SearchCanBeGone(vector<vector<bool>>& can_be_gone, pair<int, int> in
 
 }
 
-void Stage::SaveStage() {
-	
+bool Stage::SaveStage() {
+	//Attribute  Clockwise  PatrolRange  BatterySize  Treasure  Speed  CanBeGone
+	vector<vector<tuple<StageObject::Attribute, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>
+		mDetails(mVerticalSize, vector<tuple<StageObject::Attribute, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>
+			(mSideSize, tuple(StageObject::Attribute::None, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, false)));
+
+	//保存
+	for (int i = 0; i < mVerticalSize; i++) {
+		for (int j = 0; j < mSideSize; j++) {
+			if (mStageObjects[i][j] == 0)mDetails[i][j] = tuple(StageObject::Attribute::None, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, mCanBeGone[i][j]);
+			else mDetails[i][j] = tuple(mStageObjects[i][j]->GetAttribute(), mStageObjects[i][j]->GetClockwise(), mStageObjects[i][j]->GetPatrolRange(), mStageObjects[i][j]->GetBatterySize(), mStageObjects[i][j]->GetTreasure(), mStageObjects[i][j]->GetSpeed(), mCanBeGone[i][j]);
+		}
+	}
+
+	//Candle
+	vector<tuple<bool, Vec2, float>> mCandleDetails(mCandles.size(), tuple(false, Vec2(0, 0), 0.0f));
+	//保存
+	for (int i = 0; i < mCandles.size(); i++) {
+		if (mCandles[i] == 0)continue;
+		else mCandleDetails[i] = tuple(true, mCandles[i]->GetPosition(), mCandles[i]->GetLightRad());
+	}
+
+	//バイナリファイルに保存
+	StageName = U"Stage1";
+	Serializer<BinaryWriter> writer{ U"Stage/" + StageName + U"/" + U"Data.bin" };
+
+	//画像の保存
+	ScreenCapture::RequestCurrentFrame();
+	Image image; 
+	ScreenCapture::GetFrame(image);
+	Vec2 LeftTop = ConvertToView(Vec2(mLeft, mUp));
+	Image image2 = image.clipped(Rect(LeftTop.x, LeftTop.y,
+		(int32)(mWidth / 2.0 * GetScreenWidth()), (int32)(mHeight / 2.0 * GetScreenHeight())));
+
+
+	image2.save(U"Stage/" + StageName + U"/" + U"Image.png");
+	writer(mDetails); 
+	writer(mCandleDetails);
+	//RegisterStage();
+	return true;
+}
+
+bool Stage::RegisterStage() {
+	vector<String> stageNames;
+	Deserializer<BinaryReader> reader{U"Stage/StageNames.bin"};
+	if (reader) {
+		reader(stageNames);
+	}
+	stageNames.push_back(StageName);
+	for (auto& s : stageNames) {
+		Print << s;
+	}
+
+	Serializer<BinaryWriter> writer{U"Stage/StageNames.bin"};
+	writer(stageNames);
+	return true;
 }
 
 
@@ -635,9 +686,6 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 	mGoalIteration = pair(mGoal / mVerticalSize, mGoal % mSideSize);
 }
 
-void Stage::LoadStage() {
-
-}
 
 //Gameの終了判定
 void Stage::Update_Game(float deltaTime) {

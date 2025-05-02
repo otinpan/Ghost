@@ -47,6 +47,13 @@ void StageSelect::Initialize() {
 		}
 	}
 
+	mIsInStage.resize(mVerticalSize);
+	for (auto& row : mIsInStage) {
+		row.resize(mSideSize);
+	}
+
+
+
 	mStageLeft = -0.9;
 	mStageRight = 0.9;
 	mStageUp = 0.9;
@@ -83,6 +90,9 @@ void StageSelect::Initialize() {
 	mDownLine = mDisplayVerticalSize-1;
 }
 
+bool StageSelect::InitializeStages() {
+	return true;
+}
 
 void StageSelect::update(Parent* parent) {
 	if (mIsRunning) {

@@ -49,7 +49,6 @@ private:
 	
 };
 
-
 Vec2 ConvertToView(Vec2 pos);
 Vec2 ConvertToWorld(Vec2 pos);
 void DrawCircle(Vec2 pos, float rad, ColorF color);
@@ -69,3 +68,4 @@ void DrawPlus(float hegiht, float width, Vec2 pos, float angle, ColorF color);
 void DrawGradiationRect(Vec2 pos, float width, float height, ColorF top, ColorF bottom);
 RectF GetViewRect(Vec2 pos, float width, float height);
 Circle GetViewCircle(Vec2 pos, float rad);
+

@@ -73,8 +73,8 @@ public:
 private:
 	class CreateStage* mCreateStage;
 
-	void SaveStage();
-	void LoadStage();
+	bool SaveStage();
+	bool RegisterStage();
 	void SearchCanBeGone(std::vector<std::vector<bool>> &can_be_gone,std::pair<int,int> inint_pos);
 
 	int mVerticalSize;//要素数(縦)
