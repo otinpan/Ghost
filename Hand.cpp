@@ -138,7 +138,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 				GetCreateStage()->GetStageMenu()->GetEndRectHeight()))) {
 			GetCreateStage()->GetStageMenu()->SetIsEndOver(true);
 			if (inputChoose.down()) {
-				GetCreateStage()->GetStage()->EndCreateStage();
+				GetCreateStage()->OpenTextMenu();
 			}
 		}
 		else {

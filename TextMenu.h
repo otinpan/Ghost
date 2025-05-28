@@ -1,13 +1,14 @@
 ﻿#pragma once
 #include<Siv3D.hpp>
 #include"Parent.h"
+#include"CreateStage.h"
 
 class TextMenu {
 public:
 	TextMenu(String text);
 	~TextMenu();
 
-	void Initialize();
+	void Initialize_CreateStage(class CreateStage* createStage);
 
 	void Update(float deltaTime);
 	void Draw(float fontSize,const Vec2& posDrawAt) const;
@@ -23,6 +24,8 @@ public:
 	bool editing() const { return TextInput::GetEditingText() || mTimerNotEditing.sF() < 0.5f; }
 
 private:
+	class CreateStage* mCreateStage;
+
 	bool mIsTextDecide;
 	String mText;
 	size_t mCursorPos;
@@ -40,6 +43,8 @@ private:
 	ColorF EditingTextBgColor;
 	ColorF HelpTextColor{ Palette::Gray };
 
+	//End edit
+	bool EndEdit_CreateStage();
 	
 	
 	FontAsset textboxFont()const {

@@ -8,12 +8,17 @@ TextMenu::TextMenu(String text)
 	, mCursorPos(text.size())
 	, mTimerNotEditing(StartImmediately::Yes)
 {
-	Initialize();
+
 }
 
-TextMenu::~TextMenu(){}
+TextMenu::~TextMenu(){
+	if (mCreateStage) {
+		delete mCreateStage;
+		mCreateStage = 0;
+	}
+}
 
-void TextMenu::Initialize(){
+void TextMenu::Initialize_CreateStage(CreateStage* createstage){
 	mTextRectPos = Vec2(0, 0.3);
 	mTextRectWidth = 1.5;
 	mTextRectHeight = 0.3;
@@ -29,6 +34,8 @@ void TextMenu::Initialize(){
 	FontSize = 0.12 * GetScreenHeight();
 	FontAsset::Register(U"text", FontMethod::MSDF, FontSize, Typeface::Medium);
 	HelpFont =Font{ FontMethod::MSDF,FontSize/2,Typeface::Light};
+
+	mCreateStage = createstage;
 	
 }
 
@@ -70,6 +77,24 @@ void TextMenu::Update(float deltaTime) {
 	if (KeySpace.pressed() || KeySpace.up())return;
 	mCursorPos = TextInput::UpdateText(mText, mCursorPos, TextInputMode::AllowBackSpaceDelete);
 
+	//終了
+	/////////////////////////////////////
+
+}
+
+bool TextMenu::EndEdit_CreateStage() {
+	std::vector<String> stageNames;
+	Deserializer<BinaryReader> reader{ U"Stage/StageNames.bin" };
+	if (reader) {
+		reader(stageNames);
+	}
+	//もし名前が存在するなら
+	auto iter = std::find(stageNames.begin(), stageNames.end(), mText);
+	if (*iter == mText) {
+		return false;
+	}
+	mCreateStage->SetStageName(mText);
+	mCreateStage->CloseTextMenu();
 }
 
 

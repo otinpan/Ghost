@@ -40,6 +40,9 @@ public:
 	void OpenTextMenu();
 	void CloseTextMenu();
 
+	void SetStageName(String stagename) { mStageName = stagename; }
+	String GetStageName() { return mStageName; }
+
 
 	class Hand* &GetHand() { return mHand; }
 	std::vector<class StageObject*>& GetStageObjects() { return mStageObjects; }
@@ -79,6 +82,7 @@ private:
 
 	Parent::SeqID mSeqID;
 
+	String mStageName;
 
 	class Hand* mHand;
 	class StageObject* mStageObject;

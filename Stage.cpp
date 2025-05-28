@@ -530,6 +530,7 @@ void Stage::SearchCanBeGone(vector<vector<bool>>& can_be_gone, pair<int, int> in
 }
 
 bool Stage::SaveStage() {
+
 	//Attribute  Clockwise  PatrolRange  BatterySize  Treasure  Speed  CanBeGone
 	vector<vector<tuple<StageObject::Attribute, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>
 		mDetails(mVerticalSize, vector<tuple<StageObject::Attribute, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>
@@ -552,7 +553,7 @@ bool Stage::SaveStage() {
 	}
 
 	//バイナリファイルに保存
-	StageName = U"Stage1";
+	StageName = RegisterStageName();        //Stageの名前
 	Serializer<BinaryWriter> writer{ U"Stage/" + StageName + U"/" + U"Data.bin" };
 
 	//画像の保存
@@ -567,24 +568,21 @@ bool Stage::SaveStage() {
 	image2.save(U"Stage/" + StageName + U"/" + U"Image.png");
 	writer(mDetails); 
 	writer(mCandleDetails);
-	//RegisterStage();
 	return true;
 }
 
-bool Stage::RegisterStage() {
+String Stage::RegisterStageName() {
 	vector<String> stageNames;
 	Deserializer<BinaryReader> reader{U"Stage/StageNames.bin"};
 	if (reader) {
 		reader(stageNames);
 	}
-	stageNames.push_back(StageName);
-	for (auto& s : stageNames) {
-		Print << s;
-	}
+	stageNames.push_back(GetCreateStage()->GetStageName());
+	
 
 	Serializer<BinaryWriter> writer{U"Stage/StageNames.bin"};
 	writer(stageNames);
-	return true;
+	return GetCreateStage()->GetStageName();
 }
 
 

@@ -112,19 +112,8 @@ void CreateStage::LoadData() {
 	mStage->Initialize_CreateStage(this);
 	mStageMenu = new StageMenu();
 	mStageMenu->Initialize_CreateStage(this);
-	/*mBrock = new Brock(Vec2({0.0f,-0.7f}), mStage->GetRectWidth()
-		, mStage->GetRectHeight());
-	mBrock->InitializeStageObject_CreateStage(this);
-	mDoor = new Door(Vec2{ 0.4f,-0.7f }, mStage->GetRectWidth()
-		,mStage->GetRectHeight());
-	mDoor->InitializeStageObject_CreateStage(this);
-	mPatrol = new Patrol(Vec2{ 0.2f,-0.7f }, mStage->GetRectWidth()
-		, mStage->GetRectHeight());
-	mPatrol->InitializeStageObject_CreateStage(this);
-	mCandle = new Candle(Vec2{ -0.2f,-0.7f }, mStage->GetRectWidth() / 3
-	, mStage->GetRectHeight() / 3, mStage->GetRectHeight()/6);
-	mCandle->InitializeStageObject_CreateStage(this);*/
-	
+
+	mStageName = U"StageName";
 }
 
 void CreateStage::UnloadData() {
@@ -252,11 +241,13 @@ void CreateStage::RemoveStageObject(StageObject* stageobject) {
 }
 
 void CreateStage::OpenTextMenu() {
-	mTextMenu = std::make_unique<TextMenu>(U"Name");
+	mTextMenu = std::make_unique<TextMenu>(mStageName);
+	mTextMenu->Initialize_CreateStage(this);
 }
 
 void CreateStage::CloseTextMenu() {
 	if(mTextMenu)mTextMenu.reset();
+	mStage->EndCreateStage();
 }
 
 

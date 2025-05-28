@@ -21,6 +21,7 @@ public:
 	void Initialize();
 	void Shutdown();
 
+
 	void moveTo(Parent* parent, Parent::SeqID id);
 	void SetSeqID(Parent::SeqID id) { mSeqID = id; }
 
