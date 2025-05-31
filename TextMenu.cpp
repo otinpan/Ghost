@@ -19,19 +19,23 @@ TextMenu::~TextMenu(){
 }
 
 void TextMenu::Initialize_CreateStage(CreateStage* createstage){
+	mBackgroundRectPos = Vec2(0, 0);
+	mBackgroundRectWidth = (float)1.7;
+	mBackgroundRectHeight = (float)1.5;
+	mBackgroundRectColor = ColorF(0);
 	mTextRectPos = Vec2(0, 0.3);
 	mTextRectWidth = 1.5;
 	mTextRectHeight = 0.3;
-	mTextRectColor = ColorF(0, 0.9);
+	mTextRectColor = ColorF(1);
 	mTextColor=ColorF( 0.95 );
 	mCursorWidth = 0.005;
 	mCursorColor = ColorF(0.8);
 	EditingTextColor = ColorF{ Palette::White };
 	EditingTextBgColor = ColorF{ Palette::Blue,0.8 };
 	HelpTextColor = ColorF{ Palette::Gray };
-	MaxTextSize = 15;
+	MaxTextSize = 20;
 
-	FontSize = 0.12 * GetScreenHeight();
+	FontSize = 0.09 * GetScreenHeight();
 	FontAsset::Register(U"text", FontMethod::MSDF, FontSize, Typeface::Medium);
 	HelpFont =Font{ FontMethod::MSDF,FontSize/2,Typeface::Light};
 
@@ -40,7 +44,6 @@ void TextMenu::Initialize_CreateStage(CreateStage* createstage){
 }
 
 void TextMenu::Update(float deltaTime) {
-
 	if (TextInput::GetEditingText()) {
 		mTimerNotEditing.reset();
 	}
@@ -79,6 +82,9 @@ void TextMenu::Update(float deltaTime) {
 
 	//終了
 	/////////////////////////////////////
+	if (KeyEnter.pressed()) {
+		EndEdit_CreateStage();
+	}
 
 }
 
@@ -98,10 +104,14 @@ bool TextMenu::EndEdit_CreateStage() {
 }
 
 
-void TextMenu::Draw(float fontSize, const Vec2& posDrawAt)const {
-	DrawRect(mTextRectPos, mTextRectWidth, mTextRectHeight, mTextRectColor);
+void TextMenu::Draw(float fontSize)const {
+	DrawRoundRect(mBackgroundRectPos, mBackgroundRectWidth, mBackgroundRectHeight,mBackgroundRectWidth/50.0,
+		mBackgroundRectColor);
+	DrawRectFrame(mTextRectPos, mTextRectWidth, mTextRectHeight,0,0.001, mTextRectColor);
 
-	const RectF textRegion = textboxFont()(mText).region(fontSize, posDrawAt.x, posDrawAt.y-mTextRectHeight/6);
+	Vec2 mPos = ConvertToView(Vec2(mTextRectPos.x - mTextRectWidth / 2.1, mTextRectPos.y-mTextRectHeight/1.8));
+	const RectF textRegion = textboxFont()(mText)
+		.region(fontSize,  mPos.x, mPos.y );
 
 
 	//テキストを1文字ずつ描画
@@ -113,28 +123,27 @@ void TextMenu::Draw(float fontSize, const Vec2& posDrawAt)const {
 		};
 
 		for (auto [charIndex, glyph] : Indexed(textboxFont().getGlyphs(mText))) {
-			const auto glyphRect = glyph.texture.draw(ConvertToView(penPos.movedBy(0, textRegion.h * 3 / 2)) + glyph.getOffset(), mTextColor);
+			const auto glyphRect = glyph.texture.draw(penPos.movedBy(0, -textRegion.h * 3 / 2) + glyph.getOffset(), mTextColor);
 			if (mCursorPos == charIndex) {
 				CursorPos = penPos;
 			}
-			penPos.x += glyph.xAdvance * 2.0 / GetScreenWidth();
+			penPos.x += glyph.xAdvance;
 		}
 	}
-
-
+	
 	if (mCursorPos == mText.size()) {
 		CursorPos = penPos;
 	}
 
 	//未変換のテキストを描画
 	if (const auto editingText = TextInput::GetEditingText(); editingText) {
-		textboxFont()(editingText).region(ConvertToView(CursorPos.movedBy(0, textRegion.h * 1.5))).draw(EditingTextBgColor);
-		textboxFont()(editingText).draw(ConvertToView(CursorPos.movedBy(0, textRegion.h * 1.5)), EditingTextColor);
+		textboxFont()(editingText).region(CursorPos.movedBy(0, -textRegion.h * 1.5)).draw(EditingTextBgColor);
+		textboxFont()(editingText).draw(CursorPos.movedBy(0, -textRegion.h * 1.5), EditingTextColor);
 	}
 
 	//カーソル
-	if(CursorPos.x<=mTextRectPos.x+mTextRectWidth/2.0f)Line{ ConvertToView(CursorPos.movedBy(0,-textRegion.h * 0.5)),ConvertToView(CursorPos.movedBy(0,textRegion.h)) }.draw(mCursorWidth * GetScreenWidth(), mCursorColor);
-
+	Line{ CursorPos.movedBy(0,-textRegion.h/3.0),CursorPos.movedBy(0,-textRegion.h*1.1) }.draw(mCursorWidth * GetScreenWidth(), mCursorColor);
+	
 	//操作説明
 	HelpFont(U"[Enter],[Escape]キーで決定").drawAt(ConvertToView(mTextRectPos.movedBy(0, -mTextRectHeight)), HelpTextColor);
 	

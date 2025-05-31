@@ -126,7 +126,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 
 		}
 
-		//End
+		//End CreateStage
 		if (GetCreateStage()->GetStage()->GetIsSaveError()) {
 			if (inputChoose.down()) {
 				GetCreateStage()->GetStage()->SetIsSaveError(false);

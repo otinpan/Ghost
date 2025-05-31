@@ -38,9 +38,7 @@ void GameResult::UpdateGameResult() {
 }
 
 void GameResult::draw() {
-	if (mTextMenu) {
-		mTextMenu->Draw(0.06, mTextMenu->GetTextRectPos().movedBy(-mTextMenu->GetTextRectWidth()/2*0.9,0));
-	}
+
 }
 
 void GameResult::Shutdown() {

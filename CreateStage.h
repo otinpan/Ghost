@@ -90,7 +90,7 @@ private:
 	std::vector<class Candle*> mCandles;
 	class Stage* mStage;
 	class StageMenu* mStageMenu;
-	std::unique_ptr<TextMenu> mTextMenu;
+	std::unique_ptr<class TextMenu> mTextMenu;
 	class Brock* mBrock;
 	class Door* mDoor;
 	class Patrol* mPatrol;

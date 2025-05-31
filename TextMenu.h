@@ -11,7 +11,7 @@ public:
 	void Initialize_CreateStage(class CreateStage* createStage);
 
 	void Update(float deltaTime);
-	void Draw(float fontSize,const Vec2& posDrawAt) const;
+	void Draw(float fontSize) const;
 
 	bool GetIsTextDecide() { return mIsTextDecide; }
 	void SetIsTextDecide(bool isNameDecide) { mIsTextDecide = isNameDecide; }
@@ -32,7 +32,11 @@ private:
 	size_t MaxTextSize;
 	Stopwatch mTimerNotEditing;
 
-	Vec2 mTextRectPos;
+	Vec2 mBackgroundRectPos;  //背景の領域の位置
+	float mBackgroundRectWidth;
+	float mBackgroundRectHeight;
+	ColorF mBackgroundRectColor;
+	Vec2 mTextRectPos;  //Textを表示する領域の位置
 	float mTextRectWidth;
 	float mTextRectHeight;
 	ColorF mTextRectColor;

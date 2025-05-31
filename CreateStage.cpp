@@ -102,7 +102,7 @@ void CreateStage::draw() {
 	}
 
 	mStage->DrawForward_CreateStage();
-	if (mTextMenu)mTextMenu->Draw(40, Scene::CenterF());
+	if (mTextMenu)mTextMenu->Draw(40*GetScreenWidth()/960);
 }
 
 void CreateStage::LoadData() {
