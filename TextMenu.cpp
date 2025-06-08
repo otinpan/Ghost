@@ -1,6 +1,6 @@
 ﻿#include"TextMenu.h"
 #include"Parent.h"
-
+#include<Siv3D.hpp>
 
 TextMenu::TextMenu(String text)
 	:mIsTextDecide(false)
@@ -40,6 +40,15 @@ void TextMenu::Initialize_CreateStage(CreateStage* createstage){
 	HelpFont =Font{ FontMethod::MSDF,FontSize/2,Typeface::Light};
 
 	mCreateStage = createstage;
+
+	for (int i = 0; i < 26; i++) {
+		ValidInput.insert((char)('a' + i));
+		ValidInput.insert((char)('A' + i));
+		ValidInput.insert((char)(i % 10));
+	}
+	ValidInput.insert('_');
+	ValidInput.insert('-');
+
 	
 }
 
@@ -76,14 +85,16 @@ void TextMenu::Update(float deltaTime) {
 		}
 		return;
 	}
-	//Spaceは受け付けない
-	if (KeySpace.pressed() || KeySpace.up())return;
+
 	mCursorPos = TextInput::UpdateText(mText, mCursorPos, TextInputMode::AllowBackSpaceDelete);
+	
+
 
 	//終了
 	/////////////////////////////////////
 	if (KeyEnter.pressed()) {
-		EndEdit_CreateStage();
+		if(EndEdit_CreateStage())return;
+		
 	}
 
 }
@@ -94,13 +105,20 @@ bool TextMenu::EndEdit_CreateStage() {
 	if (reader) {
 		reader(stageNames);
 	}
+	//無効な名前なら
+	for (auto c : mText) {
+		if (!ValidInput.count(c))return false;
+	}
+
 	//もし名前が存在するなら
 	auto iter = std::find(stageNames.begin(), stageNames.end(), mText);
-	if (*iter == mText) {
+	if (iter != stageNames.end()) {
 		return false;
 	}
+
 	mCreateStage->SetStageName(mText);
-	mCreateStage->CloseTextMenu();
+	mCreateStage->SetShouldCloseTextMenu(true);
+	return true;
 }
 
 
@@ -145,10 +163,10 @@ void TextMenu::Draw(float fontSize)const {
 	Line{ CursorPos.movedBy(0,-textRegion.h/3.0),CursorPos.movedBy(0,-textRegion.h*1.1) }.draw(mCursorWidth * GetScreenWidth(), mCursorColor);
 	
 	//操作説明
-	HelpFont(U"[Enter],[Escape]キーで決定").drawAt(ConvertToView(mTextRectPos.movedBy(0, -mTextRectHeight)), HelpTextColor);
+	HelpFont(U"[Enter]キーで決定").drawAt(ConvertToView(mTextRectPos.movedBy(0, -mTextRectHeight)), HelpTextColor);
+	HelpFont(U"アルファベット、-、_、数字以外は無効").drawAt(ConvertToView(mTextRectPos.movedBy(0, -mTextRectHeight*2)), HelpTextColor);
 	
 }
-
 
 
 

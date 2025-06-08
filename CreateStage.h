@@ -49,6 +49,8 @@ public:
 	class Stage* &GetStage() { return mStage; }
 	class StageMenu*& GetStageMenu() { return mStageMenu; }
 
+	void SetShouldCloseTextMenu(bool shouldCloseTextMenu) { mShouldCloseTextMenu = shouldCloseTextMenu; }
+
 	//Sequence
 	void moveTo(Parent* parent, Parent::SeqID id);
 	void SetSeqID(Parent::SeqID id) { mSeqID = id; }
@@ -95,4 +97,6 @@ private:
 	class Door* mDoor;
 	class Patrol* mPatrol;
 	class Candle* mCandle;
+
+	bool mShouldCloseTextMenu;
 };

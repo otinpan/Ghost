@@ -26,6 +26,8 @@ public:
 private:
 	class CreateStage* mCreateStage;
 
+	std::set<char> ValidInput;
+
 	bool mIsTextDecide;
 	String mText;
 	size_t mCursorPos;
@@ -49,7 +51,6 @@ private:
 
 	//End edit
 	bool EndEdit_CreateStage();
-	
 	
 	FontAsset textboxFont()const {
 		return FontAsset(U"text");

@@ -81,6 +81,10 @@ void CreateStage::UpdateGame(){
 
 	mStage->Update_CreateStage(deltaTime);
 	mStageMenu->Update_CreateStage(deltaTime);
+
+	if (mTextMenu && mShouldCloseTextMenu) {
+		CloseTextMenu();
+	}
 }
 
 
@@ -112,7 +116,7 @@ void CreateStage::LoadData() {
 	mStage->Initialize_CreateStage(this);
 	mStageMenu = new StageMenu();
 	mStageMenu->Initialize_CreateStage(this);
-
+	mShouldCloseTextMenu = false;
 	mStageName = U"StageName";
 }
 
