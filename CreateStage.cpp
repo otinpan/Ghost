@@ -55,6 +55,9 @@ void CreateStage::UpdateGame(){
 	float deltaTime = Scene::DeltaTime();
 	if (mTextMenu) {
 		mTextMenu->Update(deltaTime);
+		if (mShouldCloseTextMenu) {
+			CloseTextMenu();
+		}
 		return;
 	}
 	mUpdatingActors = true;
@@ -82,9 +85,7 @@ void CreateStage::UpdateGame(){
 	mStage->Update_CreateStage(deltaTime);
 	mStageMenu->Update_CreateStage(deltaTime);
 
-	if (mTextMenu && mShouldCloseTextMenu) {
-		CloseTextMenu();
-	}
+	
 }
 
 
