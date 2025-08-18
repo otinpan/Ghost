@@ -55,7 +55,7 @@ public:
 	void DeleteStageObjects();
 
 	//End
-	bool EndCreateStage();
+	bool EndCreateStage(String name);
 
 	int GetRevHandToFul(int i, int j); //mHandがmFulcrumに対してどこにあるか
 
@@ -140,4 +140,6 @@ private:
 	float GameLimitTime;  //Gameが愁傷するまでの時間
 	float GoalTime; //goalが潜在するまでの時間
 	bool mIsGoal; //goalが存在するか
+
+
 };

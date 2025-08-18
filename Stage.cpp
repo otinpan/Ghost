@@ -57,7 +57,7 @@ Stage::~Stage() {
 		delete mCandles[i];
 		mCandles[i] = 0;
 	}
-	delete mCreateStage;
+	
 	mCreateStage = 0;
 }
 
@@ -237,11 +237,14 @@ bool Stage::SetNewCandle(class StageObject* candle) {
 	return false;
 }
 
-void Stage::DeleteCandle(class StageObject* candle) {
-	mCandles[candle->GetCandleIteration()] = 0;
-	delete mCandles[candle->GetCandleIteration()];
-	return;
+void Stage::DeleteCandle(StageObject* candle) {
+	const int idx = candle->GetCandleIteration();
+	if (mCandles[idx]) {
+		delete mCandles[idx];
+		mCandles[idx] = 0;
+	}
 }
+
 
 void Stage::RemakeStageObjects() {
 	for (int i = 0; i < mVerticalSize; i++) {
@@ -443,7 +446,7 @@ RectF Stage::GetViewStageRect() {
 	return RectF(ConvertToView(Vec2{ mLeft,mUp }), GetScreenWidth() * mWidth/2.0f, GetScreenHeight() * mHeight/2.0f);
 }
 
-bool Stage::EndCreateStage() {
+bool Stage::EndCreateStage(String name) {
 	std::pair<int,int>
 		initGhost=std::pair(-1,-1),
 		initEscapee1 = std::pair(-1, -1),
@@ -468,7 +471,6 @@ bool Stage::EndCreateStage() {
 			}
 		}
 	}
-
 	
 	if (initGhost == pair(-1, -1) || initEscapee1 == pair(-1, -1) || initEscapee2 == pair(-1, -1) || initEscapee3 == pair(-1, -1)) {
 		mIsSaveError = true;
@@ -504,6 +506,7 @@ bool Stage::EndCreateStage() {
 	}
 	if (cnt < 3)return false;
 
+	StageName = name;
 	SaveStage();
 	return true;
 }
@@ -554,6 +557,8 @@ bool Stage::SaveStage() {
 
 	//バイナリファイルに保存
 	StageName = RegisterStageName();        //Stageの名前
+
+	FileSystem::CreateDirectories(U"Stage/" + StageName);
 	Serializer<BinaryWriter> writer{ U"Stage/" + StageName + U"/" + U"Data.bin" };
 
 	//画像の保存
@@ -572,18 +577,50 @@ bool Stage::SaveStage() {
 }
 
 String Stage::RegisterStageName() {
-	vector<String> stageNames;
-	Deserializer<BinaryReader> reader{U"Stage/StageNames.bin"};
-	if (reader) {
-		reader(stageNames);
-	}
-	stageNames.push_back(GetCreateStage()->GetStageName());
-	
+	std::vector<s3d::String> stageNames;
 
-	Serializer<BinaryWriter> writer{U"Stage/StageNames.bin"};
-	writer(stageNames);
-	return GetCreateStage()->GetStageName();
+	// 逆直列化を安全に
+	if (Deserializer<BinaryReader> reader{ U"Stage/StageNames.bin" }) {
+		try {
+			reader(stageNames);
+			// 壊れた要素を除去（空 or 異常に長い等）
+			stageNames.erase(std::remove_if(stageNames.begin(), stageNames.end(),
+				[](const s3d::String& s) {
+					if (s.isEmpty() || s.size() > 128) return true;
+					// 文字種バリデーション（任意：英数-_のみ等）
+					for (auto ch : s) {
+						if (!(U'0' <= ch && ch <= U'9') &&
+							!(U'a' <= ch && ch <= U'z') &&
+							!(U'A' <= ch && ch <= U'Z') &&
+							ch != U'-' && ch != U'_') {
+							return true;
+						}
+					}
+					return false;
+				}),
+				stageNames.end());
+		}
+		catch (...) {
+			stageNames.clear(); // 壊れていたので捨てる
+		}
+	}
+
+	// ★ CreateStage から直接参照を引っ張らない（Stage が所有している名前を使う）
+	// EndCreateStage(String name) で savedName に move しておく前提
+	const s3d::String nameToAdd = StageName;  // 所有 → 安全
+
+	// 重複チェック（値比較）
+	if (std::find(stageNames.begin(), stageNames.end(), nameToAdd) == stageNames.end()) {
+		stageNames.push_back(nameToAdd); // 既存要素が壊れていなければ安全
+	}
+
+	// 再直列化（読み書きの型は vector<String> で厳密一致）
+	if (Serializer<BinaryWriter> writer{ U"Stage/StageNames.bin" }) {
+		writer(stageNames);
+	}
+	return nameToAdd;
 }
+
 
 
 

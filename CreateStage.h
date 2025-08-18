@@ -40,8 +40,8 @@ public:
 	void OpenTextMenu();
 	void CloseTextMenu();
 
-	void SetStageName(String stagename) { mStageName = stagename; }
-	String GetStageName() { return mStageName; }
+	void SetStageName(const String& stagename);
+	const String& GetStageName() const{ return mStageName; }
 
 
 	class Hand* &GetHand() { return mHand; }

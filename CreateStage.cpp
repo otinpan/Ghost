@@ -192,13 +192,14 @@ void CreateStage::RemoveDrawing(DrawingComponent* drawing)
 {
 	if (drawing->GetIsBackground()) {
 		auto iter = std::find(mDrawings_Background.begin(), mDrawings_Background.end(), drawing);
-		mDrawings_Background.erase(iter);
+		if (iter != mDrawings_Background.end()) { mDrawings_Background.erase(iter); }
 	}
 	else {
 		auto iter = std::find(mDrawings_Foreground.begin(), mDrawings_Foreground.end(), drawing);
-		mDrawings_Foreground.erase(iter);
+		if (iter != mDrawings_Foreground.end()) { mDrawings_Foreground.erase(iter); }
 	}
 }
+
 
 void CreateStage::AddCircle(CircleComponent* circle) {
 	mCircles.emplace_back(circle);
@@ -251,8 +252,8 @@ void CreateStage::OpenTextMenu() {
 }
 
 void CreateStage::CloseTextMenu() {
+	mStage->EndCreateStage(mStageName);
 	if(mTextMenu)mTextMenu.reset();
-	mStage->EndCreateStage();
 }
 
 
@@ -261,10 +262,12 @@ void CreateStage::moveTo(Parent* parent, Parent::SeqID id) {
 	if (id == Parent::SEQ_STAGESELECT)parent->moveTo(Parent::SEQ_STAGESELECT, Parent::SEQ_CREATESTAGE);
 	if (id == Parent::SEQ_GAME)parent->moveTo(Parent::SEQ_GAME,Parent::SEQ_CREATESTAGE);
 	if (id == Parent::SEQ_CREATESTAGE)parent->moveTo(Parent::SEQ_CREATESTAGE, Parent::SEQ_CREATESTAGE);
-	if (id == Parent::SEQ_CREATESTAGE)parent->moveTo(Parent::SEQ_GAMERESULT,Parent::SEQ_CREATESTAGE);
+	if (id == Parent::SEQ_GAMERESULT)parent->moveTo(Parent::SEQ_GAMERESULT,Parent::SEQ_CREATESTAGE);
 	if (id == Parent::SEQ_CHANGEWINDOWSIZE)parent->moveTo(Parent::SEQ_CHANGEWINDOWSIZE, Parent::SEQ_CREATESTAGE);
 	if (id == Parent::SEQ_SUBMENU)parent->moveTo(Parent::SEQ_SUBMENU, Parent::SEQ_CREATESTAGE);
 }
 
 
-
+void CreateStage::SetStageName(const String& name) {
+	mStageName = name;
+}

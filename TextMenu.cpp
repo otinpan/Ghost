@@ -12,10 +12,7 @@ TextMenu::TextMenu(String text)
 }
 
 TextMenu::~TextMenu(){
-	if (mCreateStage) {
-		delete mCreateStage;
-		mCreateStage = 0;
-	}
+	mCreateStage = nullptr;
 }
 
 void TextMenu::Initialize_CreateStage(CreateStage* createstage){
@@ -44,7 +41,7 @@ void TextMenu::Initialize_CreateStage(CreateStage* createstage){
 	for (int i = 0; i < 26; i++) {
 		ValidInput.insert((char)('a' + i));
 		ValidInput.insert((char)('A' + i));
-		ValidInput.insert((char)(i % 10));
+		ValidInput.insert((char)('0'+(i % 10)));
 	}
 	ValidInput.insert('_');
 	ValidInput.insert('-');
