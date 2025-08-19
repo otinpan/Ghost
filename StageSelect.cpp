@@ -1,4 +1,5 @@
 ﻿#include "StageSelect.h"
+#include "Parent.h"
 using namespace std;
 
 StageSelect::StageSelect()
@@ -30,12 +31,19 @@ void StageSelect::Initialize() {
 	mSideSize = 3;
 	mVerticalSize = 20;
 
-
 	mStageNames.resize(mVerticalSize);
 	for (auto& row : mStageNames) {
 		row.resize(mSideSize);
 		for (auto& name : row) {
-			name = "";
+			name = U"";
+		}
+	}
+
+	mStageTextures.resize(mVerticalSize);
+	for (auto& row : mStageTextures) {
+		row.resize(mSideSize);
+		for (auto& texture : row) {
+			texture = Texture(U"Stage/NoImage.png");
 		}
 	}
 
@@ -56,20 +64,23 @@ void StageSelect::Initialize() {
 
 	mStageLeft = -0.9;
 	mStageRight = 0.9;
-	mStageUp = 0.9;
+	mStageUp = 0.5;
 	mStageDown = -0.9;
-	mDisplayVerticalSize = 3;
+	mDisplayVerticalSize = 2;
 	mDisplaySideSize = mSideSize;
 	mStageWidth = (float)(mStageRight - mStageLeft);
 	mStageHeight = (float)(mStageUp - mStageDown);
 	mStageEachWidth = (float)mStageWidth / mDisplaySideSize;
 	mStageEachHeight = (float)mStageHeight / mDisplayVerticalSize;
-	mStageRectWidth = mStageEachWidth * 2.0 / 3.0;
-	mStageRectHeight = mStageEachHeight * 2.0 / 3.0;
+	mStageRectWidth = mStageEachWidth * 3.0 / 4.0;
+	mStageRectHeight = mStageEachHeight * 3.0 / 4.0;
 
 	mTopPos = 0.0f;
 	MaxTopPos = mStageEachHeight * (mVerticalSize-3);
 	MaxDownPos = MaxTopPos + 2.0f;
+
+	minputUpTime = minputDownTime = minputRightTime = minputLeftTime = 0.0f;
+	mIsinputUp = mIsinputDown = mIsinputRight = mIsinputLeft = true;
 
 	//SideBar
 	SideBarUp = 0.9f;
@@ -77,17 +88,7 @@ void StageSelect::Initialize() {
 	mSideBarHeight = 2.0f / MaxDownPos * (SideBarUp - SideBarDown);
 	mSideBarWidth = 0.03f;
 
-	//初期位置の設定
-	for (int i = 0; i < mVerticalSize; i++) {
-		for (int j = 0; j < mSideSize; j++) {
-			mStagePoses[i][j] = Vec2(mStageLeft+mStageEachWidth * j + mStageEachWidth / 2.0f,
-				mStageUp-mStageEachHeight * i - mStageEachHeight / 2.0f);
-		}
-	}
-
-	mIteration = pair(0, 0);
-	mUpLine = 0;
-	mDownLine = mDisplayVerticalSize-1;
+	RemakeStageVector();
 }
 
 bool StageSelect::InitializeStages() {
@@ -242,6 +243,15 @@ void StageSelect::draw_Game() {
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
 			DrawRect(mStagePoses[i][j], mStageRectWidth, mStageRectHeight, ColorF((float)i/mVerticalSize));
+			if (mIsInStage[i][j]) {
+				RectF(
+					Arg::center(ConvertToView(mStagePoses[i][j]))
+					, GetScreenWidth() * mStageRectWidth / 2.0f
+					, GetScreenHeight() * mStageRectHeight / 2.0f
+				)(mStageTextures[i][j]).draw();
+			
+			}
+
 		}
 	}
 	DrawRoundRect(mSideBarPos, mSideBarWidth, mSideBarHeight,mSideBarWidth/4.0f, ColorF(1, 1, 1));
@@ -263,4 +273,52 @@ void StageSelect::moveTo(Parent* parent, Parent::SeqID id) {
 	if (id == Parent::SEQ_GAME)parent->moveTo(Parent::SEQ_GAME, Parent::SEQ_STAGESELECT);
 	if (id == Parent::SEQ_GAMERESULT)parent->moveTo(Parent::SEQ_GAMERESULT, Parent::SEQ_STAGESELECT);
 	if (id == Parent::SEQ_CHANGEWINDOWSIZE)parent->moveTo(Parent::SEQ_CHANGEWINDOWSIZE, Parent::SEQ_STAGESELECT);
+}
+
+void StageSelect::RemakeStageVector() {
+	std::vector<String> stageNames;
+	{
+		Deserializer<BinaryReader> reader{ U"Stage/StageNames.bin" };
+		if (reader) {
+			reader(stageNames);
+		}
+		else {
+			stageNames.clear();
+
+		}
+	}
+
+	const Texture noImage{ U"Stage/NoImage.png" };
+
+	for (int i = 0; i < mVerticalSize; i++) {
+		for (int j = 0; j < mSideSize; j++) {
+			mStagePoses[i][j] = Vec2(mStageLeft + mStageEachWidth * j + mStageRectWidth / 2.0f,
+				mStageUp - mStageEachHeight * i - mStageRectHeight / 2.0f);
+			int idx = i * mSideSize + j;
+			if (stageNames.size() > idx) {
+				const auto& name = stageNames[idx];
+				mStageNames[i][j] = name;
+				const FilePath path = U"Stage/" + name + U"/Image.png";
+				if (FileSystem::Exists(path)) {
+					mStageTextures[i][j] = Texture(path);
+					mIsInStage[i][j] = true;
+				}
+				else {
+					mStageTextures[i][j] = noImage;
+					mIsInStage[i][j] = false;
+				}
+			}
+			else {
+				mStageNames[i][j] = U"";
+				mIsInStage[i][j] = false;
+				mStageTextures[i][j] = noImage;
+			}
+
+		}
+	}
+
+	// 初期化
+	mIteration = pair(0, 0); 
+	mUpLine = 0;
+	mDownLine = mDisplayVerticalSize - 1;
 }

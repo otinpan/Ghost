@@ -15,3 +15,5 @@ struct GameDate {
 
 
 using App = SceneManager<State>;
+
+bool DeleteStageData(const String& stageName);

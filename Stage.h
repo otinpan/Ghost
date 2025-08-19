@@ -54,7 +54,7 @@ public:
 	void DeleteStageObject(int i, int j);
 	void DeleteStageObjects();
 
-	bool DeleteStage(String name); //Stageを削除する
+	bool DeleteStage(String stageName); //Stageを削除する
 
 	//End
 	bool EndCreateStage(String name);

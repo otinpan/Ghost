@@ -15,6 +15,7 @@
 #include"StageMenu.h"
 #include<cmath>
 #include"Player.h"
+#include<algorithm>
 using namespace std;
 
 
@@ -767,36 +768,3 @@ void Stage::Draw_Game() {
 }
 
 
-bool Stage::DeleteStage(String name) {
-	std::vector<String> stageNames;
-	Deserializer<BinaryReader> reader{ U"Stage/StageNames.bin" };
-	if (reader) {
-		reader(stageNames);
-	}
-	else {
-		// 読み込み失敗
-		return false;
-	}
-
-	// 削除前のサイズ
-	const size_t beforeSize = stageNames.size();
-
-	// 指定名を削除
-	stageNames.erase(
-		std::remove(stageNames.begin(), stageNames.end(), name),
-		stageNames.end()
-	);
-
-	// 削除できたか判定
-	if (stageNames.size() == beforeSize) {
-		// 削除対象がなかった
-		return false;
-	}
-
-	// ファイルへ再保存
-	if (Serializer<BinaryWriter> writer{ U"Stage/StageNames.bin" }) {
-		writer(stageNames);
-		return true;
-	}
-	return false;
-}

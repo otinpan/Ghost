@@ -23,6 +23,7 @@ private:
 	void UpdateStageSelect_Game();
 	void UpdateStageSelect_CreateStage();
 	bool InitializeStages();   //Initialize mStageNames
+	void RemakeStageVector(); //mStageNamesを再構築する
 
 	InputGroup inputUp;
 	InputGroup inputDown;
@@ -41,7 +42,8 @@ private:
 	float minputLeftTime;
 
 
-	vector<vector<string>> mStageNames; //Stageの名前
+	vector<vector<Texture>> mStageTextures; //Stageのテクスチャ
+	vector<vector<String>> mStageNames; //Stageの名前
 	vector<vector<bool>> mIsInStage;  //Stageが入っているか
 	vector<vector<Vec2>> mStagePoses; //Stageの位置(中心座標)
 	int mVerticalSize;

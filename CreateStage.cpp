@@ -9,6 +9,7 @@
 #include"Candle.h"
 #include"TreasureChest.h"
 #include"DrawingComponent.h"
+#include"Common.h"
 
 CreateStage::CreateStage()
 	:mUpdatingActors(false)
@@ -33,7 +34,6 @@ bool CreateStage::Initialize() {
 void CreateStage::update(Parent* parent) {
 	if (mIsRunning) {
 		ClearPrint();
-
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 		}
