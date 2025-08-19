@@ -14,6 +14,8 @@ CreateStage::CreateStage()
 	:mUpdatingActors(false)
 	, mIsRunning(true)
 	, mSeqID(Parent::SEQ_NONE)
+	, mIsMoveTo(false)
+	, mCanSave(false)
 {
 	Initialize();
 }
@@ -30,7 +32,8 @@ bool CreateStage::Initialize() {
 
 void CreateStage::update(Parent* parent) {
 	if (mIsRunning) {
-		//ClearPrint();
+		ClearPrint();
+
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 		}
@@ -53,10 +56,18 @@ void CreateStage::ProcessInput() {
 
 void CreateStage::UpdateGame(){
 	float deltaTime = Scene::DeltaTime();
+	if (mCanSave) {
+		mStage->SaveStage();
+		SetSeqID(Parent::SEQ_STAGESELECT);
+	}
+
 	if (mTextMenu) {
 		mTextMenu->Update(deltaTime);
 		if (mShouldCloseTextMenu) {
 			CloseTextMenu();
+			if (mIsMoveTo) {
+				mCanSave = true;
+			}
 		}
 		return;
 	}
@@ -252,7 +263,12 @@ void CreateStage::OpenTextMenu() {
 }
 
 void CreateStage::CloseTextMenu() {
-	mStage->EndCreateStage(mStageName);
+	if (mStage->EndCreateStage(mStageName)) {
+		mIsMoveTo = true;
+	}
+	else {
+		mShouldCloseTextMenu = false;
+	}
 	if(mTextMenu)mTextMenu.reset();
 }
 

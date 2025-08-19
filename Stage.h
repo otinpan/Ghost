@@ -54,8 +54,12 @@ public:
 	void DeleteStageObject(int i, int j);
 	void DeleteStageObjects();
 
+	bool DeleteStage(String name); //Stageを削除する
+
 	//End
 	bool EndCreateStage(String name);
+	//Save
+	bool SaveStage();
 
 	int GetRevHandToFul(int i, int j); //mHandがmFulcrumに対してどこにあるか
 
@@ -73,7 +77,6 @@ public:
 private:
 	class CreateStage* mCreateStage;
 
-	bool SaveStage();
     String RegisterStageName();
 	void SearchCanBeGone(std::vector<std::vector<bool>> &can_be_gone,std::pair<int,int> inint_pos);
 

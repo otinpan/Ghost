@@ -99,4 +99,7 @@ private:
 	class Candle* mCandle;
 
 	bool mShouldCloseTextMenu;
+	bool mIsMoveTo;
+
+	bool mCanSave;
 };

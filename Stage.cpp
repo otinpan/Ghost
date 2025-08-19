@@ -507,7 +507,8 @@ bool Stage::EndCreateStage(String name) {
 	if (cnt < 3)return false;
 
 	StageName = name;
-	SaveStage();
+	ScreenCapture::RequestCurrentFrame(); // 画面のキャプチャを要求
+
 	return true;
 }
 
@@ -561,19 +562,20 @@ bool Stage::SaveStage() {
 	FileSystem::CreateDirectories(U"Stage/" + StageName);
 	Serializer<BinaryWriter> writer{ U"Stage/" + StageName + U"/" + U"Data.bin" };
 
-	//画像の保存
-	ScreenCapture::RequestCurrentFrame();
-	Image image; 
-	ScreenCapture::GetFrame(image);
-	Vec2 LeftTop = ConvertToView(Vec2(mLeft, mUp));
-	Image image2 = image.clipped(Rect(LeftTop.x, LeftTop.y,
-		(int32)(mWidth / 2.0 * GetScreenWidth()), (int32)(mHeight / 2.0 * GetScreenHeight())));
+	{
+		Image image;
+		ScreenCapture::GetFrame(image); // 画像の保存
+		Vec2 LeftTop = ConvertToView(Vec2(mLeft, mUp));
+		Image image2 = image.clipped(Rect(LeftTop.x, LeftTop.y,
+			(int32)(mWidth / 2.0 * GetScreenWidth()), (int32)(mHeight / 2.0 * GetScreenHeight())));
 
 
-	image2.save(U"Stage/" + StageName + U"/" + U"Image.png");
-	writer(mDetails); 
-	writer(mCandleDetails);
-	return true;
+		image2.save(U"Stage/" + StageName + U"/" + U"Image.png");
+		writer(mDetails);
+		writer(mCandleDetails);
+		return true;
+	}
+	
 }
 
 String Stage::RegisterStageName() {
@@ -765,3 +767,36 @@ void Stage::Draw_Game() {
 }
 
 
+bool Stage::DeleteStage(String name) {
+	std::vector<String> stageNames;
+	Deserializer<BinaryReader> reader{ U"Stage/StageNames.bin" };
+	if (reader) {
+		reader(stageNames);
+	}
+	else {
+		// 読み込み失敗
+		return false;
+	}
+
+	// 削除前のサイズ
+	const size_t beforeSize = stageNames.size();
+
+	// 指定名を削除
+	stageNames.erase(
+		std::remove(stageNames.begin(), stageNames.end(), name),
+		stageNames.end()
+	);
+
+	// 削除できたか判定
+	if (stageNames.size() == beforeSize) {
+		// 削除対象がなかった
+		return false;
+	}
+
+	// ファイルへ再保存
+	if (Serializer<BinaryWriter> writer{ U"Stage/StageNames.bin" }) {
+		writer(stageNames);
+		return true;
+	}
+	return false;
+}
