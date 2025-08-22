@@ -12,7 +12,8 @@ public:
 	void draw_Game();
 	void draw_CreateStage();
 
-	void Initialize();
+	void Initialize_CreateStage();
+	void Initialize_Game();
 	void Shutdown();
 
 	void moveTo(Parent* parent, Parent::SeqID id);
@@ -61,6 +62,10 @@ private:
 	float mStageUp;
 	float mStageDown;
 
+	Vec2 CreateStageRectPos; //ステージ作成選択
+	Vec2 CreateStageRectSize; //ステージ作成選択のサイズ
+	
+
 	float mTopPos; //一番上の移動量
 	float MaxTopPos;
 	float MaxDownPos;
@@ -84,6 +89,9 @@ private:
 
 	bool mIsRunning;
 
+	Font StageSelectFont;
+
 	Parent::SeqID mSeqID;
+
 	
 };

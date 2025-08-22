@@ -6,14 +6,14 @@ StageSelect::StageSelect()
 	:mSeqID(Parent::SEQ_NONE)
 	, mIsRunning(true)
 {
-	Initialize();
+	Initialize_CreateStage();
 }
 
 StageSelect::~StageSelect() {
 
 }
 
-void StageSelect::Initialize() {
+void StageSelect::Initialize_CreateStage() {
 	Scene::SetBackground(ColorF(200.0f / 255.0f));
 
 	inputUp = KeyW;
@@ -88,6 +88,10 @@ void StageSelect::Initialize() {
 	mSideBarHeight = 2.0f / MaxDownPos * (SideBarUp - SideBarDown);
 	mSideBarWidth = 0.03f;
 
+	//ステージ作成の位置
+	CreateStageRectPos = Vec2(mStageRight - mStageRectWidth*3/4 , mStageUp + mStageRectHeight/2);
+	CreateStageRectSize = Vec2(mStageRectWidth/1.3f, mStageRectHeight/1.3f);
+
 	RemakeStageVector();
 }
 
@@ -103,8 +107,8 @@ void StageSelect::update(Parent* parent) {
 			moveTo(parent, mSeqID);
 		}
 		ProcessInput();
-		UpdateStageSelect_Game();
-		draw_Game();
+		UpdateStageSelect_CreateStage();
+		draw_CreateStage();
 	}
 }
 
@@ -112,7 +116,7 @@ void StageSelect::ProcessInput() {
 
 }
 
-void StageSelect::UpdateStageSelect_Game() {
+void StageSelect::UpdateStageSelect_CreateStage() {
 	float deltaTime = Scene::DeltaTime();
 	if (inputUp.down()) {
 		if (mIteration.first != mUpLine) { //表示の一番上以外の行
@@ -199,10 +203,6 @@ void StageSelect::UpdateStageSelect_Game() {
 	mSideBarPos = Vec2(0.9, mSideBarUp - mSideBarHeight / 2.0f);
 }
 
-void StageSelect::UpdateStageSelect_CreateStage() {
-	float deltaTime = Scene::DeltaTime();
-}
-
 
 void StageSelect::UpdateRectPos(int plus) {
 	for (int i = 0; i < mVerticalSize; i++) {
@@ -239,7 +239,7 @@ void StageSelect::UpdateinputCooltime(bool &mIsinput, float &minputTime, float d
 	}
 }
 
-void StageSelect::draw_Game() {
+void StageSelect::draw_CreateStage() {
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
 			DrawRect(mStagePoses[i][j], mStageRectWidth, mStageRectHeight, ColorF((float)i/mVerticalSize));
@@ -256,9 +256,18 @@ void StageSelect::draw_Game() {
 	}
 	DrawRoundRect(mSideBarPos, mSideBarWidth, mSideBarHeight,mSideBarWidth/4.0f, ColorF(1, 1, 1));
 	DrawRectFrame(mStagePoses[mIteration.first][mIteration.second], mStageRectWidth, mStageRectHeight, 0, 0.005, ColorF(1, 1, 0));
+
+	// ステージ作成の選択
+	DrawRect(CreateStageRectPos, CreateStageRectSize.x, CreateStageRectSize.y, ColorF(0.5f, 0.5f, 0.5f));
+
+
 }
 
-void StageSelect::draw_CreateStage() {
+void StageSelect::UpdateStageSelect_Game() {
+
+}
+
+void StageSelect::draw_Game() {
 
 }
 
