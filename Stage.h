@@ -8,6 +8,7 @@ public:
 	~Stage();
 
 	void Initialize_CreateStage(CreateStage* createStage);
+	void Initialize_CreateStage(CreateStage* createStage, FilePath fileName);
 	void Initialize_Game(Game* game,FilePath fileName);
 
 	void Update_Game(float deltaTime);

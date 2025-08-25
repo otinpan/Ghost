@@ -64,6 +64,7 @@ private:
 
 	Vec2 CreateStageRectPos; //ステージ作成選択
 	Vec2 CreateStageRectSize; //ステージ作成選択のサイズ
+	bool mIsCreateStageSelected; //ステージ作成が選択されているか
 	
 
 	float mTopPos; //一番上の移動量

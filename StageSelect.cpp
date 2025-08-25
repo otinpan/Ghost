@@ -118,8 +118,16 @@ void StageSelect::ProcessInput() {
 
 void StageSelect::UpdateStageSelect_CreateStage() {
 	float deltaTime = Scene::DeltaTime();
+
+	// 入力
 	if (inputUp.down()) {
-		if (mIteration.first != mUpLine) { //表示の一番上以外の行
+		if (mIsCreateStageSelected) {
+			// 何もしない
+		}
+		else if (mIteration.first == 0) {
+			mIsCreateStageSelected = true;
+		}
+		else if (mIteration.first != mUpLine) { //表示の一番上以外の行
 			mIteration.first--;
 		}
 		else {
@@ -133,7 +141,13 @@ void StageSelect::UpdateStageSelect_CreateStage() {
 	}
 	if (inputUp.pressed()) {
 		if (!mIsinputUp) {
-			if (mIteration.first != mUpLine) { //表示の一番上以外の行
+			if (mIsCreateStageSelected) {
+				//何もしない
+			}
+			else if (mIteration.first == 0) {
+				mIsCreateStageSelected = true;
+			}
+			else if (mIteration.first != mUpLine) { //表示の一番上以外の行
 				mIteration.first--;
 			}
 			else {
@@ -146,7 +160,11 @@ void StageSelect::UpdateStageSelect_CreateStage() {
 		UpdateinputCooltime(mIsinputUp, minputUpTime, deltaTime);
 	}
 	if (inputDown.down()) {
-		if (mIteration.first != mDownLine) {
+		if (mIsCreateStageSelected) {
+			mIsCreateStageSelected = false;
+			mIteration.first = 0;
+		}
+		else if (mIteration.first != mDownLine) {
 			mIteration.first++;
 		}
 		else {
@@ -157,9 +175,13 @@ void StageSelect::UpdateStageSelect_CreateStage() {
 		}
 		mIsinputDown = true;
 		minputDownTime = 0.0f;
-		
+
 	}
 	if (inputDown.pressed()) {
+		if (mIsCreateStageSelected) {
+			mIsCreateStageSelected = false;
+			mIteration.first = 0;
+		}
 		if (!mIsinputDown) {
 			if (mIteration.first != mDownLine) {
 				mIteration.first++;
@@ -175,32 +197,66 @@ void StageSelect::UpdateStageSelect_CreateStage() {
 
 	}
 	if (inputRight.down()) {
-		if (mIteration.second < mSideSize - 1) mIteration.second++;
+		if (mIsCreateStageSelected) {
+			// 何もしない
+		}
+		else if (mIteration.second < mSideSize - 1) {
+			mIteration.second++;
+		}
 		mIsinputRight = true;
 		minputRightTime = 0.0f;
 	}
 	if (inputRight.pressed()) {
-		if (!mIsinputRight) {
+		if (mIsCreateStageSelected) {
+			// 何もしない
+		}
+		else if (!mIsinputRight) {
 			if (mIteration.second < mSideSize - 1) mIteration.second++;
 		}
 		UpdateinputCooltime(mIsinputRight, minputRightTime, deltaTime);
 	}
 
 	if (inputLeft.down()) {
-		if (mIteration.second > 0)mIteration.second--;
+		if (mIsCreateStageSelected) {
+			// 何もしない
+		}
+		else if (mIteration.second > 0) {
+			mIteration.second--;
+		}
 		mIsinputLeft = true;
 		minputLeftTime = 0.0f;
 	}
 	if (inputLeft.pressed()) {
-		if (!mIsinputLeft) {
+		if (mIsCreateStageSelected) {
+			// 何もしない
+		}
+		else if (!mIsinputLeft) {
 			if (mIteration.second > 0)mIteration.second--;
 		}
 		UpdateinputCooltime(mIsinputLeft, minputLeftTime, deltaTime);
 	}
 
 	//SideBar
-	mSideBarUp = SideBarUp-(float)mTopPos / MaxDownPos * (SideBarUp-SideBarDown);
+	mSideBarUp = SideBarUp - (float)mTopPos / MaxDownPos * (SideBarUp - SideBarDown);
 	mSideBarPos = Vec2(0.9, mSideBarUp - mSideBarHeight / 2.0f);
+
+	// 決定
+	if (inputDecision.down()) {
+		if (mIsCreateStageSelected) {
+			if (mIsInStage[mVerticalSize - 1][mSideSize - 1] == true) {
+				// これ以上は作れないと注意
+			}
+			else {
+				mSeqID = Parent::SEQ_CREATESTAGE;
+			}
+		}
+		else {
+			if (mIsInStage[mIteration.first][mIteration.second]) {
+				// ステージをロード
+			}
+		}
+	}
+
 }
 
 
@@ -211,6 +267,9 @@ void StageSelect::UpdateRectPos(int plus) {
 		}
 	}
 	mTopPos += plus * mStageEachHeight;
+
+	// ステージ作成の位置更新
+	CreateStageRectPos.y += plus * mStageEachHeight;
 
 	mUpLine+=plus;
 	mDownLine+=plus;
@@ -254,13 +313,33 @@ void StageSelect::draw_CreateStage() {
 
 		}
 	}
-	DrawRoundRect(mSideBarPos, mSideBarWidth, mSideBarHeight,mSideBarWidth/4.0f, ColorF(1, 1, 1));
-	DrawRectFrame(mStagePoses[mIteration.first][mIteration.second], mStageRectWidth, mStageRectHeight, 0, 0.005, ColorF(1, 1, 0));
 
 	// ステージ作成の選択
 	DrawRect(CreateStageRectPos, CreateStageRectSize.x, CreateStageRectSize.y, ColorF(0.5f, 0.5f, 0.5f));
 
+	if (mIsCreateStageSelected) {
+		DrawRectFrame(
+			CreateStageRectPos,
+			CreateStageRectSize.x,
+			CreateStageRectSize.y,
+			0,
+			0.005,
+			ColorF(1,1,0)
+		);
+	}
+	else {
+		DrawRectFrame(
+			mStagePoses[mIteration.first][mIteration.second],
+			mStageRectWidth,
+			mStageRectHeight,
+			0,
+			0.005,
+			ColorF(1, 1, 0));
+	}
 
+	// サイドバー
+	DrawRoundRect(mSideBarPos, mSideBarWidth, mSideBarHeight, mSideBarWidth / 4.0f, ColorF(1, 1, 1));
+	
 }
 
 void StageSelect::UpdateStageSelect_Game() {

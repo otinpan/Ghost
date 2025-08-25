@@ -124,6 +124,88 @@ void Stage::Initialize_CreateStage(CreateStage* createStage) {
 
 }
 
+void Stage::Initialize_CreateStage(CreateStage* createStage, FilePath fileName) {
+	Initialize_CreateStage(createStage);
+
+	// ステージのロード
+	Deserializer<BinaryReader> reader{ fileName };
+	if (not reader) {
+		throw Error{ U"Failed to load" + fileName };
+	}
+
+	// mStageObjectの初期設定
+	vector<vector<tuple<StageObject::Attribute, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>
+		mDetails(
+			mVerticalSize,
+			vector<tuple<StageObject::Attribute, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>
+			(mSideSize, tuple(StageObject::Attribute::None, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, false))
+		);
+	//0Attribute  1Clockwise  2PatrolRange  3BatterySize  4Treasure  5Speed  6CanBeGone
+	vector<tuple<bool, Vec2, float>> mCandleDetails(mCandles.size(), tuple(false, Vec2(0, 0), 0.0f));
+
+	reader(mDetails);
+	reader(mCandleDetails);
+
+
+	Array<int> mGoalCandidates;
+
+	for (int i = 0; i < mVerticalSize; i++) {
+		for (int j = 0; j < mSideSize; j++) {
+			if (get<0>(mDetails[i][j]) == StageObject::Attribute::None) {
+				mStageObjects[i][j] = 0;
+			}
+			else {
+				if (get<0>(mDetails[i][j]) == StageObject::Attribute::Ghost) {
+					mGhostIteration = pair(i, j);
+					mGhostSpeed = get<5>(mDetails[i][j]);
+				}
+				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee1) {
+					mEscapee1Iteration = pair(i, j);
+					mEscapee1Speed = get<5>(mDetails[i][j]);
+				}
+				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee2) {
+					mEscapee2Iteration = pair(i, j);
+					mEscapee2Speed = get<5>(mDetails[i][j]);
+				}
+				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee3) {
+					mEscapee3Iteration = pair(i, j);
+					mEscapee3Speed = get<5>(mDetails[i][j]);
+				}
+				else {
+					SetNewStageObject_Attribute(i, j, get<0>(mDetails[i][j]));
+					mStageObjects[i][j]->SetClockwise(get<1>(mDetails[i][j]));
+					mStageObjects[i][j]->SetPatrolRange(get<2>(mDetails[i][j]));
+					mStageObjects[i][j]->SetBatterySize(get<3>(mDetails[i][j]));
+					mStageObjects[i][j]->SetTreasure(get<4>(mDetails[i][j]));
+					mStageObjects[i][j]->SetSpeed(get<5>(mDetails[i][j]));
+					mStageObjects[i][j]->SetIteration(pair(i, j));
+					mStageObjects[i][j]->InitializeStage_Game();
+				}
+			}
+			mCanBeGone[i][j] = get<6>(mDetails[i][j]);
+			if (mCanBeGone[i][j])mGoalCandidates << (i * mVerticalSize + j);
+
+
+		}
+	}
+
+	InitCandle = new Candle(Vec2(0, 0),
+		 mRectWidth / 3,
+		 mRectHeight / 3,
+		 mRectHeight / 6);
+	InitCandle->InitializeStageObject_Game(mGame);
+	for (int i = 0; i < mCandles.size(); i++) {
+		if (!get<0>(mCandleDetails[i]))continue;
+		InitCandle->SetPosition(get<1>(mCandleDetails[i]));
+		InitCandle->SetLightRad(get<2>(mCandleDetails[i]));
+		SetNewCandle(InitCandle);
+	}
+
+	delete InitCandle;
+	InitCandle = 0;
+
+}
+
 void Stage::SetNewStageObject(int i, int j, StageObject* stageObject) {
 	if (stageObject->GetAttribute() == StageObject::Attribute::Brock) {
 		mStageObjects[i][j] = new Brock(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
@@ -673,19 +755,19 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 			else {
 				if (get<0>(mDetails[i][j]) == StageObject::Attribute::Ghost) {
 					mGhostIteration = pair(i, j);
-					mGhostSpeed = get<4>(mDetails[i][j]);
+					mGhostSpeed = get<5>(mDetails[i][j]);
 				}
 				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee1) {
 					mEscapee1Iteration = pair(i, j);
-					mEscapee1Speed = get<4>(mDetails[i][j]);
+					mEscapee1Speed = get<5>(mDetails[i][j]);
 				}
 				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee2) {
 					mEscapee2Iteration = pair(i, j);
-					mEscapee2Speed = get<4>(mDetails[i][j]);
+					mEscapee2Speed = get<5>(mDetails[i][j]);
 				}
 				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee3) {
 					mEscapee3Iteration = pair(i, j);
-					mEscapee3Speed = get<4>(mDetails[i][j]);
+					mEscapee3Speed = get<5>(mDetails[i][j]);
 				}
 				else {
 					SetNewStageObject_Attribute(i, j, get<0>(mDetails[i][j]));
@@ -699,7 +781,7 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 				}
 			}
 			mCanBeGone[i][j] = get<6>(mDetails[i][j]);
-			if(mCanBeGone[i][j])mGoalCandidates<<(i * mVerticalSize + mSideSize);
+			if(mCanBeGone[i][j])mGoalCandidates<<(i * mVerticalSize + j);
 
 			
 		}
