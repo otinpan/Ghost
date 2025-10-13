@@ -690,13 +690,12 @@ String Stage::RegisterStageName() {
 		}
 	}
 
-	// ★ CreateStage から直接参照を引っ張らない（Stage が所有している名前を使う）
 	// EndCreateStage(String name) で savedName に move しておく前提
-	const s3d::String nameToAdd = StageName;  // 所有 → 安全
+	const s3d::String nameToAdd = StageName;  
 
 	// 重複チェック（値比較）
 	if (std::find(stageNames.begin(), stageNames.end(), nameToAdd) == stageNames.end()) {
-		stageNames.push_back(nameToAdd); // 既存要素が壊れていなければ安全
+		stageNames.push_back(nameToAdd); 
 	}
 
 	// 再直列化（読み書きの型は vector<String> で厳密一致）

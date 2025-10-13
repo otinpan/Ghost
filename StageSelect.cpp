@@ -102,7 +102,18 @@ bool StageSelect::InitializeStages() {
 void StageSelect::update(Parent* parent) {
 	if (mIsRunning) {
 		ClearPrint();
-		Print << MaxDownPos;
+		// ステージ名の表示
+		Deserializer<BinaryReader> reader{ U"Stage/StageNames.bin" };
+		if (not reader) {
+			throw Error{ U"Failed to load Stage/StageNames.bin" };
+		}
+		vector<String> stageNames;
+		reader(stageNames);
+
+		for (auto& s : stageNames) {
+			Print << s;
+		}
+
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 		}
