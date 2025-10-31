@@ -22,6 +22,7 @@ void StageSelect::Initialize_CreateStage() {
 	inputLeft = KeyA;
 	inputDecision = KeySpace;
 	inputBack = KeyBackspace;
+	inputDelete = KeyDelete;
 
 	mIsinputUp = true;
 	mIsinputDown = true;
@@ -103,15 +104,13 @@ void StageSelect::update(Parent* parent) {
 	if (mIsRunning) {
 		ClearPrint();
 		// ステージ名の表示
-		Deserializer<BinaryReader> reader{ U"Stage/StageNames.bin" };
-		if (not reader) {
-			throw Error{ U"Failed to load Stage/StageNames.bin" };
-		}
-		vector<String> stageNames;
-		reader(stageNames);
-
-		for (auto& s : stageNames) {
-			Print << s;
+		{
+			Deserializer<BinaryReader> reader{ U"Stage/StageNames.bin" };
+			if (not reader) {
+			//	throw Error{ U"Failed to load Stage/StageNames.bin" };
+			}
+			std::vector<String> stageNames;
+			Print << stageNames;
 		}
 
 		if (mSeqID != Parent::SEQ_NONE) {
@@ -268,6 +267,18 @@ void StageSelect::UpdateStageSelect_CreateStage() {
 		}
 	}
 
+	// 削除
+	if (inputDelete.down()) {
+		if (!mIsCreateStageSelected) {
+			if (mIsInStage[mIteration.first][mIteration.second]) {
+				if (deleteStage(mStageNames[mIteration.first][mIteration.second])) {
+					RemakeStageVector();
+					
+				}
+			}
+		}
+	}
+
 }
 
 
@@ -417,7 +428,58 @@ void StageSelect::RemakeStageVector() {
 	}
 
 	// 初期化
-	mIteration = pair(0, 0); 
+	/*mIteration = pair(0, 0);
 	mUpLine = 0;
-	mDownLine = mDisplayVerticalSize - 1;
+	mDownLine = mDisplayVerticalSize - 1;*/
+}
+
+bool StageSelect::deleteStage(String stageName) {
+
+
+	// ステージ名リストの更新
+	std::vector<String> stageNames;
+	{
+		{
+			Deserializer<BinaryReader> reader{ U"Stage/StageNames.bin" };
+			if (reader) {
+				reader(stageNames);
+				
+			}
+			else {
+				stageNames.clear();
+				Print << U"Failed to open reader";
+
+			}
+		}
+	}
+	auto iter = std::find(stageNames.begin(), stageNames.end(), stageName);
+
+
+	// ディレクトリ・ファイルが存在するか
+	if (!FileSystem::Exists(U"Stage/" + stageName)) {
+		Print << U"Stage" + stageName + U"is not exist";
+		return false;
+	}
+	if (iter == stageNames.end()) {
+		Print << U"Stage name " + stageName + U" is not found in StageNames.bin";
+		return false;
+	}
+
+
+	
+	// ステージ名リストから削除
+	
+
+
+	// ステージディレクトリの削除
+	FileSystem::Remove(U"Stage/" + stageName);
+	if (Serializer<BinaryWriter> writer{ U"Stage/StageNames.bin" }) {
+		writer(stageNames);
+	}
+	else {
+		Print << U"Failed to open writer";
+		return false;
+	}
+	return true;
+
 }

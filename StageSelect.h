@@ -25,6 +25,7 @@ private:
 	void UpdateStageSelect_CreateStage();
 	bool InitializeStages();   //Initialize mStageNames
 	void RemakeStageVector(); //mStageNamesを再構築する
+	bool deleteStage(String stageName);
 
 	InputGroup inputUp;
 	InputGroup inputDown;
@@ -32,6 +33,7 @@ private:
 	InputGroup inputRight;
 	InputGroup inputDecision;
 	InputGroup inputBack;
+	InputGroup inputDelete;
 
 	bool mIsinputUp;
 	bool mIsinputDown;
