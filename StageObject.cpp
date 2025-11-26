@@ -224,9 +224,6 @@ void StageObject::ShutdownStageMenu_CreateStage() {
 float ConvertToSpeed(float barMin, float barWidth, float pos) {
 	return (pos - barMin) / barWidth * 100.0f;
 }
-int ConvertToInt(float f) {
-	return (int)f;
-}
 
 
 //Game///////////////////////////////////////////////////////////////

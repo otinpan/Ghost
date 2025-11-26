@@ -322,7 +322,14 @@ void StageSelect::draw_CreateStage() {
 					, GetScreenWidth() * mStageRectWidth / 2.0f
 					, GetScreenHeight() * mStageRectHeight / 2.0f
 				)(mStageTextures[i][j]).draw();
-			
+
+				// stageの名前
+				mStageNameFont(mStageNames[i][j])
+					.draw(Arg::center(
+						ConvertToView(Vec2(mStagePoses[i][j].x, mStagePoses[i][j].y - mStageRectHeight/1.5f))),
+						ColorF(1, 1, 1)
+				);
+
 			}
 
 		}
@@ -350,6 +357,7 @@ void StageSelect::draw_CreateStage() {
 			0.005,
 			ColorF(1, 1, 0));
 	}
+	
 
 	// サイドバー
 	DrawRoundRect(mSideBarPos, mSideBarWidth, mSideBarHeight, mSideBarWidth / 4.0f, ColorF(1, 1, 1));

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include"Parent.h"
 #include"Actor.h"
+
 using namespace std;
 
 class StageSelect {
@@ -92,7 +93,7 @@ private:
 
 	bool mIsRunning;
 
-	Font StageSelectFont;
+	Font mStageNameFont{ ConvertToInt((float)0.05 * GetScreenHeight()) };
 
 	Parent::SeqID mSeqID;
 

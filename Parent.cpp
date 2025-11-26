@@ -232,3 +232,6 @@ Circle GetViewCircle(Vec2 pos, float rad) {
 }
 
 
+int ConvertToInt(float f) {
+	return (int)f;
+}

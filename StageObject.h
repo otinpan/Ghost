@@ -190,4 +190,4 @@ private:
 };
 
 float ConvertToSpeed(float barMin,float barWidth,float pos);
-int ConvertToInt(float f);
+
