@@ -664,7 +664,7 @@ bool Stage::SaveStage() {
 String Stage::RegisterStageName() {
 	std::vector<s3d::String> stageNames;
 
-	// 逆直列化を安全に
+	// 既存のステージ名リスト
 	if (Deserializer<BinaryReader> reader{ U"Stage/StageNames.bin" }) {
 		try {
 			reader(stageNames);

@@ -96,5 +96,6 @@ private:
 
 	Parent::SeqID mSeqID;
 
-	
+
+	void ResetStageData();
 };

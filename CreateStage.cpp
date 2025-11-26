@@ -33,7 +33,7 @@ bool CreateStage::Initialize() {
 
 void CreateStage::update(Parent* parent) {
 	if (mIsRunning) {
-		ClearPrint();
+		//ClearPrint();
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 		}

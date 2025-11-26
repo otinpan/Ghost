@@ -94,6 +94,7 @@ void StageSelect::Initialize_CreateStage() {
 	CreateStageRectSize = Vec2(mStageRectWidth/1.3f, mStageRectHeight/1.3f);
 
 	RemakeStageVector();
+
 }
 
 bool StageSelect::InitializeStages() {
@@ -102,16 +103,7 @@ bool StageSelect::InitializeStages() {
 
 void StageSelect::update(Parent* parent) {
 	if (mIsRunning) {
-		ClearPrint();
-		// ステージ名の表示
-		{
-			Deserializer<BinaryReader> reader{ U"Stage/StageNames.bin" };
-			if (not reader) {
-			//	throw Error{ U"Failed to load Stage/StageNames.bin" };
-			}
-			std::vector<String> stageNames;
-			Print << stageNames;
-		}
+		//ClearPrint();
 
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
@@ -435,7 +427,7 @@ void StageSelect::RemakeStageVector() {
 
 bool StageSelect::deleteStage(String stageName) {
 
-
+	
 	// ステージ名リストの更新
 	std::vector<String> stageNames;
 	{
@@ -456,20 +448,17 @@ bool StageSelect::deleteStage(String stageName) {
 
 
 	// ディレクトリ・ファイルが存在するか
-	if (!FileSystem::Exists(U"Stage/" + stageName)) {
+	/*if (!FileSystem::Exists(U"Stage/" + stageName)) {
 		Print << U"Stage" + stageName + U"is not exist";
 		return false;
-	}
+	}*/
 	if (iter == stageNames.end()) {
 		Print << U"Stage name " + stageName + U" is not found in StageNames.bin";
 		return false;
 	}
-
-
 	
 	// ステージ名リストから削除
-	
-
+	stageNames.erase(iter);
 
 	// ステージディレクトリの削除
 	FileSystem::Remove(U"Stage/" + stageName);
@@ -482,4 +471,48 @@ bool StageSelect::deleteStage(String stageName) {
 	}
 	return true;
 
+}
+
+void StageSelect::ResetStageData() {
+	// StageNames.binをクリーン
+	vector<String> stageNames;
+	{
+		Deserializer<BinaryReader> reader{ U"Stage/StageNames.bin" };
+		if (reader) {
+			reader(stageNames);
+		}
+		stageNames.clear();
+	}
+	{
+		Serializer<BinaryWriter> writer{ U"Stage/StageNames.bin" };
+		if (writer) {
+			writer(stageNames);
+		}
+	}
+
+	// Stageフォルダの全てのステージデータをクリーン
+	vector<FilePath> paths = FileSystem::DirectoryContents(U"Stage/", Recursive::No);
+	int s = paths.size();
+	for (int i = 0; i < s; i++) {
+		if (FileSystem::FileName(paths[i]) == U"NoImage.png"
+			|| FileSystem::FileName(paths[i]) == U"StageNames.bin") {
+			continue;
+		}
+		// 削除
+		FileSystem::Remove(paths[i]);
+	}
+
+	// 確認
+	/* {
+		vector<String> sn;
+		Deserializer<BinaryReader> reader{ U"Stage/StageNames.bin" };
+		if (reader) {
+			reader(sn);
+		}
+		Print << sn;
+	}*/
+
+	// 初期化
+	RemakeStageVector();
+	//Print << mStageNames;
 }
