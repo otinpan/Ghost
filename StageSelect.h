@@ -96,6 +96,7 @@ private:
 	bool mIsRunning;
 
 	Font mStageNameFont{ ConvertToInt((float)0.05 * GetScreenHeight()) };
+	Font mCreateStageFont{ ConvertToInt((float)0.05 * GetScreenHeight()) };
 
 	Parent::SeqID mSeqID;
 

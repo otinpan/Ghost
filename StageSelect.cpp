@@ -340,8 +340,8 @@ void StageSelect::draw_CreateStage() {
 				// stageの名前
 				mStageNameFont(mStageNames[i][j])
 					.draw(Arg::center(
-						ConvertToView(Vec2(mStagePoses[i][j].x, mStagePoses[i][j].y - mStageRectHeight/1.5f))),
-						ColorF(1, 1, 1)
+						ConvertToView(Vec2(mStagePoses[i][j].x, mStagePoses[i][j].y - mStageRectHeight/1.7f))),
+						ColorF(0, 0, 0)
 				);
 
 			}
@@ -351,6 +351,11 @@ void StageSelect::draw_CreateStage() {
 
 	// ステージ作成の選択
 	DrawRect(CreateStageRectPos, CreateStageRectSize.x, CreateStageRectSize.y, ColorF(0.5f, 0.5f, 0.5f));
+	mCreateStageFont(U"Create!").draw(
+	Arg::center(ConvertToView(Vec2((float)CreateStageRectPos.x, (float)CreateStageRectPos.y))),
+	ColorF(1, 1, 1)
+	);
+
 
 	if (mIsCreateStageSelected) {
 		DrawRectFrame(
