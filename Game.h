@@ -5,7 +5,7 @@
 
 class Game {
 public:
-	Game();
+	Game(String selectedStageName);
 	~Game();
 	void update(class Parent*);
 	void draw();
@@ -90,6 +90,7 @@ private:
 	Parent::SeqID mSeqID;
 
 	class Stage* mStage;
+	String mSelectedStageName; // 選択されたステージの名前
 	class Escapee_Game* mEscapee1;
 	class Escapee_Game* mEscapee2;
 	class Escapee_Game* mEscapee3;

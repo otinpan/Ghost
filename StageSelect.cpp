@@ -2,18 +2,44 @@
 #include "Parent.h"
 using namespace std;
 
-StageSelect::StageSelect()
+StageSelect::StageSelect(bool isStageSelectGame)
 	:mSeqID(Parent::SEQ_NONE)
 	, mIsRunning(true)
+	, mIsStageSelectGame(isStageSelectGame)
 {
-	Initialize_CreateStage();
+	if (mIsStageSelectGame) {
+		Initialize_Game();
+	}
+	else {
+		Initialize_CreateStage();
+	}
 }
 
 StageSelect::~StageSelect() {
 
 }
 
-void StageSelect::Initialize_CreateStage() {
+void StageSelect::update(Parent* parent) {
+	if (mIsRunning) {
+		//ClearPrint();
+
+		if (mSeqID != Parent::SEQ_NONE) {
+			setStageName(parent, mSelectedStageName); //選択中のステージの名前をpaerntに渡す
+			moveTo(parent, mSeqID);
+		}
+		ProcessInput();
+		if (mIsStageSelectGame) {
+			UpdateStageSelect_Game();
+			draw_Game();
+		}
+		else {
+			UpdateStageSelect_CreateStage();
+			draw_CreateStage();
+		}
+	}
+}
+
+void StageSelect::Initialize() {
 	Scene::SetBackground(ColorF(200.0f / 255.0f));
 
 	inputUp = KeyW;
@@ -77,7 +103,7 @@ void StageSelect::Initialize_CreateStage() {
 	mStageRectHeight = mStageEachHeight * 3.0 / 4.0;
 
 	mTopPos = 0.0f;
-	MaxTopPos = mStageEachHeight * (mVerticalSize-3);
+	MaxTopPos = mStageEachHeight * (mVerticalSize - 3);
 	MaxDownPos = MaxTopPos + 2.0f;
 
 	minputUpTime = minputDownTime = minputRightTime = minputLeftTime = 0.0f;
@@ -89,11 +115,16 @@ void StageSelect::Initialize_CreateStage() {
 	mSideBarHeight = 2.0f / MaxDownPos * (SideBarUp - SideBarDown);
 	mSideBarWidth = 0.03f;
 
+	// フォルダからステージ名を読み込み
+	RemakeStageVector();
+}
+
+void StageSelect::Initialize_CreateStage() {
+	Initialize();
+
 	//ステージ作成の位置
 	CreateStageRectPos = Vec2(mStageRight - mStageRectWidth*3/4 , mStageUp + mStageRectHeight/2);
 	CreateStageRectSize = Vec2(mStageRectWidth/1.3f, mStageRectHeight/1.3f);
-
-	RemakeStageVector();
 
 }
 
@@ -101,19 +132,7 @@ bool StageSelect::InitializeStages() {
 	return true;
 }
 
-void StageSelect::update(Parent* parent) {
-	if (mIsRunning) {
-		//ClearPrint();
 
-		if (mSeqID != Parent::SEQ_NONE) {
-			setStageName(parent, mSelectedStageName); //選択中のステージの名前をpaerntに渡す
-			moveTo(parent, mSeqID);
-		}
-		ProcessInput();
-		UpdateStageSelect_CreateStage();
-		draw_CreateStage();
-	}
-}
 
 void StageSelect::ProcessInput() {
 
@@ -285,6 +304,10 @@ void StageSelect::UpdateStageSelect_CreateStage() {
 		}
 	}
 
+	// 戻る
+	if (inputBack.down()) {
+		mSeqID = Parent::SEQ_MAINMENU;
+	}
 }
 
 
@@ -383,13 +406,6 @@ void StageSelect::draw_CreateStage() {
 	
 }
 
-void StageSelect::UpdateStageSelect_Game() {
-
-}
-
-void StageSelect::draw_Game() {
-
-}
 
 void StageSelect::Shutdown() {
 
@@ -546,4 +562,171 @@ void StageSelect::ResetStageData() {
 	// 初期化
 	RemakeStageVector();
 	//Print << mStageNames;
+}
+
+
+// Game //////////////////////////////////////////////////////////////////////////
+void StageSelect::Initialize_Game() {
+	Initialize();
+}
+
+void StageSelect::UpdateStageSelect_Game() {
+	float deltaTime = Scene::DeltaTime();
+
+	// 現在選択中のstageの名前
+	if (mIsCreateStageSelected) {
+		mSelectedStageName = U"";
+	}
+	else if (mIsInStage[mIteration.first][mIteration.second]) {
+		mSelectedStageName = mStageNames[mIteration.first][mIteration.second];
+	}
+	else {
+		mSelectedStageName = U"";
+	}
+
+	// 入力
+	if (inputUp.down()) {
+		if (mIteration.first == 0) {
+			// 何もしない
+		}
+		else if (mIteration.first != mUpLine) { //表示の一番上以外の行
+			mIteration.first--;
+		}
+		else {
+			if (mUpLine > 0) {
+				mIteration.first--;
+				UpdateRectPos(-1);
+			}
+		}
+		mIsinputUp = true;
+		minputUpTime = 0.0f;
+	}
+	if (inputUp.pressed()) {
+		if (!mIsinputUp) {
+			if (mIteration.first == 0) {
+				// 何もしない
+			}
+			else if (mIteration.first != mUpLine) { //表示の一番上以外の行
+				mIteration.first--;
+			}
+			else {
+				if (mUpLine > 0) {
+					mIteration.first--;
+					UpdateRectPos(-1);
+				}
+			}
+		}
+		UpdateinputCooltime(mIsinputUp, minputUpTime, deltaTime);
+	}
+	if (inputDown.down()) {
+		if (mIteration.first != mDownLine) {
+			mIteration.first++;
+		}
+		else {
+			if (mDownLine < mVerticalSize - 1) {
+				mIteration.first++;
+				UpdateRectPos(1);
+			}
+		}
+		mIsinputDown = true;
+		minputDownTime = 0.0f;
+
+	}
+	if (inputDown.pressed()) {
+		if (!mIsinputDown) {
+			if (mIteration.first != mDownLine) {
+				mIteration.first++;
+			}
+			else {
+				if (mDownLine < mVerticalSize - 1) {
+					mIteration.first++;
+					UpdateRectPos(1);
+				}
+			}
+		}
+		UpdateinputCooltime(mIsinputDown, minputDownTime, deltaTime);
+
+	}
+	if (inputRight.down()) {
+		if (mIteration.second < mSideSize - 1) {
+			mIteration.second++;
+		}
+		mIsinputRight = true;
+		minputRightTime = 0.0f;
+	}
+	if (inputRight.pressed()) {
+		if (!mIsinputRight) {
+			if (mIteration.second < mSideSize - 1) mIteration.second++;
+		}
+		UpdateinputCooltime(mIsinputRight, minputRightTime, deltaTime);
+	}
+
+	if (inputLeft.down()) {
+		if (mIteration.second > 0) {
+			mIteration.second--;
+		}
+		mIsinputLeft = true;
+		minputLeftTime = 0.0f;
+	}
+	if (inputLeft.pressed()) {
+		if (!mIsinputLeft) {
+			if (mIteration.second > 0)mIteration.second--;
+		}
+		UpdateinputCooltime(mIsinputLeft, minputLeftTime, deltaTime);
+	}
+
+	//SideBar
+	mSideBarUp = SideBarUp - (float)mTopPos / MaxDownPos * (SideBarUp - SideBarDown);
+	mSideBarPos = Vec2(0.9, mSideBarUp - mSideBarHeight / 2.0f);
+
+	// 決定
+	if (inputDecision.down()) {
+		if (mIsInStage[mIteration.first][mIteration.second]) {
+			// ステージをロード
+			mSeqID = Parent::SEQ_GAME;
+		}
+	}
+
+	// 戻る
+	if (inputBack.down()) {
+		mSeqID = Parent::SEQ_MAINMENU;
+	}
+}
+
+void StageSelect::draw_Game() {
+	for (int i = 0; i < mVerticalSize; i++) {
+		for (int j = 0; j < mSideSize; j++) {
+			DrawRect(mStagePoses[i][j], mStageRectWidth, mStageRectHeight, ColorF((float)i / mVerticalSize));
+			if (mIsInStage[i][j]) {
+				RectF(
+					Arg::center(ConvertToView(mStagePoses[i][j]))
+					, GetScreenWidth() * mStageRectWidth / 2.0f
+					, GetScreenHeight() * mStageRectHeight / 2.0f
+				)(mStageTextures[i][j]).draw();
+
+				// stageの名前
+				mStageNameFont(mStageNames[i][j])
+					.draw(Arg::center(
+						ConvertToView(Vec2(mStagePoses[i][j].x, mStagePoses[i][j].y - mStageRectHeight / 1.7f))),
+						ColorF(0, 0, 0)
+					);
+
+			}
+
+		}
+	}
+
+	
+	
+	DrawRectFrame(
+		mStagePoses[mIteration.first][mIteration.second],
+		mStageRectWidth,
+		mStageRectHeight,
+		0,
+		0.005,
+		ColorF(1, 1, 0));
+
+	// サイドバー
+	DrawRoundRect(mSideBarPos, mSideBarWidth, mSideBarHeight, mSideBarWidth / 4.0f, ColorF(1, 1, 1));
+
 }

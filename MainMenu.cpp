@@ -3,7 +3,7 @@
 MainMenu::MainMenu()
 	:mSeqID(Parent::SEQ_NONE)
 	,mIsRunning(true)
-	,mSelect(MainMenu::SelectGame)
+	,mSelect(MainSelect::SELECT_GAME)
 {
 	Initialize();
 }
@@ -45,6 +45,7 @@ void MainMenu::update(Parent* parent) {
 	if (mIsRunning) {
 		ClearPrint();
 		if (mSeqID != Parent::SEQ_NONE) {
+			setMode(parent);
 			moveTo(parent, mSeqID);
 		}
 		ProcessInput();
@@ -59,45 +60,45 @@ void MainMenu::ProcessInput() {
 
 void MainMenu::UpdateMainMenu() {
 	switch (mSelect) {
-	case MainSelect::SelectGame:
+	case MainSelect::SELECT_GAME:
 		if (inputRight.down()) {
-			mSelect = MainSelect::SelectCreateStage;
+			mSelect = MainSelect::SELECT_CREATESTAGE;
 		}
 		if (inputDown.down()) {
-			mSelect = MainSelect::SelectSubMenu;
+			mSelect = MainSelect::SELECT_SUBMENU;
 		}
 		break;
-	case MainSelect::SelectCreateStage:
+	case MainSelect::SELECT_CREATESTAGE:
 		if (inputLeft.down()) {
-			mSelect = MainSelect::SelectGame;
+			mSelect = MainSelect::SELECT_GAME;
 		}
 		if (inputDown.down()) {
-			mSelect = MainSelect::SelectSubMenu;
+			mSelect = MainSelect::SELECT_SUBMENU;
 		}
 		break;
-	case MainSelect::SelectSubMenu:
+	case MainSelect::SELECT_SUBMENU:
 		if (inputUp.down() || inputLeft.down()) {
-			mSelect = MainMenu::SelectGame;
+			mSelect = MainSelect::SELECT_GAME;
 		}
 		if (inputRight.down()) {
-			mSelect = MainMenu::SelectCreateStage;
+			mSelect = MainSelect::SELECT_CREATESTAGE;
 		}
 		break;
 	}
 
 
 	switch (mSelect) {
-	case MainSelect::SelectGame:
+	case MainSelect::SELECT_GAME:
 		if (inputDecision.down()) {
-			mSeqID = Parent::SEQ_GAME;
+			mSeqID = Parent::SEQ_STAGESELECT;
 		}
 		break;
-	case MainMenu::SelectCreateStage:
+	case MainSelect::SELECT_CREATESTAGE:
 		if (inputDecision.down()) {
-			mSeqID = Parent::SEQ_CREATESTAGE;
+			mSeqID = Parent::SEQ_STAGESELECT;
 		}
 		break;
-	case MainMenu::SelectSubMenu:
+	case MainSelect::SELECT_SUBMENU:
 		if (inputDecision.down()) {
 			mSeqID = Parent::SEQ_SUBMENU;
 		}
@@ -111,13 +112,13 @@ void MainMenu::draw() {
 	DrawRoundRect(mSubMenuRectCenter, mSelectWidth, mSelectHeight, mRectRound, mSubMenuRectColor);
 
 	switch (mSelect) {
-	case MainSelect::SelectGame:
+	case MainSelect::SELECT_GAME:
 		DrawRoundRectFrame(mGameRectCenter, mSelectWidth, mSelectHeight, mRectRound, 0, mSelectHeight / 40.0f, ColorF(1));
 		break;
-	case MainSelect::SelectCreateStage:
+	case MainSelect::SELECT_CREATESTAGE:
 		DrawRoundRectFrame(mCreateStageRectCenter, mSelectWidth, mSelectHeight, mRectRound, 0, mSelectHeight / 40.0f, ColorF(1));
 		break;
-	case MainSelect::SelectSubMenu:
+	case MainSelect::SELECT_SUBMENU:
 		DrawRoundRectFrame(mSubMenuRectCenter, mSelectWidth, mSelectHeight, mRectRound, 0, mSelectHeight / 40.0f, ColorF(1));
 		break;
 	}
@@ -145,4 +146,18 @@ void MainMenu::moveTo(Parent* parent, Parent::SeqID id) {
 	if (id == Parent::SEQ_GAMERESULT)parent->moveTo(Parent::SEQ_GAMERESULT, Parent::SEQ_MAINMENU);
 	if (id == Parent::SEQ_CHANGEWINDOWSIZE)parent->moveTo(Parent::SEQ_CHANGEWINDOWSIZE, Parent::SEQ_MAINMENU);
 	if (id == Parent::SEQ_SUBMENU)parent->moveTo(Parent::SEQ_SUBMENU, Parent::SEQ_MAINMENU);
+}
+
+void MainMenu::setMode(Parent* parent) {
+	switch (mSelect) {
+	case SELECT_GAME:
+		parent->setStageSelectGame(true);
+		break;
+	case SELECT_CREATESTAGE:
+		parent->setStageSelectGame(false);
+		break;
+	default:
+		parent->setStageSelectGame(true);
+		break;
+	}
 }

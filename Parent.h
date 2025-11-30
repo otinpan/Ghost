@@ -21,6 +21,7 @@ public:
 
 	void moveTo(SeqID next, SeqID pre);
 	void setStageName(String stageName);
+	void setStageSelectGame(bool isStageSelectGame) { mIsStageSelectGame = isStageSelectGame; }
 
 	class MainMenu*& GetMainMenu() { return mMainMenu; }
 	class SubMenu*& GetSubMenu() { return mSubMenu; }
@@ -47,6 +48,7 @@ private:
 	SeqID mPre;
 
 	String mSelectedStageName;
+	bool mIsStageSelectGame;
 
 	void SafeDelete();
 	

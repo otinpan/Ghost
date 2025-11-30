@@ -10,9 +10,9 @@ public:
 	~MainMenu();
 
 	enum MainSelect {
-		SelectGame,
-		SelectCreateStage,
-		SelectSubMenu,
+		SELECT_GAME,
+		SELECT_CREATESTAGE,
+		SELECT_SUBMENU,
 	};
 
 	void update(class Parent*);
@@ -24,6 +24,7 @@ public:
 
 	void moveTo(Parent* parent, Parent::SeqID id);
 	void SetSeqID(Parent::SeqID id) { mSeqID = id; }
+	void setMode(Parent* parent); // StageSelectでGame用かCreateStage用か
 
 private:
 	void ProcessInput();

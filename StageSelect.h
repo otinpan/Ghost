@@ -6,13 +6,14 @@ using namespace std;
 
 class StageSelect {
 public:
-	StageSelect();
+	StageSelect(bool mIsStageSelectGame);
 	~StageSelect();
 
 	void update(class Parent*);
 	void draw_Game();
 	void draw_CreateStage();
 
+	void Initialize();
 	void Initialize_CreateStage();
 	void Initialize_Game();
 	void Shutdown();
@@ -46,6 +47,7 @@ private:
 	float minputRightTime;
 	float minputLeftTime;
 
+	bool mIsStageSelectGame; // Game用のStageSelect画面か
 
 	vector<vector<Texture>> mStageTextures; //Stageのテクスチャ
 	vector<vector<String>> mStageNames; //Stageの名前

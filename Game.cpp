@@ -10,12 +10,13 @@
 #include"DrawingComponent.h"
 
 
-Game::Game()
+Game::Game(String selectedStageName)
 	:mUpdatingActors(false)
 	, mIsRunning(true)
 	, mIsHitstop(false)
 	, HitstopTime(0.0f)
 	, mSeqID(Parent::SEQ_NONE)
+	, mSelectedStageName(selectedStageName)
 {
 	Initialize();
 }
@@ -164,7 +165,8 @@ void Game::draw() {
 
 void Game::LoadData() {
 	mStage = new Stage(1.92f,1.92f);
-	mStage->Initialize_Game(this,U"Stage/Stage1.bin");
+	const FilePath path = U"Stage/" + mSelectedStageName + U"/Data.bin";
+	mStage->Initialize_Game(this,path);
 	mGhost = new Ghost_Game(Vec2({(float)mStage->GetLeft() +
 		mStage->GetGhostIteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
 		(float)mStage->GetUp() -
