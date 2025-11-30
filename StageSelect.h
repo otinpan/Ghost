@@ -19,6 +19,7 @@ public:
 
 	void moveTo(Parent* parent, Parent::SeqID id);
 	void SetSeqID(Parent::SeqID id) { mSeqID = id; }
+	void setStageName(Parent* parent,String stageName);
 
 private:
 	void ProcessInput();
@@ -48,6 +49,7 @@ private:
 
 	vector<vector<Texture>> mStageTextures; //Stageのテクスチャ
 	vector<vector<String>> mStageNames; //Stageの名前
+	String mSelectedStageName; //現在選択中のstageの名前
 	vector<vector<bool>> mIsInStage;  //Stageが入っているか
 	vector<vector<Vec2>> mStagePoses; //Stageの位置(中心座標)
 	int mVerticalSize;

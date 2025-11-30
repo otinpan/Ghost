@@ -57,7 +57,7 @@ void Parent::update() {
 		break;
 	case SEQ_CREATESTAGE:
 		SafeDelete();
-		mCreateStage = new CreateStage();
+		mCreateStage = new CreateStage(mSelectedStageName);
 		break;
 	case SEQ_GAMERESULT:
 		SafeDelete();
@@ -115,6 +115,10 @@ void Parent::SafeDelete() {
 void Parent::moveTo(SeqID next,SeqID pre) {
 	mNext = next;
 	mPre = pre;
+}
+
+void Parent::setStageName(String stageName) {
+	mSelectedStageName = stageName;
 }
 
 

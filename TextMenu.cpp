@@ -110,7 +110,9 @@ bool TextMenu::EndEdit_CreateStage() {
 	//もし名前が存在するなら
 	auto iter = std::find(stageNames.begin(), stageNames.end(), mText);
 	if (iter != stageNames.end()) {
-		return false;
+		if (mCreateStage->GetSelectedStageName() == U"") {
+			return false;
+		}
 	}
 
 	mCreateStage->SetStageName(mText);

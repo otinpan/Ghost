@@ -7,10 +7,11 @@
 #include"SquareComponent.h"
 #include"TextMenu.h"
 
+
 class CreateStage
 {
 public:
-	CreateStage();
+	CreateStage(String stageName);
 	~CreateStage();
 
 	void update(class Parent*);
@@ -42,6 +43,7 @@ public:
 
 	void SetStageName(const String& stagename);
 	const String& GetStageName() const{ return mStageName; }
+	const String& GetSelectedStageName() const { return mSelectedStageName; }
 
 
 	class Hand* &GetHand() { return mHand; }
@@ -84,7 +86,8 @@ private:
 
 	Parent::SeqID mSeqID;
 
-	String mStageName;
+	String mStageName; // 作っているステージの名前
+	String mSelectedStageName; // StageMenuから選択されたステージの名前
 
 	class Hand* mHand;
 	class StageObject* mStageObject;

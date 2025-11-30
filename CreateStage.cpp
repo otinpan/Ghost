@@ -11,12 +11,13 @@
 #include"DrawingComponent.h"
 #include"Common.h"
 
-CreateStage::CreateStage()
+CreateStage::CreateStage(String stageName)
 	:mUpdatingActors(false)
 	, mIsRunning(true)
 	, mSeqID(Parent::SEQ_NONE)
 	, mIsMoveTo(false)
 	, mCanSave(false)
+	, mSelectedStageName(stageName)
 {
 	Initialize();
 }
@@ -125,11 +126,18 @@ void CreateStage::LoadData() {
 	mHand = new Hand();
 	mHand->InitializeActor_CreateStage(this);
 	mStage = new Stage(1.6f, 1.5f);
-	mStage->Initialize_CreateStage(this);
+	if (mSelectedStageName == U"") {
+		mStage->Initialize_CreateStage(this);
+		mStageName = U"StageName";
+	}
+	else {
+		const FilePath path = U"Stage/" + mSelectedStageName + U"/Data.bin";
+		mStage->Initialize_CreateStage(this, path);
+		mStageName = mSelectedStageName;
+	}
 	mStageMenu = new StageMenu();
 	mStageMenu->Initialize_CreateStage(this);
 	mShouldCloseTextMenu = false;
-	mStageName = U"StageName";
 }
 
 void CreateStage::UnloadData() {

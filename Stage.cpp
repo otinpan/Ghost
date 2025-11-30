@@ -146,8 +146,8 @@ void Stage::Initialize_CreateStage(CreateStage* createStage, FilePath fileName) 
 	reader(mDetails);
 	reader(mCandleDetails);
 
+	
 
-	Array<int> mGoalCandidates;
 
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
@@ -155,36 +155,15 @@ void Stage::Initialize_CreateStage(CreateStage* createStage, FilePath fileName) 
 				mStageObjects[i][j] = 0;
 			}
 			else {
-				if (get<0>(mDetails[i][j]) == StageObject::Attribute::Ghost) {
-					mGhostIteration = pair(i, j);
-					mGhostSpeed = get<5>(mDetails[i][j]);
-				}
-				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee1) {
-					mEscapee1Iteration = pair(i, j);
-					mEscapee1Speed = get<5>(mDetails[i][j]);
-				}
-				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee2) {
-					mEscapee2Iteration = pair(i, j);
-					mEscapee2Speed = get<5>(mDetails[i][j]);
-				}
-				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee3) {
-					mEscapee3Iteration = pair(i, j);
-					mEscapee3Speed = get<5>(mDetails[i][j]);
-				}
-				else {
-					SetNewStageObject_Attribute(i, j, get<0>(mDetails[i][j]));
-					mStageObjects[i][j]->SetClockwise(get<1>(mDetails[i][j]));
-					mStageObjects[i][j]->SetPatrolRange(get<2>(mDetails[i][j]));
-					mStageObjects[i][j]->SetBatterySize(get<3>(mDetails[i][j]));
-					mStageObjects[i][j]->SetTreasure(get<4>(mDetails[i][j]));
-					mStageObjects[i][j]->SetSpeed(get<5>(mDetails[i][j]));
-					mStageObjects[i][j]->SetIteration(pair(i, j));
-					mStageObjects[i][j]->InitializeStage_Game();
-				}
+				SetNewStageObject_Attribute(i, j, get<0>(mDetails[i][j]));
+				mStageObjects[i][j]->SetClockwise(get<1>(mDetails[i][j]));
+				mStageObjects[i][j]->SetPatrolRange(get<2>(mDetails[i][j]));
+				mStageObjects[i][j]->SetBatterySize(get<3>(mDetails[i][j]));
+				mStageObjects[i][j]->SetTreasure(get<4>(mDetails[i][j]));
+				mStageObjects[i][j]->SetSpeed(get<5>(mDetails[i][j]));
+				mStageObjects[i][j]->SetIteration(pair(i, j));
+				
 			}
-			mCanBeGone[i][j] = get<6>(mDetails[i][j]);
-			if (mCanBeGone[i][j])mGoalCandidates << (i * mVerticalSize + j);
-
 
 		}
 	}
@@ -193,7 +172,6 @@ void Stage::Initialize_CreateStage(CreateStage* createStage, FilePath fileName) 
 		 mRectWidth / 3,
 		 mRectHeight / 3,
 		 mRectHeight / 6);
-	InitCandle->InitializeStageObject_Game(mGame);
 	for (int i = 0; i < mCandles.size(); i++) {
 		if (!get<0>(mCandleDetails[i]))continue;
 		InitCandle->SetPosition(get<1>(mCandleDetails[i]));

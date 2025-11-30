@@ -20,6 +20,7 @@ public:
 	void update();
 
 	void moveTo(SeqID next, SeqID pre);
+	void setStageName(String stageName);
 
 	class MainMenu*& GetMainMenu() { return mMainMenu; }
 	class SubMenu*& GetSubMenu() { return mSubMenu; }
@@ -44,6 +45,8 @@ private:
 
 	SeqID mNext;
 	SeqID mPre;
+
+	String mSelectedStageName;
 
 	void SafeDelete();
 	

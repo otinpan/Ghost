@@ -106,6 +106,7 @@ void StageSelect::update(Parent* parent) {
 		//ClearPrint();
 
 		if (mSeqID != Parent::SEQ_NONE) {
+			setStageName(parent, mSelectedStageName); //選択中のステージの名前をpaerntに渡す
 			moveTo(parent, mSeqID);
 		}
 		ProcessInput();
@@ -120,6 +121,17 @@ void StageSelect::ProcessInput() {
 
 void StageSelect::UpdateStageSelect_CreateStage() {
 	float deltaTime = Scene::DeltaTime();
+
+	// 現在選択中のstageの名前
+	if (mIsCreateStageSelected) {
+		mSelectedStageName = U"";
+	}
+	else if (mIsInStage[mIteration.first][mIteration.second]) {
+		mSelectedStageName = mStageNames[mIteration.first][mIteration.second];
+	}
+	else {
+		mSelectedStageName = U"";
+	}
 
 	// 入力
 	if (inputUp.down()) {
@@ -255,6 +267,8 @@ void StageSelect::UpdateStageSelect_CreateStage() {
 		else {
 			if (mIsInStage[mIteration.first][mIteration.second]) {
 				// ステージをロード
+				mSeqID = Parent::SEQ_CREATESTAGE;
+				
 			}
 		}
 	}
@@ -383,6 +397,10 @@ void StageSelect::moveTo(Parent* parent, Parent::SeqID id) {
 	if (id == Parent::SEQ_GAME)parent->moveTo(Parent::SEQ_GAME, Parent::SEQ_STAGESELECT);
 	if (id == Parent::SEQ_GAMERESULT)parent->moveTo(Parent::SEQ_GAMERESULT, Parent::SEQ_STAGESELECT);
 	if (id == Parent::SEQ_CHANGEWINDOWSIZE)parent->moveTo(Parent::SEQ_CHANGEWINDOWSIZE, Parent::SEQ_STAGESELECT);
+}
+
+void StageSelect::setStageName(Parent* parent,String stageName) {
+	parent->setStageName(stageName);
 }
 
 void StageSelect::RemakeStageVector() {
