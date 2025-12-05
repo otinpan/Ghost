@@ -11,6 +11,8 @@ public:
 
 		void Update_Game(float deltaTime);
 
+		Vec2 GetPos0() const { return mPos0; }
+
 private:
 	class StageObject* mOwner;
 	class TriangleComponent* mLightTri;

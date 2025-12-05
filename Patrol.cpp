@@ -47,7 +47,7 @@ void Patrol::InitializeStageMenu_CreateStage() {
 		mBarCenter.y
 	);
 
-	mBarSC_CreateStage = new SquareComponent(this,200,true);
+	mBarSC_CreateStage = new SquareComponent(this,200, DrawingComponent::DrawState::UNAFFECTED);
 	mBarSC_CreateStage->InitializeDrawing_CreateStage(mBarPos,
 		mBarWidth / 25.0f, GetCreateStage()->GetStageMenu()->GetMenuHeight() / 20.0f);
 	mBarSC_CreateStage->SetColor(ColorF(0, 0, 0));
@@ -77,28 +77,28 @@ void Patrol::InitializeStageMenu_CreateStage() {
 	);
 
 
-	mUpCC = new CircleComponent(this,10,false);
+	mUpCC = new CircleComponent(this,10, DrawingComponent::DrawState::UNAFFECTED);
 	mUpCC->InitializeDrawing_CreateStage();
 	mUpCC->SetCenter(mUpTriPos);
 	mUpCC->SetRadius(mTriLength);
 	mUpCC->SetColor(ColorF(1.0, 1.0, 0.0, 0));
 	mUpCC->SetIsDraw(false);
 
-	mDownCC = new CircleComponent(this,10,false);
+	mDownCC = new CircleComponent(this,10, DrawingComponent::DrawState::UNAFFECTED);
 	mDownCC->InitializeDrawing_CreateStage();
 	mDownCC->SetCenter(mDownTriPos);
 	mDownCC->SetRadius(mTriLength);
 	mDownCC->SetColor(ColorF(1.0, 1.0, 0.0, 0));
 	mDownCC->SetIsDraw(false);
 
-	mRightCC = new CircleComponent(this,10,false);
+	mRightCC = new CircleComponent(this,10, DrawingComponent::DrawState::UNAFFECTED);
 	mRightCC->InitializeDrawing_CreateStage();
 	mRightCC->SetCenter(mRightTriPos);
 	mRightCC->SetRadius(mTriLength);
 	mRightCC->SetColor(ColorF(1.0, 1.0, 0.0, 0));
 	mRightCC->SetIsDraw(false);
 
-	mLeftCC = new CircleComponent(this,10,false);
+	mLeftCC = new CircleComponent(this,10, DrawingComponent::DrawState::UNAFFECTED);
 	mLeftCC->InitializeDrawing_CreateStage();
 	mLeftCC->SetCenter(mLeftTriPos);
 	mLeftCC->SetRadius(mTriLength);
@@ -125,14 +125,14 @@ void Patrol::InitializeStageMenu_CreateStage() {
 	mMinusWidth= GetCreateStage()->GetStageMenu()->GetMenuWidth() / 4.0f;
 	mMinusHeight = mMinusWidth / 3.0f;
 
-	mPlusCC = new CircleComponent(this,10,false);
+	mPlusCC = new CircleComponent(this,10, DrawingComponent::DrawState::UNAFFECTED);
 	mPlusCC->InitializeDrawing_CreateStage();
 	mPlusCC->SetCenter(mPlusPos);
 	mPlusCC->SetRadius(mTriLength);
 	mPlusCC->SetColor(ColorF(1, 1, 0, 0));
 	mPlusCC->SetIsDraw(false);
 
-	mMinusCC = new CircleComponent(this, 10, false);
+	mMinusCC = new CircleComponent(this, 10, DrawingComponent::DrawState::UNAFFECTED);
 	mMinusCC->InitializeDrawing_CreateStage();
 	mMinusCC->SetCenter(mMinusPos);
 	mMinusCC->SetRadius(mTriLength);
@@ -286,6 +286,7 @@ void Patrol::InitializeStage_Game() {
 	SetPatrolRange(GetPatrolRange() - 1);
 	SetSpeed(GetStandardSpeed() + GetSpeed() / 100.0f * GetStandardSpeed());
 	switch (GetClockwise()) {
+	// 上方向
 	case 0:
 		FromPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
 		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 - GetHeight() / 2.0f });
@@ -296,6 +297,7 @@ void Patrol::InitializeStage_Game() {
 		//velocity
 		mVelocity = Vec2(0, GetSpeed());
 		break;
+	// 右方向
 	case 1:
 		FromPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2-GetWidth()/2.0f,
 		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2  });
@@ -306,6 +308,7 @@ void Patrol::InitializeStage_Game() {
 		//velocity
 		mVelocity = Vec2( GetSpeed(),0);
 		break;
+	// 下方向
 	case 2:
 		FromPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2,
 		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 + GetHeight()/2.0f});
@@ -316,6 +319,7 @@ void Patrol::InitializeStage_Game() {
 		//velocity
 		mVelocity = Vec2(0,-GetSpeed());
 		break;
+	// 左方向
 	case 3:
 		FromPos = Vec2({ (float)GetGame()->GetStage()->GetLeft() + GetIteration().second * GetGame()->GetStage()->GetRectWidth() + GetGame()->GetStage()->GetRectWidth() / 2+GetWidth()/2.0f,
 		(float)GetGame()->GetStage()->GetUp() - (GetIteration().first + 1) * GetGame()->GetStage()->GetRectHeight() + GetGame()->GetStage()->GetRectHeight() / 2 });
@@ -334,12 +338,13 @@ void Patrol::InitializeStage_Game() {
 	mStageObjectLight = new StageObjectLight(this);
 	mStageObjectLight->Initialize_Game();
 
+
 	MicroRad = (float)M_PI / TurnLimitTime;
+
 }
 
 void Patrol::UpdateStageObject_Game(float deltaTime) {
 	mStageObjectLight->Update_Game(deltaTime);
-	if (GetPatrolRange() == 0)return;
 	if (GetIsTurn()) {
 		UpdateTurn_Game(deltaTime);
 		return;
@@ -349,7 +354,10 @@ void Patrol::UpdateStageObject_Game(float deltaTime) {
 
 
 void Patrol::UpdatePos_Game(float deltaTime) {
+	Print << GetPosition();
+	Print << mStageObjectLight->GetPos0();
 	Vec2 mPos = GetPosition();
+	// stageobjectとの衝突
 	for (auto& row : GetGame()->GetStage()->GetStageObjects()) {
 		for (auto& stageObject : row) {
 			if (stageObject == 0)continue;
@@ -357,25 +365,25 @@ void Patrol::UpdatePos_Game(float deltaTime) {
 			if (stageObject == this)continue;
 			switch (GetClockwise()) {
 			case 0:
-				mPos.y = stageObject->GetObjectDown() - GetHeight()/2.0f - 0.005; //Playerが下
+				mPos.y = stageObject->GetObjectDown() - GetHeight()/2.0f - 0.005; //Patrolが下
 				mVelocity.y *= -1.0f;
 				SetClockwise(2);
 				std::swap(ToPos, FromPos);
 				break;
 			case 1:
-				mPos.x = stageObject->GetObjectLeft() - GetWidth()/2.0f - 0.005; //Playerが左
+				mPos.x = stageObject->GetObjectLeft() - GetWidth()/2.0f - 0.005; //Patrolが左
 				mVelocity.x *= -1.0f;
 				SetClockwise(3);
 				std::swap(ToPos, FromPos);
 				break;
 			case 2:
-				mPos.y = stageObject->GetObjectUp() + GetHeight()/2.0f + 0.005; //Playerが上
+				mPos.y = stageObject->GetObjectUp() + GetHeight()/2.0f + 0.005; //Patrolが上
 				mVelocity.y *= -1.0f;
 				SetClockwise(0);
 				std::swap(ToPos, FromPos);
 				break;
 			case 3:
-				mPos.x = stageObject->GetObjectRight() + GetWidth()/2.0f + 0.005; //Playerが右
+				mPos.x = stageObject->GetObjectRight() + GetWidth()/2.0f + 0.005; //Patrolが右
 				mVelocity.x *= -1.0f;
 				SetClockwise(1);
 				std::swap(ToPos, FromPos);
@@ -385,6 +393,8 @@ void Patrol::UpdatePos_Game(float deltaTime) {
 		}
 	}
 
+
+	// playerとの衝突
 	for (auto& player : GetGame()->GetPlayers()) {
 		if (player && IsIntersect_SC(GetSquareComponent(),player->GetCircleComponent())) {
 			switch (GetClockwise()) {

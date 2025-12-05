@@ -5,7 +5,7 @@
 
 class CircleComponent :public DrawingComponent {
 public:
-	CircleComponent(class Actor* owner,int drawOrder,bool isBackground);
+	CircleComponent(class Actor* owner,int drawOrder,DrawState drawState);
 	~CircleComponent();
 
 	//void Update(float deltaTime)override;

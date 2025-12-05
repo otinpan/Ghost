@@ -2,8 +2,8 @@
 #include "Actor.h"
 #include "Game.h"
 
-CircleComponent::CircleComponent(class Actor* owner,int drawOrder,bool isBackground)
-	:DrawingComponent(owner,drawOrder,isBackground)
+CircleComponent::CircleComponent(class Actor* owner,int drawOrder,DrawState drawState)
+	:DrawingComponent(owner,drawOrder,drawState)
 	, mRadius(0.0f)
 	, mCenter(owner->GetPosition())
 	, mColor(ColorF({ 0.0,0.0,0.0 }))

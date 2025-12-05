@@ -30,9 +30,9 @@ void TreasureChest::InitializeStageMenu_CreateStage() {
 	mRectHeight = mEachHeight / 3.0f;
 	mRectWidth = mRectHeight * GetScreenHeight() / GetScreenWidth();
 
-	mNoneSC = new SquareComponent(this,200,true);
-	mBatterySC = new SquareComponent(this,200,true);
-	mKeySC = new SquareComponent(this,200,true);
+	mNoneSC = new SquareComponent(this,200, DrawingComponent::DrawState::UNAFFECTED);
+	mBatterySC = new SquareComponent(this,200, DrawingComponent::DrawState::UNAFFECTED);
+	mKeySC = new SquareComponent(this,200,DrawingComponent::DrawState::UNAFFECTED);
 
 	mMidPos = Vec2(
 		(GetCreateStage()->GetStageMenu()->GetMenuLeft() + GetCreateStage()->GetStageMenu()->GetMenuRight()) / 2.0f,
@@ -57,7 +57,7 @@ void TreasureChest::InitializeStageMenu_CreateStage() {
 	mBatterySC->SetColor(ColorF(0, 1, 128.0f / 255.0f));
 
 	mMidBatteryRad = mRectWidth / 4.0f;
-	mSmallCC = new CircleComponent(this,200,true);
+	mSmallCC = new CircleComponent(this,200, DrawingComponent::DrawState::UNAFFECTED);
 	mSmallCC->InitializeDrawing_CreateStage();
 	mSmallCC->SetCenter(Vec2(
 		mBatteryPos.x + mRectWidth,
@@ -66,7 +66,7 @@ void TreasureChest::InitializeStageMenu_CreateStage() {
 	mSmallCC->SetRadius(mMidBatteryRad / 1.5f);
 	mSmallCC->SetColor(ColorF(0, 0, 0));
 
-	mMidCC = new CircleComponent(this,200,true);
+	mMidCC = new CircleComponent(this,200, DrawingComponent::DrawState::UNAFFECTED);
 	mMidCC->InitializeDrawing_CreateStage();
 	mMidCC->SetCenter(Vec2(
 		mBatteryPos.x + mRectWidth,
@@ -75,7 +75,7 @@ void TreasureChest::InitializeStageMenu_CreateStage() {
 	mMidCC->SetRadius(mMidBatteryRad);
 	mMidCC->SetColor(ColorF(0, 0, 0));
 
-	mBigCC = new CircleComponent(this,200,true);
+	mBigCC = new CircleComponent(this,200, DrawingComponent::DrawState::UNAFFECTED);
 	mBigCC->InitializeDrawing_CreateStage();
 	mBigCC->SetCenter(Vec2(
 		mBatteryPos.x + mRectWidth,

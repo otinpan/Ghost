@@ -111,10 +111,13 @@ void CreateStage::draw() {
 	for (auto circle : mCircles) {
 		circle->Draw();
 	}*/
-	for (auto& drawing : mDrawings_Background) {
+	for (auto& drawing : mDrawings_Back) {
 		drawing->Draw();
 	}
-	for (auto& drawing : mDrawings_Foreground) {
+	for (auto& drawing : mDrawings_Front) {
+		drawing->Draw();
+	}
+	for (auto& drawing : mDrawings_Unaffected) {
 		drawing->Draw();
 	}
 
@@ -181,41 +184,57 @@ void CreateStage::RemoveActor(Actor* actor) {
 void CreateStage::AddDrawing(DrawingComponent* drawing)
 {
 	int myDrawOrder = drawing->GetDrawOrder();
-	if (drawing->GetIsBackground()) {
-		auto iter = mDrawings_Background.begin();
+	if (drawing->GetDrawState() == DrawingComponent::DrawState::BACK) {
+		auto iter = mDrawings_Back.begin();
 		for (;
-			iter != mDrawings_Background.end();
+			iter != mDrawings_Back.end();
 			++iter)
 		{
 			if (myDrawOrder < (*iter)->GetDrawOrder()) {
 				break;
 			}
 		}
-		mDrawings_Background.insert(iter, drawing);
+		mDrawings_Back.insert(iter, drawing);
+	}
+	else if (drawing->GetDrawState() == DrawingComponent::DrawState::FRONT) {
+		auto iter = mDrawings_Front.begin();
+		for (;
+			iter != mDrawings_Front.end();
+			++iter)
+		{
+			if (myDrawOrder < (*iter)->GetDrawOrder()) {
+				break;
+			}
+		}
+		mDrawings_Front.insert(iter, drawing);
 	}
 	else {
-		auto iter = mDrawings_Foreground.begin();
+		auto iter = mDrawings_Unaffected.begin();
 		for (;
-			iter != mDrawings_Foreground.end();
+			iter != mDrawings_Unaffected.end();
 			++iter)
 		{
 			if (myDrawOrder < (*iter)->GetDrawOrder()) {
 				break;
 			}
 		}
-		mDrawings_Foreground.insert(iter, drawing);
+		mDrawings_Unaffected.insert(iter, drawing);
 	}
 }
 
 void CreateStage::RemoveDrawing(DrawingComponent* drawing)
 {
-	if (drawing->GetIsBackground()) {
-		auto iter = std::find(mDrawings_Background.begin(), mDrawings_Background.end(), drawing);
-		if (iter != mDrawings_Background.end()) { mDrawings_Background.erase(iter); }
+	if (drawing->GetDrawState() == DrawingComponent::DrawState::BACK) {
+		auto iter = std::find(mDrawings_Back.begin(), mDrawings_Back.end(), drawing);
+		mDrawings_Back.erase(iter);
+	}
+	else if (drawing->GetDrawState() == DrawingComponent::DrawState::FRONT) {
+		auto iter = std::find(mDrawings_Front.begin(), mDrawings_Front.end(), drawing);
+		mDrawings_Front.erase(iter);
 	}
 	else {
-		auto iter = std::find(mDrawings_Foreground.begin(), mDrawings_Foreground.end(), drawing);
-		if (iter != mDrawings_Foreground.end()) { mDrawings_Foreground.erase(iter); }
+		auto iter = std::find(mDrawings_Unaffected.begin(), mDrawings_Unaffected.end(), drawing);
+		mDrawings_Unaffected.erase(iter);
 	}
 }
 

@@ -26,7 +26,7 @@ Game::~Game() {
 }
 
 bool Game::Initialize() {
-	Scene::SetBackground(ColorF((float)10 / 255, (float)10 / 255, (float)10 / 255));
+	Scene::SetBackground(ColorF((float)100 / 255));
 	LoadData();
 
 	vs2D = HLSL{ U"example/shader/hlsl/default2d.hlsl", U"VS" }
@@ -45,7 +45,6 @@ bool Game::Initialize() {
 
 void Game::update(Parent* parent) {
 	if (mIsRunning) {
-		//ClearPrint();
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 		}
@@ -114,26 +113,42 @@ void Game::UpdateHitstop(float deltaTime) {
 
 
 void Game::draw() {
-	/*renderTexture.clear(ColorF(0));
+	renderTexture.clear(ColorF(0));
 	renderTextureLight.clear(ColorF(0));
 	//renderTexture.resized(Scene::Size());
 	//renderTextureLight.resized(Scene::Size());
 
+
+
+	// 描画する領域を指定
 	{
 		const ScopedRenderTarget2D target{ renderTextureLight };
-		for (auto circle : mCircles) {
-			circle->Draw();
+		for (auto& drawing : mDrawings_Front) {
+			drawing->Draw();
 		}
+
 	}
 	renderTextureLight. draw(Vec2(0,0));
 
+	DrawRect(Vec2(0, 0), 0.5, 0.5, ColorF(1, 1, 1));
+
+	// 影響を受けないActorの描画
+	{
+		for (auto& drawing : mDrawings_Unaffected) {
+			drawing->Draw();
+		}
+	}
+
+	// Background
 	{
 		const ScopedRenderTarget2D target{ renderTexture };
 		mStage->Draw_Game();
-		for (auto square : mSquares) {
-			square->Draw();
+		for (auto& drawing : mDrawings_Back) {
+			//Print << U"front";
+			drawing->Draw();
 		}
 	}
+
 
 	Graphics2D::SetPSTexture(1, renderTextureLight);
 	{
@@ -141,25 +156,31 @@ void Game::draw() {
 			const ScopedCustomShader2D shader{ vs2D,ps2DTexture };
 			renderTexture.draw(Vec2(0,0));
 		}
+	}
+
+
+	/*for (auto& drawing : mDrawings_Front) {
+		drawing->Draw();
+	}
+	for (auto& drawing : mDrawings_Unaffected) {
+		drawing->Draw();
+	}
+	for (auto& drawing : mDrawings_Back) {
+		//Print << U"front";
+		drawing->Draw();
 	}*/
 
-	mStage->Draw_Game();
-	/*for (auto square : mSquares) {
-		square->Draw();
-	}
-	for (auto circle : mCircles) {
-		circle->Draw();
-	}
-	for (auto tri : mTriangles) {
-		tri->Draw();
-	}*/
 
-	for (auto& drawing : mDrawings_Background) {
+
+	
+
+
+	/*for (auto& drawing : mDrawings_Background) {
 		drawing->Draw();
 	}
 	for (auto& drawing : mDrawings_Foreground) {
 		drawing->Draw();
-	}
+	}*/
 	
 }
 
@@ -233,40 +254,56 @@ void Game::RemoveActor(Actor* actor) {
 
 void Game::AddDrawing(DrawingComponent* drawing) {
 	int myDrawOrder = drawing->GetDrawOrder();
-	if (drawing->GetIsBackground()) {
-		auto iter = mDrawings_Background.begin();
+	if (drawing->GetDrawState()==DrawingComponent::DrawState::BACK) {
+		auto iter = mDrawings_Back.begin();
 		for (;
-			iter != mDrawings_Background.end();
+			iter != mDrawings_Back.end();
 			++iter)
 		{
 			if (myDrawOrder < (*iter)->GetDrawOrder()) {
 				break;
 			}
 		}
-		mDrawings_Background.insert(iter, drawing);
+		mDrawings_Back.insert(iter, drawing);
+	}
+	else if(drawing->GetDrawState()==DrawingComponent::DrawState::FRONT){
+		auto iter = mDrawings_Front.begin();
+		for (;
+			iter != mDrawings_Front.end();
+			++iter)
+		{
+			if (myDrawOrder < (*iter)->GetDrawOrder()) {
+				break;
+			}
+		}
+		mDrawings_Front.insert(iter, drawing);
 	}
 	else {
-		auto iter = mDrawings_Foreground.begin();
+		auto iter = mDrawings_Unaffected.begin();
 		for (;
-			iter != mDrawings_Foreground.end();
+			iter != mDrawings_Unaffected.end();
 			++iter)
 		{
 			if (myDrawOrder < (*iter)->GetDrawOrder()) {
 				break;
 			}
 		}
-		mDrawings_Foreground.insert(iter, drawing);
+		mDrawings_Unaffected.insert(iter, drawing);
 	}
 }
 
 void Game::RemoveDrawing(DrawingComponent* drawing) {
-	if (drawing->GetIsBackground()) {
-		auto iter = std::find(mDrawings_Background.begin(), mDrawings_Background.end(), drawing);
-		mDrawings_Background.erase(iter);
+	if (drawing->GetDrawState()==DrawingComponent::DrawState::BACK) {
+		auto iter = std::find(mDrawings_Back.begin(), mDrawings_Back.end(), drawing);
+		mDrawings_Back.erase(iter);
+	}
+	else if(drawing->GetDrawState()==DrawingComponent::DrawState::FRONT){
+		auto iter = std::find(mDrawings_Front.begin(), mDrawings_Front.end(), drawing);
+		mDrawings_Front.erase(iter);
 	}
 	else {
-		auto iter = std::find(mDrawings_Foreground.begin(), mDrawings_Foreground.end(), drawing);
-		mDrawings_Foreground.erase(iter);
+		auto iter = std::find(mDrawings_Unaffected.begin(), mDrawings_Unaffected.end(), drawing);
+		mDrawings_Unaffected.erase(iter);
 	}
 }
 

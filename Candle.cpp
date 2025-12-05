@@ -23,7 +23,7 @@ void Candle::InitializeStageObject_CreateStage(class CreateStage* createStage) {
 	SetMinLightRad(0.0f);
 	SetLightRadRange(GetMaxLightRad() - GetMinLightRad());
 
-	cc = new CircleComponent(this,100,false);
+	cc = new CircleComponent(this,100,DrawingComponent::DrawState::UNAFFECTED);
 	cc->InitializeDrawing_CreateStage();
 	cc->SetCenter(GetPosition());
 	cc->SetRadius(GetLightRad());
@@ -58,7 +58,7 @@ void Candle::InitializeStageMenu_CreateStage() {
 		
 	);
 
-	mBarSC_CreateStage = new SquareComponent(this,200,true);
+	mBarSC_CreateStage = new SquareComponent(this,200,DrawingComponent::DrawState::UNAFFECTED);
 	mBarSC_CreateStage->InitializeDrawing_CreateStage(mBarPos,
 		GetCreateStage()->GetStageMenu()->GetMenuWidth() / 6.0f,
 		mBarHeight/25.0f);
@@ -118,7 +118,7 @@ float Candle::ConvertToLightRad(float bar) {
 //Game///////////////////////////////////////////////////////////////
 void Candle::InitializeStageObject_Game(class Game* game) {
 	InitializeActor_Game(game);
-	cc = new CircleComponent(this,200,false);
+	cc = new CircleComponent(this,200,DrawingComponent::DrawState::FRONT);
 	cc->InitializeDrawing_Game();
 	cc->SetCenter(GetPosition());
 	cc->SetRadius(GetLightRad());

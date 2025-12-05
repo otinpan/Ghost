@@ -2,8 +2,8 @@
 #include "Actor.h"
 
 
-SpriteComponent::SpriteComponent(Actor* owner, int drawOrder,bool isBackground)
-	:DrawingComponent(owner,drawOrder,isBackground)
+SpriteComponent::SpriteComponent(Actor* owner, int drawOrder,DrawingComponent::DrawState drawState)
+	:DrawingComponent(owner,drawOrder,drawState)
 	, mTexture()
 	, mDrawOrder(drawOrder)
 {

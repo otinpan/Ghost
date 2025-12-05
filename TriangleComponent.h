@@ -4,7 +4,7 @@
 
 class TriangleComponent :public DrawingComponent {
 public:
-	TriangleComponent(class Actor* owner, int drawOrder, bool isBackground);
+	TriangleComponent(class Actor* owner, int drawOrder, DrawState drwaState);
 	~TriangleComponent();
 
 	void InitializeDrawing_CreateStage(Vec2 pos0, Vec2 pos1, Vec2 pos2);

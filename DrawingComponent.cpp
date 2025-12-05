@@ -3,10 +3,10 @@
 #include"CreateStage.h"
 #include"Actor.h"
 
-DrawingComponent::DrawingComponent(Actor* owner,int drawOrder,bool isBackground)
+DrawingComponent::DrawingComponent(Actor* owner,int drawOrder,DrawState drawState)
 	:Component(owner)
 	,mDrawOrder(drawOrder)
-	,mIsBackground(isBackground)
+	,mDrawState(drawState)
 	,mIsDraw(true)
 {
 

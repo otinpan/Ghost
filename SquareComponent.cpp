@@ -3,8 +3,8 @@
 #include"Actor.h"
 
 
-SquareComponent::SquareComponent(class Actor* owner, int drawOrder, bool isBackground)
-	:DrawingComponent(owner,drawOrder,isBackground)
+SquareComponent::SquareComponent(class Actor* owner, int drawOrder, DrawState drawState)
+	:DrawingComponent(owner,drawOrder,drawState)
 	,mWidth(0.0f)
 	,mHeight(0.0f)
 	,mCenter(Vec2{0,0})
@@ -60,7 +60,6 @@ void SquareComponent::Draw() {
 const RectF SquareComponent::GetRect() {
 	return RectF{ Arg::center(mCenter),mWidth,mHeight };
 }
-
 const RectF SquareComponent::GetViewRect() {
 	return RectF{ Arg::center(ConvertToView(mCenter)),GetScreenWidth() * mWidth/2.0f,GetScreenHeight() * mHeight/2.0f };
 }

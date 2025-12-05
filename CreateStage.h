@@ -72,8 +72,9 @@ private:
 	std::vector<class Actor*> mPendingActors;
 
 	//All the Drwaing
-	std::vector<class DrawingComponent*> mDrawings_Background;
-	std::vector<class DrawingComponent*> mDrawings_Foreground;
+	std::vector<class DrawingComponent*> mDrawings_Back;
+	std::vector<class DrawingComponent*> mDrawings_Front;
+	std::vector<class DrawingComponent*> mDrawings_Unaffected;
 
 	//All the Circle components drawn
 	std::vector<class CircleComponent*> mCircles;

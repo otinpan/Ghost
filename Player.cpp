@@ -31,22 +31,22 @@ Player::~Player() {
 void Player::InitializeActor_Game(class Game* game) {
 	Initialize_Game(game);
 	GetGame()->AddPlayer(this);
-	cc = new CircleComponent(this,170,false);
+	cc = new CircleComponent(this,170,DrawingComponent::DrawState::BACK);
 	cc->InitializeDrawing_Game();
 	cc->SetCenter(GetPosition());
 	mRadius = GetGame()->GetStage()->GetRectWidth() * 2.0f / 5.0f;
 	cc->SetRadius(mRadius);
-	Bigcc = new CircleComponent(this, 170, false);
+	Bigcc = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
 	Bigcc->InitializeDrawing_Game();
 	Bigcc->SetCenter(GetPosition());
 	Bigcc->SetRadius(mRadius * 4.0f);
 	Bigcc->SetIsDraw(false);
-	Midcc = new CircleComponent(this, 170, false);
+	Midcc = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
 	Midcc->InitializeDrawing_Game();
 	Midcc->SetCenter(GetPosition());
 	Midcc->SetRadius(mRadius * 3.0f);
 	Midcc->SetIsDraw(false);
-	Smallcc = new CircleComponent(this, 170, false);
+	Smallcc = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
 	Smallcc->InitializeDrawing_Game();
 	Smallcc->SetCenter(GetPosition());
 	Smallcc->SetRadius(mRadius*2.0f);

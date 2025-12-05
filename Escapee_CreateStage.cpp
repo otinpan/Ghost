@@ -45,7 +45,7 @@ void Escapee_CreateStage::InitializeStageMenu_CreateStage() {
 		mBarMin + mBarHeight * GetSpeed() / 100.0f
 	);
 
-	mBarSC_CreateStage = new SquareComponent(this,200,true);
+	mBarSC_CreateStage = new SquareComponent(this,200, DrawingComponent::DrawState::UNAFFECTED);
 	mBarSC_CreateStage->InitializeDrawing_CreateStage(mBarPos,
 		GetCreateStage()->GetStageMenu()->GetMenuWidth() / 6.0f,
 		mBarHeight / 25.0f);

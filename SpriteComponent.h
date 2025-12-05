@@ -6,7 +6,7 @@
 //そうでないとエラーが出てくる
 class SpriteComponent :public DrawingComponent {
 public:
-	SpriteComponent(class Actor* owner, int drawOrder,bool isBackground);
+	SpriteComponent(class Actor* owner, int drawOrder,DrawState drawState);
 	~SpriteComponent();
 
 	void InitializeDrawing_Game(float worldTexWidth,float worldTexHeight,Vec2 diff);
