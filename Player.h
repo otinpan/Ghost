@@ -25,9 +25,6 @@ public:
 	Attribute GetAttribute() { return mAttribute; }
 
 	class CircleComponent* GetCircleComponent() { return cc; }
-	class CircleComponent* GetBigCircleComponent() { return Bigcc; }
-	class CircleComponent* GetMidCircleComponent() { return Midcc; }
-	class CircleComponent* GetSmallCircleComponent() { return Smallcc; }
 
 	void UpdatePos_Game(float deltaTime);
 	virtual void UpdatePlayerPos_Game(float deltaTime);
@@ -42,19 +39,12 @@ public:
 	void SetIsAlive(bool isAlive) { mIsAlive = isAlive; }
 	bool GetIsLighted() { return mIsLighted; }
 	void SetIsLighted(bool isLighted) { mIsLighted = isLighted; }
+	float GetRadius() { return mRadius; }
 
-	void UpdateHeartbeat(float deltaTime);
-	virtual void UpdatePlayerHeartbeat(float deltaTime);
-
-	float GetHeartbeatLimitTime() { return HeartbeatLimitTime; }
-	void SetHeartbeatLimitTime(float heartbeatLimitTime) { HeartbeatLimitTime = heartbeatLimitTime; }
 
 private:
 	class CircleComponent* cc;
-	//検知の範囲
-	class CircleComponent* Bigcc;
-	class CircleComponent* Midcc;
-	class CircleComponent* Smallcc;
+
 
 	Attribute mAttribute;
 
@@ -79,8 +69,4 @@ private:
 	Line LineD;
 	Vec2 mPos;
 	float mRadius;
-
-	//鼓動
-	float mHeartbeatTime;
-	float HeartbeatLimitTime;
 };

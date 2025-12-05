@@ -354,8 +354,6 @@ void Patrol::UpdateStageObject_Game(float deltaTime) {
 
 
 void Patrol::UpdatePos_Game(float deltaTime) {
-	Print << GetPosition();
-	Print << mStageObjectLight->GetPos0();
 	Vec2 mPos = GetPosition();
 	// stageobjectとの衝突
 	for (auto& row : GetGame()->GetStage()->GetStageObjects()) {

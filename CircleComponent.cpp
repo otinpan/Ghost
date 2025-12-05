@@ -32,7 +32,7 @@ void CircleComponent::InitializeDrawing_Game() {
 
 
 float CircleComponent::GetRadius()const {
-	return mOwner->GetScale() * mRadius;
+	return mOwner->GetScale() *mRadius;
 }
 
 const Vec2& CircleComponent::GetCenter()const {

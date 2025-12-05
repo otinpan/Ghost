@@ -18,6 +18,12 @@ Escapee_Game::Escapee_Game(Vec2 pos, float speed, int num)
 	, mIsLighted(false)
 	, mLightedTime(0.0f)
 	, mLightedLimitTime(7.0f)
+	, mHeartLargeCC(nullptr)
+	, mHeartMidCC(nullptr)
+	, mHeartSmallCC(nullptr)
+	, mHeartbeatTime(0.0f)
+	, HeartbeatLimitTime(1.5f)
+	, mHeartLastingTime(0.0f)
 {
 	
 	SetPosition(pos);
@@ -59,6 +65,31 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 		ic->SetMaxXSpeed(GetSpeed());
 		ic->SetMaxYSpeed(GetSpeed());
 	}
+
+	float mRadius = GetRadius();
+	mHeartLargeCC = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
+	mHeartLargeCC->InitializeDrawing_Game();
+	mHeartLargeCC->SetCenter(GetPosition());
+	mHeartLargeCC->SetRadius(mRadius * 20.0f);
+	mHeartLargeCC->SetIsDraw(false);
+	mHeartMidCC = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
+	mHeartMidCC->InitializeDrawing_Game();
+	mHeartMidCC->SetCenter(GetPosition());
+	mHeartMidCC->SetRadius(mRadius * 15.0f);
+	mHeartMidCC->SetIsDraw(false);
+	mHeartSmallCC = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
+	mHeartSmallCC->InitializeDrawing_Game();
+	mHeartSmallCC->SetCenter(GetPosition());
+	mHeartSmallCC->SetRadius(mRadius * 5.0f);
+	mHeartSmallCC->SetIsDraw(false);
+
+	mHeartDrawCC = new CircleComponent(this, 100, DrawingComponent::DrawState::UNAFFECTED);
+	mHeartDrawCC->InitializeDrawing_Game();
+	mHeartDrawCC->SetCenter(GetPosition());
+	mHeartDrawCC->SetRadius(mRadius * 1.5f);
+	mHeartDrawCC->SetIsDraw(false);
+	mHeartDrawCC->SetColor(ColorF(1.0f, (float)102 / 255.0f, 1.0f));
+
 }
 
 void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
@@ -70,13 +101,19 @@ void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 	}
 	UpdateItemAvailable(deltaTime);
 	//heartbeat
-	UpdatePlayerHeartbeat(deltaTime);
+	UpdateHeartbeat(deltaTime);
 	//Position
 	UpdatePos_Game(deltaTime);
 	//Flashlight Battery
 	UpdateFlashlight_Game(deltaTime);
 	//intersect
 	UpdateIntersectGhost_Game(deltaTime);
+
+	mHeartLargeCC->SetCenter(GetPosition());
+	mHeartMidCC->SetCenter(GetPosition());
+	mHeartSmallCC->SetCenter(GetPosition());
+	mHeartDrawCC->SetCenter(GetPosition());
+
 }
 
 void Escapee_Game::UpdateFlashlight_Game(float deltaTime) {
@@ -155,6 +192,46 @@ void Escapee_Game::UpdateIntersectEscapee_Game(float deltaTime) {
 		}
 	}
 	
+}
+
+// 鼓動の更新
+void Escapee_Game::UpdateHeartbeat(float deltaTime) {
+	if (IsIntersect_CC(mHeartSmallCC, GetGame()->GetGhost()->GetCircleComponent())) {
+		HeartbeatLimitTime = 0.4f;
+	}
+	else if (IsIntersect_CC(mHeartMidCC, GetGame()->GetGhost()->GetCircleComponent())) {
+		HeartbeatLimitTime = 0.7f;
+		
+	}
+	else if (IsIntersect_CC(mHeartLargeCC, GetGame()->GetGhost()->GetCircleComponent())) {
+		
+		HeartbeatLimitTime = 1.0f;
+	}
+	else {
+		HeartbeatLimitTime = 1.5f;
+	}
+
+	if (mIsHeartLasting) {
+		if (mHeartLastingTime < 0.2f) {
+			mHeartLastingTime += deltaTime;
+		}
+		else {
+			mHeartLastingTime = 0.0f;
+			mIsHeartLasting = false;
+		}
+	}
+	else {
+		if (mHeartbeatTime > HeartbeatLimitTime) {
+			mHeartbeatTime = 0.0f;
+			mIsHeartLasting = true;
+			mHeartDrawCC->SetIsDraw(true);
+		}
+		else {
+			mHeartbeatTime += deltaTime;
+			mHeartDrawCC->SetIsDraw(false);
+		}
+	}
+
 }
 
 void Escapee_Game::UpdateUnAlive(float deltaTime) {
@@ -280,15 +357,4 @@ void Escapee_Game::UpdateItemAvailable(float deltaTime){
 	return;
 }
 
-void Escapee_Game::UpdatePlayerHeartbeat(float deltaTime) {
-	UpdateHeartbeat(deltaTime);
-	if (IsIntersect_CC(GetBigCircleComponent(), GetGame()->GetGhost()->GetSmallCircleComponent())) {
-		SetHeartbeatLimitTime(0.7f);
-	}
-	else if (IsIntersect_CC(GetMidCircleComponent(), GetGame()->GetGhost()->GetSmallCircleComponent())) {
-		SetHeartbeatLimitTime(0.5f);
-	}
-	else if (IsIntersect_CC(GetSmallCircleComponent(), GetGame()->GetGhost()->GetSmallCircleComponent())) {
-		SetHeartbeatLimitTime(0.2f);
-	}
-}
+

@@ -115,9 +115,6 @@ void Game::UpdateHitstop(float deltaTime) {
 void Game::draw() {
 	renderTexture.clear(ColorF(0));
 	renderTextureLight.clear(ColorF(0));
-	//renderTexture.resized(Scene::Size());
-	//renderTextureLight.resized(Scene::Size());
-
 
 
 	// 描画する領域を指定
@@ -144,7 +141,6 @@ void Game::draw() {
 		const ScopedRenderTarget2D target{ renderTexture };
 		mStage->Draw_Game();
 		for (auto& drawing : mDrawings_Back) {
-			//Print << U"front";
 			drawing->Draw();
 		}
 	}
@@ -170,18 +166,6 @@ void Game::draw() {
 		drawing->Draw();
 	}*/
 
-
-
-	
-
-
-	/*for (auto& drawing : mDrawings_Background) {
-		drawing->Draw();
-	}
-	for (auto& drawing : mDrawings_Foreground) {
-		drawing->Draw();
-	}*/
-	
 }
 
 void Game::LoadData() {

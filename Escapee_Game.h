@@ -18,9 +18,14 @@ public:
 	void SetIsLighted(bool isLighted) { mIsLighted = isLighted; }
 	bool GetIsLighted() { return mIsLighted; }
 
-	void UpdatePlayerHeartbeat(float deltaTime)override;
 
 	class Flashlight* &GetFlashlight() { return mFlashlight; }
+
+	// 鼓動の更新
+	void UpdateHeartbeat(float deltaTime);
+
+	float GetHeartbeatLimitTime() { return HeartbeatLimitTime; }
+	void SetHeartbeatLimitTime(float heartbeatLimitTime) { HeartbeatLimitTime = heartbeatLimitTime; }
 
 
 private:
@@ -32,6 +37,18 @@ private:
 	InputGroup inputDown;
 	InputGroup inputRight;
 	InputGroup inputLeft;
+
+	// 鼓動の範囲
+	class CircleComponent* mHeartLargeCC;
+	class CircleComponent* mHeartMidCC;
+	class CircleComponent* mHeartSmallCC;
+
+	// 鼓動
+	float mHeartbeatTime;
+	float HeartbeatLimitTime;
+	float mHeartLastingTime;
+	bool mIsHeartLasting;
+	class CircleComponent* mHeartDrawCC;
 
 	//Flashlight
 	bool mIsLightOn;

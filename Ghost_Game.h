@@ -17,7 +17,6 @@ public:
 	void SetStopLimitTime(float stopLimitTime) { StopLimitTime = stopLimitTime; }
 	float GetStopLimitTime() { return StopLimitTime; }
 
-	void UpdatePlayerHeartbeat(float deltaTime)override;
 
 	class GhostClone_Game* &GetGhostClone() { return mGhostClone; }
 
