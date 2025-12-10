@@ -10,3 +10,12 @@ Wall::Wall(Vec2 pos, float width, float height)
 Wall::~Wall() {
 
 }
+
+void Wall::InitializeStageObject_CreateStage(class CreateStage* createStage) {
+	InitializeActor_CreateStage(createStage);
+	GetSquareComponent()->SetDrawState(DrawingComponent::DrawState::UNAFFECTED);
+}
+
+void Wall::InitializeStageObject_Game(class Game* game) {
+	InitializeActor_Game(game);
+}

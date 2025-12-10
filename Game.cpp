@@ -127,7 +127,6 @@ void Game::draw() {
 	}
 	renderTextureLight. draw(Vec2(0,0));
 
-	DrawRect(Vec2(0, 0), 0.5, 0.5, ColorF(1, 1, 1));
 
 	// 影響を受けないActorの描画
 	{
@@ -153,7 +152,6 @@ void Game::draw() {
 			renderTexture.draw(Vec2(0,0));
 		}
 	}
-
 
 	/*for (auto& drawing : mDrawings_Front) {
 		drawing->Draw();

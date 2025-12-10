@@ -49,7 +49,7 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 	sqc->InitializeDrawing_CreateStage(mCenter,mWidth,mHeight);
 	switch (mAttribute) {
 	case Attribute::Wall:
-		sqc->SetColor(ColorF(1, 1, 1));
+		sqc->SetColor(ColorF(0.5f));
 		break;
 	case Attribute::Brock:
 		sqc->SetColor(ColorF(1, 1, 1));
@@ -233,7 +233,7 @@ void StageObject::InitializeActor_Game(class Game* game) {
 	sqc->InitializeDrawing_Game(mCenter, mWidth, mHeight);
 	switch (mAttribute) {
 	case Attribute::Wall:
-		sqc->SetColor(ColorF(1, 1, 1));
+		sqc->SetColor(ColorF(0.5f));
 		break;
 	case Attribute::Brock:
 		sqc->SetColor(ColorF(1, 1, 1));

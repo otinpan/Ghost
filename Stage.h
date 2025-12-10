@@ -48,6 +48,7 @@ public:
 	void SetStageObject(int i, int j, StageObject* stageObject) { mStageObjects[i][j] = stageObject; }
 	std::vector<std::vector<RectF>>& GetRects() { return mRects; }
 	std::vector<class Candle*>& GetCandle() { return mCandles; }
+	std::vector<class StageObject*>& GetWall() { return mWalls; }
 
 	void SetNewStageObject(int i, int j, StageObject* stageObject);
 	void SetNewStageObject_Attribute(int i, int j, StageObject::Attribute attribute);

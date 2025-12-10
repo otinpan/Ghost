@@ -76,15 +76,16 @@ void Player::UpdatePos_Game(float deltaTime) {
 	UpdatePlayerPos_Game(deltaTime);
 	mPos = GetPosition();
 
+	float offset = 0.008f;
 	//端
 	if (mPos.x + mRadius > GetGame()->GetStage()->GetRight())
-		mPos.x = GetGame()->GetStage()->GetRight() - mRadius - 0.008;
+		mPos.x = GetGame()->GetStage()->GetRight() - mRadius-offset;
 	if (mPos.x - mRadius < GetGame()->GetStage()->GetLeft())
-		mPos.x = GetGame()->GetStage()->GetLeft() + mRadius + 0.008;
-	if (mPos.y + mRadius > GetGame()->GetStage()->GetUp())
-		mPos.y = GetGame()->GetStage()->GetUp() - mRadius - 0.008;
-	if (mPos.y - mRadius < GetGame()->GetStage()->GetDown())
-		mPos.y = GetGame()->GetStage()->GetDown() + mRadius + 0.008;
+		mPos.x = GetGame()->GetStage()->GetLeft() + mRadius+offset;
+	if (mPos.y + mRadius*2.0f > GetGame()->GetStage()->GetUp())
+		mPos.y = GetGame()->GetStage()->GetUp() - mRadius*2.0f-offset;
+	if (mPos.y - mRadius*3.0f < GetGame()->GetStage()->GetDown())
+		mPos.y = GetGame()->GetStage()->GetDown() + mRadius*3.0f+offset;
 
 	SetPosition(mPos);
 	cc->SetCenter(mPos);
