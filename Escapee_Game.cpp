@@ -51,10 +51,10 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 	mFlashlight = new Flashlight(this);
 	mFlashlight->Initialize_Game();
 	inputFlashlight = Key7;
-	inputUp = KeyW;
-	inputDown = KeyS;
-	inputLeft = KeyA;
-	inputRight = KeyD;
+	inputUp = KeyUp;
+	inputDown = KeyDown;
+	inputLeft = KeyLeft;
+	inputRight = KeyRight;
 
 	if (GetAttribute() == Attribute::Escapee1) {
 		ic = new InputComponent_Keyboard(this);
@@ -70,17 +70,17 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 	mHeartLargeCC = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
 	mHeartLargeCC->InitializeDrawing_Game();
 	mHeartLargeCC->SetCenter(GetPosition());
-	mHeartLargeCC->SetRadius(mRadius * 20.0f);
+	mHeartLargeCC->SetRadius(mRadius * 30.0f);
 	mHeartLargeCC->SetIsDraw(false);
 	mHeartMidCC = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
 	mHeartMidCC->InitializeDrawing_Game();
 	mHeartMidCC->SetCenter(GetPosition());
-	mHeartMidCC->SetRadius(mRadius * 15.0f);
+	mHeartMidCC->SetRadius(mRadius * 20.0f);
 	mHeartMidCC->SetIsDraw(false);
 	mHeartSmallCC = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
 	mHeartSmallCC->InitializeDrawing_Game();
 	mHeartSmallCC->SetCenter(GetPosition());
-	mHeartSmallCC->SetRadius(mRadius * 5.0f);
+	mHeartSmallCC->SetRadius(mRadius * 10.0f);
 	mHeartSmallCC->SetIsDraw(false);
 
 	mHeartDrawCC = new CircleComponent(this, 100, DrawingComponent::DrawState::UNAFFECTED);
@@ -131,7 +131,7 @@ void Escapee_Game::UpdateFlashlight_Game(float deltaTime) {
 
 
 	if (mIsLightOn) {
-		mBattery -= deltaTime * 60.0f / 6.0f;
+		//mBattery -= deltaTime * 60.0f / 6.0f;
 	}
 
 	mBattery =std:: max(0.0f, mBattery);
@@ -145,17 +145,14 @@ void Escapee_Game::UpdateFlashlight_Game(float deltaTime) {
 }
 
 void Escapee_Game::UpdateIntersectGhost_Game(float deltaTime) {
-	//初期化
-	GetGame()->GetGhost()->SetIsLighted(false);
-	if (GetGame()->GetGhost()->GetGhostClone()) {
-		GetGame()->GetGhost()->GetGhostClone()->SetIsLighted(false);
-	}
+
 	//Ghostが照らされているとき
 	if (mIsLightOn) {
+		// Ghostが無敵状態でなく、ライトがGhostと交差しているとき
+		// Ghostで初期化
 		if (IsIntersect_TC(mFlashlight->GetTriangleComponent()
 			, GetGame()->GetGhost()->GetCircleComponent())) {
 			GetGame()->GetGhost()->SetIsLighted(true);
-			GetGame()->GetGhost()->SetStopTime(0.0f); //Timerを0にする
 		}
 		
 		if (GetGame()->GetGhost()->GetGhostClone() && IsIntersect_TC(mFlashlight->GetTriangleComponent()
@@ -166,7 +163,8 @@ void Escapee_Game::UpdateIntersectGhost_Game(float deltaTime) {
 	}
 
 	
-	if (IsIntersect_CC(GetGame()->GetGhost()->GetCircleComponent(), GetCircleComponent())) {
+	if (IsIntersect_CC(GetGame()->GetGhost()->GetCircleComponent(), GetCircleComponent())
+		&&GetGame()->GetGhost()->GetCanCapture()) {
 		SetIsAlive(false);
 		GetCircleComponent()->SetColor(ColorF(0.5f, 0.5f, 0.5f));
 	}
@@ -205,10 +203,10 @@ void Escapee_Game::UpdateHeartbeat(float deltaTime) {
 	}
 	else if (IsIntersect_CC(mHeartLargeCC, GetGame()->GetGhost()->GetCircleComponent())) {
 		
-		HeartbeatLimitTime = 1.0f;
+		HeartbeatLimitTime = 1.3f;
 	}
 	else {
-		HeartbeatLimitTime = 1.5f;
+		HeartbeatLimitTime = 2.0f;
 	}
 
 	if (mIsHeartLasting) {

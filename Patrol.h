@@ -75,6 +75,7 @@ private:
 
 	//方向転換
 	void UpdateTurn_Game(float deltaTime);
+	void UpdateIntersectGhost_Game(float deltaTime);
 	float mTurnTime;
 	float TurnLimitTime;
 	float MicroRad;

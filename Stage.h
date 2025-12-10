@@ -103,6 +103,7 @@ private:
 	float mDeleteRectHeight;
 
 	std::vector<std::vector<class StageObject* >> mStageObjects;
+	std::vector<class StageObject*> mWalls;
 	std::vector<class Candle*> mCandles;
 	std::vector<std::vector<RectF>> mRects;
 	RectF mStageRect;
@@ -129,7 +130,6 @@ private:
 	class Game* mGame;
 	class Candle* InitCandle;
 
-	std::pair<int, int> mGoalIteration;
 	std::pair<int, int> mGhostIteration;
 	std::pair<int, int> mEscapee1Iteration;
 	std::pair<int, int> mEscapee2Iteration;

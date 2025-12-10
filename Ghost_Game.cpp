@@ -4,17 +4,20 @@
 #include"Stage.h"
 #include"StageObject.h"
 
-Ghost_Game::Ghost_Game(Vec2 pos,float speed)
-	:Player(pos,speed)
-	,ic(nullptr)
-	,MakeCloneCoolTime(30.0f)
-	,mMakeCloneTime(0.0f)
-	,mCanMakeClone(true)
-	,mIsClone(false)
-	,mCloneTime(0.0f)
-	,CloneLimitTime(7.0f)
-	,StopLimitTime(1.0f)
-	,mStopTime(5.0f)
+Ghost_Game::Ghost_Game(Vec2 pos, float speed)
+	:Player(pos, speed)
+	, ic(nullptr)
+	, MakeCloneCoolTime(30.0f)
+	, mMakeCloneTime(0.0f)
+	, mCanMakeClone(true)
+	, mIsClone(false)
+	, mCloneTime(0.0f)
+	, CloneLimitTime(7.0f)
+	, mIsInvincible(false)
+	, mInvincibleTime(0.0f)
+	, mCanCapture(true)
+	, mCanCaptureTime(0.0f)
+	, mDrawAccumulator(0.0f)
 {
 	SetPosition(pos);
 	SetSpeed(GetStandardSpeed() + speed / 100.0f * GetStandardSpeed());
@@ -49,6 +52,10 @@ void Ghost_Game::InitializePlayer_Game(class Game* game) {
 void Ghost_Game::UpdatePlayer_Game(float deltaTime) {
 	//Stop
 	UpdateStop_Game(deltaTime);
+	// 無敵
+	UpdateInvincible(deltaTime);
+	// 描画
+	UpdateIsDraw(deltaTime);
 	//Position
 	if (mIsStop)ic->SetIsMove(false);
 	else ic->SetIsMove(true);
@@ -85,17 +92,74 @@ void Ghost_Game::UpdateClone_Game(float deltaTime) {
 	}
 }
 
+
+
+// 照らされているとき
 void Ghost_Game::UpdateStop_Game(float deltaTime) {
-	if (GetIsLighted()) {
-		mIsStop = true;
+
+	if (mIsInvincible) {
+		mIsStop = false;
+		return;
 	}
-	else {
-		if (mStopTime < StopLimitTime) {
-			mStopTime += deltaTime;
-			mIsStop = true;
+
+	// 照らされたらスタン
+	if (GetIsLighted()) {
+		// 一定時間照らされると無敵状態
+		if (mStoppingTime >= 2.0f) {
+			SetInvincible();
 		}
 		else {
-			mIsStop = false;
+			mStoppingTime += deltaTime;
+			mIsStop = true;
+		}
+	}
+	else {
+		if (mIsStop) {
+			SetInvincible();
+		}
+	}
+
+	// 一度照らされただけでも照らされ続ける、といったことをなくす
+	SetIsLighted(false);
+
+}
+
+
+void Ghost_Game::SetInvincible() {
+	mIsInvincible = true;
+	mInvincibleTime = 0.0f;
+	mIsStop = false;
+	SetIsLighted(false);
+	mStoppingTime = 0.0f;
+}
+
+// 一定時間連続して止まる → 無敵状態になる
+// 無限に止められてしまうことを防ぐ
+void Ghost_Game::UpdateInvincible(float deltaTime) {
+	ClearPrint();
+	Print << mIsStop;
+	Print << mInvincibleTime;
+	Print << mCanCaptureTime;
+	Print << mStoppingTime;
+	// 無敵状態の時間カウント
+	if (mIsInvincible) {
+		mCanCapture = false;
+		if (mInvincibleTime < 2.0f) {
+			mInvincibleTime += deltaTime;
+		}
+		else {
+			mIsInvincible = false;
+			mInvincibleTime = 0.0f;
+		}
+	}
+	// escapeeを捉えられない時間のカウント
+	if (!mCanCapture) {
+		if (mCanCaptureTime < 2.5f) {
+			mCanCaptureTime += deltaTime;
+		}
+		else {
+			mCanCaptureTime = 0.0f;
+			mCanCapture = true;
 		}
 	}
 }
@@ -130,3 +194,22 @@ void Ghost_Game::UpdatePlayerPos_Game(float deltaTime) {
 }
 
 
+// 無敵状態の時点滅して描画
+void Ghost_Game::UpdateIsDraw(float deltaTime) {
+	if (mIsInvincible) {
+		if (mDrawAccumulator < 0.2f) {
+			GetCircleComponent()->SetIsDraw(true);
+			mDrawAccumulator += deltaTime;
+		}
+		else if (mDrawAccumulator < 0.4f) {
+			GetCircleComponent()->SetIsDraw(false);
+			mDrawAccumulator += deltaTime;
+		}
+		else {
+			mDrawAccumulator = 0.0f;
+		}
+	}
+	else {
+		GetCircleComponent()->SetIsDraw(true);
+	}
+}

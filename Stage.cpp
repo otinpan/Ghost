@@ -104,6 +104,7 @@ void Stage::Initialize_CreateStage(CreateStage* createStage) {
 		row.resize(mSideSize);
 	}
 
+	// Wallの追加
 	
 
 	//mRectsの初期設定
@@ -121,6 +122,8 @@ void Stage::Initialize_CreateStage(CreateStage* createStage) {
 	mSaveErrorRectWidth = 1.0;
 	mSaveErrorRectHeight = 0.5;
 	mSaveErrorPos = Vec2(0.0, 0.0);
+
+	
 
 }
 
@@ -722,7 +725,7 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 	for (auto& row : mCanBeGone) {
 		row.resize(mSideSize);
 	}
-	Array<int> mGoalCandidates;
+	
 
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
@@ -757,8 +760,7 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 					mStageObjects[i][j]->InitializeStage_Game();
 				}
 			}
-			mCanBeGone[i][j] = get<6>(mDetails[i][j]);
-			if(mCanBeGone[i][j])mGoalCandidates<<(i * mVerticalSize + j);
+			
 
 			
 		}
@@ -779,8 +781,9 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 	delete InitCandle;
 	InitCandle = 0;
 
-	int mGoal = mGoalCandidates.choice();
-	mGoalIteration = pair(mGoal / mVerticalSize, mGoal % mSideSize);
+
+	return;
+	
 }
 
 
@@ -810,6 +813,7 @@ void Stage::Draw_Game() {
 	DrawRectFrame(Vec2{ mLeft + mWidth / 2,mUp - mHeight / 2 },
 		mWidth, mHeight, 0.003, 0, ColorF(1, 1, 1));
 
+	// ステージのマス目を描画
 	for (int i = 0; i < mVerticalSize; i++) {
 		DrawSquareDotLine({ mLeft,mUp - i * mRectHeight },
 			{ mLeft + mWidth,mUp - i * mRectHeight }, 0.005, ColorF(1, 1, 1));
@@ -818,11 +822,6 @@ void Stage::Draw_Game() {
 		DrawSquareDotLine({ mLeft + j * mRectWidth,mUp },
 			{ mLeft + j * mRectWidth,mUp - mHeight }, 0.005, ColorF(1, 1, 1));
 	};
-
-	if (mIsGoal) {
-		DrawRect(Vec2({ (float)mLeft + mGoalIteration.second * mRectWidth + mRectWidth / 2,
-		(float)mUp - (mGoalIteration.first + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight,ColorF(1,0,0));
-	}
 	
 }
 

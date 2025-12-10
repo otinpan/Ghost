@@ -4,6 +4,7 @@
 #include"Hand.h"
 #include"Stage.h"
 #include"StageObjectLight.h"
+#include"TriangleComponent.h"
 #include"Ghost_Game.h"
 #include"Escapee_Game.h"
 #define _USE_MATH_DEFINES
@@ -345,6 +346,7 @@ void Patrol::InitializeStage_Game() {
 
 void Patrol::UpdateStageObject_Game(float deltaTime) {
 	mStageObjectLight->Update_Game(deltaTime);
+	UpdateIntersectGhost_Game(deltaTime);
 	if (GetIsTurn()) {
 		UpdateTurn_Game(deltaTime);
 		return;
@@ -435,6 +437,7 @@ void Patrol::UpdatePos_Game(float deltaTime) {
 
 	}
 
+	// 回転
 	if (GetSquareComponent()->GetRect().intersects(ToPos)) {
 		switch (GetClockwise()) {
 		case 0://Down to Up
@@ -484,7 +487,6 @@ void Patrol::UpdatePos_Game(float deltaTime) {
 }
 
 
-
 void Patrol::UpdateTurn_Game(float deltaTime) {
 	if (mTurnTime < TurnLimitTime) {
 		mMoveC->SetIsMove(false);
@@ -508,5 +510,15 @@ void Patrol::UpdateTurn_Game(float deltaTime) {
 		}
 		mTurnTime = 0.0f;
 		SetIsTurn(false);
+	}
+}
+
+void Patrol::UpdateIntersectGhost_Game(float deltaTime) {
+
+
+	// Lightが照らされているとき
+	if (IsIntersect_TC(mStageObjectLight->GetLightTri(),GetGame()->GetGhost()->GetCircleComponent())
+		&&!(GetGame()->GetGhost()->GetIsInvincible())) {
+		GetGame()->GetGhost()->SetIsLighted(true);
 	}
 }
