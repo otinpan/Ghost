@@ -37,7 +37,10 @@ void Ghost_Game::InitializePlayer_Game(class Game* game) {
 	inputDown = KeyS;
 	inputLeft = KeyA;
 	inputRight = KeyD;
-	inputMakeGhost = KeySpace;
+	inputMakeGhost = KeyQ;
+	inputDecision = KeyEnter;
+	inputPause = KeyO;
+	inputBack = KeyDelete;
 
 	ic = new InputComponent_Keyboard(this);
 	ic->SetUpKey(inputUp);
@@ -50,6 +53,13 @@ void Ghost_Game::InitializePlayer_Game(class Game* game) {
 
 
 void Ghost_Game::UpdatePlayer_Game(float deltaTime) {
+	// pause
+	if (inputPause.pressed()) {
+		if (!(GetGame()->GetIsPaused())) {
+			GetGame()->SetIsPaused(true);
+			SetPauseInputGroup();
+		}
+	}
 	//Stop
 	UpdateStop_Game(deltaTime);
 	// 無敵
@@ -124,6 +134,13 @@ void Ghost_Game::UpdateStop_Game(float deltaTime) {
 
 }
 
+void Ghost_Game::SetPauseInputGroup() {
+	GetGame()->SetInputUp(inputUp);
+	GetGame()->SetInputDown(inputDown);
+	GetGame()->SetInputBack(inputBack);
+	GetGame()->SetInputPause(inputPause);
+	GetGame()->SetInputDecision(inputDecision);
+}
 
 void Ghost_Game::SetInvincible() {
 	mIsInvincible = true;

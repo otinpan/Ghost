@@ -43,6 +43,11 @@ bool Game::Initialize() {
 
 	renderTexture = RenderTexture{ Scene::Size() };
 	renderTextureLight = RenderTexture{ Scene::Size() };
+
+
+	// Pause
+	mPauseMode = PauseSelectedMode::CONTINUE;
+
 	return true;
 }
 
@@ -51,6 +56,7 @@ void Game::update(Parent* parent) {
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 		}
+
 		ProcessInput();
 		UpdateGame();
 		draw();
@@ -73,6 +79,8 @@ void Game::UpdateGame() {
 
 	if (mIsPaused) {
 		// pauseの関数作成
+		UpdatePause(deltaTime);
+		return;
 	}
 
 	// timer更新
@@ -169,8 +177,9 @@ void Game::draw() {
 	mTimerFont(timeStr)
 		.draw(Arg::center(ConvertToView(Vec2(0.0f, 0.93f))), ColorF(1.0f));
 
-
-
+	if (mIsPaused) {
+		DrawPause();
+	}
 	/*for (auto& drawing : mDrawings_Front) {
 		drawing->Draw();
 	}
@@ -215,6 +224,72 @@ void Game::LoadData() {
 		(mStage->GetEscapee3Iteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
 		mStage->GetGhostSpeed(),3);
 	mEscapee3->InitializePlayer_Game(this);
+}
+
+void Game::UpdatePause(float deltaTime) {
+	// Gameに戻る
+	if (inputPause.down()||inputBack.down()) {
+		mIsPaused = false;
+	}
+	switch (mPauseMode) {
+	case CONTINUE:
+		if (inputDown.down()) {
+			mPauseMode = MAIN_MENU;
+			break;
+		}
+		if (inputDecision.down()) {
+			mIsPaused = false;
+			break;
+		}
+		break;
+	case MAIN_MENU:
+		if (inputUp.down()) {
+			mPauseMode = CONTINUE;
+			break;
+		}
+		if (inputDown.down()) {
+			mPauseMode = STAGE_SELECT;
+			break;
+		}
+		if (inputDecision.down()) {
+			SetSeqID(Parent::SeqID::SEQ_MAINMENU);
+			break;
+		}
+		break;
+	case STAGE_SELECT:
+		if (inputUp.down()) {
+			mPauseMode = MAIN_MENU;
+			break;
+		}
+		if (inputDown.down()) {
+			mPauseMode = RULE;
+			break;
+		}
+		if (inputDecision.down()) {
+			SetSeqID(Parent::SeqID::SEQ_STAGESELECT);
+			break;
+		}
+		break;
+	case RULE:
+		if (inputUp.down()) {
+			mPauseMode = STAGE_SELECT;
+			break;
+		}
+		if (inputDecision.down()) {
+			break;
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+void DrawPause() {
+	// 続き
+}
+
+void Game::DrawPause() {
+
 }
 
 void Game::UnloadData() {
@@ -369,7 +444,10 @@ void Game::UpdateTimer(float deltaTime) {
 
 void Game::moveTo(Parent* parent, Parent::SeqID id) {
 	if (id == Parent::SEQ_MAINMENU)parent->moveTo(Parent::SEQ_MAINMENU,Parent::SEQ_GAME);
-	if (id == Parent::SEQ_STAGESELECT)parent->moveTo(Parent::SEQ_STAGESELECT, Parent::SEQ_GAME);
+	if (id == Parent::SEQ_STAGESELECT) {
+		parent->setStageSelectGame(true);
+		parent->moveTo(Parent::SEQ_STAGESELECT, Parent::SEQ_GAME);
+	}
 	if (id == Parent::SEQ_GAME)parent->moveTo(Parent::SEQ_GAME,Parent::SEQ_GAME);
 	if (id == Parent::SEQ_CREATESTAGE)parent->moveTo(Parent::SEQ_CREATESTAGE,Parent::SEQ_GAME);
 	if (id == Parent::SEQ_GAMERESULT)parent->moveTo(Parent::SEQ_GAMERESULT, Parent::SEQ_GAME);

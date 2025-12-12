@@ -52,6 +52,9 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 	inputDown = KeyDown;
 	inputLeft = KeyLeft;
 	inputRight = KeyRight;
+	inputPause = KeyP;
+	inputBack = KeyBackspace;
+	inputDecision = KeySpace;
 
 	if (GetAttribute() == Attribute::Escapee1) {
 		ic = new InputComponent_Keyboard(this);
@@ -91,7 +94,15 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 
 void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 	mFlashlight->Update_Game(deltaTime);
-	
+
+	// pause
+	if (inputPause.pressed()) {
+		if (!(GetGame()->GetIsPaused())) {
+			GetGame()->SetIsPaused(true);
+			SetPauseInputGroup();
+		}
+	}
+
 	if (!GetIsAlive()) {
 		mFlashlight->SetIsLightOn(false);
 		UpdateUnAlive(deltaTime);
@@ -188,6 +199,14 @@ void Escapee_Game::UpdateIntersectEscapee_Game(float deltaTime) {
 		}
 	}
 	
+}
+
+void Escapee_Game::SetPauseInputGroup() {
+	GetGame()->SetInputUp(inputUp);
+	GetGame()->SetInputDown(inputDown);
+	GetGame()->SetInputBack(inputBack);
+	GetGame()->SetInputPause(inputPause);
+	GetGame()->SetInputDecision(inputDecision);
 }
 
 // 鼓動の更新

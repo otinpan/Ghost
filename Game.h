@@ -49,6 +49,17 @@ public:
 	void moveTo(Parent* paretn, Parent::SeqID id);
 	void SetSeqID(Parent::SeqID id) { mSeqID = id; }
 
+	// Pause用入力
+	void SetInputUp(InputGroup input) { inputUp = input; }
+	void SetInputDown(InputGroup input) { inputDown = input; }
+	void SetInputBack(InputGroup input) { inputBack = input; }
+	void SetInputPause(InputGroup input) { inputPause = input; }
+	void SetInputDecision(InputGroup input) { inputDecision = input; }
+
+	// Pause
+	bool GetIsPaused() { return mIsPaused; }
+	void SetIsPaused(bool isPaused) { mIsPaused = isPaused; }
+
 
 
 private:
@@ -112,10 +123,23 @@ private:
 	const Font mTimerFont{ ConvertToInt((float)0.05 * GetScreenHeight()),Typeface::Bold };
 	void UpdateTimer(float deltaTime);
 
-
-
-
 	// pause manu
 	bool mIsPaused;
+	enum PauseSelectedMode {
+		CONTINUE,
+		MAIN_MENU,
+		STAGE_SELECT,
+		RULE,
+	};
+	class Player* mPauseOwner;
+	PauseSelectedMode mPauseMode;
+	void UpdatePause(float deltaTime);
+	void DrawPause();
+
+	InputGroup inputUp;
+	InputGroup inputDown;
+	InputGroup inputPause;
+	InputGroup inputBack;
+	InputGroup inputDecision;
 
 };

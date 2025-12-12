@@ -47,6 +47,7 @@ public:
 	void SetLightedLimitTime(float lightedLimitTime) { mLightedLimitTime=lightedLimitTime; }
 
 
+
 private:
 	class CircleComponent* cc;
 	ColorF mGhostColor;
@@ -80,4 +81,6 @@ private:
 	Line LineD;
 	Vec2 mPos;
 	float mRadius;
+
+	
 };

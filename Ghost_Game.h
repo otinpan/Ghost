@@ -29,6 +29,12 @@ private:
 	InputGroup inputRight;
 	InputGroup inputLeft;
 	InputGroup inputMakeGhost;
+	InputGroup inputDecision;
+	InputGroup inputPause;
+	InputGroup inputBack;
+
+	// Pause
+	void SetPauseInputGroup();
 
 	bool mCanMakeClone;
 	float mMakeCloneTime;

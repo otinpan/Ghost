@@ -38,6 +38,12 @@ private:
 	InputGroup inputDown;
 	InputGroup inputRight;
 	InputGroup inputLeft;
+	InputGroup inputPause;
+	InputGroup inputBack;
+	InputGroup inputDecision;
+
+	// Pause
+	void SetPauseInputGroup();
 
 	// 鼓動の範囲
 	class CircleComponent* mHeartLargeCC;
