@@ -15,9 +15,6 @@ Escapee_Game::Escapee_Game(Vec2 pos, float speed, int num)
 	, mIsItemAvailable(true)
 	, mItemInavailableTime(0.0f)
 	, mItemInavailableLimitTime(0.0f)
-	, mIsLighted(false)
-	, mLightedTime(0.0f)
-	, mLightedLimitTime(7.0f)
 	, mHeartLargeCC(nullptr)
 	, mHeartMidCC(nullptr)
 	, mHeartSmallCC(nullptr)
@@ -94,6 +91,7 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 
 void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 	mFlashlight->Update_Game(deltaTime);
+	
 	if (!GetIsAlive()) {
 		mFlashlight->SetIsLightOn(false);
 		UpdateUnAlive(deltaTime);
@@ -108,6 +106,7 @@ void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 	UpdateFlashlight_Game(deltaTime);
 	//intersect
 	UpdateIntersectGhost_Game(deltaTime);
+	UpdateIntersectEscapee_Game(deltaTime);
 
 	mHeartLargeCC->SetCenter(GetPosition());
 	mHeartMidCC->SetCenter(GetPosition());
@@ -165,18 +164,17 @@ void Escapee_Game::UpdateIntersectGhost_Game(float deltaTime) {
 	
 	if (IsIntersect_CC(GetGame()->GetGhost()->GetCircleComponent(), GetCircleComponent())
 		&&GetGame()->GetGhost()->GetCanCapture()) {
-		SetIsAlive(false);
-		GetCircleComponent()->SetColor(ColorF(0.5f, 0.5f, 0.5f));
+		SetIsAlive_Game(false,GetGame());
 	}
 	if (GetGame()->GetGhost()->GetGhostClone()
 		&& IsIntersect_CC(GetCircleComponent(), GetGame()->GetGhost()->GetGhostClone()->GetCircleComponent())) {
-		SetIsAlive(false);
-		GetCircleComponent()->SetColor(ColorF(0.5f, 0.5f, 0.5f));
+		SetIsAlive_Game(false,GetGame());
 	}
 	
 	
 }
 
+// UnAiveなEscapeeを照らす
 void Escapee_Game::UpdateIntersectEscapee_Game(float deltaTime) {
 	if (!mIsLightOn)return;
 	for (auto& player : GetGame()->GetPlayers()) {
@@ -234,13 +232,17 @@ void Escapee_Game::UpdateHeartbeat(float deltaTime) {
 
 void Escapee_Game::UpdateUnAlive(float deltaTime) {
 	if (GetIsAlive())return;
-	if (mLightedTime > mLightedLimitTime) {
-		SetIsAlive(true);
-		mLightedTime = 0.0f;
+
+	// 生還
+	if (GetLightedTime() > 5.0f) {
+		SetIsAlive_Game(true,GetGame());
+		SetLightedTime(0.0f);
 		return;
 	}
-	if (GetIsLighted()) {
-		mLightedTime += deltaTime;
+	else {
+		if (GetIsLighted()) {
+			SetLightedTime(GetLightedTime() + deltaTime);
+		}
 	}
 	//1度照らされただけでも照らされ続ける、といったことをなくす
 	SetIsLighted(false);
@@ -355,4 +357,12 @@ void Escapee_Game::UpdateItemAvailable(float deltaTime){
 	return;
 }
 
-
+void Escapee_Game::SetIsAlive_Game(bool isAlive,Game* game) {
+	if (isAlive) {
+		mHeartDrawCC->SetIsDraw(true);
+	}
+	else {
+		mHeartDrawCC->SetIsDraw(false);
+	}
+	Player::SetIsAlive_Game(isAlive,game);
+}

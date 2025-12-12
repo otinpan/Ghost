@@ -15,8 +15,9 @@ public:
 	void SetIsItemAvailable(bool isItemAvailable) { mIsItemAvailable = isItemAvailable; }
 	bool GetIsItemAvailable() { return mIsItemAvailable; }
 
-	void SetIsLighted(bool isLighted) { mIsLighted = isLighted; }
-	bool GetIsLighted() { return mIsLighted; }
+
+
+	void SetIsAlive_Game(bool isAlive,Game* game) override;
 
 
 	class Flashlight* &GetFlashlight() { return mFlashlight; }
@@ -73,9 +74,7 @@ private:
 	void UpdateFlashlight_Game(float deltaTime);
 	void UpdateIntersectGhost_Game(float deltaTime);
 	void UpdateIntersectEscapee_Game(float deltaTime);
-	bool mIsLighted;
-	float mLightedTime;
-	float mLightedLimitTime;
+
 
 	void UpdateItemAvailable(float deltaTime);
 	void UpdateUnAlive(float deltaTime);

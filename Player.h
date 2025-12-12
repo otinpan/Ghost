@@ -36,14 +36,23 @@ public:
 	float GetPlayerRadius() { return mRadius; }
 	void SetPlayerRadius(float radius) { mRadius = radius; }
 	bool GetIsAlive() { return mIsAlive; }
-	void SetIsAlive(bool isAlive) { mIsAlive = isAlive; }
+	virtual void SetIsAlive_Game(bool isAlive,class Game* game);
 	bool GetIsLighted() { return mIsLighted; }
 	void SetIsLighted(bool isLighted) { mIsLighted = isLighted; }
 	float GetRadius() { return mRadius; }
+	ColorF GetCircleColor();
+	float GetLightedTime() { return mLightedTime; }
+	void SetLightedTime(float lightedTime) { mLightedTime = lightedTime; }
+	float GetLightedLimitTime() { return mLightedLimitTime; }
+	void SetLightedLimitTime(float lightedLimitTime) { mLightedLimitTime=lightedLimitTime; }
 
 
 private:
 	class CircleComponent* cc;
+	ColorF mGhostColor;
+	ColorF mEscapee1Color;
+	ColorF mEscapee2Color;
+	ColorF mEscapee3Color;
 
 
 	Attribute mAttribute;
@@ -58,6 +67,8 @@ private:
 	//Flashlight
 	bool mIsAlive;
 	bool mIsLighted;
+	float mLightedTime;
+	float mLightedLimitTime;
 
     float mObjectLeft;
 	float mObjectRight;

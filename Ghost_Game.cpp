@@ -136,11 +136,6 @@ void Ghost_Game::SetInvincible() {
 // 一定時間連続して止まる → 無敵状態になる
 // 無限に止められてしまうことを防ぐ
 void Ghost_Game::UpdateInvincible(float deltaTime) {
-	ClearPrint();
-	Print << mIsStop;
-	Print << mInvincibleTime;
-	Print << mCanCaptureTime;
-	Print << mStoppingTime;
 	// 無敵状態の時間カウント
 	if (mIsInvincible) {
 		mCanCapture = false;

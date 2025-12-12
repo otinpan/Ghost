@@ -33,3 +33,15 @@ void DrawingComponent::Initialize_CreateStage() {
 void DrawingComponent::Draw() {
 
 }
+
+void DrawingComponent::SetDrawState_Game(DrawState drawState, Game* game) {
+	game->RemoveDrawing(this);
+	mDrawState = drawState;
+	game->AddDrawing(this);
+}
+
+void DrawingComponent::SetDrawState_CreateStage(DrawState drawState, CreateStage* createStage) {
+	createStage->RemoveDrawing(this);
+	mDrawState = drawState;
+	createStage->AddDrawing(this);
+}

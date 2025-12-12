@@ -11,6 +11,10 @@ Player::Player(Vec2 pos, float speed)
 	,StandardSpeed(0.3f)
 	,mIsAlive(true)
 	,mIsLighted(false)
+	,mGhostColor(ColorF(76.0f / 255.0f, 0, 204.0f / 255.0f))
+	,mEscapee1Color(ColorF(204.0f / 255.0f, 0, 204.0f / 255.0f))
+	,mEscapee2Color(ColorF(102.0f / 255.0f, 178.0f / 255.0f, 1))
+	,mEscapee3Color(ColorF(153.0f / 255.0f, 1.0f, 153.0f / 255.0f))
 {
 	SetPosition(pos);
 }
@@ -32,23 +36,23 @@ void Player::InitializeActor_Game(class Game* game) {
 	switch (GetAttribute()) {
 	case Attribute::Ghost:
 		cc = new CircleComponent(this, 170, DrawingComponent::DrawState::UNAFFECTED);
-		cc->SetColor(ColorF(76.0f / 255.0f, 0, 204.0f / 255.0f));
+		cc->SetColor(mGhostColor);
 		break;
 	case Attribute::GhostClone:
 		cc = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
-		cc->SetColor(ColorF(43.0f / 255.0f, 0, 110.0f / 255.0f));
+		cc->SetColor(mGhostColor);
 		break;
 	case Attribute::Escapee1:
 		cc = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
-		cc->SetColor(ColorF(204.0f / 255.0f, 0, 204.0f / 255.0f));
+		cc->SetColor(mEscapee1Color);
 		break;
 	case Attribute::Escapee2:
 		cc = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
-		cc->SetColor(ColorF(102.0f / 255.0f, 178.0f / 255.0f, 1));
+		cc->SetColor(mEscapee2Color);
 		break;
 	case Attribute::Escapee3:
 		cc = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
-		cc->SetColor(ColorF(153.0f / 255.0f, 1.0f, 153.0f / 255.0f));
+		cc->SetColor(mEscapee3Color);
 		break;
 	}
 
@@ -97,3 +101,36 @@ void Player::UpdatePlayerPos_Game(float deltaTime) {
 
 }
 
+
+void Player::SetIsAlive_Game(bool isAlive,Game* game) {
+	if (isAlive) {
+		mIsAlive = true;
+		GetCircleComponent()->SetDrawState_Game(DrawingComponent::DrawState::BACK,game);
+		GetCircleComponent()->SetColor(GetCircleColor());
+	}
+	else {
+		mIsAlive = false;
+		GetCircleComponent()->SetDrawState_Game(DrawingComponent::DrawState::UNAFFECTED,game);
+		GetCircleComponent()->SetColor(ColorF(0.5f));
+	}
+}
+
+ColorF Player::GetCircleColor() {
+	switch (mAttribute) {
+	case Ghost:
+		return mGhostColor;
+		break;
+	case Escapee1:
+		return mEscapee1Color;
+		break;
+	case Escapee2:
+		return mEscapee2Color;
+		break;
+	case Escapee3:
+		return mEscapee3Color;
+		break;
+	default:
+		return ColorF(1.0f);
+		break;
+	}
+}

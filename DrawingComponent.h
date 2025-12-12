@@ -19,7 +19,8 @@ public:
 	virtual void Draw();
 
 	int GetDrawOrder()const { return mDrawOrder; }
-	void SetDrawState(DrawState drawState) { mDrawState = drawState; }
+	void SetDrawState_Game(DrawState drawState,class Game* game);
+	void SetDrawState_CreateStage(DrawState drawState,class CreateStage* createStage);
 	DrawState GetDrawState() const{ return mDrawState; }
 	void SetIsDraw(bool isDraw) { mIsDraw = isDraw; }
 	bool GetIsDraw() const{ return mIsDraw; }
