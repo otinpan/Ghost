@@ -103,4 +103,19 @@ private:
 	//Shader
 	VertexShader vs2D;
 	PixelShader ps2DTexture;
+
+	// timer
+	float mGameTime;
+	int mGameSec;
+	int mGameMin;
+	bool mIsTimeUp;
+	const Font mTimerFont{ ConvertToInt((float)0.05 * GetScreenHeight()),Typeface::Bold };
+	void UpdateTimer(float deltaTime);
+
+
+
+
+	// pause manu
+	bool mIsPaused;
+
 };

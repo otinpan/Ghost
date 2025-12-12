@@ -17,6 +17,9 @@ Game::Game(String selectedStageName)
 	, HitstopTime(0.0f)
 	, mSeqID(Parent::SEQ_NONE)
 	, mSelectedStageName(selectedStageName)
+	, mGameTime(300.0f)
+	, mIsPaused(false)
+	, mIsTimeUp(false)
 {
 	Initialize();
 }
@@ -67,6 +70,14 @@ void Game::ProcessInput() {
 
 void Game::UpdateGame() {
 	float deltaTime = Scene::DeltaTime();
+
+	if (mIsPaused) {
+		// pauseの関数作成
+	}
+
+	// timer更新
+	UpdateTimer(deltaTime);
+
 
 	if (mIsHitstop) {
 		UpdateHitstop(deltaTime);
@@ -153,6 +164,13 @@ void Game::draw() {
 		}
 	}
 
+	// Timerの表示
+	String timeStr = U"{:02}:{:02}"_fmt(mGameMin, mGameSec);
+	mTimerFont(timeStr)
+		.draw(Arg::center(ConvertToView(Vec2(0.0f, 0.93f))), ColorF(1.0f));
+
+
+
 	/*for (auto& drawing : mDrawings_Front) {
 		drawing->Draw();
 	}
@@ -167,7 +185,9 @@ void Game::draw() {
 }
 
 void Game::LoadData() {
-	mStage = new Stage(1.92f,1.92f);
+	mStage = new Stage(1.85f,1.85f);
+
+
 	const FilePath path = U"Stage/" + mSelectedStageName + U"/Data.bin";
 	mStage->Initialize_Game(this,path);
 	mGhost = new Ghost_Game(Vec2({(float)mStage->GetLeft() +
@@ -331,6 +351,20 @@ void Game::RemovePlayer(Player* player) {
 	if (iter != mPlayers.end()) {
 		mPlayers.erase(iter);
 	}
+}
+
+void Game::UpdateTimer(float deltaTime) {
+	if (mIsTimeUp)return;
+
+	mGameTime -= deltaTime;
+	if (mGameTime <= 0.0f) {
+		mGameTime = 0.0f;
+		mIsTimeUp = true;
+	}
+
+	int time = static_cast<int>(mGameTime);
+	mGameMin = time / 60;
+	mGameSec = time % 60;
 }
 
 void Game::moveTo(Parent* parent, Parent::SeqID id) {

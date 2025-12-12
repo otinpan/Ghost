@@ -258,6 +258,7 @@ void Escapee_Game::UpdatePlayerPos_Game(float deltaTime) {
 			if (!IsIntersect_SC(stageObject->GetSquareComponent(), GetCircleComponent()))continue;
 			switch (stageObject->GetAttribute()) {
 			case StageObject::Attribute::Door:
+				// 鍵を持っているならドアを開く
 				if (mIsKey) {
 					mIsKey = false;
 					GetGame()->GetStage()->DeleteStageObject(stageObject->GetIteration().first,
@@ -297,6 +298,7 @@ void Escapee_Game::UpdatePlayerPos_Game(float deltaTime) {
 				break;
 			case StageObject::Attribute::TreasureChest:
 				if (!mIsItemAvailable)break;
+				// 鍵を持っているなら宝箱を開く
 				if (mIsKey) {
 					mIsKey = false;
 					mTreasure = stageObject->GetTreasure();

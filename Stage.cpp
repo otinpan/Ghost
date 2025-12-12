@@ -690,6 +690,12 @@ String Stage::RegisterStageName() {
 
 //Game/////////////////////////////////////////////////////////////////////////////////////////////
 void Stage::Initialize_Game(class Game* game, FilePath fileName) {
+	
+	mLeft = -0.93f;
+	mUp = 0.9f;
+	mRectWidth = mWidth / mSideSize;
+	mRectHeight = mHeight / mVerticalSize;
+
 	mGame = game;
 	Deserializer<BinaryReader> reader{ fileName };
 	if (not reader) {
@@ -766,19 +772,20 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 	}
 
 	// Wallの追加
-	for (int i = -1; i < mVerticalSize + 1; i++) {
+	float scale = 1.0f;
+	for (int i = -1; i < mVerticalSize ; i++) {
 		mWalls.emplace_back(new Wall(Vec2({ (float)mLeft + (-1 * mRectWidth) + mRectWidth / 2,
-		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight));
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth*scale, mRectHeight*scale));
 		mWalls.emplace_back(new Wall(Vec2({ (float)mLeft + mSideSize * mRectWidth + mRectWidth / 2,
-		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight));
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth*scale, mRectHeight*scale));
 
 	}
 
 	for (int j = -1; j < mSideSize + 1; j++) {
 		mWalls.emplace_back(new Wall(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp + mRectHeight - mRectHeight / 2 }), mRectWidth, mRectHeight));
+		(float)mUp + mRectHeight - mRectHeight / 2 }), mRectWidth*scale, mRectHeight*scale));
 		mWalls.emplace_back(new Wall(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - mRectHeight - mVerticalSize * mRectHeight + mRectHeight }), mRectWidth, mRectHeight / 2));
+		(float)mUp - mRectHeight - mVerticalSize * mRectHeight + mRectHeight }), mRectWidth*scale, mRectHeight*scale));
 	}
 
 	// initiaize
