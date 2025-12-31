@@ -17,9 +17,9 @@ Parent::Parent()
 	,mStageSelect(0)
 	, mNext(SEQ_NONE)
 {
-	mMainMenu = new MainMenu();
+	//mMainMenu = new MainMenu();
 	//mSubMenu = new SubMenu();
-	//mStageSelect=new StageSelect(true);
+	mStageSelect=new StageSelect(true);
 	//mGame = new Game();
 	//mCreateStage = new CreateStage();
 	//mGameResult = new GameResult();
@@ -61,7 +61,7 @@ void Parent::update() {
 		break;
 	case SEQ_GAMERESULT:
 		SafeDelete();
-		mGameResult = new GameResult();
+		mGameResult = new GameResult(mGameJudgement);
 		break;
 	case SEQ_CHANGEWINDOWSIZE:
 		SafeDelete();

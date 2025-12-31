@@ -15,6 +15,13 @@ public:
 		SEQ_NONE,
 	};
 
+	enum GameJudgement {
+		GHOST_WIN,
+		ESCAPEES_WIN,
+		DRAW,
+		NONE,
+	};
+
 	Parent();
 	~Parent();
 	void update();
@@ -22,6 +29,8 @@ public:
 	void moveTo(SeqID next, SeqID pre);
 	void setStageName(String stageName);
 	void setStageSelectGame(bool isStageSelectGame) { mIsStageSelectGame = isStageSelectGame; }
+
+	void setGameJudgement(GameJudgement judge) { mGameJudgement = judge; }
 
 	class MainMenu*& GetMainMenu() { return mMainMenu; }
 	class SubMenu*& GetSubMenu() { return mSubMenu; }
@@ -49,6 +58,9 @@ private:
 
 	String mSelectedStageName;
 	bool mIsStageSelectGame;
+
+	// gameの勝敗
+	GameJudgement mGameJudgement = NONE;
 
 	void SafeDelete();
 	

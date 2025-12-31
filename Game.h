@@ -135,6 +135,12 @@ private:
 	PauseSelectedMode mPauseMode;
 	void UpdatePause(float deltaTime);
 	void DrawPause();
+	Font pauseFont;
+
+	// 終了判定
+	void CheckIsGameEnd();
+	bool mIsGameEnd=false;
+	Parent::GameJudgement mJudgement;
 
 	InputGroup inputUp;
 	InputGroup inputDown;

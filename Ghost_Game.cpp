@@ -60,6 +60,12 @@ void Ghost_Game::UpdatePlayer_Game(float deltaTime) {
 			SetPauseInputGroup();
 		}
 	}
+
+	// dead
+	if (mHP < 0) {
+		SetIsAlive_Game(false,GetGame());
+	}
+
 	//Stop
 	UpdateStop_Game(deltaTime);
 	// 無敵
@@ -108,13 +114,24 @@ void Ghost_Game::UpdateClone_Game(float deltaTime) {
 void Ghost_Game::UpdateStop_Game(float deltaTime) {
 
 	if (mIsInvincible) {
+		// 無敵時間でも照らされていたら体力が減る
+		if (GetIsLighted()) {
+			// HPの更新
+			mLightedAccumulator += deltaTime * 2.0f;
+			mHP = 100 - (mLightedAccumulator / lightedLimitTime) * 100.0f;
+		}
 		mIsStop = false;
 		return;
 	}
 
 	// 照らされたらスタン
 	if (GetIsLighted()) {
-		// 一定時間照らされると無敵状態
+
+		// HPの更新
+		mLightedAccumulator += deltaTime*2.0f;
+		mHP = 100-(mLightedAccumulator / lightedLimitTime)*100.0f;
+
+		// 一定時間照らされると解放
 		if (mStoppingTime >= 2.0f) {
 			SetInvincible();
 		}

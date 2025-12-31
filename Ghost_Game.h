@@ -16,6 +16,7 @@ public:
 	bool GetIsInvincible() { return mIsInvincible; }
 	void SetCanCapture(bool canCapture) { mCanCapture = canCapture; }
 	bool GetCanCapture() { return mCanCapture; }
+	int GetHP() { return mHP; }
 
 
 	class GhostClone_Game* &GetGhostClone() { return mGhostClone; }
@@ -54,7 +55,12 @@ private:
 	float mInvincibleTime; // 無敵時間
 	bool mCanCapture; // Escapeeを捉えられない状態
 	float mCanCaptureTime; 
-	float mStoppingTime; // 静止している時間*/
+	float mStoppingTime; // 静止している時間
+
+	// HP
+	float lightedLimitTime = 20.0f;
+	float mLightedAccumulator = 0.0f;
+	int mHP=100;
 
 	// 描画
 	void UpdateIsDraw(float deltaTime);

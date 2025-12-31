@@ -1,8 +1,9 @@
 ﻿#include"GameResult.h"
 
-GameResult::GameResult()
+GameResult::GameResult(Parent::GameJudgement judge)
 	:mSeqID(Parent::SEQ_NONE)
 	, mIsRunning(true)
+	, mGameJudgement(judge)
 {
 	Initialize();
 }
@@ -38,7 +39,7 @@ void GameResult::UpdateGameResult() {
 }
 
 void GameResult::draw() {
-
+	Print << mGameJudgement;
 }
 
 void GameResult::Shutdown() {

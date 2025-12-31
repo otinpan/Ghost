@@ -176,10 +176,12 @@ void Escapee_Game::UpdateIntersectGhost_Game(float deltaTime) {
 	if (IsIntersect_CC(GetGame()->GetGhost()->GetCircleComponent(), GetCircleComponent())
 		&&GetGame()->GetGhost()->GetCanCapture()) {
 		SetIsAlive_Game(false,GetGame());
+		GetGame()->SetHitstop(1.0f);
 	}
 	if (GetGame()->GetGhost()->GetGhostClone()
 		&& IsIntersect_CC(GetCircleComponent(), GetGame()->GetGhost()->GetGhostClone()->GetCircleComponent())) {
 		SetIsAlive_Game(false,GetGame());
+		GetGame()->SetHitstop(1.0f);
 	}
 	
 	

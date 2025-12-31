@@ -6,7 +6,7 @@
 
 class GameResult {
 public:
-	GameResult();
+	GameResult(Parent::GameJudgement judge);
 	~GameResult();
 
 	void update(class Parent*);
@@ -21,6 +21,8 @@ public:
 private:
 	void ProcessInput();
 	void UpdateGameResult();
+
+	Parent::GameJudgement mGameJudgement;
 
 	Parent::SeqID mSeqID;
 	bool mIsRunning;

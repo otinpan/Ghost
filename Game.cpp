@@ -20,6 +20,10 @@ Game::Game(String selectedStageName)
 	, mGameTime(300.0f)
 	, mIsPaused(false)
 	, mIsTimeUp(false)
+	, mEscapee1(nullptr)
+	, mEscapee2(nullptr)
+	, mEscapee3(nullptr)
+	, mGhost(nullptr)
 {
 	Initialize();
 }
@@ -47,12 +51,21 @@ bool Game::Initialize() {
 
 	// Pause
 	mPauseMode = PauseSelectedMode::CONTINUE;
+	int FontSize = 0.09 * GetScreenHeight();
+	pauseFont = Font{ FontMethod::MSDF,FontSize / 2,Typeface::Light };
 
 	return true;
 }
 
 void Game::update(Parent* parent) {
 	if (mIsRunning) {
+		ClearPrint();
+		Print << mGhost->GetHP();
+		// 終了判定
+		if (mIsGameEnd) {
+			parent->setGameJudgement(mJudgement);
+			mSeqID = Parent::SeqID::SEQ_GAMERESULT;
+		}
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 		}
@@ -76,21 +89,24 @@ void Game::ProcessInput() {
 
 void Game::UpdateGame() {
 	float deltaTime = Scene::DeltaTime();
-
 	if (mIsPaused) {
 		// pauseの関数作成
 		UpdatePause(deltaTime);
 		return;
 	}
 
-	// timer更新
-	UpdateTimer(deltaTime);
-
-
 	if (mIsHitstop) {
 		UpdateHitstop(deltaTime);
 		return;
 	}
+
+
+	// timer更新
+	UpdateTimer(deltaTime);
+	// 終了判定
+	CheckIsGameEnd();
+
+
 
 	mUpdatingActors = true;
 	for (auto actor : mActors) {
@@ -115,6 +131,7 @@ void Game::UpdateGame() {
 	}
 
 	mStage->Update_Game(deltaTime);
+
 }
 
 void Game::SetHitstop(float hitstopTime) {
@@ -284,12 +301,40 @@ void Game::UpdatePause(float deltaTime) {
 	}
 }
 
-void DrawPause() {
-	// 続き
-}
+
 
 void Game::DrawPause() {
+	std::map<Game::PauseSelectedMode, Vec2> pos;
+	std::map<Game::PauseSelectedMode, String> text;
+	float width = 1.5f;
+	float height = 1.5f;
+	float modeHeight = 1.3;
+	float left = (2.0 - width) / 2.0f;
+	float top = height / 2.0f;
+	float modeTop = modeHeight / 2.0f;
+	float eachHeight = modeHeight / 4.0f;
 
+	pos[CONTINUE] = Vec2(0.0f, modeTop - eachHeight / 2.0f);
+	pos[MAIN_MENU] = Vec2(0.0f, modeTop - eachHeight * 3.0f / 2.0f);
+	pos[STAGE_SELECT] = Vec2(0.0f, modeTop - eachHeight * 5.0f / 2.0f);
+	pos[RULE] = Vec2(0.0f, modeTop - eachHeight * 7.0f / 2.0f);
+	text[CONTINUE] = U"Continue";
+	text[MAIN_MENU] = U"MainMenu";
+	text[STAGE_SELECT] = U"StageSelect";
+	text[RULE] = U"Rule";
+
+	float rectHeight = eachHeight * 0.7f;
+	float rectWidth = width * 0.7f;
+
+	// 描画
+	DrawRect(Vec2(0.0f, 0.0f), width, height, ColorF(192.0f / 255.0f));
+	for (auto [mode,p] : pos) {
+		DrawRect(p, rectWidth, rectHeight,ColorF(1.0f));
+		pauseFont(text[mode]).drawAt(ConvertToView(p), ColorF(0.0f));
+	}
+
+	DrawRectFrame(pos[mPauseMode], rectWidth, rectHeight, 0.01f, 0.01f, ColorF(0.0f));
+	
 }
 
 void Game::UnloadData() {
@@ -440,6 +485,28 @@ void Game::UpdateTimer(float deltaTime) {
 	int time = static_cast<int>(mGameTime);
 	mGameMin = time / 60;
 	mGameSec = time % 60;
+}
+
+void Game::CheckIsGameEnd() {
+	// Ghostの負け
+	if (!mGhost->GetIsAlive()) {
+		mIsGameEnd = true;
+		mJudgement = Parent::GameJudgement::ESCAPEES_WIN;
+	}
+	// Escapeeの負け
+	else if ((mEscapee1 != nullptr && !mEscapee1->GetIsAlive()) &&
+		(mEscapee2 != nullptr && !mEscapee2->GetIsAlive()) &&
+		(mEscapee3 != nullptr && !mEscapee3->GetIsAlive())) {
+		mIsGameEnd = true;
+		mJudgement = Parent::GameJudgement::GHOST_WIN;
+
+	}
+	// 引き分け
+	else if (mIsTimeUp) {
+		mIsGameEnd = true;
+		mJudgement = Parent::GameJudgement::DRAW;
+	}
+	
 }
 
 void Game::moveTo(Parent* parent, Parent::SeqID id) {
