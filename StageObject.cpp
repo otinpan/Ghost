@@ -47,30 +47,41 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 
 	sqc = new SquareComponent(this,50,DrawingComponent::DrawState::UNAFFECTED);
 	sqc->InitializeDrawing_CreateStage(mCenter,mWidth,mHeight);
+
+	sc = new SpriteComponent(this, 70, DrawingComponent::DrawState::UNAFFECTED);
+	//sc->InitializeDrawing_CreateStage(mCenter, mWidth, mHeight);
+
 	switch (mAttribute) {
 	case Attribute::Wall:
 		sqc->SetColor(ColorF(0.5f));
+		sc->SetTexture(TextureAsset(U"brock_stone"));
 		break;
 	case Attribute::Brock:
 		sqc->SetColor(ColorF(1, 1, 1));
+		sc->SetTexture(TextureAsset(U"brock_stone"));
 		break;
 	case Attribute::Door:
 		sqc->SetColor(ColorF(0, 0, 0));
+		sc->SetTexture(TextureAsset(U"door_front"));
 		break;
 	case Attribute::Patrol:
 		sqc->SetColor(ColorF(0, (float)102 / 255, 0));
 		break;
 	case Attribute::Key:
 		sqc->SetColor(ColorF((float)76 / 255, (float)0, (float)153 / 255));
+		sc->SetTexture(TextureAsset(U"key"));
 		break;
 	case Attribute::Battery:
 		sqc->SetColor(ColorF(0, 1, 128.0f / 255.0f));
+		sc->SetTexture(TextureAsset(U"battery"));
 		break;
 	case Attribute::TreasureChest:
 		sqc->SetColor(ColorF(1, 1, 0));
+		sc->SetTexture(TextureAsset(U"treasure"));
 		break;
 	case Attribute::Candle:
 		sqc->SetColor(ColorF(1, 1, 1));
+		sc->SetTexture(TextureAsset(U"candle"));
 		break;
 	case Attribute::Ghost:
 		sqc->SetColor(ColorF(76.0f / 255.0f, 0, 204.0f / 255.0f));
@@ -111,8 +122,12 @@ void StageObject::UpdateActor_CreateStage(float deltaTime) {
 	}
 
 	UpdateStageObject_CreateStage(deltaTime);
-	
+
+
+	// 描画の位置変更
 	sqc->SetCenter(GetPosition());
+	sc->SetCenter(GetPosition());
+
 	for (int i = 0; i < 4; i++) {
 		cc[i]->
 			SetCenter(Vec2

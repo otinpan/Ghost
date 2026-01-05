@@ -45,6 +45,7 @@ public:
 	void UpdateActor_CreateStage(float deltaTime)override;
 	virtual void UpdateStageObject_CreateStage(float deltaTime);
 
+
 	void UpdateActor_Game(float deltaTime)override;
 	virtual void UpdateStageObject_Game(float deltaTime);
 
@@ -52,6 +53,7 @@ public:
 
 	class SquareComponent*& GetSquareComponent() { return sqc; }
 	std::vector<CircleComponent*>& GetCircleComponents() { return cc; }
+	class SpriteComponent*& GetSpriteComponent() { return sc; }
 
 	bool GetIsGripen() { return mIsGripen; }
 	void SetIsGripen(bool b) { mIsGripen = b; }
@@ -99,6 +101,7 @@ public:
 	void RotateClockwise(bool isClockwise);
 	void SpreadLightRad(bool isPlus);
 
+	Vec2 GetCenter() { return mCenter; }
 	Vec2 GetDoorCenter() { return mDoorCenter; }
 	void SetDoorCenter(Vec2 pos) { mDoorCenter = pos; }
 	float GetDoorWidth() { return mDoorWidth; }
@@ -137,6 +140,7 @@ public:
 private:
 	class SquareComponent* sqc;
 	std::vector<class CircleComponent*> cc;
+	class SpriteComponent* sc;
 	//0lefttop 1righttop 2rightbottom 3leftbottom
 
 	std::vector<float> dx;

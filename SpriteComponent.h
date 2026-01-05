@@ -9,8 +9,8 @@ public:
 	SpriteComponent(class Actor* owner, int drawOrder,DrawState drawState);
 	~SpriteComponent();
 
-	void InitializeDrawing_Game(float worldTexWidth,float worldTexHeight,Vec2 diff);
-	void InitializeDrawing_CreateStage(float worldTexWidth, float worldTexHeight, Vec2 diff);
+	void InitializeDrawing_Game(Vec2 pos,float width, float height);
+	void InitializeDrawing_CreateStage(Vec2 pos,float width,float height);
 
 	void Draw() override;
     void SetTexture(Texture texture);
@@ -18,6 +18,8 @@ public:
 	int GetDrawOrder() const { return mDrawOrder; }
 	float GetTexHeight() const { return mWorldTexHeight; }
 	float GetTexWidth() const { return mWorldTexWidth; }
+	Vec2 GetCenter() const { return mCenter; }
+	void SetCenter(Vec2 pos) { mCenter = pos; }
 
 private:
 	int mDrawOrder;
@@ -30,6 +32,9 @@ private:
 	//ワールド座標での画像の大きさ（描画したい画像の大きさ)
 	float mWorldTexWidth;
 	float mWorldTexHeight;
+	Vec2 mCenter;
 
 	Texture mTexture;
+
+
 };

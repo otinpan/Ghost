@@ -211,8 +211,21 @@ void Game::draw() {
 }
 
 void Game::LoadData() {
-	mStage = new Stage(1.85f,1.85f);
 
+	// Assetロード
+	TextureAsset::Load(U"brock_stone");
+	TextureAsset::Load(U"borck_grass");
+	TextureAsset::Load(U"borck_wood");
+	TextureAsset::Load(U"candle");
+	TextureAsset::Load(U"door_front");
+	TextureAsset::Load(U"door_side");
+	TextureAsset::Load(U"key");
+	TextureAsset::Load(U"treasure");
+	TextureAsset::Load(U"battery");
+
+
+
+	mStage = new Stage(1.85f,1.85f);
 
 	const FilePath path = U"Stage/" + mSelectedStageName + U"/Data.bin";
 	mStage->Initialize_Game(this,path);
@@ -241,6 +254,7 @@ void Game::LoadData() {
 		(mStage->GetEscapee3Iteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
 		mStage->GetGhostSpeed(),3);
 	mEscapee3->InitializePlayer_Game(this);
+
 }
 
 void Game::UpdatePause(float deltaTime) {
@@ -341,6 +355,16 @@ void Game::UnloadData() {
 	while (!mActors.empty()) {
 		delete mActors.back();
 	}
+
+	TextureAsset::Release(U"brock_stone");
+	TextureAsset::Release(U"brock_grass");
+	TextureAsset::Release(U"brock_wood");
+	TextureAsset::Release(U"candle");
+	TextureAsset::Release(U"door_front");
+	TextureAsset::Release(U"door_side");
+	TextureAsset::Release(U"key");
+	TextureAsset::Release(U"treasure");
+	TextureAsset::Release(U"battery");
 }
 
 

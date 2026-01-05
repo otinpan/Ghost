@@ -13,15 +13,18 @@ SpriteComponent::SpriteComponent(Actor* owner, int drawOrder,DrawingComponent::D
 SpriteComponent::~SpriteComponent() {
 }
 
-void SpriteComponent::InitializeDrawing_Game(float worldTexWidth, float worldTexHeight, Vec2 diff) {
+void SpriteComponent::InitializeDrawing_Game(Vec2 pos,float width,float height) {
 	Initialize_Game();
-	mWorldTexWidth = worldTexWidth;
-	mWorldTexHeight = worldTexHeight;
-	mDiff = diff;
+	mCenter = pos;
+	mWorldTexWidth = width;
+	mWorldTexHeight = height;
 }
 
-void SpriteComponent::InitializeDrawing_CreateStage(float worldTexWidth, float worldTexHeight, Vec2 diff) {
+void SpriteComponent::InitializeDrawing_CreateStage(Vec2 pos,float width,float height) {
 	Initialize_CreateStage();
+	mCenter = pos;
+	mWorldTexWidth = width;
+	mWorldTexHeight = height;
 }
 
 void SpriteComponent::Draw() {
@@ -31,9 +34,8 @@ void SpriteComponent::Draw() {
 	float WritingHeight = (float)mWorldTexHeight / 2.0 *
 		GetScreenHeight();
 
-	Vec2 WritingPos = mOwner->GetPosition() + mDiff;
 
-	mTexture.resized(WritingWidth, WritingHeight).drawAt(ConvertToView(WritingPos));
+	mTexture.resized(WritingWidth, WritingHeight).drawAt(ConvertToView(mCenter));
 }
 
 

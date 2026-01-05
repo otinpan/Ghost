@@ -19,7 +19,7 @@ Parent::Parent()
 {
 	//mMainMenu = new MainMenu();
 	//mSubMenu = new SubMenu();
-	mStageSelect=new StageSelect(true);
+	mStageSelect=new StageSelect(false);
 	//mGame = new Game();
 	//mCreateStage = new CreateStage();
 	//mGameResult = new GameResult();

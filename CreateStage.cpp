@@ -126,6 +126,18 @@ void CreateStage::draw() {
 }
 
 void CreateStage::LoadData() {
+	// Assetロード
+	TextureAsset::Load(U"brock_stone");
+	TextureAsset::Load(U"borck_grass");
+	TextureAsset::Load(U"borck_wood");
+	TextureAsset::Load(U"candle");
+	TextureAsset::Load(U"door_front");
+	TextureAsset::Load(U"door_side");
+	TextureAsset::Load(U"key");
+	TextureAsset::Load(U"treasure");
+	TextureAsset::Load(U"battery");
+
+
 	mHand = new Hand();
 	mHand->InitializeActor_CreateStage(this);
 	mStage = new Stage(1.6f, 1.5f);
@@ -148,6 +160,16 @@ void CreateStage::UnloadData() {
 		delete mActors.back();
 	}
 	delete mStage;
+
+	TextureAsset::Release(U"brock_stone");
+	TextureAsset::Release(U"brock_grass");
+	TextureAsset::Release(U"brock_wood");
+	TextureAsset::Release(U"candle");
+	TextureAsset::Release(U"door_front");
+	TextureAsset::Release(U"door_side");
+	TextureAsset::Release(U"key");
+	TextureAsset::Release(U"treasure");
+	TextureAsset::Release(U"battery");
 }
 
 
