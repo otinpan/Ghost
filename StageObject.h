@@ -35,6 +35,12 @@ public:
 		TreasureBattery,
 	};
 
+	enum Material {
+		Stone,
+		Wood,
+		Grass,
+	};
+
 	void InitializeActor_CreateStage(class CreateStage* createstage)override;
 	virtual void InitializeStageObject_CreateStage(class CreateStage* createStage);
 
@@ -90,6 +96,8 @@ public:
 	void SetBatterySize(BatterySize batterySize) { mBatterySize = batterySize; }
 	Treasure GetTreasure() { return mTreasure; }
 	void SetTreasure(Treasure treasure) { mTreasure = treasure; }
+	Material GetMaterial() { return mMaterial; }
+	void SetMaterial(Material material) { mMaterial = material; }
 
 
 	Vec2 GetLeftTop();
@@ -128,6 +136,8 @@ public:
 	void SetStandardSpeed(float standardSpeed) { StandardSpeed = standardSpeed; }
 	bool GetIsTurn() { return mIsTurn; }
 	void SetIsTurn(bool isTurn) { mIsTurn = isTurn; }
+	bool GetIsChosen() { return mIsChosen; }
+	void SetIsChosen(bool isChosen) { mIsChosen = isChosen; }
 
 
 	//Menu
@@ -149,6 +159,7 @@ private:
 	bool mIsGripen;
 	bool mIsInStage;//Stageの中にあるか
 	bool mIsInObjectMenu;//ObjectMenuの中にあるか
+	bool mIsChosen;
 
 	Attribute mAttribute;
 
@@ -163,6 +174,9 @@ private:
 	std::pair<int, int> mIteration;//stageにある場合stageのどこにあるかを保存
 	int mCandleIteration;
 	int mClockwise;
+
+	// Brock
+	Material mMaterial;
 
 	//Patrol
 	int mPatrolRange;

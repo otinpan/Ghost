@@ -59,8 +59,6 @@ bool Game::Initialize() {
 
 void Game::update(Parent* parent) {
 	if (mIsRunning) {
-		ClearPrint();
-		Print << mGhost->GetHP();
 		// 終了判定
 		if (mIsGameEnd) {
 			parent->setGameJudgement(mJudgement);

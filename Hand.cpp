@@ -243,6 +243,7 @@ void Hand::InitChoosing(class StageObject* stageObject) {
 	}
 	mChoosing = stageObject;
 	mChoosing->InitializeStageMenu_CreateStage();
+	mChoosing->SetIsChosen(true);
 	mIsChoose = true;
 }
 

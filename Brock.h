@@ -9,14 +9,11 @@ public:
 	void InitializeStageObject_CreateStage(class CreateStage* createStage)override;
 	void InitializeStageObject_Game(class Game* game)override;
 
+	void InitializeStage_Game() override;
+
 	void UpdateStageObject_CreateStage(float deltaTime)override;
 	void UpdateStageObject_Game(float deltaTime)override;
 
-	enum Material {
-		Stone,
-		Wood,
-		Grass,
-	};
 
 	//Menu
 	void InitializeStageMenu_CreateStage()override;
@@ -28,6 +25,9 @@ private:
 	class SquareComponent* StoneSC;
 	class SquareComponent* WoodSC;
 	class SquareComponent* GrassSC;
+	class SpriteComponent* scStone;
+	class SpriteComponent* scWood;
+	class SpriteComponent* scGrass;
 	Vec2 StoneRectCenter_StageMenu;
 	Vec2 WoodRectCenter_StageMenu;
 	Vec2 GrassRectCenter_StageMenu;
@@ -37,5 +37,5 @@ private:
 	float EachWidth_StageMenu;
 	float EachHeight_StageMenu;
 
-	Material mMaterial;
+	//Material mMaterial;
 };

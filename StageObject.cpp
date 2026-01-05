@@ -10,6 +10,7 @@ StageObject::StageObject(Vec2 pos, float width, float height)
 	:sqc(nullptr)
 	, mIsGripen(false)
 	, mCenter(pos)
+	, mMaterial(Material::Stone)
 	, mWidth(width)
 	, mHeight(height)
 	, mIteration({ -1,-1 })
@@ -267,6 +268,17 @@ void StageObject::InitializeActor_Game(class Game* game) {
 		break;
 	case Attribute::Brock:
 		sqc->SetColor(ColorF(1, 1, 1));
+		switch (mMaterial) {
+		case Material::Stone:
+			sc->SetTexture(TextureAsset(U"brock_stone"));
+			break;
+		case Material::Grass:
+			sc->SetTexture(TextureAsset(U"brock_grass"));
+			break;
+		case Material::Wood:
+			sc->SetTexture(TextureAsset(U"brock_wood"));
+			break;
+		}
 		sc->SetTexture(TextureAsset(U"brock_stone"));
 		break;
 	case Attribute::Door:

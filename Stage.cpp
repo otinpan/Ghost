@@ -136,13 +136,13 @@ void Stage::Initialize_CreateStage(CreateStage* createStage, FilePath fileName) 
 	}
 
 	// mStageObjectの初期設定
-	vector<vector<tuple<StageObject::Attribute, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>
+	vector<vector<tuple<StageObject::Attribute, StageObject::Material, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>
 		mDetails(
 			mVerticalSize,
-			vector<tuple<StageObject::Attribute, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>
-			(mSideSize, tuple(StageObject::Attribute::None, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, false))
+			vector<tuple<StageObject::Attribute, StageObject::Material,int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>
+			(mSideSize, tuple(StageObject::Attribute::None, StageObject::Material::Stone,0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, false))
 		);
-	//0Attribute  1Clockwise  2PatrolRange  3BatterySize  4Treasure  5Speed  6CanBeGone
+	//0Attribute 1Material 2Clockwise  3PatrolRange  4BatterySize  5Treasure  6Speed  7CanBeGone
 	vector<tuple<bool, Vec2, float>> mCandleDetails(mCandles.size(), tuple(false, Vec2(0, 0), 0.0f));
 
 	reader(mDetails);
@@ -158,11 +158,12 @@ void Stage::Initialize_CreateStage(CreateStage* createStage, FilePath fileName) 
 			}
 			else {
 				SetNewStageObject_Attribute(i, j, get<0>(mDetails[i][j]));
-				mStageObjects[i][j]->SetClockwise(get<1>(mDetails[i][j]));
-				mStageObjects[i][j]->SetPatrolRange(get<2>(mDetails[i][j]));
-				mStageObjects[i][j]->SetBatterySize(get<3>(mDetails[i][j]));
-				mStageObjects[i][j]->SetTreasure(get<4>(mDetails[i][j]));
-				mStageObjects[i][j]->SetSpeed(get<5>(mDetails[i][j]));
+				mStageObjects[i][j]->SetMaterial(get<1>(mDetails[i][j]));
+				mStageObjects[i][j]->SetClockwise(get<2>(mDetails[i][j]));
+				mStageObjects[i][j]->SetPatrolRange(get<3>(mDetails[i][j]));
+				mStageObjects[i][j]->SetBatterySize(get<4>(mDetails[i][j]));
+				mStageObjects[i][j]->SetTreasure(get<5>(mDetails[i][j]));
+				mStageObjects[i][j]->SetSpeed(get<6>(mDetails[i][j]));
 				mStageObjects[i][j]->SetIteration(pair(i, j));
 				
 			}
@@ -598,16 +599,16 @@ void Stage::SearchCanBeGone(vector<vector<bool>>& can_be_gone, pair<int, int> in
 
 bool Stage::SaveStage() {
 
-	//Attribute  Clockwise  PatrolRange  BatterySize  Treasure  Speed  CanBeGone
-	vector<vector<tuple<StageObject::Attribute, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>
-		mDetails(mVerticalSize, vector<tuple<StageObject::Attribute, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>
-			(mSideSize, tuple(StageObject::Attribute::None, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, false)));
+	//Attribute Material Clockwise  PatrolRange  BatterySize  Treasure  Speed  CanBeGone
+	vector<vector<tuple<StageObject::Attribute, StageObject::Material, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>
+		mDetails(mVerticalSize, vector<tuple<StageObject::Attribute, StageObject::Material, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>
+			(mSideSize, tuple(StageObject::Attribute::None, StageObject::Material::Stone, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, false)));
 
 	//保存
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
-			if (mStageObjects[i][j] == 0)mDetails[i][j] = tuple(StageObject::Attribute::None, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, mCanBeGone[i][j]);
-			else mDetails[i][j] = tuple(mStageObjects[i][j]->GetAttribute(), mStageObjects[i][j]->GetClockwise(), mStageObjects[i][j]->GetPatrolRange(), mStageObjects[i][j]->GetBatterySize(), mStageObjects[i][j]->GetTreasure(), mStageObjects[i][j]->GetSpeed(), mCanBeGone[i][j]);
+			if (mStageObjects[i][j] == 0)mDetails[i][j] = tuple(StageObject::Attribute::None, StageObject::Material::Stone, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, mCanBeGone[i][j]);
+			else mDetails[i][j] = tuple(mStageObjects[i][j]->GetAttribute(), mStageObjects[i][j]->GetMaterial(), mStageObjects[i][j]->GetClockwise(), mStageObjects[i][j]->GetPatrolRange(), mStageObjects[i][j]->GetBatterySize(), mStageObjects[i][j]->GetTreasure(), mStageObjects[i][j]->GetSpeed(), mCanBeGone[i][j]);
 		}
 	}
 
@@ -702,10 +703,13 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 	if (not reader) {
 		throw Error{ U"Failed to open file" };
 	}
-	vector<vector<tuple<StageObject::Attribute, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>
-		mDetails(mVerticalSize, vector<tuple<StageObject::Attribute, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>
-			(mSideSize, tuple(StageObject::Attribute::None, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, false)));
-	//0Attribute  1Clockwise  2PatrolRange  3BatterySize  4Treasure  5Speed  6CanBeGone
+	vector<vector<tuple<StageObject::Attribute, StageObject::Material, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>
+		mDetails(
+			mVerticalSize,
+			vector<tuple<StageObject::Attribute, StageObject::Material, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>
+			(mSideSize, tuple(StageObject::Attribute::None, StageObject::Material::Stone, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, false))
+		);
+	//0Attribute  1Material  2Clockwise  3PatrolRange  4BatterySize  5Treasure  6Speed  7CanBeGone
 	vector<tuple<bool, Vec2, float>> mCandleDetails(mCandles.size(), tuple(false, Vec2(0, 0), 0.0f));
 
 	reader(mDetails);
@@ -741,29 +745,30 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 			else {
 				if (get<0>(mDetails[i][j]) == StageObject::Attribute::Ghost) {
 					mGhostIteration = pair(i, j);
-					mGhostSpeed = get<5>(mDetails[i][j]);
+					mGhostSpeed = get<6>(mDetails[i][j]);
 				}
 				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee1) {
 					mEscapee1Iteration = pair(i, j);
-					mEscapee1Speed = get<5>(mDetails[i][j]);
+					mEscapee1Speed = get<6>(mDetails[i][j]);
 				}
 				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee2) {
 					mEscapee2Iteration = pair(i, j);
-					mEscapee2Speed = get<5>(mDetails[i][j]);
+					mEscapee2Speed = get<6>(mDetails[i][j]);
 				}
 				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee3) {
 					mEscapee3Iteration = pair(i, j);
-					mEscapee3Speed = get<5>(mDetails[i][j]);
+					mEscapee3Speed = get<6>(mDetails[i][j]);
 				}
 				else {
 					SetNewStageObject_Attribute(i, j, get<0>(mDetails[i][j]));
-					mStageObjects[i][j]->SetClockwise(get<1>(mDetails[i][j]));
-					mStageObjects[i][j]->SetPatrolRange(get<2>(mDetails[i][j]));
-					mStageObjects[i][j]->SetBatterySize(get<3>(mDetails[i][j]));
-					mStageObjects[i][j]->SetTreasure(get<4>(mDetails[i][j]));
-					mStageObjects[i][j]->SetSpeed(get<5>(mDetails[i][j]));
+					mStageObjects[i][j]->SetMaterial(get<1>(mDetails[i][j]));
+					mStageObjects[i][j]->SetClockwise(get<2>(mDetails[i][j]));
+					mStageObjects[i][j]->SetPatrolRange(get<3>(mDetails[i][j]));
+					mStageObjects[i][j]->SetBatterySize(get<4>(mDetails[i][j]));
+					mStageObjects[i][j]->SetTreasure(get<5>(mDetails[i][j]));
+					mStageObjects[i][j]->SetSpeed(get<6>(mDetails[i][j]));
 					mStageObjects[i][j]->SetIteration(pair(i, j));
-					mStageObjects[i][j]->InitializeStage_Game();
+					mStageObjects[i][j]->InitializeStage_Game(); //これがないとflashがnull参照してしまう
 				}
 			}
 			
@@ -771,6 +776,7 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 			
 		}
 	}
+
 
 	// Wallの追加
 	float scale = 1.0f;

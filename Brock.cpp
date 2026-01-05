@@ -17,7 +17,7 @@ void Brock::InitializeStageObject_CreateStage(class CreateStage* createStage) {
 }
 
 void Brock::UpdateStageObject_CreateStage(float deltaTime) {
-	switch (mMaterial) {
+	switch (GetMaterial()) {
 	case Material::Wood:
 		GetSquareComponent()->SetColor(ColorF(102.0f / 255.0f, 51.0f / 255.0f,0));
 		GetSpriteComponent()->SetTexture(TextureAsset(U"brock_wood"));
@@ -63,9 +63,9 @@ void Brock::InitializeStageMenu_CreateStage() {
 	GrassSC->SetColor(ColorF(153.0f / 255.0f, 1, 51.0f / 255.0f));
 
 	// SpriteComponent
-	SpriteComponent* scStone = new SpriteComponent(this, 200, DrawingComponent::DrawState::UNAFFECTED);
-	SpriteComponent* scGrass = new SpriteComponent(this, 200, DrawingComponent::DrawState::UNAFFECTED);
-	SpriteComponent* scWood = new SpriteComponent(this, 200, DrawingComponent::DrawState::UNAFFECTED);
+	scStone = new SpriteComponent(this, 200, DrawingComponent::DrawState::UNAFFECTED);
+	scGrass = new SpriteComponent(this, 200, DrawingComponent::DrawState::UNAFFECTED);
+	scWood = new SpriteComponent(this, 200, DrawingComponent::DrawState::UNAFFECTED);
 	scStone->InitializeDrawing_CreateStage(Vec2{
 		(GetCreateStage()->GetStageMenu()->GetMenuLeft() + GetCreateStage()->GetStageMenu()->GetMenuRight()) / 2.0f,
 		GetCreateStage()->GetStageMenu()->GetMenuUp() - EachHeight_StageMenu * 3.0f / 2.0f },
@@ -82,39 +82,39 @@ void Brock::InitializeStageMenu_CreateStage() {
 	scGrass->SetTexture(TextureAsset(U"brock_grass"));
 	scWood->SetTexture(TextureAsset(U"brock_wood"));
 
-	mMaterial = Material::Stone;
+	SetMaterial(Material::Stone);
 }
 
 void Brock::UpdateStageMenu_CreateStage(float deltaTime) {
 	if (GetCreateStage()->GetHand()->GetInputChoose().down()) {
 		if (GetCreateStage()->GetHand()->GetCircleComponent()->GetCircle()
 			.intersects(WoodSC->GetRect())) {
-			mMaterial = Material::Wood;
+			SetMaterial(Material::Wood);
 		}
 		else if (GetCreateStage()->GetHand()->GetCircleComponent()->GetCircle()
 		   .intersects(StoneSC->GetRect())) {
-			mMaterial = Material::Stone;
+			SetMaterial(Material::Stone);
 		}else if(GetCreateStage()->GetHand()->GetCircleComponent()->GetCircle()
 			.intersects(GrassSC->GetRect())) {
-			mMaterial=Material::Grass;
+			SetMaterial(Material::Grass);
 		}
 	}
 
-	if (mMaterial == Material::Wood) {
+	if (GetMaterial() == Material::Wood) {
 		if (GetCreateStage()->GetHand()->GetInputD().down())
-			mMaterial = Material::Stone;
+			SetMaterial(Material::Stone);
 	}
-	else if (mMaterial == Material::Stone) {
+	else if (GetMaterial() == Material::Stone) {
 		if (GetCreateStage()->GetHand()->GetInputD().down()) {
-			mMaterial = Material::Grass;
+			SetMaterial(Material::Grass);
 		}
 		if (GetCreateStage()->GetHand()->GetInputU().down()) {
-			mMaterial = Material::Wood;
+			SetMaterial(Material::Wood);
 		}
 	}
-	else if (mMaterial == Material::Grass) {
+	else if (GetMaterial() == Material::Grass) {
 		if (GetCreateStage()->GetHand()->GetInputU().down()) {
-			mMaterial = Material::Stone;
+			SetMaterial(Material::Stone);
 		}
 	}
 
@@ -122,7 +122,8 @@ void Brock::UpdateStageMenu_CreateStage(float deltaTime) {
 }
 
 void Brock::DrawStageMenu_CreateStage() {
-	switch (mMaterial) {
+	// 選択されていない場合は描かない
+	switch (GetMaterial()) {
 	case Material::Wood:
 		DrawRectFrame(Vec2{
 		(GetCreateStage()->GetStageMenu()->GetMenuLeft() + GetCreateStage()->GetStageMenu()->GetMenuRight()) / 2.0f,
@@ -148,6 +149,9 @@ void Brock::ShutdownStageMenu_CreateStage() {
 	delete StoneSC;
 	delete WoodSC;
 	delete GrassSC;
+	delete scStone;
+	delete scGrass;
+	delete scWood;
 }
 
 void Brock::InitializeStageObject_Game(class Game* game) {
@@ -156,6 +160,20 @@ void Brock::InitializeStageObject_Game(class Game* game) {
 
 void Brock::UpdateStageObject_Game(float deltaTime) {
 
+}
+
+void Brock::InitializeStage_Game() {
+	switch (GetMaterial()) {
+	case Material::Wood:
+		GetSpriteComponent()->SetTexture(TextureAsset(U"brock_wood"));
+		break;
+	case Material::Stone:
+		GetSpriteComponent()->SetTexture(TextureAsset(U"brock_stone"));
+		break;
+	case Material::Grass:
+		GetSpriteComponent()->SetTexture(TextureAsset(U"brock_grass"));
+		break;
+	}
 }
 
 
