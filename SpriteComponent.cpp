@@ -2,10 +2,12 @@
 #include "Actor.h"
 
 
-SpriteComponent::SpriteComponent(Actor* owner, int drawOrder,DrawingComponent::DrawState drawState)
-	:DrawingComponent(owner,drawOrder,drawState)
+SpriteComponent::SpriteComponent(Actor* owner, int drawOrder, DrawingComponent::DrawState drawState)
+	:DrawingComponent(owner, drawOrder, drawState)
 	, mTexture()
 	, mDrawOrder(drawOrder)
+	, mRotation(0.0f)
+	, mScale(1.0f)
 {
 
 }
@@ -35,7 +37,10 @@ void SpriteComponent::Draw() {
 		GetScreenHeight();
 
 
-	mTexture.resized(WritingWidth, WritingHeight).drawAt(ConvertToView(mCenter));
+
+	mTexture.resized(WritingWidth, WritingHeight).
+		scaled(mScale).rotated(mRotation).
+		drawAt(ConvertToView(mCenter));
 }
 
 

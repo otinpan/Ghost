@@ -33,6 +33,8 @@ private:
 	float mWorldTexWidth;
 	float mWorldTexHeight;
 	Vec2 mCenter;
+	float mScale;
+	float mRotation;
 
 	Texture mTexture;
 
