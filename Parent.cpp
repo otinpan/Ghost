@@ -1,5 +1,6 @@
 ﻿#include"Parent.h"
 #include"MainMenu.h"
+#include"RegisterController.h"
 #include"Game.h"
 #include"CreateStage.h"
 #include"StageSelect.h"
@@ -17,9 +18,10 @@ Parent::Parent()
 	,mStageSelect(0)
 	, mNext(SEQ_NONE)
 {
-	//mMainMenu = new MainMenu();
+	mMainMenu = new MainMenu();
 	//mSubMenu = new SubMenu();
-	mStageSelect=new StageSelect(false);
+	//mRegisterController = new RegisterController();
+	//mStageSelect=new StageSelect(false);
 	//mGame = new Game();
 	//mCreateStage = new CreateStage();
 	//mGameResult = new GameResult();
@@ -47,6 +49,10 @@ void Parent::update() {
 		SafeDelete();
 		mSubMenu = new SubMenu();
 		break;
+	case SEQ_REGISTERCONTROLLER:
+		SafeDelete();
+		mRegisterController = new RegisterController();
+		break;
 	case SEQ_STAGESELECT:
 		SafeDelete();
 		mStageSelect = new StageSelect(mIsStageSelectGame);
@@ -73,6 +79,7 @@ void Parent::update() {
 
 	if (mMainMenu)mMainMenu->update(this);
 	if (mSubMenu)mSubMenu->update(this);
+	if (mRegisterController) mRegisterController->update(this);
 	if (mStageSelect)mStageSelect->update(this);
 	if (mGame)mGame->update(this);
 	if (mCreateStage)mCreateStage->update(this);
@@ -89,6 +96,10 @@ void Parent::SafeDelete() {
 	if (mSubMenu) {
 		delete mSubMenu;
 		mSubMenu = nullptr;
+	}
+	if (mRegisterController) {
+		delete mRegisterController;
+		mRegisterController = nullptr;
 	}
 	if (mStageSelect) {
 		delete mStageSelect;

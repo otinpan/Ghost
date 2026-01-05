@@ -256,30 +256,42 @@ void StageObject::InitializeActor_Game(class Game* game) {
 	Initialize_Game(game);
 	sqc = new SquareComponent(this,50,DrawingComponent::DrawState::UNAFFECTED); 
 	sqc->InitializeDrawing_Game(mCenter, mWidth, mHeight);
+
+	sc = new SpriteComponent(this, 70, DrawingComponent::DrawState::UNAFFECTED);
+	sc->InitializeDrawing_Game(mCenter, mWidth, mHeight);
+
 	switch (mAttribute) {
 	case Attribute::Wall:
 		sqc->SetColor(ColorF(0.5f));
+		sc->SetTexture(TextureAsset(U"brock_stone"));
 		break;
 	case Attribute::Brock:
 		sqc->SetColor(ColorF(1, 1, 1));
+		sc->SetTexture(TextureAsset(U"brock_stone"));
 		break;
 	case Attribute::Door:
 		sqc->SetColor(ColorF(0, 0, 0));
+		sc->SetTexture(TextureAsset(U"Door_front"));
 		break;
 	case Attribute::Patrol:
 		sqc->SetColor(ColorF(0, (float)102 / 255, 0));
+		sc->SetIsDraw(false);
 		break;
 	case Attribute::Key:
 		sqc->SetColor(ColorF((float)76 / 255, (float)0, (float)153 / 255));
+		sc->SetTexture(TextureAsset(U"key"));
 		break;
 	case Attribute::Battery:
 		sqc->SetColor(ColorF(0, 1, 128.0f / 255.0f));
+		sc->SetTexture(TextureAsset(U"battery"));
 		break;
 	case Attribute::TreasureChest:
 		sqc->SetColor(ColorF(1, 1, 0));
+		sc->SetTexture(TextureAsset(U"treasure"));
 		break;
 	case Attribute::Candle:
 		sqc->SetColor(ColorF(1, 1, 1));
+		sc->SetTexture(TextureAsset(U"candle"));
 		break;
 	case Attribute::Ghost:
 		sqc->SetColor(ColorF(76.0f / 255.0f, 0, 204.0f / 255.0f));

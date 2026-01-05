@@ -413,6 +413,7 @@ void StageSelect::Shutdown() {
 
 void StageSelect::moveTo(Parent* parent, Parent::SeqID id) {
 	if (id == Parent::SEQ_MAINMENU)parent->moveTo(Parent::SEQ_MAINMENU, Parent::SEQ_STAGESELECT);
+	if (id == Parent::SEQ_REGISTERCONTROLLER)parent->moveTo(Parent::SEQ_REGISTERCONTROLLER, Parent::SEQ_STAGESELECT);
 	if (id == Parent::SEQ_STAGESELECT)parent->moveTo(Parent::SEQ_STAGESELECT, Parent::SEQ_STAGESELECT);
 	if (id == Parent::SEQ_CREATESTAGE)parent->moveTo(Parent::SEQ_CREATESTAGE, Parent::SEQ_STAGESELECT);
 	if (id == Parent::SEQ_GAME)parent->moveTo(Parent::SEQ_GAME, Parent::SEQ_STAGESELECT);
@@ -689,7 +690,7 @@ void StageSelect::UpdateStageSelect_Game() {
 
 	// 戻る
 	if (inputBack.down()) {
-		mSeqID = Parent::SEQ_MAINMENU;
+		mSeqID = Parent::SEQ_REGISTERCONTROLLER;
 	}
 }
 

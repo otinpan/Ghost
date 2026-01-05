@@ -7,6 +7,7 @@ public:
 	enum SeqID {
 		SEQ_MAINMENU,
 		SEQ_SUBMENU,
+		SEQ_REGISTERCONTROLLER,
 		SEQ_STAGESELECT,
 		SEQ_GAME,
 		SEQ_CREATESTAGE,
@@ -47,6 +48,7 @@ public:
 private:
 	class MainMenu* mMainMenu;
 	class SubMenu* mSubMenu;
+	class RegisterController* mRegisterController;
 	class StageSelect* mStageSelect;
 	class Game* mGame;
 	class CreateStage* mCreateStage;

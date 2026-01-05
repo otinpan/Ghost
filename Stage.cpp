@@ -696,6 +696,7 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 	mRectWidth = mWidth / mSideSize;
 	mRectHeight = mHeight / mVerticalSize;
 
+	// load
 	mGame = game;
 	Deserializer<BinaryReader> reader{ fileName };
 	if (not reader) {

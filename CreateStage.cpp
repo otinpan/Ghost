@@ -134,7 +134,6 @@ void CreateStage::LoadData() {
 	TextureAsset::Load(U"door_front");
 	TextureAsset::Load(U"door_side");
 	TextureAsset::Load(U"key");
-	Print << TextureAsset::IsReady(U"key");
 	TextureAsset::Load(U"treasure");
 	TextureAsset::Load(U"battery");
 

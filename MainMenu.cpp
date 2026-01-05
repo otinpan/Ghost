@@ -90,7 +90,7 @@ void MainMenu::UpdateMainMenu() {
 	switch (mSelect) {
 	case MainSelect::SELECT_GAME:
 		if (inputDecision.down()) {
-			mSeqID = Parent::SEQ_STAGESELECT;
+			mSeqID = Parent::SEQ_REGISTERCONTROLLER;
 		}
 		break;
 	case MainSelect::SELECT_CREATESTAGE:
@@ -141,6 +141,7 @@ void MainMenu::Shutdown() {
 void MainMenu::moveTo(Parent* parent, Parent::SeqID id) {
 	if (id == Parent::SEQ_MAINMENU)parent->moveTo(Parent::SEQ_MAINMENU, Parent::SEQ_MAINMENU);
 	if (id == Parent::SEQ_STAGESELECT)parent->moveTo(Parent::SEQ_STAGESELECT, Parent::SEQ_MAINMENU);
+	if (id == Parent::SEQ_REGISTERCONTROLLER)parent->moveTo(Parent::SEQ_REGISTERCONTROLLER, Parent::SEQ_MAINMENU);
 	if (id == Parent::SEQ_GAME)parent->moveTo(Parent::SEQ_GAME,Parent::SEQ_MAINMENU);
 	if (id == Parent::SEQ_CREATESTAGE)parent->moveTo(Parent::SEQ_CREATESTAGE,Parent::SEQ_MAINMENU);
 	if (id == Parent::SEQ_GAMERESULT)parent->moveTo(Parent::SEQ_GAMERESULT, Parent::SEQ_MAINMENU);
@@ -149,7 +150,7 @@ void MainMenu::moveTo(Parent* parent, Parent::SeqID id) {
 }
 
 void MainMenu::setMode(Parent* parent) {
-	switch (mSelect) {
+	switch (mSelect){
 	case SELECT_GAME:
 		parent->setStageSelectGame(true);
 		break;
