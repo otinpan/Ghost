@@ -4,8 +4,6 @@
 
 TreasureChest::TreasureChest(Vec2 pos, float width, float height)
 	:StageObject(pos, width, height)
-	, mBatterySize(StageObject::BatterySize::Mid)
-	, mTreasure(StageObject::Treasure::Empty)
 {
 	SetAttribute(Attribute::TreasureChest);
 }
@@ -86,82 +84,83 @@ void TreasureChest::InitializeStageMenu_CreateStage() {
 
 }
 
+void TreasureChest::InitializeStage_CreateStage() {
+}
+
 void TreasureChest::UpdateStageMenu_CreateStage(float deltaTime) {
 	if (GetCreateStage()->GetHand()->GetInputChoose().down()) {
 		if (IsIntersect_SC(mNoneSC, GetCreateStage()->GetHand()->GetCircleComponent())) {
-			mTreasure = StageObject::Treasure::Empty;
+			SetTreasure(StageObject::Treasure::Empty);
 		}
 		if (IsIntersect_SC(mKeySC, GetCreateStage()->GetHand()->GetCircleComponent())) {
-			mTreasure = StageObject::Treasure::TreasureKey;
+			SetTreasure(StageObject::Treasure::TreasureKey);
 		}
 		if (IsIntersect_SC(mBatterySC, GetCreateStage()->GetHand()->GetCircleComponent())) {
-			mTreasure = StageObject::Treasure::TreasureBattery;
+			SetTreasure(StageObject::Treasure::TreasureBattery);
 		}
 	}
 
-	if (mTreasure == StageObject::Treasure::Empty) {
+	if (GetTreasure() == StageObject::Treasure::Empty) {
 		if (GetCreateStage()->GetHand()->GetInputD().down()) {
-			mTreasure = StageObject::Treasure::TreasureKey;
+			SetTreasure(StageObject::Treasure::TreasureKey);
 		}
-	}else if(mTreasure==StageObject::Treasure::TreasureKey){
+	}else if(GetTreasure() == StageObject::Treasure::TreasureKey) {
 		if (GetCreateStage()->GetHand()->GetInputD().down()) {
-			mTreasure = StageObject::Treasure::TreasureBattery;
+			SetTreasure(StageObject::Treasure::TreasureBattery);
 		}
 		if (GetCreateStage()->GetHand()->GetInputU().down()) {
-			mTreasure = StageObject::Treasure::Empty;
+			SetTreasure(StageObject::Treasure::Empty);
 		}
 	}
-	else if (mTreasure == StageObject::Treasure::TreasureBattery) {
+	else if (GetTreasure() == StageObject::Treasure::TreasureBattery) {
 		if (GetCreateStage()->GetHand()->GetInputU().down()) {
-			mTreasure = StageObject::Treasure::TreasureKey;
+			SetTreasure(StageObject::Treasure::TreasureKey);
 		}
 		//BatterySize
-		if (mBatterySize == StageObject::BatterySize::Small) {
+		if (GetBatterySize() == StageObject::BatterySize::Small) {
 			if (GetCreateStage()->GetHand()->GetInputPlus().down()) {
-				mBatterySize = StageObject::BatterySize::Mid;
+				SetBatterySize(StageObject::BatterySize::Mid);
 			}
 		}
-		if (mBatterySize == StageObject::BatterySize::Mid) {
+		if (GetBatterySize() == StageObject::BatterySize::Mid) {
 			if (GetCreateStage()->GetHand()->GetInputMinus().down()) {
-				mBatterySize = StageObject::BatterySize::Small;
+				SetBatterySize(StageObject::BatterySize::Small);
 			}
 			if (GetCreateStage()->GetHand()->GetInputPlus().down()) {
-				mBatterySize = StageObject::BatterySize::Big;
+				SetBatterySize(StageObject::BatterySize::Big);
 			}
 		}
-		if (mBatterySize == StageObject::BatterySize::Big) {
+		if (GetBatterySize() == StageObject::BatterySize::Big) {
 			if (GetCreateStage()->GetHand()->GetInputMinus().down()) {
-				mBatterySize = StageObject::BatterySize::Mid;
+				SetBatterySize(StageObject::BatterySize::Mid);
 			}
 		}
 	}
 
-	if (mBatterySize == StageObject::BatterySize::Small) {
+	if (GetBatterySize() == StageObject::BatterySize::Small) {
 		mSmallCC->SetColor(ColorF(0, 1, 128.0f / 255.0f));
 	}
 	else {
 		mSmallCC->SetColor(ColorF(0, 0, 0));
 	}
-	if (mBatterySize == StageObject::BatterySize::Mid) {
+	if (GetBatterySize() == StageObject::BatterySize::Mid) {
 		mMidCC->SetColor(ColorF(0, 1, 128.0f / 255.0f));
 	}
 	else {
 		mMidCC->SetColor(ColorF(0, 0, 0));
 	}
-	if (mBatterySize == StageObject::BatterySize::Big) {
+	if (GetBatterySize() == StageObject::BatterySize::Big) {
 		mBigCC->SetColor(ColorF(0, 1, 128.0f / 255.0f));
 	}
 	else {
 		mBigCC->SetColor(ColorF(0, 0, 0));
 	}
 
-	SetTreasure(mTreasure);
-	SetBatterySize(mBatterySize);
 
 }
 
 void TreasureChest::DrawStageMenu_CreateStage() {
-	switch (mTreasure) {
+	switch (GetTreasure()) {
 	case StageObject::Empty:
 		DrawRectFrame(Vec2(mMidPos.x, mMidPos.y + mEachHeight*2.0f/3.0f + mRectHeight / 2.0f),
 		mRectWidth, mRectHeight, 0, 0.002, ColorF(1, 1, 0));

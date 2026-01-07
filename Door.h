@@ -18,9 +18,6 @@ public:
 	void DrawStageMenu_CreateStage()override;
 	void ShutdownStageMenu_CreateStage()override;
 
-	
-
-
 private:
 	CircleComponent* mUpCC;
 	CircleComponent* mDownCC;

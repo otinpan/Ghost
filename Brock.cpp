@@ -16,6 +16,20 @@ void Brock::InitializeStageObject_CreateStage(class CreateStage* createStage) {
 	GrassSC = 0;
 }
 
+void Brock::InitializeStage_CreateStage() {
+	switch (GetMaterial()) {
+	case Material::Wood:
+		GetSpriteComponent()->SetTexture(TextureAsset(U"brock_wood"));
+		break;
+	case Material::Stone:
+		GetSpriteComponent()->SetTexture(TextureAsset(U"brock_stone"));
+		break;
+	case Material::Grass:
+		GetSpriteComponent()->SetTexture(TextureAsset(U"brock_grass"));
+		break;
+	}
+}
+
 void Brock::UpdateStageObject_CreateStage(float deltaTime) {
 	switch (GetMaterial()) {
 	case Material::Wood:

@@ -126,6 +126,9 @@ void StageObject::InitializeStageObject_CreateStage(class CreateStage* createsta
 	InitializeActor_CreateStage(createstage);
 }
 
+void StageObject::InitializeStage_CreateStage() {
+
+}
 
 void StageObject::UpdateActor_CreateStage(float deltaTime) {
 	if (GetIsGripen()) {

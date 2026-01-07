@@ -7,8 +7,8 @@ public:
 	~Brock();
 
 	void InitializeStageObject_CreateStage(class CreateStage* createStage)override;
+	void InitializeStage_CreateStage() override;
 	void InitializeStageObject_Game(class Game* game)override;
-
 	void InitializeStage_Game() override;
 
 	void UpdateStageObject_CreateStage(float deltaTime)override;

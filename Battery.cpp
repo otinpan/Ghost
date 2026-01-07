@@ -4,7 +4,6 @@
 
 Battery::Battery(Vec2 pos, float width, float height)
 	:StageObject(pos, width, height)
-	, mBatterySize(StageObject:: BatterySize::Mid)
 {
 	SetAttribute(StageObject::Attribute::Battery);
 }
@@ -19,9 +18,15 @@ void Battery::InitializeStageObject_CreateStage(class CreateStage* createStage) 
 
 }
 
+void Battery::InitializeStage_CreateStage() {
+	
+}
+
 void Battery::UpdateStageObject_CreateStage(float deltaTime) {
 
 }
+
+
 
 void Battery::InitializeStageMenu_CreateStage() {
 	mSmallPos = Vec2(
@@ -57,56 +62,55 @@ void Battery::InitializeStageMenu_CreateStage() {
 }
 
 void Battery::UpdateStageMenu_CreateStage(float deltaTime) {
-	if (mBatterySize == BatterySize::Big) {
+	if (GetBatterySize() == BatterySize::Big) {
 		if (GetCreateStage()->GetHand()->GetInputMinus().down()||
 			GetCreateStage()->GetHand()->GetInputD().down()) {
-			mBatterySize = BatterySize::Mid;
+			SetBatterySize(StageObject::BatterySize::Mid);
 		}
 	}
-	else if (mBatterySize == BatterySize::Mid) {
+	else if (GetBatterySize() == BatterySize::Mid) {
 		if (GetCreateStage()->GetHand()->GetInputPlus().down()||
 			GetCreateStage()->GetHand()->GetInputU().down()) {
-			mBatterySize = BatterySize::Big;
+			SetBatterySize(StageObject::BatterySize::Big);
 		}
 		if (GetCreateStage()->GetHand()->GetInputMinus().down()||
 			GetCreateStage()->GetHand()->GetInputD().down()) {
-			mBatterySize = BatterySize::Small;
+			SetBatterySize(StageObject::BatterySize::Small);
 		}
 	}
-	else if (mBatterySize == BatterySize::Small) {
+	else if (GetBatterySize() == BatterySize::Small) {
 		if (GetCreateStage()->GetHand()->GetInputPlus().down()||
 			GetCreateStage()->GetHand()->GetInputU().down()) {
-			mBatterySize = BatterySize::Mid;
+			SetBatterySize(StageObject::BatterySize::Mid);
 		}
 	}
 
 	if (GetCreateStage()->GetHand()->GetInputChoose().down()) {
 		if (IsIntersect_CC(mBigCC, GetCreateStage()->GetHand()->GetCircleComponent())) {
-			mBatterySize = BatterySize::Big;
+			SetBatterySize(StageObject::BatterySize::Big);
 		}
 		if (IsIntersect_CC(mMidCC, GetCreateStage()->GetHand()->GetCircleComponent())) {
-			mBatterySize = BatterySize::Mid;
+			SetBatterySize(StageObject::BatterySize::Mid);
 		}
 		if (IsIntersect_CC(mSmallCC, GetCreateStage()->GetHand()->GetCircleComponent())) {
-			mBatterySize = BatterySize::Small;
+			SetBatterySize(StageObject::BatterySize::Small);
 		}
 	}
 
-	SetBatterySize(mBatterySize);
 
-	if (mBatterySize == BatterySize::Big) {
+	if (GetBatterySize() == BatterySize::Big) {
 		mBigCC->SetColor(ColorF(0, 1, 128.0f / 255.0f));
 	}
 	else {
 		mBigCC->SetColor(ColorF(0, 0, 0));
 	}
-	if (mBatterySize == BatterySize::Mid) {
+	if (GetBatterySize() == BatterySize::Mid) {
 		mMidCC->SetColor(ColorF(0, 1, 128.0f / 255.0f));
 	}
 	else {
 		mMidCC->SetColor(ColorF(0, 0, 0));
 	}
-	if (mBatterySize == BatterySize::Small) {
+	if (GetBatterySize() == BatterySize::Small) {
 		mSmallCC->SetColor(ColorF(0, 1, 128.0f / 255.0f));
 	}
 	else {

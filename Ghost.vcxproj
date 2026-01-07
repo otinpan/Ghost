@@ -124,6 +124,7 @@
     <ClCompile Include="CircleComponent.cpp" />
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="CreateStage.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="DrawingComponent.cpp" />
@@ -374,6 +375,7 @@
     <ClInclude Include="CircleComponent.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="CreateStage.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="DrawingComponent.h" />

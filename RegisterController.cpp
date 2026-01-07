@@ -37,7 +37,6 @@ void RegisterController::ProcessInput() {
 void RegisterController::UpdateRegisterController() {
 	float deltaTime = Scene::DeltaTime();
 
-	Print << U"Next -> space, Back-> backspace";
 	if (KeySpace.down()||KeyRight.down()) {
 		mSeqID = Parent::SEQ_STAGESELECT;
 		return;
@@ -49,10 +48,19 @@ void RegisterController::UpdateRegisterController() {
 		return;
 	}
 
+	if (const auto joy = JoyConL(0)) {
+
+	}
+
 }
 
 
 void RegisterController::draw() {
+
+}
+
+
+void RegisterController::Shutdown() {
 
 }
 

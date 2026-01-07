@@ -43,6 +43,7 @@ public:
 
 	void InitializeActor_CreateStage(class CreateStage* createstage)override;
 	virtual void InitializeStageObject_CreateStage(class CreateStage* createStage);
+	virtual void InitializeStage_CreateStage(); // InitializeStageObjectの後にもう一度Initializeする
 
 	void InitializeActor_Game(class Game* game)override;
 	virtual void InitializeStageObject_Game(class Game* game);//InitializeActor_GameによってStageObjectLeft等が上書きされてしまう
