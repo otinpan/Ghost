@@ -54,6 +54,7 @@ bool Game::Initialize() {
 	int FontSize = 0.09 * GetScreenHeight();
 	pauseFont = Font{ FontMethod::MSDF,FontSize / 2,Typeface::Light };
 
+
 	return true;
 }
 

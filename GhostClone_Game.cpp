@@ -26,10 +26,10 @@ void GhostClone_Game::InitializePlayer_Game(class Game* game) {
 	inputLeft = KeyLeft;
 
 	ic = new InputComponent_Keyboard(this);
-	ic->SetUpKey(inputUp);
-	ic->SetDownKey(inputDown);
-	ic->SetRightKey(inputRight);
-	ic->SetLeftKey(inputLeft);
+	ic->SetInputUp(inputUp);
+	ic->SetInputDown(inputDown);
+	ic->SetInputRight(inputRight);
+	ic->SetInputLeft(inputLeft);
 	ic->SetMaxXSpeed(GetSpeed());
 	ic->SetMaxYSpeed(GetSpeed());
 }

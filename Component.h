@@ -13,7 +13,7 @@ public:
 	// Update this component by delta time
 	virtual void Update(float deltaTime);
 	// Process input for this component
-	virtual void ProcessInput(const std::vector<Input> keyState) {}
+	virtual void ProcessInput() {}
 
 	class Actor* GetOwner() { return mOwner; }
 

@@ -2,36 +2,52 @@
 #include"Actor.h"
 
 InputComponent_Keyboard::InputComponent_Keyboard(class Actor* owner)
-	:MoveComponent(owner)
-	,mMaxAngularSpeed(0.0f)
-	,mMaxXSpeed(0.0f)
-	,mMaxYSpeed(0.0f)
-	, mUpKey()
-	, mDownKey()
-	, mRightKey()
-	, mLeftKey()
-	, mClockwiseKey()
-	, mCounterClockwiseKey()
+	:Controller(owner,Controller::ControllerType::KEYBOARD)
+	, inputUp()
+	, inputDown()
+	, inputRight()
+	, inputLeft()
+	, inputClockwise()
+	, inputCounterClockwise()
 {
 
 }
 
+InputComponent_Keyboard::~InputComponent_Keyboard() {
 
-void InputComponent_Keyboard::ProcessInput(std::vector<Input> keyState) {
+}
+
+void InputComponent_Keyboard::Initialize() {
+	inputUp = KeyW;
+	inputDown = KeyS;
+	inputLeft = KeyA;
+	inputRight = KeyD;
+	SetInputA(KeySpace);
+	SetInputB(KeyBackspace);
+	SetInputX(Key8);
+	SetInputY(Key9);
+	SetInputL(KeyLeft);
+	SetInputR(KeyRight);
+	SetInputPlus(KeyP);
+	SetInputMinus(KeyO);
+	
+}
+
+void InputComponent_Keyboard::ProcessInput() {
 	float xSpeed = 0.0f;
 
-	if (mRightKey.pressed())xSpeed += mMaxXSpeed;
-	if (mLeftKey. pressed())xSpeed -= mMaxXSpeed;
+	if (inputRight.pressed())xSpeed += GetMaxXSpeed();
+	if (inputLeft. pressed())xSpeed -= GetMaxXSpeed();
 	SetXSpeed(xSpeed);
 
 	float ySpeed = 0.0f;
-	if (mUpKey.pressed())ySpeed += mMaxYSpeed;
-	if (mDownKey.pressed())ySpeed -= mMaxYSpeed;
+	if (inputUp.pressed())ySpeed += GetMaxYSpeed();
+	if (inputDown.pressed())ySpeed -= GetMaxYSpeed();
 	SetYSpeed(ySpeed);
 
 	float angularSpeed = 0.0f;
-	if (mClockwiseKey.pressed())angularSpeed += mMaxAngularSpeed;
-	if (mCounterClockwiseKey.pressed())angularSpeed -= mMaxAngularSpeed;
+	if (inputClockwise.pressed())angularSpeed += GetMaxAngularSpeed();
+	if (inputCounterClockwise.pressed())angularSpeed -= GetMaxAngularSpeed();
 	SetAngularSpeed(angularSpeed);
 
 	

@@ -137,6 +137,7 @@
     <ClCompile Include="Ghost_Game.cpp" />
     <ClCompile Include="Ghost_CreateStage.cpp" />
     <ClCompile Include="Hand.cpp" />
+    <ClCompile Include="InputComponent_JoyCon.cpp" />
     <ClCompile Include="InputComponent_Keyboard.cpp" />
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -389,6 +390,7 @@
     <ClInclude Include="Ghost_CreateStage.h" />
     <ClInclude Include="Hand.h" />
     <ClInclude Include="InputComponent_Keyboard.h" />
+    <ClInclude Include="InputComponent_JoyCon.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="RegisterController.h" />

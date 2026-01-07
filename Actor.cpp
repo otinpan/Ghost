@@ -93,7 +93,7 @@ void Actor::ProcessInput(const std::vector<Input> keyState)
 		// First process input for components
 		for (auto comp : mComponents)
 		{
-			comp->ProcessInput(keyState);
+			comp->ProcessInput();
 		}
 
 		ActorInput(keyState);

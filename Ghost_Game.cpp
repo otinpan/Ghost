@@ -33,20 +33,10 @@ Ghost_Game::~Ghost_Game() {
 void Ghost_Game::InitializePlayer_Game(class Game* game) {
 	InitializeActor_Game(game);
 
-	inputUp = KeyW;
-	inputDown = KeyS;
-	inputLeft = KeyA;
-	inputRight = KeyD;
-	inputMakeGhost = KeyQ;
-	inputDecision = KeyEnter;
-	inputPause = KeyO;
-	inputBack = KeyDelete;
+
 
 	ic = new InputComponent_Keyboard(this);
-	ic->SetUpKey(inputUp);
-	ic->SetDownKey(inputDown);
-	ic->SetRightKey(inputRight);
-	ic->SetLeftKey(inputLeft);
+	ic->Initialize();
 	ic->SetMaxXSpeed(GetSpeed());
 	ic->SetMaxYSpeed(GetSpeed());
 }
@@ -54,7 +44,7 @@ void Ghost_Game::InitializePlayer_Game(class Game* game) {
 
 void Ghost_Game::UpdatePlayer_Game(float deltaTime) {
 	// pause
-	if (inputPause.pressed()) {
+	if (ic->GetInputPlus().pressed()) {
 		if (!(GetGame()->GetIsPaused())) {
 			GetGame()->SetIsPaused(true);
 			SetPauseInputGroup();
@@ -82,7 +72,7 @@ void Ghost_Game::UpdatePlayer_Game(float deltaTime) {
 
 void Ghost_Game::UpdateClone_Game(float deltaTime) {
 	if (mCanMakeClone) {
-		if (inputMakeGhost.down()) {
+		if (ic->GetInputR().down()) {
 			mMakeCloneTime = 0.0f;
 			mCanMakeClone = false;
 			mIsClone = true;
@@ -152,11 +142,11 @@ void Ghost_Game::UpdateStop_Game(float deltaTime) {
 }
 
 void Ghost_Game::SetPauseInputGroup() {
-	GetGame()->SetInputUp(inputUp);
-	GetGame()->SetInputDown(inputDown);
-	GetGame()->SetInputBack(inputBack);
-	GetGame()->SetInputPause(inputPause);
-	GetGame()->SetInputDecision(inputDecision);
+	GetGame()->SetInputUp(KeyW);
+	GetGame()->SetInputDown(KeyS);
+	GetGame()->SetInputBack(KeyBackspace);
+	GetGame()->SetInputPause(ic->GetInputPlus());
+	GetGame()->SetInputDecision(KeySpace);
 }
 
 void Ghost_Game::SetInvincible() {

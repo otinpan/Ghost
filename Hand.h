@@ -22,20 +22,20 @@ public:
 	bool GetIsDelete() { return mIsDelete; }
 	void SetIsDelete(bool isDelete) { mIsDelete = isDelete; }
 
-	InputGroup GetInputUp() { return inputUp; }
-	InputGroup GetInputDown() { return inputDown; }
-	InputGroup GetInputRight() { return inputRight; }
-	InputGroup GetInputLeft() { return inputLeft; }
-	InputGroup GetInputGrap() { return inputGrap; }
-	InputGroup GetInputBack() { return inputBack; }
-	InputGroup GetInputR() { return inputR; }
-	InputGroup GetInputL() { return inputL; }
-	InputGroup GetInputU() { return inputU; }
-	InputGroup GetInputD() { return inputD; }
-	InputGroup GetInputChoose() { return inputChoose; }
-	InputGroup GetInputDelete() { return inputDelete; }
-	InputGroup GetInputPlus() { return inputPlus; }
-	InputGroup GetInputMinus() { return inputMinus; }
+	Input GetInputUp() { return inputUp; }
+	Input GetInputDown() { return inputDown; }
+	Input GetInputRight() { return inputRight; }
+	Input GetInputLeft() { return inputLeft; }
+	Input GetInputGrap() { return inputGrap; }
+	Input GetInputBack() { return inputBack; }
+	Input GetInputR() { return inputR; }
+	Input GetInputL() { return inputL; }
+	Input GetInputU() { return inputU; }
+	Input GetInputD() { return inputD; }
+	Input GetInputChoose() { return inputChoose; }
+	Input GetInputDelete() { return inputDelete; }
+	Input GetInputPlus() { return inputPlus; }
+	Input GetInputMinus() { return inputMinus; }
 
 	class StageObject* & GetChoosing() { return mChoosing; }
 	class StageObject*& GetGrapping() { return mGrapping; }
@@ -52,20 +52,20 @@ private:
 
 	float StandardSpeed;
 
-	InputGroup inputUp;
-	InputGroup inputDown;
-	InputGroup inputRight;
-	InputGroup inputLeft;
-	InputGroup inputGrap;
-	InputGroup inputBack;
-	InputGroup inputR;
-	InputGroup inputL;
-	InputGroup inputU;
-	InputGroup inputD;
-	InputGroup inputChoose;
-	InputGroup inputDelete;
-	InputGroup inputPlus;
-	InputGroup inputMinus;
+	Input inputUp;
+	Input inputDown;
+	Input inputRight;
+	Input inputLeft;
+	Input inputGrap;
+	Input inputBack;
+	Input inputR;
+	Input inputL;
+	Input inputU;
+	Input inputD;
+	Input inputChoose;
+	Input inputDelete;
+	Input inputPlus;
+	Input inputMinus;
 
 	std::vector<int> dx;
 	std::vector<int> dy;

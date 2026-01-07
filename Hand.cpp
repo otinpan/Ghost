@@ -40,10 +40,7 @@ void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 	cc->SetRadius(0.003f);
 	cc->SetColor({ 1.0,0.0,0.0 });
 
-	inputUp = KeyW;
-	inputDown = KeyS;
-	inputRight = KeyD;
-	inputLeft = KeyA;
+	
 	inputGrap = KeyEnter;
 	inputBack = KeyK;
 	inputR = KeyRight;
@@ -56,12 +53,16 @@ void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 	inputMinus = KeyComma;
 
 	ic = new InputComponent_Keyboard(this);
-	ic->SetUpKey(inputUp);
-	ic->SetDownKey(inputDown);
-	ic->SetRightKey(inputRight);
-	ic->SetLeftKey(inputLeft);
+	ic->Initialize();
+	inputLeft = KeyA;
+	inputRight = KeyD;
+	inputUp = KeyW;
+	inputDown = KeyS;
 	ic->SetMaxXSpeed(StandardSpeed);
 	ic->SetMaxYSpeed(StandardSpeed);
+
+
+
 
 	dx = { -1,1,1,-1 };
 	dy = { 1,1,-1,-1 };

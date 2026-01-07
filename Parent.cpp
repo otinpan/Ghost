@@ -21,7 +21,7 @@ Parent::Parent()
 	//mMainMenu = new MainMenu();
 	//mSubMenu = new SubMenu();
 	//mRegisterController = new RegisterController();
-	mStageSelect=new StageSelect(false);
+	mStageSelect=new StageSelect(true);
 	//mGame = new Game();
 	//mCreateStage = new CreateStage();
 	//mGameResult = new GameResult();

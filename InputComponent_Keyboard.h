@@ -1,43 +1,41 @@
 ﻿#pragma once
-#include "MoveComponent.h"
+#include "Controller.h"
 #include"Siv3D.hpp"
 
-class InputComponent_Keyboard :public MoveComponent {
+class InputComponent_Keyboard :public Controller {
 public:
 	InputComponent_Keyboard(class Actor* owner);
+	~InputComponent_Keyboard();
 
-	void ProcessInput(const std::vector<Input> keyState)override;
+	void Initialize();
 
-	float GetMaxXSpeed() const { return mMaxXSpeed; }
-	float GetMaxYSpeed() const { return mMaxYSpeed; }
-	float GetMaxAngularSpeed() const { return mMaxAngularSpeed; }
+	void ProcessInput()override;
 
-	InputGroup GetUpKey() const { return mUpKey; }
-	InputGroup GetDownKey() const { return mDownKey; }
-	InputGroup GetRightKey() const { return mRightKey; }
-	InputGroup GetLeftKey() const { return mLeftKey; }
-	InputGroup GetClockwiseKey() const { return mClockwiseKey; }
-	InputGroup GetCounterClockwiseKey() const { return mCounterClockwiseKey; }
 
-	void SetMaxXSpeed(float speed) { mMaxXSpeed = speed; }
-	void SetMaxYSpeed(float speed) { mMaxYSpeed = speed; }
-	void SetMaxAngularSpeed(float speed) { mMaxAngularSpeed = speed; }
-	void SetUpKey(InputGroup key) { mUpKey = key; }
-	void SetDownKey(InputGroup key) { mDownKey = key; }
-	void SetRightKey(InputGroup key) { mRightKey = key; }
-	void SetLeftKey(InputGroup key) { mLeftKey = key; }
-	void SetClockwiseKey(InputGroup key) { mClockwiseKey = key; }
-	void SetCounterClockwiseKey(InputGroup key) { mCounterClockwiseKey = key;}
+	InputGroup GetInputUp() const { return inputUp; }
+	InputGroup GetInputDown() const { return inputDown; }
+	InputGroup GetInputRight() const { return inputRight; }
+	InputGroup GetInputLeft() const { return inputLeft; }
+	InputGroup GetInputClockwise() const { return inputClockwise; }
+	InputGroup GetInputCounterClockwise() const { return inputCounterClockwise; }
+
+
+
+	void SetInputUp(Input key) { inputUp = key; }
+	void SetInputDown(InputGroup key) { inputDown = key; }
+	void SetInputRight(InputGroup key) { inputRight = key; }
+	void SetInputLeft(InputGroup key) { inputLeft = key; }
+	void SetInputClockwise(InputGroup key) { inputClockwise = key; }
+	void SetInputCounterClockwise(InputGroup key) { inputCounterClockwise = key;}
 
 private:
-	float mMaxXSpeed;
-	float mMaxYSpeed;
-	float mMaxAngularSpeed;
 
-	InputGroup mUpKey;
-	InputGroup mDownKey;
-	InputGroup mRightKey;
-	InputGroup mLeftKey;
-	InputGroup mClockwiseKey;
-	InputGroup mCounterClockwiseKey;
+
+	Input inputUp;
+	InputGroup inputDown;
+	InputGroup inputRight;
+	InputGroup inputLeft;
+	InputGroup inputClockwise;
+	InputGroup inputCounterClockwise;
+	
 };

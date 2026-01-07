@@ -33,14 +33,6 @@ private:
 	class Flashlight* mFlashlight;
 	class InputComponent_Keyboard* ic;
 
-	//Input
-	InputGroup inputUp;
-	InputGroup inputDown;
-	InputGroup inputRight;
-	InputGroup inputLeft;
-	InputGroup inputPause;
-	InputGroup inputBack;
-	InputGroup inputDecision;
 
 	// Pause
 	void SetPauseInputGroup();
@@ -60,7 +52,6 @@ private:
 	//Flashlight
 	bool mIsLightOn;
 	float mBattery;
-	InputGroup inputFlashlight;
 
 	//Key
 	bool mIsKey;

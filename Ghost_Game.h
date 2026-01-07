@@ -25,14 +25,6 @@ private:
 	class InputComponent_Keyboard* ic;
 	class GhostClone_Game* mGhostClone;
 
-	InputGroup inputUp;
-	InputGroup inputDown;
-	InputGroup inputRight;
-	InputGroup inputLeft;
-	InputGroup inputMakeGhost;
-	InputGroup inputDecision;
-	InputGroup inputPause;
-	InputGroup inputBack;
 
 	// Pause
 	void SetPauseInputGroup();

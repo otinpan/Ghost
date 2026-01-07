@@ -49,7 +49,7 @@ void RegisterController::UpdateRegisterController() {
 	}
 
 	if (const auto joy = JoyConL(0)) {
-
+		auto d = joy.povD8();
 	}
 
 }

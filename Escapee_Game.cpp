@@ -21,6 +21,7 @@ Escapee_Game::Escapee_Game(Vec2 pos, float speed, int num)
 	, mHeartbeatTime(0.0f)
 	, HeartbeatLimitTime(1.5f)
 	, mHeartLastingTime(0.0f)
+	, ic(nullptr)
 {
 	
 	SetPosition(pos);
@@ -47,24 +48,15 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 	InitializeActor_Game(game);
 	mFlashlight = new Flashlight(this);
 	mFlashlight->Initialize_Game();
-	inputFlashlight = Key7;
-	inputUp = KeyUp;
-	inputDown = KeyDown;
-	inputLeft = KeyLeft;
-	inputRight = KeyRight;
-	inputPause = KeyP;
-	inputBack = KeyBackspace;
-	inputDecision = KeySpace;
 
 	if (GetAttribute() == Attribute::Escapee1) {
 		ic = new InputComponent_Keyboard(this);
-		ic->SetUpKey(inputUp);
-		ic->SetDownKey(inputDown);
-		ic->SetRightKey(inputRight);
-		ic->SetLeftKey(inputLeft);
+		ic->Initialize();
 		ic->SetMaxXSpeed(GetSpeed());
 		ic->SetMaxYSpeed(GetSpeed());
+		ic->SetInputR(KeyUp);
 	}
+
 
 	float mRadius = GetRadius();
 	mHeartLargeCC = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
@@ -96,7 +88,7 @@ void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 	mFlashlight->Update_Game(deltaTime);
 
 	// pause
-	if (inputPause.pressed()) {
+	if (ic!=nullptr&&ic->GetInputPlus().pressed()) {
 		if (!(GetGame()->GetIsPaused())) {
 			GetGame()->SetIsPaused(true);
 			SetPauseInputGroup();
@@ -127,7 +119,10 @@ void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 }
 
 void Escapee_Game::UpdateFlashlight_Game(float deltaTime) {
-	if (inputFlashlight.pressed()) {
+	if (ic == nullptr) {
+		return;
+	}
+	if (ic->GetInputR().pressed()) {
 		if (mBattery > 0.0) {
 			mIsLightOn = true;
 		}
@@ -204,11 +199,11 @@ void Escapee_Game::UpdateIntersectEscapee_Game(float deltaTime) {
 }
 
 void Escapee_Game::SetPauseInputGroup() {
-	GetGame()->SetInputUp(inputUp);
-	GetGame()->SetInputDown(inputDown);
-	GetGame()->SetInputBack(inputBack);
-	GetGame()->SetInputPause(inputPause);
-	GetGame()->SetInputDecision(inputDecision);
+	GetGame()->SetInputUp(KeyW);
+	GetGame()->SetInputDown(KeyS);
+	GetGame()->SetInputBack(KeyBackspace);
+	GetGame()->SetInputPause(ic->GetInputPlus());
+	GetGame()->SetInputDecision(KeySpace);
 }
 
 // 鼓動の更新
