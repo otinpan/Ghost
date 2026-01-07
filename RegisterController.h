@@ -2,7 +2,7 @@
 #include"Parent.h"
 #include"Common.h"
 #include"Actor.h"
-
+#include"Controller.h"
 
 class RegisterController {
 public:
@@ -24,6 +24,16 @@ private:
 	void UpdateRegisterController();
 
 	// コントローラー
+	std::vector<Controller::ControllerType> mControllers;
+	int mControllerIteration;
+	bool IsExistController(Controller::ControllerType type); // mControllersにtypeが既に存在するか
+	bool DeleteController(Controller::ControllerType type); 
+
+	// 描画
+	std::vector<Vec2> mControllersPos;
+	float drawSize;
+	void DrawKeyboard(Vec2 pos);
+	void DrawJoyCon(Controller::ControllerType type,Vec2 pos);
 
 	Parent::SeqID mSeqID;
 	bool mIsRunning;

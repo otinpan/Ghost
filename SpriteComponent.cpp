@@ -9,7 +9,6 @@ SpriteComponent::SpriteComponent(Actor* owner, int drawOrder, DrawingComponent::
 	, mRotation(0.0f)
 	, mScale(1.0f)
 {
-
 }
 
 SpriteComponent::~SpriteComponent() {
