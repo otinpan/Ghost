@@ -7,18 +7,23 @@ InputComponent_JoyCon::InputComponent_JoyCon(class Actor* owner, Controller::Con
 }
 
 void InputComponent_JoyCon::Initialize() {
+	bool isLeft = false;
 	switch (GetControllerType()) {
 	case ControllerType::JOYCON_L0:
 		joy = JoyConL(0);
+		isLeft = true;
 		break;
 	case ControllerType::JOYCON_L1:
 		joy = JoyConL(1);
+		isLeft = true;
 		break;
 	case ControllerType::JOYCON_L2:
 		joy = JoyConL(2);
+		isLeft = true;
 		break;
 	case ControllerType::JOYCON_L3:
 		joy = JoyConL(3);
+		isLeft = true;
 		break;
 	case ControllerType::JOYCON_R0:
 		joy = JoyConR(0);
@@ -44,8 +49,8 @@ void InputComponent_JoyCon::Initialize() {
 		SetInputX(joy->button3);
 		SetInputL(joy->buttonSL);
 		SetInputR(joy->buttonSR);
-		SetInputPlus(joy->buttonPlus);
-		SetInputMinus(joy->buttonMinus);
+		if (isLeft)SetInputPlus(joy->buttonMinus);
+		else SetInputPlus(joy->buttonPlus);
 	}
 }
 
@@ -58,9 +63,9 @@ void InputComponent_JoyCon::ProcessInput(){
 	float ySpeed = 0.0f;
 	if (joy.has_value()) {
 		if (auto d = joy->povD8()) {
-			switch (d.has_value()) {
+			switch (*d) {
 			case 0:
-				xSpeed += GetMaxXSpeed();
+				ySpeed += GetMaxYSpeed();
 				break;
 			case 1:
 				xSpeed += GetMaxXSpeed();
@@ -93,8 +98,12 @@ void InputComponent_JoyCon::ProcessInput(){
 
 		}
 	}
-	SetXSpeed(xSpeed);
-	SetYSpeed(ySpeed);
+	Vec2 v{xSpeed,ySpeed};
+	if (v.lengthSq() > 0) {
+		v = v.normalized() * GetMaxSpeed();
+	}
+	SetXSpeed(v.x);
+	SetYSpeed(v.y);
 }
 
 

@@ -3,7 +3,7 @@
 
 class Ghost_Game :public Player{
 public:
-	Ghost_Game(Vec2 pos,float speed);
+	Ghost_Game(Vec2 pos,float speed,Controller::ControllerType controller);
 	~Ghost_Game();
 
 	void InitializePlayer_Game(class Game* game)override;
@@ -22,7 +22,6 @@ public:
 	class GhostClone_Game* &GetGhostClone() { return mGhostClone; }
 
 private:
-	class InputComponent_Keyboard* ic;
 	class GhostClone_Game* mGhostClone;
 
 

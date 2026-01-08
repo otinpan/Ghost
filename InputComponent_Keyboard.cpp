@@ -38,12 +38,17 @@ void InputComponent_Keyboard::ProcessInput() {
 
 	if (inputRight.pressed())xSpeed += GetMaxXSpeed();
 	if (inputLeft. pressed())xSpeed -= GetMaxXSpeed();
-	SetXSpeed(xSpeed);
 
 	float ySpeed = 0.0f;
 	if (inputUp.pressed())ySpeed += GetMaxYSpeed();
 	if (inputDown.pressed())ySpeed -= GetMaxYSpeed();
-	SetYSpeed(ySpeed);
+
+	Vec2 v{ xSpeed,ySpeed };
+	if (v.lengthSq() > 0) {
+		v = v.normalized() * GetMaxSpeed();
+	}
+	SetXSpeed(v.x);
+	SetYSpeed(v.y);
 
 	float angularSpeed = 0.0f;
 	if (inputClockwise.pressed())angularSpeed += GetMaxAngularSpeed();

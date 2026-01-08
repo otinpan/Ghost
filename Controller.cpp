@@ -6,6 +6,7 @@ Controller::Controller(class Actor* owner, ControllerType type)
 	, mMaxAngularSpeed(0.0f)
 	, mMaxXSpeed(0.0f)
 	, mMaxYSpeed(0.0f)
+	, mMaxSpeed(0.0f)
 {
 
 }

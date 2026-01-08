@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include<Siv3D.hpp>
+#include "Controller.h"
 #define INCLUDED_SEQUENCE_PARENT_H
 
 class Parent {
@@ -32,6 +33,7 @@ public:
 	void setStageSelectGame(bool isStageSelectGame) { mIsStageSelectGame = isStageSelectGame; }
 
 	void setGameJudgement(GameJudgement judge) { mGameJudgement = judge; }
+	void setControllers(const std::vector<Controller::ControllerType> controllers) { mControllers = controllers; }
 
 	class MainMenu*& GetMainMenu() { return mMainMenu; }
 	class SubMenu*& GetSubMenu() { return mSubMenu; }
@@ -60,6 +62,9 @@ private:
 
 	String mSelectedStageName;
 	bool mIsStageSelectGame;
+
+	// Controller
+	std::vector<Controller::ControllerType> mControllers;
 
 	// gameの勝敗
 	GameJudgement mGameJudgement = NONE;

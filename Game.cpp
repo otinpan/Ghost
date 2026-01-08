@@ -10,7 +10,7 @@
 #include"DrawingComponent.h"
 
 
-Game::Game(String selectedStageName)
+Game::Game(String selectedStageName,std::vector<Controller::ControllerType> controllers)
 	:mUpdatingActors(false)
 	, mIsRunning(true)
 	, mIsHitstop(false)
@@ -24,6 +24,7 @@ Game::Game(String selectedStageName)
 	, mEscapee2(nullptr)
 	, mEscapee3(nullptr)
 	, mGhost(nullptr)
+	, mControllers(controllers)
 {
 	Initialize();
 }
@@ -228,31 +229,48 @@ void Game::LoadData() {
 
 	const FilePath path = U"Stage/" + mSelectedStageName + U"/Data.bin";
 	mStage->Initialize_Game(this,path);
-	mGhost = new Ghost_Game(Vec2({(float)mStage->GetLeft() +
-		mStage->GetGhostIteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
-		(float)mStage->GetUp() -
-		(mStage->GetGhostIteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
-		mStage->GetGhostSpeed()
-	);
-	mGhost->InitializePlayer_Game(this);
-	mEscapee1 = new Escapee_Game(Vec2({(float)mStage->GetLeft() +
-		mStage->GetEscapee1Iteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
-		(float)mStage->GetUp() -
-		(mStage->GetEscapee1Iteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
-		mStage->GetGhostSpeed(),1);
-	mEscapee1->InitializePlayer_Game(this);
-	mEscapee2 = new Escapee_Game(Vec2({ (float)mStage->GetLeft() +
-		mStage->GetEscapee2Iteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
-		(float)mStage->GetUp() -
-		(mStage->GetEscapee2Iteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
-		mStage->GetGhostSpeed(),2);
-	mEscapee2->InitializePlayer_Game(this);
-	mEscapee3 = new Escapee_Game(Vec2({ (float)mStage->GetLeft() +
-		mStage->GetEscapee3Iteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
-		(float)mStage->GetUp() -
-		(mStage->GetEscapee3Iteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
-		mStage->GetGhostSpeed(),3);
-	mEscapee3->InitializePlayer_Game(this);
+	// todo playerのコンストラクタの引数にコントローラーを渡す
+	if (mControllers.size() >= 1) {
+		mGhost = new Ghost_Game(Vec2({ (float)mStage->GetLeft() +
+			mStage->GetGhostIteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
+			(float)mStage->GetUp() -
+			(mStage->GetGhostIteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
+			mStage->GetGhostSpeed(),
+			mControllers[0]
+		);
+		mGhost->InitializePlayer_Game(this);
+	}
+
+	if (mControllers.size() >= 2) {
+		mEscapee1 = new Escapee_Game(Vec2({ (float)mStage->GetLeft() +
+			mStage->GetEscapee1Iteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
+			(float)mStage->GetUp() -
+			(mStage->GetEscapee1Iteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
+			mStage->GetGhostSpeed(),
+			1,
+			mControllers[1]);
+		mEscapee1->InitializePlayer_Game(this);
+	}
+	if (mControllers.size() >= 3) {
+		mEscapee2 = new Escapee_Game(Vec2({ (float)mStage->GetLeft() +
+			mStage->GetEscapee2Iteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
+			(float)mStage->GetUp() -
+			(mStage->GetEscapee2Iteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
+			mStage->GetGhostSpeed(),
+			2,
+			mControllers[2]);
+		mEscapee2->InitializePlayer_Game(this);
+	}
+	if (mControllers.size() >= 4) {
+		mEscapee3 = new Escapee_Game(Vec2({ (float)mStage->GetLeft() +
+			mStage->GetEscapee3Iteration().second * mStage->GetRectWidth() + mStage->GetRectWidth() / 2,
+			(float)mStage->GetUp() -
+			(mStage->GetEscapee3Iteration().first + 1) * mStage->GetRectHeight() + mStage->GetRectHeight() / 2 }),
+			mStage->GetGhostSpeed(),
+			3,
+			mControllers[3]);
+		mEscapee3->InitializePlayer_Game(this);
+	}
 
 }
 

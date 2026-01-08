@@ -59,7 +59,7 @@ void Parent::update() {
 		break;
 	case SEQ_GAME:
 		SafeDelete();
-		mGame = new Game(mSelectedStageName);
+		mGame = new Game(mSelectedStageName,mControllers);
 		break;
 	case SEQ_CREATESTAGE:
 		SafeDelete();

@@ -1,12 +1,12 @@
 ﻿#include"Ghost_Game.h"
 #include"InputComponent_Keyboard.h"
+#include"InputComponent_JoyCon.h"
 #include"GhostClone_Game.h"
 #include"Stage.h"
 #include"StageObject.h"
 
-Ghost_Game::Ghost_Game(Vec2 pos, float speed)
-	:Player(pos, speed)
-	, ic(nullptr)
+Ghost_Game::Ghost_Game(Vec2 pos, float speed,Controller::ControllerType controller)
+	:Player(pos, speed,controller)
 	, MakeCloneCoolTime(30.0f)
 	, mMakeCloneTime(0.0f)
 	, mCanMakeClone(true)
@@ -35,16 +35,19 @@ void Ghost_Game::InitializePlayer_Game(class Game* game) {
 
 
 
-	ic = new InputComponent_Keyboard(this);
-	ic->Initialize();
-	ic->SetMaxXSpeed(GetSpeed());
-	ic->SetMaxYSpeed(GetSpeed());
 }
 
 
 void Ghost_Game::UpdatePlayer_Game(float deltaTime) {
 	// pause
-	if (ic->GetInputPlus().pressed()) {
+	// pause
+	if (GetInputComponent_JoyCon() != nullptr && GetInputComponent_JoyCon()->GetInputPlus().down()) {
+		if (!(GetGame()->GetIsPaused())) {
+			GetGame()->SetIsPaused(true);
+			SetPauseInputGroup();
+		}
+	}
+	if (GetInputComponent_Keyboard() != nullptr && GetInputComponent_Keyboard()->GetInputPlus().down()) {
 		if (!(GetGame()->GetIsPaused())) {
 			GetGame()->SetIsPaused(true);
 			SetPauseInputGroup();
@@ -63,8 +66,23 @@ void Ghost_Game::UpdatePlayer_Game(float deltaTime) {
 	// 描画
 	UpdateIsDraw(deltaTime);
 	//Position
-	if (mIsStop)ic->SetIsMove(false);
-	else ic->SetIsMove(true);
+	if (mIsStop) {
+		if (GetInputComponent_JoyCon() != nullptr) {
+			GetInputComponent_JoyCon()->SetIsMove(false);
+		}
+		if (GetInputComponent_Keyboard() != nullptr) {
+			GetInputComponent_Keyboard()->SetIsMove(false);
+		}
+	}
+	else {
+		if (GetInputComponent_JoyCon() != nullptr) {
+			GetInputComponent_JoyCon()->SetIsMove(true);
+		}
+		if (GetInputComponent_Keyboard() != nullptr) {
+			GetInputComponent_Keyboard()->SetIsMove(true);
+		}
+	}
+
 	UpdatePos_Game(deltaTime);
 	//Clone
 	UpdateClone_Game(deltaTime);
@@ -72,14 +90,14 @@ void Ghost_Game::UpdatePlayer_Game(float deltaTime) {
 
 void Ghost_Game::UpdateClone_Game(float deltaTime) {
 	if (mCanMakeClone) {
-		if (ic->GetInputR().down()) {
+		/*if (ic->GetInputR().down()) {
 			mMakeCloneTime = 0.0f;
 			mCanMakeClone = false;
 			mIsClone = true;
 			mCloneTime = 0.0f;
 			mGhostClone = new GhostClone_Game(GetPosition(), GetSpeedMagnification());
 			mGhostClone->InitializePlayer_Game(GetGame());
-		}
+		}*/
 	}
 	else {
 		mMakeCloneTime += deltaTime;
@@ -145,7 +163,12 @@ void Ghost_Game::SetPauseInputGroup() {
 	GetGame()->SetInputUp(KeyW);
 	GetGame()->SetInputDown(KeyS);
 	GetGame()->SetInputBack(KeyBackspace);
-	GetGame()->SetInputPause(ic->GetInputPlus());
+	if (GetInputComponent_JoyCon() != nullptr) {
+		GetGame()->SetInputPause(GetInputComponent_JoyCon()->GetInputPlus());
+	}
+	else if (GetInputComponent_Keyboard() != nullptr) {
+		GetGame()->SetInputPause(GetInputComponent_Keyboard()->GetInputPlus());
+	}
 	GetGame()->SetInputDecision(KeySpace);
 }
 

@@ -5,7 +5,7 @@
 
 class Game {
 public:
-	Game(String selectedStageName);
+	Game(String selectedStageName,std::vector<Controller::ControllerType> controllers);
 	~Game();
 	void update(class Parent*);
 	void draw();
@@ -107,6 +107,9 @@ private:
 	class Escapee_Game* mEscapee2;
 	class Escapee_Game* mEscapee3;
 	class Ghost_Game* mGhost;
+
+	// controller
+	std::vector<Controller::ControllerType> mControllers;
 
 	//RenderTexture
 	RenderTexture renderTexture;

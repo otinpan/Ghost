@@ -1,10 +1,11 @@
 ﻿#pragma once
 using namespace std;
 #include"Actor.h"
+#include"Controller.h"
 
 class Player :public Actor {
 public:
-	Player(Vec2 pos, float speed);
+	Player(Vec2 pos, float speed,Controller::ControllerType controller);
 	~Player();
 
 	enum Attribute {
@@ -45,6 +46,11 @@ public:
 	void SetLightedTime(float lightedTime) { mLightedTime = lightedTime; }
 	float GetLightedLimitTime() { return mLightedLimitTime; }
 	void SetLightedLimitTime(float lightedLimitTime) { mLightedLimitTime=lightedLimitTime; }
+	Controller::ControllerType GetControllerType() { return mControllerType; }
+	void SetControllerType(Controller::ControllerType controllerType) { mControllerType = controllerType; }
+
+	class InputComponent_Keyboard*& GetInputComponent_Keyboard() { return icKeyboard; }
+	class InputComponent_JoyCon*& GetInputComponent_JoyCon() { return icJoyCon; }
 
 
 
@@ -54,6 +60,10 @@ private:
 	ColorF mEscapee1Color;
 	ColorF mEscapee2Color;
 	ColorF mEscapee3Color;
+
+	class InputComponent_Keyboard* icKeyboard;
+	class InputComponent_JoyCon* icJoyCon;
+	Controller::ControllerType mControllerType;
 
 
 	Attribute mAttribute;

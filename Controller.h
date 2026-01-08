@@ -20,9 +20,11 @@ public:
 
 	float GetMaxXSpeed() const { return mMaxXSpeed; }
 	float GetMaxYSpeed() const { return mMaxYSpeed; }
+	float GetMaxSpeed() const { return mMaxSpeed; }
 	float GetMaxAngularSpeed() const { return mMaxAngularSpeed; }
 	void SetMaxXSpeed(float speed) { mMaxXSpeed = speed; }
 	void SetMaxYSpeed(float speed) { mMaxYSpeed = speed; }
+	void SetMaxSpeed(float speed) { mMaxSpeed = speed; }
 	void SetMaxAngularSpeed(float speed) { mMaxAngularSpeed = speed; }
 
 	Input GetInputA()const {return inputA; }
@@ -52,6 +54,7 @@ private:
 	//許容できる最大スピード
 	float mMaxXSpeed;
 	float mMaxYSpeed;
+	float mMaxSpeed;
 	float mMaxAngularSpeed;
 
 	// 入力

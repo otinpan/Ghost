@@ -1,7 +1,9 @@
 ﻿#include"Player.h"
 #include"Stage.h"
+#include"InputComponent_JoyCon.h"
+#include"InputComponent_Keyboard.h"
 
-Player::Player(Vec2 pos, float speed)
+Player::Player(Vec2 pos, float speed,Controller::ControllerType controller)
 	:cc(nullptr)
 	, mObjectLeft(0)
 	, mObjectRight(0)
@@ -15,6 +17,9 @@ Player::Player(Vec2 pos, float speed)
 	,mEscapee1Color(ColorF(204.0f / 255.0f, 0, 204.0f / 255.0f))
 	,mEscapee2Color(ColorF(102.0f / 255.0f, 178.0f / 255.0f, 1))
 	,mEscapee3Color(ColorF(153.0f / 255.0f, 1.0f, 153.0f / 255.0f))
+	, mControllerType(controller)
+	, icKeyboard(nullptr)
+	, icJoyCon(nullptr)
 {
 	SetPosition(pos);
 }
@@ -60,6 +65,25 @@ void Player::InitializeActor_Game(class Game* game) {
 	cc->SetCenter(GetPosition());
 	mRadius = GetGame()->GetStage()->GetRectWidth() * 2.0f / 5.0f;
 	cc->SetRadius(mRadius);
+
+	// controller
+	if (mControllerType == Controller::ControllerType::KEYBOARD) {
+		icKeyboard = new InputComponent_Keyboard(this);
+		icKeyboard->Initialize();
+		icKeyboard->SetMaxXSpeed(GetSpeed());
+		icKeyboard->SetMaxYSpeed(GetSpeed());
+		icKeyboard->SetMaxSpeed(GetSpeed());
+	}
+	else if (mControllerType == Controller::ControllerType::NONE) {
+
+	}
+	else {
+		icJoyCon = new InputComponent_JoyCon(this, mControllerType);
+		icJoyCon->Initialize();
+		icJoyCon->SetMaxXSpeed(GetSpeed());
+		icJoyCon->SetMaxYSpeed(GetSpeed());
+		icJoyCon->SetMaxSpeed(GetSpeed());
+	}
 
 	mVerticalSize = GetGame()->GetStage()->GetVerticalSize();
 	mSideSize = GetGame()->GetStage()->GetSideSize();

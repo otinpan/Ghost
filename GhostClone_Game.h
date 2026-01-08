@@ -3,7 +3,7 @@
 
 class GhostClone_Game :public Player {
 public:
-	GhostClone_Game(Vec2 pos, float speed);
+	GhostClone_Game(Vec2 pos, float speed,Controller::ControllerType controller);
 	~GhostClone_Game();
 
 	void InitializePlayer_Game(class Game* game)override;

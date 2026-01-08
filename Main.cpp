@@ -22,6 +22,7 @@ void Main()
 	TextureAsset::Register(U"key", U"StageObject/key_yellow.png");
 	TextureAsset::Register(U"treasure", U"StageObject/treasure.png");
 	TextureAsset::Register(U"battery", U"StageObject/battery.png");
+	TextureAsset::Register(U"keyboard", U"Keyboard.png");
 
 
 	Scene::SetBackground({ 1,1,1 });

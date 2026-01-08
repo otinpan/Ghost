@@ -7,9 +7,10 @@
 #include"Stage.h"
 #include"StageObject.h"
 #include"InputComponent_Keyboard.h"
+#include"InputComponent_JoyCon.h"
 
-Escapee_Game::Escapee_Game(Vec2 pos, float speed, int num)
-	:Player(pos, speed)
+Escapee_Game::Escapee_Game(Vec2 pos, float speed, int num,Controller::ControllerType controller)
+	:Player(pos, speed,controller)
 	, mFlashlight(nullptr)
 	, mBattery(100.0f)
 	, mIsItemAvailable(true)
@@ -21,7 +22,6 @@ Escapee_Game::Escapee_Game(Vec2 pos, float speed, int num)
 	, mHeartbeatTime(0.0f)
 	, HeartbeatLimitTime(1.5f)
 	, mHeartLastingTime(0.0f)
-	, ic(nullptr)
 {
 	
 	SetPosition(pos);
@@ -49,13 +49,6 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 	mFlashlight = new Flashlight(this);
 	mFlashlight->Initialize_Game();
 
-	if (GetAttribute() == Attribute::Escapee1) {
-		ic = new InputComponent_Keyboard(this);
-		ic->Initialize();
-		ic->SetMaxXSpeed(GetSpeed());
-		ic->SetMaxYSpeed(GetSpeed());
-		ic->SetInputR(KeyUp);
-	}
 
 
 	float mRadius = GetRadius();
@@ -82,13 +75,20 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 	mHeartDrawCC->SetIsDraw(false);
 	mHeartDrawCC->SetColor(ColorF(1.0f, (float)102 / 255.0f, 1.0f));
 
+
 }
 
 void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 	mFlashlight->Update_Game(deltaTime);
 
 	// pause
-	if (ic!=nullptr&&ic->GetInputPlus().pressed()) {
+	if (GetInputComponent_JoyCon() != nullptr && GetInputComponent_JoyCon()->GetInputPlus().down()) {
+		if (!(GetGame()->GetIsPaused())) {
+			GetGame()->SetIsPaused(true);
+			SetPauseInputGroup();
+		}
+	}
+	if (GetInputComponent_Keyboard() != nullptr && GetInputComponent_Keyboard()->GetInputPlus().down()) {
 		if (!(GetGame()->GetIsPaused())) {
 			GetGame()->SetIsPaused(true);
 			SetPauseInputGroup();
@@ -119,19 +119,31 @@ void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 }
 
 void Escapee_Game::UpdateFlashlight_Game(float deltaTime) {
-	if (ic == nullptr) {
-		return;
-	}
-	if (ic->GetInputR().pressed()) {
-		if (mBattery > 0.0) {
-			mIsLightOn = true;
+	if (GetInputComponent_Keyboard() != nullptr) {
+		if (GetInputComponent_Keyboard()->GetInputR().pressed()) {
+			if (mBattery > 0.0) {
+				mIsLightOn = true;
+			}
+			else {
+				mIsLightOn = false;
+			}
 		}
 		else {
 			mIsLightOn = false;
 		}
 	}
-	else {
-		mIsLightOn = false;
+	if (GetInputComponent_JoyCon() != nullptr) {
+		if (GetInputComponent_JoyCon()->GetInputR().pressed()) {
+			if (mBattery > 0.0) {
+				mIsLightOn = true;
+			}
+			else {
+				mIsLightOn = false;
+			}
+		}
+		else {
+			mIsLightOn = false;
+		}
 	}
 
 
@@ -202,7 +214,12 @@ void Escapee_Game::SetPauseInputGroup() {
 	GetGame()->SetInputUp(KeyW);
 	GetGame()->SetInputDown(KeyS);
 	GetGame()->SetInputBack(KeyBackspace);
-	GetGame()->SetInputPause(ic->GetInputPlus());
+	if (GetInputComponent_JoyCon() != nullptr) {
+		GetGame()->SetInputPause(GetInputComponent_JoyCon()->GetInputPlus());
+	}
+	else if (GetInputComponent_Keyboard() != nullptr) {
+		GetGame()->SetInputPause(GetInputComponent_Keyboard()->GetInputPlus());
+	}
 	GetGame()->SetInputDecision(KeySpace);
 }
 

@@ -4,7 +4,7 @@
 
 class Escapee_Game :public Player {
 public:
-	Escapee_Game(Vec2 pos,float speed,int num);
+	Escapee_Game(Vec2 pos,float speed,int num,Controller::ControllerType controller);
 	~Escapee_Game();
 
 	void InitializePlayer_Game(class Game* game)override;
@@ -31,8 +31,6 @@ public:
 
 private:
 	class Flashlight* mFlashlight;
-	class InputComponent_Keyboard* ic;
-
 
 	// Pause
 	void SetPauseInputGroup();

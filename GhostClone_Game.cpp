@@ -1,8 +1,8 @@
 ﻿#include"GhostClone_Game.h"
 #include"InputComponent_Keyboard.h"
 
-GhostClone_Game::GhostClone_Game(Vec2 pos, float speed)
-	:Player(pos, speed)
+GhostClone_Game::GhostClone_Game(Vec2 pos, float speed,Controller::ControllerType controller)
+	:Player(pos, speed,controller)
 	, ic(nullptr)
 	, StandardSpeed(0.3f)
 	, StopLimitTime(1.0f)
@@ -20,18 +20,6 @@ GhostClone_Game::~GhostClone_Game() {
 void GhostClone_Game::InitializePlayer_Game(class Game* game) {
 	InitializeActor_Game(game);
 
-	inputUp = KeyUp;
-	inputDown = KeyDown;
-	inputRight = KeyRight;
-	inputLeft = KeyLeft;
-
-	ic = new InputComponent_Keyboard(this);
-	ic->SetInputUp(inputUp);
-	ic->SetInputDown(inputDown);
-	ic->SetInputRight(inputRight);
-	ic->SetInputLeft(inputLeft);
-	ic->SetMaxXSpeed(GetSpeed());
-	ic->SetMaxYSpeed(GetSpeed());
 }
 
 void GhostClone_Game::UpdatePlayer_Game(float deltaTime) {
