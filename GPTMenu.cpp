@@ -106,7 +106,7 @@ void GPTMenu::Draw() const {
 		DrawRect(p, mSelectRectWidth, mSelectRectHeight, ColorF(1.0f));
 		selectFont(text[mode]).drawAt(ConvertToView(p), ColorF(0.0f));
 	}
-	DrawRectFrame(pos[mSelectedButton], mSelectRectWidth, mSelectRectHeight, 0.005f, 0.005   f, ColorF(1.0f,1.0f,0.0f));
+	DrawRectFrame(pos[mSelectedButton], mSelectRectWidth, mSelectRectHeight, 0.005f, 0.005 , ColorF(1.0f,1.0f,0.0f));
 
 
 }
