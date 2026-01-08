@@ -18,6 +18,8 @@ CreateStage::CreateStage(String stageName)
 	, mIsMoveTo(false)
 	, mCanSave(false)
 	, mSelectedStageName(stageName)
+	, mShouldCloseGPTMenu(false)
+	, mShouldCloseTextMenu(false)
 {
 	Initialize();
 }
@@ -62,6 +64,7 @@ void CreateStage::UpdateGame(){
 		SetSeqID(Parent::SEQ_STAGESELECT);
 	}
 
+	// TextMenu
 	if (mTextMenu) {
 		mTextMenu->Update(deltaTime);
 		if (mShouldCloseTextMenu) {
@@ -72,6 +75,15 @@ void CreateStage::UpdateGame(){
 		}
 		return;
 	}
+	// GPTMenu
+	if (mGPTMenu) {
+		mGPTMenu->Update(deltaTime);
+		if (mShouldCloseGPTMenu) {
+			CloseGPTMenu();
+		}
+		return;
+	}
+
 	mUpdatingActors = true;
 	for (auto actor : mActors) {
 		actor->Update(deltaTime);
@@ -123,6 +135,7 @@ void CreateStage::draw() {
 
 	mStage->DrawForward_CreateStage();
 	if (mTextMenu)mTextMenu->Draw(40*GetScreenWidth()/960);
+	if (mGPTMenu)mGPTMenu->Draw();
 }
 
 void CreateStage::LoadData() {
@@ -321,6 +334,15 @@ void CreateStage::CloseTextMenu() {
 	if(mTextMenu)mTextMenu.reset();
 }
 
+void CreateStage::OpenGPTMenu() {
+	mGPTMenu = std::make_unique<GPTMenu>();
+	mGPTMenu->Initialize_CreateStage(this);
+	mShouldCloseGPTMenu = false;
+}
+
+void CreateStage::CloseGPTMenu() {
+	if (mGPTMenu)mGPTMenu.reset();
+}
 
 void CreateStage::moveTo(Parent* parent, Parent::SeqID id) {
 	if (id == Parent::SEQ_MAINMENU)parent->moveTo(Parent::SEQ_MAINMENU,Parent::SEQ_CREATESTAGE);

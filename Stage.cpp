@@ -589,7 +589,8 @@ void Stage::SearchCanBeGone(vector<vector<bool>>& can_be_gone, pair<int, int> in
 			if (nxi < 0 || nxi >= mVerticalSize || nxj < 0 || nxj >= mSideSize)continue;
 			if ((mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::Brock)
 				|| (mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::Wall)
-				|| (mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::Patrol)
+				|| (mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::Door)
+				|| (mStageObjects[nxi][nxj] !=0 && mStageObjects[nxi][nxj]->GetAttribute()==StageObject::Attribute::Patrol)
 				|| (mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::TreasureChest))continue;
 			q.push(pair(nxi, nxj));
 		}

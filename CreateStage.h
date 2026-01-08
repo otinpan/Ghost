@@ -6,6 +6,7 @@
 #include"CircleComponent.h"
 #include"SquareComponent.h"
 #include"TextMenu.h"
+#include"GPTMenu.h"
 
 
 class CreateStage
@@ -38,8 +39,16 @@ public:
 	void AddStageObject(class StageObject* stageobject);
 	void RemoveStageObject(class StageObject* stageobject);
 
+	// TextMenu
 	void OpenTextMenu();
 	void CloseTextMenu();
+	void SetShouldCloseTextMenu(bool shouldCloseTextMenu) { mShouldCloseTextMenu = shouldCloseTextMenu; }
+
+	// GPTMenu
+	void OpenGPTMenu();
+	void CloseGPTMenu();
+	void SetShouldCloseGPTMenu(bool shouldCloseGPTMenu) { mShouldCloseGPTMenu = shouldCloseGPTMenu; }
+
 
 	void SetStageName(const String& stagename);
 	const String& GetStageName() const{ return mStageName; }
@@ -51,7 +60,6 @@ public:
 	class Stage* &GetStage() { return mStage; }
 	class StageMenu*& GetStageMenu() { return mStageMenu; }
 
-	void SetShouldCloseTextMenu(bool shouldCloseTextMenu) { mShouldCloseTextMenu = shouldCloseTextMenu; }
 
 	//Sequence
 	void moveTo(Parent* parent, Parent::SeqID id);
@@ -96,14 +104,18 @@ private:
 	std::vector<class Candle*> mCandles;
 	class Stage* mStage;
 	class StageMenu* mStageMenu;
-	std::unique_ptr<class TextMenu> mTextMenu;
 	class Brock* mBrock;
 	class Door* mDoor;
 	class Patrol* mPatrol;
 	class Candle* mCandle;
 
+	// TextMenu
+	std::unique_ptr<class TextMenu> mTextMenu;
 	bool mShouldCloseTextMenu;
 	bool mIsMoveTo;
-
 	bool mCanSave;
+
+	// GPTMenu
+	std::unique_ptr<class GPTMenu> mGPTMenu;
+	bool mShouldCloseGPTMenu;
 };

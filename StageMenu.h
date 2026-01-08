@@ -24,13 +24,20 @@ public:
 	void RemakeStageObject(class StageObject* stageObject);
 	void RemakePlayer(class StageObject* stageObject);
 
-	//End
+	//End (TextMenu)
 	Vec2 GetEndPos() { return mEndPos; }
 	float GetEndRectWidth() { return mEndRectWidth; }
 	float GetEndRectHeight() { return mEndRectHeight; }
 	bool GetIsEndOver() { return mIsEndOver; }
 	void SetIsEndOver(bool isEndOver) { mIsEndOver = isEndOver; }
 
+	// GPTMenu
+	Vec2 GetGPTMenuPos() { return mGPTMenuPos; }
+	float GetGPTMenuWidth() { return mGPTMenuWidth; }
+	float GetGPTMenuHeight() { return mGPTMenuHeight; }
+	bool GetIsGPTMenuOver() { return mIsGPTMenuOver; }
+	void SetIsGPTMenuOver(bool isGPTMenuOver) { mIsGPTMenuOver = isGPTMenuOver; }
+	
 
 	class Brock*& GetBrock() { return mBrock; }
 
@@ -70,6 +77,13 @@ private:
 	RectF mEndRect;
 	bool mIsEndOver;
 
+	// GPT
+	Vec2 mGPTMenuPos;
+	float mGPTMenuWidth;
+	float mGPTMenuHeight;
+	RectF mGPTMenuRect;
+	bool mIsGPTMenuOver;
+
 	int mObjectNum; //Objectの種類数
 	float mObjectEachWidth;
 
@@ -86,5 +100,6 @@ private:
 	class Ghost_CreateStage* mGhost;
 
 	//Font
-	Font mEndFont{ ConvertToInt((float)0.08 * GetScreenHeight()),Typeface::Bold};
+	Font mEndFont{ ConvertToInt((float)0.06 * GetScreenHeight()),Typeface::Bold};
+	Font mGPTFont{ ConvertToInt((float)0.03 * GetScreenHeight()),Typeface::Black };
 };

@@ -100,7 +100,7 @@ void StageMenu::Initialize_CreateStage(CreateStage* createStage) {
 
 	mPlayerPos = Vec2(
 		mMenuPos.x,
-		(mMenuDown - 1.0) / 2.0f
+		(mMenuDown - 1.0) / 3.0f
 	);
 	mPlayerRectWidth = mCreateStage->GetStage()->GetRectWidth() / 3.0f;
 	mPlayerRectHeight = mCreateStage->GetStage()->GetRectHeight();
@@ -122,13 +122,24 @@ void StageMenu::Initialize_CreateStage(CreateStage* createStage) {
 	mEscapee3->InitializeStageObject_CreateStage(mCreateStage);
 	mEscapee3->SetIsInObjectMenu(true);
 
+	// GPTMenu
+	mGPTMenuPos = Vec2(
+		mPlayerPos.x,
+		mPlayerPos.y - mPlayerRectHeight * 2.0f
+	);
+	mGPTMenuWidth = mMenuWidth ;
+	mGPTMenuHeight= (mPlayerPos.y + 1.0f) / 3.5f;
+	mGPTMenuRect = RectF(Arg::center(mGPTMenuPos), mGPTMenuWidth, mGPTMenuHeight); 
+	
 	mEndPos = Vec2(
 		mPlayerPos.x,
-		mPlayerPos.y - mPlayerRectHeight * 3
+		mPlayerPos.y - mPlayerRectHeight * 5.0f
 	);
-	mEndRectWidth = mMenuWidth * 3.0f / 4.0f;
-	mEndRectHeight = (mPlayerPos.y + 1.0f) / 3.0f;
+	mEndRectWidth = mMenuWidth ;
+	mEndRectHeight = (mPlayerPos.y + 1.0f) / 3.5f;
 	mEndRect = RectF(Arg::center(mEndPos), mEndRectWidth, mEndRectHeight);
+
+
 }
 
 void StageMenu::Update_CreateStage(float deltaTime) {
@@ -142,6 +153,17 @@ void StageMenu::Draw_CreateStage() {
 		mCreateStage->GetHand()->GetChoosing()->DrawStageMenu_CreateStage();
 	}
 
+	// GPTMenu
+	DrawRectFrame(mGPTMenuPos, mGPTMenuWidth, mGPTMenuHeight, 0, 0.003, ColorF(0, 0, 0));
+	if (mIsGPTMenuOver) {
+		DrawRect(mGPTMenuPos, mGPTMenuWidth, mGPTMenuHeight, ColorF(160.0f / 255.0f, 160.0f / 255.0f, 160.0f / 255.0f));
+	}
+	else {
+		DrawRect(mGPTMenuPos, mGPTMenuWidth, mGPTMenuHeight, ColorF(1, 1, 1));
+	}
+	mGPTFont(U"GPT Assist").draw(Arg::center(ConvertToView(mGPTMenuPos)), ColorF(0, 0, 0));
+
+	// End
 	DrawRectFrame(mEndPos, mEndRectWidth, mEndRectHeight, 0, 0.003, ColorF(0, 0, 0));
 	if (mIsEndOver) {
 		DrawRect(mEndPos, mEndRectWidth, mEndRectHeight, ColorF(160.0f / 255.0f, 160.0f / 255.0f, 160.0f / 255.0f));

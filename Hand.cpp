@@ -145,6 +145,20 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 		else {
 			GetCreateStage()->GetStageMenu()->SetIsEndOver(false);
 		}
+
+		// ChatGPT Menu
+		if(cc->GetViewCircle().
+			intersects(GetViewRect(GetCreateStage()->GetStageMenu()->GetGPTMenuPos(),
+				GetCreateStage()->GetStageMenu()->GetGPTMenuWidth(),
+				GetCreateStage()->GetStageMenu()->GetGPTMenuHeight()))) {
+			GetCreateStage()->GetStageMenu()->SetIsGPTMenuOver(true);
+			if (inputChoose.down()) {
+				GetCreateStage()->OpenGPTMenu();
+			}
+		}
+		else {
+			GetCreateStage()->GetStageMenu()->SetIsGPTMenuOver(false);
+		}
 		
 	}
 	//Delete
