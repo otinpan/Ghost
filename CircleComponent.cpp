@@ -2,7 +2,7 @@
 #include "Actor.h"
 #include "Game.h"
 
-CircleComponent::CircleComponent(class Actor* owner,int drawOrder,DrawState drawState)
+CircleComponent::CircleComponent(class Actor* owner,int drawOrder,DrawingState drawState)
 	:DrawingComponent(owner,drawOrder,drawState)
 	, mRadius(0.0f)
 	, mCenter(owner->GetPosition())

@@ -46,10 +46,10 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 	Initialize_CreateStage(createstage);
 	GetCreateStage()->AddStageObject(this);
 
-	sqc = new SquareComponent(this,50,DrawingComponent::DrawState::UNAFFECTED);
+	sqc = new SquareComponent(this,50,DrawingComponent::DrawingState::UNAFFECTED);
 	sqc->InitializeDrawing_CreateStage(mCenter,mWidth,mHeight);
 
-	sc = new SpriteComponent(this, 70, DrawingComponent::DrawState::UNAFFECTED);
+	sc = new SpriteComponent(this, 70, DrawingComponent::DrawingState::UNAFFECTED);
 	sc->InitializeDrawing_CreateStage(mCenter, mWidth, mHeight);
 
 	switch (mAttribute) {
@@ -110,7 +110,7 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 
 	cc.resize(4);
 	for (int i = 0; i < 4; i++) {
-		cc[i] = new CircleComponent(this,70,DrawingComponent::DrawState::UNAFFECTED);
+		cc[i] = new CircleComponent(this,70,DrawingComponent::DrawingState::UNAFFECTED);
 		cc[i]->InitializeDrawing_CreateStage();
 		cc[i]->SetRadius((float)mWidth / 7.0f);
 		cc[i]->SetColor(ColorF(0, 0, 1));
@@ -258,10 +258,10 @@ float ConvertToSpeed(float barMin, float barWidth, float pos) {
 //Game///////////////////////////////////////////////////////////////
 void StageObject::InitializeActor_Game(class Game* game) {
 	Initialize_Game(game);
-	sqc = new SquareComponent(this,50,DrawingComponent::DrawState::UNAFFECTED); 
+	sqc = new SquareComponent(this,50,DrawingComponent::DrawingState::UNAFFECTED); 
 	sqc->InitializeDrawing_Game(mCenter, mWidth, mHeight);
 
-	sc = new SpriteComponent(this, 70, DrawingComponent::DrawState::UNAFFECTED);
+	sc = new SpriteComponent(this, 70, DrawingComponent::DrawingState::UNAFFECTED);
 	sc->InitializeDrawing_Game(mCenter, mWidth, mHeight);
 
 	switch (mAttribute) {

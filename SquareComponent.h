@@ -5,7 +5,7 @@
 
 class SquareComponent :public DrawingComponent {
 public:
-	SquareComponent(class Actor* owner, int drawOrder, DrawState drawState);
+	SquareComponent(class Actor* owner, int drawOrder, DrawingState drawState);
 	~SquareComponent();
 
 	void InitializeDrawing_Game(Vec2 pos, float width, float height);

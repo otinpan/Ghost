@@ -177,7 +177,7 @@ void DrawRect(Vec2 pos, float width, float height, ColorF color) {
 }
 
 void DrawRoundRect(Vec2 pos, float width, float height, float round, ColorF color) {
-	RoundRect(Arg::center(ConvertToView(pos)),
+	s3d::RoundRect(Arg::center(ConvertToView(pos)),
 		GetScreenWidth() * width / 2.0f,
 		GetScreenHeight() * height / 2.0f,
 		GetScreenHeight() * round).draw(color);
@@ -190,7 +190,7 @@ void DrawRectFrame(Vec2 pos, float width, float height, float innerlinewidth,flo
 }
 
 void DrawRoundRectFrame(Vec2 pos, float width, float height, float round, float innerlinewidth, float outerlinewidth, ColorF color) {
-	RoundRect(Arg::center(ConvertToView(pos)),
+	s3d::RoundRect(Arg::center(ConvertToView(pos)),
 		GetScreenWidth() * width / 2.0f,
 		GetScreenHeight() * height / 2.0f,
 		GetScreenHeight() * round).drawFrame(innerlinewidth * GetScreenHeight(), outerlinewidth * GetScreenHeight(), color);

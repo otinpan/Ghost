@@ -40,23 +40,23 @@ void Player::InitializeActor_Game(class Game* game) {
 
 	switch (GetAttribute()) {
 	case Attribute::Ghost:
-		cc = new CircleComponent(this, 170, DrawingComponent::DrawState::UNAFFECTED);
+		cc = new CircleComponent(this, 170, DrawingComponent::DrawingState::UNAFFECTED);
 		cc->SetColor(mGhostColor);
 		break;
 	case Attribute::GhostClone:
-		cc = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
+		cc = new CircleComponent(this, 170, DrawingComponent::DrawingState::BACK);
 		cc->SetColor(mGhostColor);
 		break;
 	case Attribute::Escapee1:
-		cc = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
+		cc = new CircleComponent(this, 170, DrawingComponent::DrawingState::BACK);
 		cc->SetColor(mEscapee1Color);
 		break;
 	case Attribute::Escapee2:
-		cc = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
+		cc = new CircleComponent(this, 170, DrawingComponent::DrawingState::BACK);
 		cc->SetColor(mEscapee2Color);
 		break;
 	case Attribute::Escapee3:
-		cc = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
+		cc = new CircleComponent(this, 170, DrawingComponent::DrawingState::BACK);
 		cc->SetColor(mEscapee3Color);
 		break;
 	}
@@ -129,12 +129,12 @@ void Player::UpdatePlayerPos_Game(float deltaTime) {
 void Player::SetIsAlive_Game(bool isAlive,Game* game) {
 	if (isAlive) {
 		mIsAlive = true;
-		GetCircleComponent()->SetDrawState_Game(DrawingComponent::DrawState::BACK,game);
+		GetCircleComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::BACK,game);
 		GetCircleComponent()->SetColor(GetCircleColor());
 	}
 	else {
 		mIsAlive = false;
-		GetCircleComponent()->SetDrawState_Game(DrawingComponent::DrawState::UNAFFECTED,game);
+		GetCircleComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::UNAFFECTED,game);
 		GetCircleComponent()->SetColor(ColorF(0.5f));
 	}
 }

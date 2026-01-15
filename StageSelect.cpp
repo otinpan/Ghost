@@ -1,6 +1,5 @@
 ﻿#include "StageSelect.h"
 #include "Parent.h"
-using namespace std;
 
 StageSelect::StageSelect(bool isStageSelectGame)
 	:mSeqID(Parent::SEQ_NONE)
@@ -324,10 +323,10 @@ void StageSelect::UpdateRectPos(int plus) {
 
 	mUpLine+=plus;
 	mDownLine+=plus;
-	mUpLine = max(0, mUpLine);
-	mUpLine = min(mVerticalSize - 1, mUpLine);
-	mDownLine = max(0, mDownLine);
-	mDownLine = min(mVerticalSize - 1, mDownLine);
+	mUpLine = std::max(0, mUpLine);
+	mUpLine = std::min(mVerticalSize - 1, mUpLine);
+	mDownLine = std::max(0, mDownLine);
+	mDownLine = std::min(mVerticalSize - 1, mDownLine);
 }
 
 
@@ -523,7 +522,7 @@ bool StageSelect::deleteStage(String stageName) {
 
 void StageSelect::ResetStageData() {
 	// StageNames.binをクリーン
-	vector<String> stageNames;
+	std::vector<String> stageNames;
 	{
 		Deserializer<BinaryReader> reader{ U"Stage/StageNames.bin" };
 		if (reader) {
@@ -539,7 +538,7 @@ void StageSelect::ResetStageData() {
 	}
 
 	// Stageフォルダの全てのステージデータをクリーン
-	vector<FilePath> paths = FileSystem::DirectoryContents(U"Stage/", Recursive::No);
+	std::vector<FilePath> paths = FileSystem::DirectoryContents(U"Stage/", Recursive::No);
 	int s = paths.size();
 	for (int i = 0; i < s; i++) {
 		if (FileSystem::FileName(paths[i]) == U"NoImage.png"

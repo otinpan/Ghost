@@ -2,7 +2,6 @@
 #include"Parent.h"
 #include"Actor.h"
 
-using namespace std;
 
 class StageSelect {
 public:
@@ -49,11 +48,11 @@ private:
 
 	bool mIsStageSelectGame; // Game用のStageSelect画面か
 
-	vector<vector<Texture>> mStageTextures; //Stageのテクスチャ
-	vector<vector<String>> mStageNames; //Stageの名前
+	std::vector<std::vector<Texture>> mStageTextures; //Stageのテクスチャ
+	std::vector<std::vector<String>> mStageNames; //Stageの名前
 	String mSelectedStageName; //現在選択中のstageの名前
-	vector<vector<bool>> mIsInStage;  //Stageが入っているか
-	vector<vector<Vec2>> mStagePoses; //Stageの位置(中心座標)
+	std::vector<std::vector<bool>> mIsInStage;  //Stageが入っているか
+	std::vector<std::vector<Vec2>> mStagePoses; //Stageの位置(中心座標)
 	int mVerticalSize;
 	int mSideSize;
 	int mDisplayVerticalSize;
@@ -87,7 +86,7 @@ private:
 	float mSideBarHeight;
 
 
-	pair<int, int> mIteration; //いま選択しているstageのIteration
+	std::pair<int, int> mIteration; //いま選択しているstageのIteration
 	int mUpLine; //完全位映りきっている一番上の行
 	int mDownLine; //完全に映りきっている一番下の行
 

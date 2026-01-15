@@ -3,14 +3,18 @@
 #include"CreateStage.h"
 #include"Actor.h"
 
-DrawingComponent::DrawingComponent(Actor* owner,int drawOrder,DrawState drawState)
-	:Component(owner)
-	,mDrawOrder(drawOrder)
-	,mDrawState(drawState)
-	,mIsDraw(true)
+DrawingComponent::DrawingComponent(
+	Actor* owner,
+	int drawOrder,
+	DrawingState drawState
+)
+	: Component(owner)
+	, mDrawOrder(drawOrder)
+	, mDrawingState(drawState)
+	, mIsDraw(true)
 {
-
 }
+
 
 DrawingComponent::~DrawingComponent() {
 	if(mOwner->GetGame())mOwner->GetGame()->RemoveDrawing(this);
@@ -34,14 +38,14 @@ void DrawingComponent::Draw() {
 
 }
 
-void DrawingComponent::SetDrawState_Game(DrawState drawState, Game* game) {
+void DrawingComponent::SetDrawingState_Game(DrawingState drawState, Game* game) {
 	game->RemoveDrawing(this);
-	mDrawState = drawState;
+	mDrawingState = drawState;
 	game->AddDrawing(this);
 }
 
-void DrawingComponent::SetDrawState_CreateStage(DrawState drawState, CreateStage* createStage) {
+void DrawingComponent::SetDrawingState_CreateStage(DrawingState drawState, CreateStage* createStage) {
 	createStage->RemoveDrawing(this);
-	mDrawState = drawState;
+	mDrawingState = drawState;
 	createStage->AddDrawing(this);
 }

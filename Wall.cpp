@@ -13,7 +13,7 @@ Wall::~Wall() {
 
 void Wall::InitializeStageObject_CreateStage(class CreateStage* createStage) {
 	InitializeActor_CreateStage(createStage);
-	GetSquareComponent()->SetDrawState_CreateStage(DrawingComponent::DrawState::UNAFFECTED,createStage);
+	GetSquareComponent()->SetDrawingState_CreateStage(DrawingComponent::DrawingState::UNAFFECTED,createStage);
 }
 
 void Wall::InitializeStageObject_Game(class Game* game) {

@@ -16,7 +16,6 @@
 #include<cmath>
 #include"Player.h"
 #include<algorithm>
-using namespace std;
 
 
 Stage::Stage(float width, float height)
@@ -136,14 +135,14 @@ void Stage::Initialize_CreateStage(CreateStage* createStage, FilePath fileName) 
 	}
 
 	// mStageObjectの初期設定
-	vector<vector<tuple<StageObject::Attribute, StageObject::Material, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>
+	std::vector<std::vector<std::tuple<StageObject::Attribute, StageObject::Material, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>
 		mDetails(
 			mVerticalSize,
-			vector<tuple<StageObject::Attribute, StageObject::Material,int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>
-			(mSideSize, tuple(StageObject::Attribute::None, StageObject::Material::Stone,0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, false))
+			std::vector<std::tuple<StageObject::Attribute, StageObject::Material,int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>
+			(mSideSize, std::tuple(StageObject::Attribute::None, StageObject::Material::Stone,0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, false))
 		);
 	//0Attribute 1Material 2Clockwise  3PatrolRange  4BatterySize  5Treasure  6Speed  7CanBeGone
-	vector<tuple<bool, Vec2, float>> mCandleDetails(mCandles.size(), tuple(false, Vec2(0, 0), 0.0f));
+	std::vector<std::tuple<bool, Vec2, float>> mCandleDetails(mCandles.size(), std::tuple(false, Vec2(0, 0), 0.0f));
 
 	reader(mDetails);
 	reader(mCandleDetails);
@@ -164,7 +163,7 @@ void Stage::Initialize_CreateStage(CreateStage* createStage, FilePath fileName) 
 				mStageObjects[i][j]->SetBatterySize(get<4>(mDetails[i][j]));
 				mStageObjects[i][j]->SetTreasure(get<5>(mDetails[i][j]));
 				mStageObjects[i][j]->SetSpeed(get<6>(mDetails[i][j]));
-				mStageObjects[i][j]->SetIteration(pair(i, j));
+				mStageObjects[i][j]->SetIteration(std::pair(i, j));
 				
 			}
 
@@ -536,7 +535,7 @@ bool Stage::EndCreateStage(String name) {
 		}
 	}
 	
-	if (initGhost == pair(-1, -1) || initEscapee1 == pair(-1, -1) || initEscapee2 == pair(-1, -1) || initEscapee3 == pair(-1, -1)) {
+	if (initGhost == std::pair(-1, -1) || initEscapee1 == std::pair(-1, -1) || initEscapee2 == std::pair(-1, -1) || initEscapee3 == std::pair(-1, -1)) {
 		mIsSaveError = true;
 		return false;
 	}
@@ -576,8 +575,8 @@ bool Stage::EndCreateStage(String name) {
 	return true;
 }
 
-void Stage::SearchCanBeGone(vector<vector<bool>>& can_be_gone, pair<int, int> init_pos) {
-	queue<pair<int, int>> q;
+void Stage::SearchCanBeGone(std::vector<std::vector<bool>>& can_be_gone, std::pair<int, int> init_pos) {
+	std::queue<std::pair<int, int>> q;
 	q.emplace(init_pos);
 	while (!q.empty()) {
 		int ni = q.front().first, nj = q.front().second;
@@ -592,7 +591,7 @@ void Stage::SearchCanBeGone(vector<vector<bool>>& can_be_gone, pair<int, int> in
 				|| (mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::Door)
 				|| (mStageObjects[nxi][nxj] !=0 && mStageObjects[nxi][nxj]->GetAttribute()==StageObject::Attribute::Patrol)
 				|| (mStageObjects[nxi][nxj] != 0 && mStageObjects[nxi][nxj]->GetAttribute() == StageObject::Attribute::TreasureChest))continue;
-			q.push(pair(nxi, nxj));
+			q.push(std::pair(nxi, nxj));
 		}
 	}
 
@@ -601,24 +600,24 @@ void Stage::SearchCanBeGone(vector<vector<bool>>& can_be_gone, pair<int, int> in
 bool Stage::SaveStage() {
 
 	//Attribute Material Clockwise  PatrolRange  BatterySize  Treasure  Speed  CanBeGone
-	vector<vector<tuple<StageObject::Attribute, StageObject::Material, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>
-		mDetails(mVerticalSize, vector<tuple<StageObject::Attribute, StageObject::Material, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>
-			(mSideSize, tuple(StageObject::Attribute::None, StageObject::Material::Stone, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, false)));
+	std::vector<std::vector<std::tuple<StageObject::Attribute, StageObject::Material, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>
+		mDetails(mVerticalSize, std::vector<std::tuple<StageObject::Attribute, StageObject::Material, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>
+			(mSideSize, std::tuple(StageObject::Attribute::None, StageObject::Material::Stone, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, false)));
 
 	//保存
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
-			if (mStageObjects[i][j] == 0)mDetails[i][j] = tuple(StageObject::Attribute::None, StageObject::Material::Stone, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, mCanBeGone[i][j]);
-			else mDetails[i][j] = tuple(mStageObjects[i][j]->GetAttribute(), mStageObjects[i][j]->GetMaterial(), mStageObjects[i][j]->GetClockwise(), mStageObjects[i][j]->GetPatrolRange(), mStageObjects[i][j]->GetBatterySize(), mStageObjects[i][j]->GetTreasure(), mStageObjects[i][j]->GetSpeed(), mCanBeGone[i][j]);
+			if (mStageObjects[i][j] == 0)mDetails[i][j] = std::tuple(StageObject::Attribute::None, StageObject::Material::Stone, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, mCanBeGone[i][j]);
+			else mDetails[i][j] = std::tuple(mStageObjects[i][j]->GetAttribute(), mStageObjects[i][j]->GetMaterial(), mStageObjects[i][j]->GetClockwise(), mStageObjects[i][j]->GetPatrolRange(), mStageObjects[i][j]->GetBatterySize(), mStageObjects[i][j]->GetTreasure(), mStageObjects[i][j]->GetSpeed(), mCanBeGone[i][j]);
 		}
 	}
 
 	//Candle
-	vector<tuple<bool, Vec2, float>> mCandleDetails(mCandles.size(), tuple(false, Vec2(0, 0), 0.0f));
+	std::vector<std::tuple<bool, Vec2, float>> mCandleDetails(mCandles.size(), std::tuple(false, Vec2(0, 0), 0.0f));
 	//保存
 	for (int i = 0; i < mCandles.size(); i++) {
 		if (mCandles[i] == 0)continue;
-		else mCandleDetails[i] = tuple(true, mCandles[i]->GetPosition(), mCandles[i]->GetLightRad());
+		else mCandleDetails[i] = std::tuple(true, mCandles[i]->GetPosition(), mCandles[i]->GetLightRad());
 	}
 
 	//バイナリファイルに保存
@@ -680,7 +679,7 @@ String Stage::RegisterStageName() {
 		stageNames.push_back(nameToAdd); 
 	}
 
-	// 再直列化（読み書きの型は vector<String> で厳密一致）
+	// 再直列化（読み書きの型は std::vector<String> で厳密一致）
 	if (Serializer<BinaryWriter> writer{ U"Stage/StageNames.bin" }) {
 		writer(stageNames);
 	}
@@ -704,14 +703,14 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 	if (not reader) {
 		throw Error{ U"Failed to open file" };
 	}
-	vector<vector<tuple<StageObject::Attribute, StageObject::Material, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>
+	std::vector<std::vector<std::tuple<StageObject::Attribute, StageObject::Material, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>>
 		mDetails(
 			mVerticalSize,
-			vector<tuple<StageObject::Attribute, StageObject::Material, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>
-			(mSideSize, tuple(StageObject::Attribute::None, StageObject::Material::Stone, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, false))
+			std::vector<std::tuple<StageObject::Attribute, StageObject::Material, int, int, StageObject::BatterySize, StageObject::Treasure, float, bool>>
+			(mSideSize, std::tuple(StageObject::Attribute::None, StageObject::Material::Stone, 0, 0, StageObject::BatterySize::Zero, StageObject::Treasure::Empty, 0.0f, false))
 		);
 	//0Attribute  1Material  2Clockwise  3PatrolRange  4BatterySize  5Treasure  6Speed  7CanBeGone
-	vector<tuple<bool, Vec2, float>> mCandleDetails(mCandles.size(), tuple(false, Vec2(0, 0), 0.0f));
+	std::vector<std::tuple<bool, Vec2, float>> mCandleDetails(mCandles.size(), std::tuple(false, Vec2(0, 0), 0.0f));
 
 	reader(mDetails);
 	reader(mCandleDetails);
@@ -745,19 +744,19 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 			}
 			else {
 				if (get<0>(mDetails[i][j]) == StageObject::Attribute::Ghost) {
-					mGhostIteration = pair(i, j);
+					mGhostIteration = std::pair(i, j);
 					mGhostSpeed = get<6>(mDetails[i][j]);
 				}
 				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee1) {
-					mEscapee1Iteration = pair(i, j);
+					mEscapee1Iteration = std::pair(i, j);
 					mEscapee1Speed = get<6>(mDetails[i][j]);
 				}
 				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee2) {
-					mEscapee2Iteration = pair(i, j);
+					mEscapee2Iteration = std::pair(i, j);
 					mEscapee2Speed = get<6>(mDetails[i][j]);
 				}
 				else if (get<0>(mDetails[i][j]) == StageObject::Attribute::Escapee3) {
-					mEscapee3Iteration = pair(i, j);
+					mEscapee3Iteration = std::pair(i, j);
 					mEscapee3Speed = get<6>(mDetails[i][j]);
 				}
 				else {
@@ -768,7 +767,7 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 					mStageObjects[i][j]->SetBatterySize(get<4>(mDetails[i][j]));
 					mStageObjects[i][j]->SetTreasure(get<5>(mDetails[i][j]));
 					mStageObjects[i][j]->SetSpeed(get<6>(mDetails[i][j]));
-					mStageObjects[i][j]->SetIteration(pair(i, j));
+					mStageObjects[i][j]->SetIteration(std::pair(i, j));
 					mStageObjects[i][j]->InitializeStage_Game(); //これがないとflashがnull参照してしまう
 				}
 			}

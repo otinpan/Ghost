@@ -57,9 +57,9 @@ void Brock::InitializeStageMenu_CreateStage() {
 	EachHeight_StageMenu = GetCreateStage()->GetStageMenu()->GetMenuHeight() / 3;
 	RectHeight_StageMenu = EachHeight_StageMenu / 2.0f;
 	RectWidth_StageMenu = RectHeight_StageMenu*GetScreenHeight()/GetScreenWidth();
-	StoneSC = new SquareComponent(this,200, DrawingComponent::DrawState::UNAFFECTED);
-	WoodSC = new SquareComponent(this,200, DrawingComponent::DrawState::UNAFFECTED);
-	GrassSC = new SquareComponent(this,200, DrawingComponent::DrawState::UNAFFECTED);
+	StoneSC = new SquareComponent(this,200, DrawingComponent::DrawingState::UNAFFECTED);
+	WoodSC = new SquareComponent(this,200, DrawingComponent::DrawingState::UNAFFECTED);
+	GrassSC = new SquareComponent(this,200, DrawingComponent::DrawingState::UNAFFECTED);
 	WoodSC->InitializeDrawing_CreateStage(Vec2{
 		(GetCreateStage()->GetStageMenu()->GetMenuLeft() + GetCreateStage()->GetStageMenu()->GetMenuRight()) / 2.0f,
 		GetCreateStage()->GetStageMenu()->GetMenuUp() - EachHeight_StageMenu / 2.0f },
@@ -77,9 +77,9 @@ void Brock::InitializeStageMenu_CreateStage() {
 	GrassSC->SetColor(ColorF(153.0f / 255.0f, 1, 51.0f / 255.0f));
 
 	// SpriteComponent
-	scStone = new SpriteComponent(this, 200, DrawingComponent::DrawState::UNAFFECTED);
-	scGrass = new SpriteComponent(this, 200, DrawingComponent::DrawState::UNAFFECTED);
-	scWood = new SpriteComponent(this, 200, DrawingComponent::DrawState::UNAFFECTED);
+	scStone = new SpriteComponent(this, 200, DrawingComponent::DrawingState::UNAFFECTED);
+	scGrass = new SpriteComponent(this, 200, DrawingComponent::DrawingState::UNAFFECTED);
+	scWood = new SpriteComponent(this, 200, DrawingComponent::DrawingState::UNAFFECTED);
 	scStone->InitializeDrawing_CreateStage(Vec2{
 		(GetCreateStage()->GetStageMenu()->GetMenuLeft() + GetCreateStage()->GetStageMenu()->GetMenuRight()) / 2.0f,
 		GetCreateStage()->GetStageMenu()->GetMenuUp() - EachHeight_StageMenu * 3.0f / 2.0f },

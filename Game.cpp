@@ -417,7 +417,7 @@ void Game::RemoveActor(Actor* actor) {
 
 void Game::AddDrawing(DrawingComponent* drawing) {
 	int myDrawOrder = drawing->GetDrawOrder();
-	if (drawing->GetDrawState()==DrawingComponent::DrawState::BACK) {
+	if (drawing->GetDrawingState()==DrawingComponent::DrawingState::BACK) {
 		auto iter = mDrawings_Back.begin();
 		for (;
 			iter != mDrawings_Back.end();
@@ -429,7 +429,7 @@ void Game::AddDrawing(DrawingComponent* drawing) {
 		}
 		mDrawings_Back.insert(iter, drawing);
 	}
-	else if(drawing->GetDrawState()==DrawingComponent::DrawState::FRONT){
+	else if(drawing->GetDrawingState()==DrawingComponent::DrawingState::FRONT){
 		auto iter = mDrawings_Front.begin();
 		for (;
 			iter != mDrawings_Front.end();
@@ -456,11 +456,11 @@ void Game::AddDrawing(DrawingComponent* drawing) {
 }
 
 void Game::RemoveDrawing(DrawingComponent* drawing) {
-	if (drawing->GetDrawState()==DrawingComponent::DrawState::BACK) {
+	if (drawing->GetDrawingState()==DrawingComponent::DrawingState::BACK) {
 		auto iter = std::find(mDrawings_Back.begin(), mDrawings_Back.end(), drawing);
 		mDrawings_Back.erase(iter);
 	}
-	else if(drawing->GetDrawState()==DrawingComponent::DrawState::FRONT){
+	else if(drawing->GetDrawingState()==DrawingComponent::DrawingState::FRONT){
 		auto iter = std::find(mDrawings_Front.begin(), mDrawings_Front.end(), drawing);
 		mDrawings_Front.erase(iter);
 	}

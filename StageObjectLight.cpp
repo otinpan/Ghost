@@ -20,7 +20,7 @@ StageObjectLight::~StageObjectLight() {
 }
 
 void StageObjectLight::Initialize_Game() {
-	mLightTri = new TriangleComponent(mOwner,200, DrawingComponent::DrawState::FRONT);
+	mLightTri = new TriangleComponent(mOwner,200, DrawingComponent::DrawingState::FRONT);
 	SetLightPos0();
 	SetLightPos1();
 	SetLightPos2();

@@ -16,7 +16,7 @@ Flashlight::~Flashlight() {
 
 
 void Flashlight::Initialize_Game() {
-	mLightTri = new TriangleComponent(mOwner,200,DrawingComponent::DrawState::FRONT);
+	mLightTri = new TriangleComponent(mOwner,200,DrawingComponent::DrawingState::FRONT);
 	SetLightSize(LightSize::LightLarge);
 	SetLightPos0();
 	SetLightPos1();

@@ -52,23 +52,23 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 
 
 	float mRadius = GetRadius();
-	mHeartLargeCC = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
+	mHeartLargeCC = new CircleComponent(this, 170, DrawingComponent::DrawingState::BACK);
 	mHeartLargeCC->InitializeDrawing_Game();
 	mHeartLargeCC->SetCenter(GetPosition());
 	mHeartLargeCC->SetRadius(mRadius * 30.0f);
 	mHeartLargeCC->SetIsDraw(false);
-	mHeartMidCC = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
+	mHeartMidCC = new CircleComponent(this, 170, DrawingComponent::DrawingState::BACK);
 	mHeartMidCC->InitializeDrawing_Game();
 	mHeartMidCC->SetCenter(GetPosition());
 	mHeartMidCC->SetRadius(mRadius * 20.0f);
 	mHeartMidCC->SetIsDraw(false);
-	mHeartSmallCC = new CircleComponent(this, 170, DrawingComponent::DrawState::BACK);
+	mHeartSmallCC = new CircleComponent(this, 170, DrawingComponent::DrawingState::BACK);
 	mHeartSmallCC->InitializeDrawing_Game();
 	mHeartSmallCC->SetCenter(GetPosition());
 	mHeartSmallCC->SetRadius(mRadius * 10.0f);
 	mHeartSmallCC->SetIsDraw(false);
 
-	mHeartDrawCC = new CircleComponent(this, 100, DrawingComponent::DrawState::UNAFFECTED);
+	mHeartDrawCC = new CircleComponent(this, 100, DrawingComponent::DrawingState::UNAFFECTED);
 	mHeartDrawCC->InitializeDrawing_Game();
 	mHeartDrawCC->SetCenter(GetPosition());
 	mHeartDrawCC->SetRadius(mRadius * 1.5f);
@@ -317,7 +317,7 @@ void Escapee_Game::UpdatePlayerPos_Game(float deltaTime) {
 					mBattery += 100.0f;
 					break;
 				}
-				mBattery = max(100.0f, mBattery);
+				mBattery = std::max(100.0f, mBattery);
 				GetGame()->GetStage()->DeleteStageObject(stageObject->GetIteration().first,
 				stageObject->GetIteration().second);
 				return;

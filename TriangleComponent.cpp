@@ -3,7 +3,7 @@
 #include"SquareComponent.h"
 #include"Actor.h"
 
-TriangleComponent::TriangleComponent(class Actor* owner, int drawOrder, DrawState drawState)
+TriangleComponent::TriangleComponent(class Actor* owner, int drawOrder, DrawingState drawState)
 	:DrawingComponent(owner,drawOrder,drawState)
 	, mPos0(Vec2(0, 0))
 	, mPos1(Vec2(0, 0))

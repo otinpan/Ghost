@@ -60,28 +60,28 @@ void Door::InitializeStageMenu_CreateStage() {
 	);
 	
 
-	mUpCC = new CircleComponent(this,10,DrawingComponent::DrawState::UNAFFECTED);
+	mUpCC = new CircleComponent(this,10,DrawingComponent::DrawingState::UNAFFECTED);
 	mUpCC->InitializeDrawing_CreateStage();
 	mUpCC->SetCenter(mUpTriPos);
 	mUpCC->SetRadius(mTriLength);
 	mUpCC ->SetColor(ColorF(1.0, 1.0, 0.0, 0));
 	mUpCC->SetIsDraw(false);
 
-	mDownCC = new CircleComponent(this,10, DrawingComponent::DrawState::UNAFFECTED);
+	mDownCC = new CircleComponent(this,10, DrawingComponent::DrawingState::UNAFFECTED);
 	mDownCC->InitializeDrawing_CreateStage();
 	mDownCC->SetCenter(mDownTriPos);
 	mDownCC->SetRadius(mTriLength);
 	mDownCC->SetColor(ColorF(1.0, 1.0, 0.0, 0));
 	mDownCC->SetIsDraw(false);
 
-	mRightCC = new CircleComponent(this,10, DrawingComponent::DrawState::UNAFFECTED);
+	mRightCC = new CircleComponent(this,10, DrawingComponent::DrawingState::UNAFFECTED);
 	mRightCC->InitializeDrawing_CreateStage();
 	mRightCC->SetCenter(mRightTriPos);
 	mRightCC->SetRadius(mTriLength);
 	mRightCC->SetColor(ColorF(1.0, 1.0, 0.0, 0));
 	mRightCC->SetIsDraw(false);
 
-	mLeftCC = new CircleComponent(this,10, DrawingComponent::DrawState::UNAFFECTED);
+	mLeftCC = new CircleComponent(this,10, DrawingComponent::DrawingState::UNAFFECTED);
 	mLeftCC->InitializeDrawing_CreateStage();
 	mLeftCC->SetCenter(mLeftTriPos);
 	mLeftCC->SetRadius(mTriLength);

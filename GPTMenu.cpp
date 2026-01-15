@@ -366,7 +366,7 @@ bool GPTMenu::checkCanBeGone(std::vector<std::string>& g) {
 
 }
 
-std::vector<std::string> GPTMenu::GenerateStageLayoutCppOnly(int maxRetries = 5) {
+std::vector<std::string> GPTMenu::GenerateStageLayoutCppOnly(int maxRetries) {
 	std::string apiKey = readApiKey();
 	if (apiKey == "error") {
 		throw std::runtime_error("OPENAI_API_KEY is not set");

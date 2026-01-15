@@ -3,7 +3,7 @@
 #include"Actor.h"
 
 
-SquareComponent::SquareComponent(class Actor* owner, int drawOrder, DrawState drawState)
+SquareComponent::SquareComponent(class Actor* owner, int drawOrder, DrawingState drawState)
 	:DrawingComponent(owner,drawOrder,drawState)
 	,mWidth(0.0f)
 	,mHeight(0.0f)

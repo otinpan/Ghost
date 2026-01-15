@@ -2,7 +2,7 @@
 #include "Actor.h"
 
 
-SpriteComponent::SpriteComponent(Actor* owner, int drawOrder, DrawingComponent::DrawState drawState)
+SpriteComponent::SpriteComponent(Actor* owner, int drawOrder, DrawingComponent::DrawingState drawState)
 	:DrawingComponent(owner, drawOrder, drawState)
 	, mTexture()
 	, mDrawOrder(drawOrder)
