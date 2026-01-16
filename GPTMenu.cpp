@@ -15,9 +15,9 @@
 #include <vector>
 #include <queue>
 #include <map>
-#include <optional>
 #include <random>
 #include <curl/curl.h>
+#include <numbers>
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
@@ -29,12 +29,14 @@ GPTMenu::GPTMenu()
 	:mCreateStage(nullptr)
 	, mWidth(0)
 	, mHeight(0)
+	, mIsCreating(false)
 {
 
 }
 
 
 GPTMenu::~GPTMenu() {
+	CancelOrJoinWorker();
 	mCreateStage = nullptr;
 }
 
@@ -70,13 +72,39 @@ void GPTMenu::Initialize_CreateStage(class CreateStage* createStage) {
 
 	int FontSize = 0.09 * GetScreenHeight();
 	selectFont = Font{ FontMethod::MSDF,FontSize / 2,Typeface::Light };
+
+	// load
+	mFuncs = {
+		[](const Vec2& pos,float radius,float radian,ColorF color)
+		{
+			DrawCircle(pos,radius*0.5f,color);
+		},
+		[](const Vec2& pos,float radius,float radian,ColorF color)
+		{
+			DrawRotateRect(pos,radius,radius,radian,color);
+		},
+		[](const Vec2& pos,float radius,float radian,ColorF color)
+		{
+			DrawTriangle(pos,radius,radius,color);
+		}
+
+	};
+}
+
+const GPTMenu::DrawFunc& GPTMenu::getFunc(size_t index)const {
+	return mFuncs.at(index);
 }
 
 void GPTMenu::Update(float deltaTime) {
-
-	if (mIsCreating) {
+	// 結果回収
+	PollCreateStageResult();
+	if (mIsCreating.load()) {
+		if (inputDecision.down()) {
+			mLoadIndex = (mLoadIndex + 1) % mFuncs.size();
+		}
 		return;
 	}
+	
 	RectF sendRect = RectF(Arg::center(ConvertToView(mSendRectPos)),
 		mSelectRectWidth * GetScreenWidth() / 2.0f,
 		mSelectRectHeight * GetScreenHeight() / 2.0f);
@@ -120,6 +148,8 @@ void GPTMenu::Update(float deltaTime) {
 	if (closeRect.leftClicked()) {
 		if (EndGPTMenu_CreateStage())return;
 	}
+
+	return;
 }
 
 bool GPTMenu::EndGPTMenu_CreateStage() {
@@ -127,10 +157,50 @@ bool GPTMenu::EndGPTMenu_CreateStage() {
 	return true;
 }
 
+static void DrawLoading(
+	const Vec2& pos,
+	float radius,
+	int num,
+	float speed,
+	const GPTMenu::DrawFunc& func
+)
+{
+	const float dNum = static_cast<float>(num);
+	const float dif = Math::TwoPiF / dNum;
+
+	for (int i = 0; i < num; ++i)
+	{
+		const float radian = i * dif;
+		const Vec2 tPos = pos + Circular(radius*3.0f, radian);
+
+
+		const float phase =
+			static_cast<float>(Scene::Time()) * (-speed) + radian * 0.5f;
+
+		const float t = 0.5f + 0.5f * std::sin(phase); // 0..1
+		float tRadius = radius*(0.7+0.3*t);
+		ColorF color = ColorF(t * 1.0f);
+		func(tPos, tRadius, radian,color);
+	}
+}
+
+
 
 void GPTMenu::Draw() const {
 	DrawRoundRect(mBackgroundRectPos, mBackgroundRectWidth, mBackgroundRectHeight, mBackgroundRectWidth / 50.0,
 		mBackgroundRectColor);
+
+	// 作成中であることの表示
+	if (mIsCreating.load()) {
+		DrawLoading(
+			Vec2(0.0f, -0.2f),
+			0.05f,
+			10,
+			1.0f,
+			getFunc(mLoadIndex)
+		);
+		return;
+	}
 
 	std::map < SelectedButton, Vec2> pos;
 	std::map<SelectedButton, String> text;
@@ -145,8 +215,6 @@ void GPTMenu::Draw() const {
 		selectFont(text[mode]).drawAt(ConvertToView(p), ColorF(0.0f));
 	}
 	DrawRectFrame(pos[mSelectedButton], mSelectRectWidth, mSelectRectHeight, 0.005f, 0.005, ColorF(1.0f, 1.0f, 0.0f));
-
-	// 作成中であることの表示
 
 
 
@@ -1173,30 +1241,87 @@ DetailsOutput GenerateStageDetailsAndCandles(
 }
 
 bool GPTMenu::CreateStage() {
-	curl_global_init(CURL_GLOBAL_DEFAULT);
-
-	mIsCreating = true;
-	std::vector<std::string> layout;
-	DetailsOutput details;
-	try {
-		layout = GenerateStageLayout(5);
-		details = GenerateStageDetailsAndCandles(layout, 2);
-
-
-	}
-	catch (const std::exception& e) {
-		std::cerr << "ERROR: " << e.what() << "\n";
-		Print << U"Error: " << Unicode::FromUTF8(e.what());
-		curl_global_cleanup();
-		mIsCreating = false;
-		return 1;
-	}
-
-	
-	curl_global_cleanup();
-	Print << U"Success Create Stage";
-	
-	mIsCreating = false;
-	return 0;
+	StartCreateStageAsync();
+	return true;
 }
+
+void GPTMenu::StartCreateStageAsync() {
+	if (mIsCreating.load())return;
+
+	CancelOrJoinWorker();
+
+	{
+		std::lock_guard<std::mutex> lock(mResultMutex);
+		mPendingResult.reset();
+		mPendingError.reset();
+	}
+
+	mIsCreating.store(true);
+
+	mWorker = std::thread([this]() {
+		try {
+			curl_global_init(CURL_GLOBAL_DEFAULT);
+
+			auto layout = GenerateStageLayout(5);
+			auto details = GenerateStageDetailsAndCandles(layout, 2);
+
+			auto out = std::make_unique<DetailsOutput>(std::move(details));
+
+			curl_global_cleanup();
+			{
+				std::lock_guard < std::mutex> lock(mResultMutex);
+				mPendingResult = GeneratedResult{ std::move(layout),std::move(out) };
+			}
+		}
+		catch (const std::exception& e) {
+			{
+				std::lock_guard<std::mutex> lock(mResultMutex);
+				mPendingError = std::string(e.what());
+			}
+
+			curl_global_cleanup();
+		}
+		mIsCreating.store(false);
+
+	});
+
+}
+
+void GPTMenu::PollCreateStageResult() {
+	// スレッド資源を削除
+	if (!mIsCreating.load()) {
+		if (mWorker.joinable())mWorker.join();
+	}
+
+	std::optional<GeneratedResult> result;
+	std::optional<std::string> err;
+
+	{
+		std::lock_guard<std::mutex> lock(mResultMutex);
+		result = std::move(mPendingResult);
+		err = std::move(mPendingError);
+		mPendingResult.reset();
+		mPendingError.reset();
+	}
+
+	if (err) {
+		Print << U"Error: " << Unicode::FromUTF8(*err);
+		return;
+	}
+
+	if (result) {
+		Print << U"Success CreateStage";
+		return;
+	}
+
+
+}
+
+void GPTMenu::CancelOrJoinWorker() {
+	// すでに走っているスレッドがいるならそのスレッドが終わるまで待つ
+	if (mWorker.joinable()) {
+		mWorker.join();
+	}
+}
+
 

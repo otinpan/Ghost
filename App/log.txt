@@ -277,3 +277,1491 @@ attempt: 3
   },
   "user": null
 }
+attempt: 1
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768571730,
+  "created_at": 1768571727,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_03c9a36e963d188c00696a434f62708195ae76b9389b5504cf",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"layout\":[\"......................\",\"..B...........D......K\",\"..B..K..P.....E..P...T\",\"..B...............G..P\",\"..B.................P.\",\"..B.B...............D.\",\"..B.B..B.B.B.B.B..B..2\",\"..B..P...P..P.......3.\",\"..B.B..D..B.B....B.B..\",\"..B..........D.......1\",\"..B..E..P...P..P.....P\",\"..B.B..B.B.B.B.B..B..B\",\"..B..................B\",\"..B.B.B.B..B..B.B..B.B\",\"..B..................B\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_03c9a36e963d188c00696a434fd00c81958175f40e30a7b518",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 605,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 148,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 753
+  },
+  "user": null
+}
+attempt: 1
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768571911,
+  "created_at": 1768571907,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_087d7b2c58af1e0e00696a44038a6881959cadbc53a5ea7fd5",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"layout\": [\n    \"BBBBBBBBBBBBBBBBBBBBB.\",\n    \"B......D............B.\",\n    \"B..K....E.P....D....B.\",\n    \"B.B......D..E..G..B.B.\",\n    \"B.B.....B.B.........B.\",\n    \"B.B...P..BB.....D..B.B\",\n    \"B.B.B.......K...E..B.B\",\n    \"B.B..P......D..P....B.\",\n    \"B.B......B.B..D..B.B.B\",\n    \"B..D..E......1.B.B..B.\",\n    \"B.B..B.......B..B..B.B\",\n    \"B.B....D..2..B..B.....\",\n    \"B.B..E..B.B..B..3..B.B\",\n    \"B.B.B.B..B...B..B.B.B.\",\n    \"B..BBBBB.B.BBBBBBBBB.B\"\n  ]\n}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_087d7b2c58af1e0e00696a4404199881958a1f3b157a894d48",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 605,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 205,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 810
+  },
+  "user": null
+}
+attempt: 1
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768572025,
+  "created_at": 1768572021,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0d4a078fa90893a400696a44758e38819793a72e9bb6ba3d63",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"layout\":[\"...........D......T..K\",\".....B....B.........P.\",\"...K..1...P....E.....B\",\"...B.B....B....D.....B\",\"....P......B..........\",\"..........P...G.......\",\"..E.....B.P.B.B....B..\",\"..B..B.P....D...B....P\",\"....P.....D.E..2.....B\",\"B...B......B.B......B.\",\"...D......P....B......\",\".....B..P.....K..B....\",\".....2..B...........B.\",\".B..B.P..........G....\",\"....B..D.K...E......3.\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0d4a078fa90893a400696a4475df0c81979617753bfabec0b0",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 605,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 141,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 746
+  },
+  "user": null
+}
+attempt: 2
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768572031,
+  "created_at": 1768572025,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0b73d26d83c704e700696a44798ea8819381dcf14982874256",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"layout\": [\n    \"......................\",\n    \".....B......B.......G.\",\n    \"..B.....D.......B....P\",\n    \"....B......K....B....B\",\n    \"B....P.....D..........\",\n    \"....E......P..K.......\",\n    \"......B...B...B....B..\",\n    \"....T....B....P....B..\",\n    \"B......B...E.....B....\",\n    \"..........B..1..B.....\",\n    \".B....B......B....B...\",\n    \"D....B.....2.........B\",\n    \"....B..P.B....B.....B.\",\n    \"P........3...........B\",\n    \"B.B.B.B.B.B.B.B.B...B.\"] \n}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0b73d26d83c704e700696a447a03f481938fc312caf0c44ad5",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 627,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 164,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 791
+  },
+  "user": null
+}
+attempt: 1
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768572209,
+  "created_at": 1768572205,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_029a5c5697a158be00696a452cfa6481909e306b6a9947b955",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"layout\":[\".................K..T.\",\".B.B.B.B.B.B.B.B.B.B.B\",\".B...D...D.........B.B\",\"...........G...E....B.\",\".B.B.B.B.B.B.BB.B.B.B.\",\".B...P.......D...B.B.B\",\"B.B.B.B.B.B.BB.B.B.B.B\",\"B.K...B....E....B.E.B.\",\".B.B.B.B.B.B.BB.B.B.B.\",\".B.B.B....B...D.B.B.B.\",\".T.B.B.B.B.B.BB.B.B.B.\",\".B.B.B.B.B.B.B.B.B.B.B\",\"..P.........1....B.B.B\",\".D.....B.B.B.B2.B.B.B.\",\".B.BB.B.B.B.B.B.B.B.3B\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_029a5c5697a158be00696a452d5bdc81909e28ff70b326b767",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 605,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 176,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 781
+  },
+  "user": null
+}
+attempt: 1
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768572273,
+  "created_at": 1768572271,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_01fd948f0255c6d500696a456f11fc8193bd67ac9b33776d79",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"layout\":[\"......................\",\"......................\",\"......B..............T\",\"......B.D....E.......P\",\"...B....G.K..........P\",\"...B.B...............P\",\"......B..............P\",\"1......B.P...........P\",\"...B..............2..P\",\"......P..............P\",\"..B.B...E....D.......P\",\"..B...................\",\"D..B...3.............P\",\"...B.......P.........P\",\"......................\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_01fd948f0255c6d500696a456f8ee88193bb4d0d1d127d72eb",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 605,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 102,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 707
+  },
+  "user": null
+}
+attempt: 1
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768572549,
+  "created_at": 1768572545,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0b38f1f30eb65cc900696a4681a21081958f544ca326f5459f",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"layout\":[\"......................\",\"..B.....D.B......K...E\",\"..B..2..D....1.P......\",\"..B.B....D..........G.\",\"..B....B....B.P.P.....\",\"..B.B....D.B.B......B.\",\"..B...P....B.......B..\",\"..B...D....B.E...B...T\",\"..BKP....B.B.B.......B\",\"..B.D..P..B..D.B...B..\",\"..B...B.....B.B..B.B..\",\"..B.D.....B...B..B.B..\",\"..B.....P..K..B..B.B..\",\"..B.G..D.B...B..B.B..B\",\"..B..3....D.B..B..B..B\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0b38f1f30eb65cc900696a46820a088195861f4e6d2989c97b",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 605,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 168,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 773
+  },
+  "user": null
+}
+attempt: 2
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768572553,
+  "created_at": 1768572549,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_09b81d057808345300696a4685e5b08196835b31acdfed375c",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"layout\":[\"...........B....D.....\",\"..P.B.....E.........K.\",\"...............P.....T\",\"...D.....K........P..B\",\"...E.................G\",\"......1..............3\",\"..B.............D.....\",\"....P....2.....K......\",\"...B.......D.........E\",\"..............P......P\",\"....K.P...B........D..\",\"...E.....P...........B\",\"......B..D..T...G.....\",\"...P.................B\",\"...K...2.E..........D1\" ]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_09b81d057808345300696a468657948196865f2aa25c8d13b5",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 627,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 118,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 745
+  },
+  "user": null
+}
+attempt: 3
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768572558,
+  "created_at": 1768572553,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_034b2518c3553af200696a4689a0fc81958d4bd1d04ce6bfe2",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"layout\":[\"...............1....P.\",\"..P.B.B.B.B.B.B.B....P\",\"..B.P.P.....B.3......E\",\"..B...P.....B.....K..D\",\"..D.B.E..G.D.B.B.B.B.B\",\"..B..B.E.....D..B.B.B.\",\"..B.B.B..P..T.B..E.B.B\",\"..P....P.....B.B...P..\",\"...P.B.B.B.B..B.B.B.B.\",\"....K.P.P.P..D.....P..\",\"..B...B......B...B.B..\",\"..B.P.B.B.B.B.B..B.B..\",\"..P...P.P..E.T....E..D\",\"..P.B.B.B.B.B.B.B.B.B.\",\"....T.E..P.B.B.B.B.B.B\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_034b2518c3553af200696a4689ee8c81958f4e80bfec1660c5",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 627,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 179,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 806
+  },
+  "user": null
+}
+attempt: 4
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768572563,
+  "created_at": 1768572558,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0042001708a3ee4a00696a468e9de481938f3ab30d22900fb9",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"layout\":[\"..........B......B..P.\",\"..B.E.......P.E..K..B.\",\"..B.K.B.BB.BD.BB.B..B.\",\"..B.B..B.P.....D.....B\",\"..P.D.B.B..P.B....P.BB\",\"..D...........B..D...B\",\"..B....B..B.B.B....B..\",\"BB.B.B.B..B.B..G.B.B..\",\"..P.B.B.....P...D....B\",\"...T...K.B.B..T.BB.BB.\",\"..B.....D.B.P..B.B....\",\"..D.B.B....B.B.......B\",\"..B.BD.P.P.........B.B\",\"...B...B......B.....B.\",\"B......B.B.B.B.B1B.BBB\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0042001708a3ee4a00696a468f22708193a0dc6e858106df6a",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 628,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 172,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 800
+  },
+  "user": null
+}
+attempt: 5
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768572566,
+  "created_at": 1768572563,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0a30c4d4375270bb00696a46936bc48194a1b2f9f85d5a77b8",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"layout\":[\".............D....P..K\",\"..B..P.B....B....B.B..\",\"..P.P...E......E.T..B.\",\"..B.B.P.BB.B..B.B...B.\",\"..P...P.....P..P....B.\",\"..B.P....K.....D...B..\",\"..P.P..G..P.P.E...P...\",\"..B.B......B.B.B.P.B..\",\".....D....P....B..B..T\",\"...P.B.P.PB..B..B.....\",\"..P..K.1...E...P.B.D..\",\"B..B...B.B..P..P.B.B..\",\"..B....T.P....B.T..B..\",\"..D.B.B.P...B....B.B..\",\"..P..2...B.P...3.P.P..\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0a30c4d4375270bb00696a4693ca448194932db0fd2f35b3c8",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 628,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 183,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 811
+  },
+  "user": null
+}
+attempt: 1
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768572679,
+  "created_at": 1768572674,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0829481b26b23fed00696a4702d2808194b09490ac010244f3",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"layout\": [\n    \"BBBBBBBBBBBBBBBBBBBBBB\",\n    \"B.....................\",\n    \"B..K....D..E.....B...B\",\n    \"B..P..T.G..D....P....B\",\n    \"B......D....P.....B..B\",\n    \"B....BBBBB...........B\",\n    \"B....B.....B.BB.B.B.BB\",\n    \"B...1....2.P...3..P..B\",\n    \"B.....................\",\n    \"BBBBBB.P.............B\",\n    \"B....T..B....D..E....B\",\n    \"B....B...D..D.....B..B\",\n    \"B....B.P...........B.B\",\n    \"B..D.........D.....B..\",\n    \"B.....................\"\n  ]\n}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0829481b26b23fed00696a470343ac8194aaa25feb1f5277e2",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 605,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 176,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 781
+  },
+  "user": null
+}
+attempt: 1
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768572801,
+  "created_at": 1768572796,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_080b7923aa3926a200696a477cb8fc8197b9c4fbcdf3410d5c",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"layout\": [\n    \".....................B\",\n    \".....B.....B.......B.B\",\n    \".....B.P.....B.....B.B\",\n    \"B...B..K.B....D....B.B\",\n    \"..E.E.......P...D...B.\",\n    \"......B..B.B....B...B.\",\n    \"B.B.B.B..D..G..D.B.B.B\",\n    \"B.P.....E.T.....P.....\",\n    \"B.B.B.B..B.B.B.B.B.B.B\",\n    \"..............B.....B.\",\n    \"B.P.B.B.B.B.B.P.B.B.B.\",\n    \"B.B.B.B......K...B.B.B\",\n    \"...1....P....D.B.B.B.B\",\n    \".D..D.B.....B.B...B.B.\",\n    \"B.B.P....2....B.B..3.B\"\n  ]\n}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_080b7923aa3926a200696a477d3b5c819782ea24af8896d0ec",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 605,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 190,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 795
+  },
+  "user": null
+}
+attempt: 1
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768586847,
+  "created_at": 1768586842,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0a217ffc0635fe4a00696a7e5a8ca48190aea0d4149d30160e",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"layout\":[\"......................\",\"..B..B..D..K.........2\",\"..B..B..D..E..T..P..P.\",\"..B..B..D..E.G.P..P..P\",\"......................\",\"..B..B..B..B.B..B.B..B\",\"..1...................\",\"..B..B..B..B.B..B.B..B\",\"..B..B..B..T..B..E..P.\",\"..P..P..P..P..P..K..B.\",\"..B..B..B..B..B..B..B.\",\"..3..P..P..P..P..D..B.\",\"..B..B..B..D..B..B..B.\",\"..B..B..D..P..B..B..B.\",\"......................\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0a217ffc0635fe4a00696a7e5afc5881909211f9e3bfe60d64",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 605,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 180,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 785
+  },
+  "user": null
+}
+attempt: 1
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768587065,
+  "created_at": 1768587060,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0d554b782880ef8000696a7f3427348194906c7cb0cc125a99",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"layout\":[\"......................\",\"......................\",\".....D...............K\",\".............B.......E\",\"P.P.....T...B..D....E.\",\"...B..B..............P\",\".................T....\",\"...B..G..B..B....K....\",\".....P..B..P.........1\",\"..E..B..B.B.K.......3.\",\".....E...............P\",\"..D.......B...P.B....2\",\"......................\",\".....B...B............\",\"......................\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0d554b782880ef8000696a7f34930c8194903c40eea3d68739",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 605,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 107,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 712
+  },
+  "user": null
+}
+attempt: 1
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1768587218,
+  "created_at": 1768587213,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0e2ca04d5ab7887000696a7fcd8ac481909db643049d143f24",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"layout\": [\n    \"B......B..B.....B..B..\",\n    \"B..K...D..E...B....B..\",\n    \"B...B...B..P.B.B..B.B.\",\n    \"D.................B...\",\n    \"B.B.B.B.B.D.B.B.B....B\",\n    \"B.B......P....G.....B.\",\n    \"B.B.B.B.B.B..B...B...B\",\n    \"B...P..D......E.....B.\",\n    \"B.B..B..B.B..B.B..B..B\",\n    \"B..3...B.....B.B...B.B\",\n    \"B..P....B..T...B..B.B.\",\n    \"B...B.B.B.B...B.B.....\",\n    \"B..1.B..B...B.B..B.B.B\",\n    \"B.......B.B.B..B.B...B\",\n    \"B..B..B.B.....2....B.B\"\n  ]\n}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0e2ca04d5ab7887000696a7fcdf4bc81909a9db7fd5efafa13",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_layout",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "layout": {
+            "items": {
+              "pattern": "^[.BPDKETG123]{22}$",
+              "type": "string"
+            },
+            "maxItems": 15,
+            "minItems": 15,
+            "type": "array"
+          }
+        },
+        "required": [
+          "layout"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 605,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 214,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 819
+  },
+  "user": null
+}

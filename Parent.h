@@ -77,6 +77,7 @@ Vec2 ConvertToView(Vec2 pos);
 Vec2 ConvertToWorld(Vec2 pos);
 void DrawCircle(Vec2 pos, float rad, ColorF color);
 void DrawRect(Vec2 pos, float width, float height, ColorF color);  //posは中心の座標
+void DrawRotateRect(Vec2 pos, float width, float height, float radian, ColorF color);
 void DrawRoundRect(Vec2 pos, float width, float height, float round, ColorF color);  //roundの半径の円だけけどを丸める
 void DrawRectFrame(Vec2 pos, float width, float height, float innerlinewidth,float outerlinewidth, ColorF color);
 void DrawRoundRectFrame(Vec2 pos, float width, float height, float round, float innerline, float outerline, ColorF color);

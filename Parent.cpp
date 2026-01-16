@@ -176,6 +176,14 @@ void DrawRect(Vec2 pos, float width, float height, ColorF color) {
 		GetScreenHeight() * height / 2).draw(color);
 }
 
+void DrawRotateRect(Vec2 pos, float width, float height, float radian, ColorF color) {
+	RectF(GetScreenWidth() * width / 2,
+		GetScreenHeight() * height / 2)
+		.setCenter(ConvertToView(pos))
+		.rotate90(radian)
+		.draw(color);
+}
+
 void DrawRoundRect(Vec2 pos, float width, float height, float round, ColorF color) {
 	s3d::RoundRect(Arg::center(ConvertToView(pos)),
 		GetScreenWidth() * width / 2.0f,
@@ -195,6 +203,7 @@ void DrawRoundRectFrame(Vec2 pos, float width, float height, float round, float 
 		GetScreenHeight() * height / 2.0f,
 		GetScreenHeight() * round).drawFrame(innerlinewidth * GetScreenHeight(), outerlinewidth * GetScreenHeight(), color);
 }
+
 
 void DrawSquareDotLine(Vec2 pos1, Vec2 pos2, float linewidth, ColorF color) {
 	Line{ConvertToView(pos1),ConvertToView(pos2)}

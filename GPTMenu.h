@@ -2,8 +2,12 @@
 #include<Siv3D.hpp>
 #include"Parent.h"
 #include"CreateStage.h"
+#include <atomic>
+#include <mutex>
+#include <optional>
+#include <thread>
 
-
+struct DetailsOutput;
 
 class GPTMenu {
 public:
@@ -17,11 +21,16 @@ public:
 		NONE
 	};
 
+	using DrawFunc = std::function<void(const Vec2&, float, float,ColorF)>;
+
 
 	void Initialize_CreateStage(class CreateStage* createStage);
 
 	void Update(float deltaTime);
 	void Draw() const;
+
+	const DrawFunc& getFunc(size_t index) const;
+	
 
 private:
 	class CreateStage* mCreateStage;
@@ -55,8 +64,27 @@ private:
 	// gpt
 	int mWidth;
 	int mHeight;
-	bool mIsCreating = false;
+	// スレッド
+	std::atomic<bool> mIsCreating{ false };
+	std::thread mWorker;
+
+	struct GeneratedResult {
+		std::vector<std::string> layout;
+		std::unique_ptr<DetailsOutput> details;
+	};
+
+	mutable std::mutex mResultMutex;
+	std::optional<GeneratedResult> mPendingResult;
+	std::optional<std::string> mPendingError;
+
+	void StartCreateStageAsync();
+	void PollCreateStageResult();
+	void CancelOrJoinWorker();
+
 	bool CreateStage();
+	std::array<DrawFunc,3> mFuncs;
+	
+	int mLoadIndex = 0;
 
 	bool EndGPTMenu_CreateStage();
 };
