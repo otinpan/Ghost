@@ -39,7 +39,6 @@ private:
 	Vec2 mBackgroundRectPos;  //背景の領域の位置
 	float mBackgroundRectWidth;
 	float mBackgroundRectHeight;
-	ColorF mBackgroundRectColor;
 
 	// 送信ボタン
 	Vec2 mSendRectPos;
@@ -83,6 +82,8 @@ private:
 
 	bool CreateStage();
 	std::array<DrawFunc,3> mFuncs;
+	Font mLoadingFont{ ConvertToInt((float)0.07f * GetScreenHeight()),Typeface::Black };
+	Font mExplainFont{ ConvertToInt((float)0.04f * GetScreenHeight()),Typeface::Black };
 	
 	int mLoadIndex = 0;
 

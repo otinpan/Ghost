@@ -54,7 +54,6 @@ void GPTMenu::Initialize_CreateStage(class CreateStage* createStage) {
 	mBackgroundRectPos = Vec2(0, 0);
 	mBackgroundRectWidth = (float)1.7;
 	mBackgroundRectHeight = (float)1.8;
-	mBackgroundRectColor = ColorF(0);
 
 	// ボタン設定
 	mSendRectPos = Vec2(0.4f, -0.7f);
@@ -188,10 +187,12 @@ static void DrawLoading(
 
 void GPTMenu::Draw() const {
 	DrawRoundRect(mBackgroundRectPos, mBackgroundRectWidth, mBackgroundRectHeight, mBackgroundRectWidth / 50.0,
-		mBackgroundRectColor);
+		ColorF(0.6f));
 
 	// 作成中であることの表示
 	if (mIsCreating.load()) {
+		mLoadingFont(U"ステージを作成しています").draw(Arg::center(ConvertToView(Vec2(0.0f, 0.6f))), ColorF(0.0f));
+		mExplainFont(U"あなたが思っている2倍の時間がかかります").draw(Arg::center(ConvertToView(Vec2(0.0f, 0.2f))), ColorF(0.0f));
 		DrawLoading(
 			Vec2(0.0f, -0.2f),
 			0.05f,
