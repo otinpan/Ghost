@@ -17,3 +17,5 @@ struct GameDate {
 using App = SceneManager<State>;
 
 bool DeleteStageData(const String& stageName);
+
+std::string NormalizePromptToSafeAscii(std::string_view s);

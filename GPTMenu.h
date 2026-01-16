@@ -3,20 +3,20 @@
 #include"Parent.h"
 #include"CreateStage.h"
 
-#include <curl/curl.h>
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
+
 
 class GPTMenu {
 public:
 	GPTMenu();
 	~GPTMenu();
 
+
 	enum SelectedButton {
 		SEND,
 		CLOSE,
 		NONE
 	};
+
 
 	void Initialize_CreateStage(class CreateStage* createStage);
 
@@ -55,15 +55,12 @@ private:
 	// gpt
 	int mWidth;
 	int mHeight;
-	std::string BuildPrompt();
-	json BuildStageSchema();
-	std::vector<std::string> ExtractLayoutFromResponses(const json& resp);
-	void ValidLogicalRulesOrThrow(const std::vector<std::string>& layout);
-	void searchCanBeGone(int si, int sj, std::vector<std::vector<bool>>& visited, std::vector<std::string>& g);
-	bool checkCanBeGone(std::vector<std::string>& g);
-	std::vector<std::string> GenerateStageLayoutCppOnly(int maxRetries = 5);
+	bool mIsCreating = false;
+	bool CreateStage();
 
 	bool EndGPTMenu_CreateStage();
 };
+
+
 
 
