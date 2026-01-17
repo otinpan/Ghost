@@ -205,7 +205,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 				if (GetCreateStage()->GetStage()->GetViewStageRect().
 					contains(mGrapping->GetSquareComponent()->GetViewRect())) {
 					if (mGrapping->GetIsInStage()) {
-						GetCreateStage()->GetStage()->DeleteCandle(mGrapping);
+						//GetCreateStage()->GetStage()->DeleteCandle(mGrapping);
 					}
 					
 					GetCreateStage()->GetStage()->SetNewCandle(mGrapping);
@@ -215,6 +215,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 				if (mGrapping->GetIsInObjectMenu()) {
 					GetCreateStage()->GetStageMenu()->RemakeStageObject(mGrapping);
 				}
+				
 				delete mGrapping;
 				mIsGrap = false;
 				return;

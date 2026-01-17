@@ -55,6 +55,7 @@ public:
 	void RemakeStageObjects();
 	void DeleteStageObject(int i, int j);
 	void DeleteStageObjects();
+	void DeleteAllStageObjects();
 
 	bool DeleteStage(String stageName); //Stageを削除する
 

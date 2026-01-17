@@ -147,8 +147,6 @@ void Stage::Initialize_CreateStage(CreateStage* createStage, FilePath fileName) 
 	reader(mDetails);
 	reader(mCandleDetails);
 
-	
-
 
 	for (int i = 0; i < mVerticalSize; i++) {
 		for (int j = 0; j < mSideSize; j++) {
@@ -183,6 +181,7 @@ void Stage::Initialize_CreateStage(CreateStage* createStage, FilePath fileName) 
 
 	delete InitCandle;
 	InitCandle = 0;
+
 
 }
 
@@ -346,6 +345,24 @@ void Stage::DeleteStageObjects() {
 			if (mRects[i][j].intersects(mDeleteRect)) {
 				DeleteStageObject(i, j);
 			}
+		}
+	}
+}
+
+void Stage::DeleteAllStageObjects() {
+	for (int i = 0; i < mVerticalSize; i++) {
+		for (int j = 0; j < mSideSize; j++) {
+			if (mStageObjects[i][j]) {
+				delete mStageObjects[i][j];
+				mStageObjects[i][j] = 0;
+			}
+		}
+	}
+
+	for (int i = 0; i < mCandles.size(); i++) {
+		if (mCandles[i]) {
+			delete mCandles[i];
+			mCandles[i] = 0;
 		}
 	}
 }

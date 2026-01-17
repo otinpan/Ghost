@@ -104,23 +104,34 @@ void StageMenu::Initialize_CreateStage(CreateStage* createStage) {
 	);
 	mPlayerRectWidth = mCreateStage->GetStage()->GetRectWidth() / 3.0f;
 	mPlayerRectHeight = mCreateStage->GetStage()->GetRectHeight();
-	mGhost = new Ghost_CreateStage(Vec2(mPlayerPos.x,
-		mPlayerPos.y+2*mPlayerRectHeight),mPlayerRectWidth,mPlayerRectHeight
-	);
-	mGhost->InitializeStageObject_CreateStage(mCreateStage);
-	mGhost->SetIsInObjectMenu(true);
-	mEscapee1 = new Escapee_CreateStage(Vec2(mPlayerPos.x - mPlayerRectWidth * 5.0f,
-		mPlayerPos.y), mPlayerRectWidth, mPlayerRectHeight,1);
-	mEscapee1->InitializeStageObject_CreateStage(mCreateStage);
-	mEscapee1->SetIsInObjectMenu(true);
-	mEscapee2 = new Escapee_CreateStage(Vec2(mPlayerPos.x,
-		mPlayerPos.y), mPlayerRectWidth, mPlayerRectHeight,2);
-	mEscapee2->InitializeStageObject_CreateStage(mCreateStage);
-	mEscapee2->SetIsInObjectMenu(true);
-	mEscapee3 = new Escapee_CreateStage(Vec2(mPlayerPos.x + mPlayerRectWidth * 5.0f,
-		mPlayerPos.y), mPlayerRectWidth, mPlayerRectHeight,3);
-	mEscapee3->InitializeStageObject_CreateStage(mCreateStage);
-	mEscapee3->SetIsInObjectMenu(true);
+
+	// stageの中にすでにplayerがいるかチェック
+	std::vector<bool> isInStage = CheckIsPlayersInStage();
+	if (!isInStage[0]) {
+		mGhost = new Ghost_CreateStage(Vec2(mPlayerPos.x,
+			mPlayerPos.y + 2 * mPlayerRectHeight), mPlayerRectWidth, mPlayerRectHeight
+		);
+		mGhost->InitializeStageObject_CreateStage(mCreateStage);
+		mGhost->SetIsInObjectMenu(true);
+	}
+	if (!isInStage[1]) {
+		mEscapee1 = new Escapee_CreateStage(Vec2(mPlayerPos.x - mPlayerRectWidth * 5.0f,
+			mPlayerPos.y), mPlayerRectWidth, mPlayerRectHeight, 1);
+		mEscapee1->InitializeStageObject_CreateStage(mCreateStage);
+		mEscapee1->SetIsInObjectMenu(true);
+	}
+	if (!isInStage[2]) {
+		mEscapee2 = new Escapee_CreateStage(Vec2(mPlayerPos.x,
+			mPlayerPos.y), mPlayerRectWidth, mPlayerRectHeight, 2);
+		mEscapee2->InitializeStageObject_CreateStage(mCreateStage);
+		mEscapee2->SetIsInObjectMenu(true);
+	}
+	if (!isInStage[3]) {
+		mEscapee3 = new Escapee_CreateStage(Vec2(mPlayerPos.x + mPlayerRectWidth * 5.0f,
+			mPlayerPos.y), mPlayerRectWidth, mPlayerRectHeight, 3);
+		mEscapee3->InitializeStageObject_CreateStage(mCreateStage);
+		mEscapee3->SetIsInObjectMenu(true);
+	}
 
 	// GPTMenu
 	mGPTMenuPos = Vec2(
@@ -272,3 +283,37 @@ void StageMenu::RemakePlayer(class StageObject* stageObject){
 		break;
 	}
 }
+
+
+std::vector<bool> StageMenu::CheckIsPlayersInStage() {
+	std::vector<bool> res(4, false);
+	for (const auto& row : mCreateStage->GetStage()->GetStageObjects()) {
+		for (const auto& s : row) {
+			if (s == 0)continue;
+			if (s->GetAttribute() == StageObject::Attribute::Ghost) {
+				res[0] = true;
+			}
+			else if (s->GetAttribute() == StageObject::Attribute::Escapee1) {
+				res[1] = true;
+			}
+			else if (s->GetAttribute() == StageObject::Attribute::Escapee2) {
+				res[2] = true;
+			}
+			else if (s->GetAttribute() == StageObject::Attribute::Escapee3) {
+				res[3] = true;
+			}
+		}
+	}
+
+	return res;
+}
+
+void StageMenu::DeleteMenuPlayers() {
+	// メニュー上の駒を消す（ステージの存在とは無関係）
+	if (mGhost) { delete mGhost; mGhost = nullptr; }
+	if (mEscapee1) { delete mEscapee1; mEscapee1 = nullptr; }
+	if (mEscapee2) { delete mEscapee2; mEscapee2 = nullptr; }
+	if (mEscapee3) { delete mEscapee3; mEscapee3 = nullptr; }
+
+}
+

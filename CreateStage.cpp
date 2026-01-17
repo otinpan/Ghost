@@ -358,3 +358,4 @@ void CreateStage::moveTo(Parent* parent, Parent::SeqID id) {
 void CreateStage::SetStageName(const String& name) {
 	mStageName = name;
 }
+

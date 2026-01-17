@@ -3,6 +3,8 @@
 #include"CreateStage.h"
 #include"StageObject.h"
 #include"Common.h"
+#include "Candle.h"
+#include"StageMenu.h"
 #include"Stage.h"
 #include <cstdlib>
 #include <cstring>
@@ -142,6 +144,7 @@ void GPTMenu::Update(float deltaTime) {
 
 
 	if (sendRect.leftClicked()) {
+		CreateStage();
 		// to do: GPTへ送信
 	}
 	if (closeRect.leftClicked()) {
@@ -187,7 +190,7 @@ static void DrawLoading(
 
 void GPTMenu::Draw() const {
 	DrawRoundRect(mBackgroundRectPos, mBackgroundRectWidth, mBackgroundRectHeight, mBackgroundRectWidth / 50.0,
-		ColorF(0.6f));
+		ColorF(0.7f));
 
 	// 作成中であることの表示
 	if (mIsCreating.load()) {
@@ -287,8 +290,7 @@ static const struct StageDetailsOut {
 	std::vector<CandleOut> candles;
 };
 
-static const struct DetailsOutput {
-
+struct DetailsOutput {
 	std::map<std::pair<int, int>, StageDetails> cell_details; // <<x,y>,StageDetails>
 	std::map<std::pair<float, float>, float> candles;
 };
@@ -525,6 +527,9 @@ static std::string BuildPrompt(int w, int h) {
    - '1' appears exactly 1 time.
    - '2' appears exactly 1 time.
    - '3' appears exactly 1 time.
+5) Density limit (IMPORTANT):
+- The total number of NON-DOT tiles (anything other than '.') MUST be <= 100.
+- Prefer MUCH fewer: target 60 to 90 non-dot tiles.
 
 [LEGEND / MEANINGS]
 - '.' = Floor (walkable)
@@ -588,7 +593,7 @@ static json BuildDetailsSchema() {
 			{"properties",{
 				{"cell_overrides",{
 					{"type","array"},
-					{"maxItems",120},
+					{"maxItems",100},
 					{"items",{
 						{"type","object"},
 						{"additionalProperties",false},
@@ -621,9 +626,9 @@ static json BuildDetailsSchema() {
 						{"additionalProperties",false},
 						{"required", json::array({"x","y","radius"})},
 						{"properties",{
-							{"x", {{"type","integer"},{"minimum",0},{"maximum",21}}},
-							{"y", {{"type","integer"},{"minimum",0},{"maximum",14}}},
-							{"radius", {{"type","number"},{"minimum",10.0},{"maximum",600.0}}}
+							{"x", {{"type","integer"},{"minimum",0},{"maximum",100}}},
+							{"y", {{"type","integer"},{"minimum",0},{"maximum",100}}},
+							{"radius", {{"type","number"},{"minimum",0},{"maximum",100}}}
 						}}
 					}}
 				}}
@@ -700,15 +705,15 @@ COUNT=)";
 - G/1/2/3: speed may be set; others null.
 
 [CANDLES]
-- Place 3 to 6 candles (avoid too many).
-- Put candles only on passable tiles: '.' 'K' 'E' 'G' '1' '2' '3'
-- Do NOT place candles on: B,P,D,T
-- Avoid placing within Manhattan distance <=2 from G,1,2,3.
-- radius: 80 to 200 typically.
+- Place 3 to 6 candles.
+- Candle positions are INDEPENDENT of the layout grid.
+- Choose x and y uniformly from 0 to 100 (integers).
+- radius must be a number from 0 to 100.
+- No additional restrictions (do not check passability, do not avoid spawns).
 
 [COORDINATES]
-- x is column index (0..21), y is row index (0..14).
-- The tile at (x,y) is layout[y][x].
+- cell_overrides: x is column index (0..21), y is row index (0..14).
+- candles: x and y are normalized 0..100 coordinates, independent of layout cells.
 
 [GAME RULES (for level design intent)]
 - There is exactly 1 Ghost (G) and 3 Escapees (1,2,3).
@@ -905,7 +910,9 @@ std::vector<std::string> GenerateStageLayout(int maxRetries = 5) {
 			if (attempt == maxRetries) {
 				TryFixPlayers(layout,100);
 			}
-			ValidateLogicalRulesOrThrow(layout);
+			else {
+				ValidateLogicalRulesOrThrow(layout);
+			}
 			return layout; // OK
 		}
 		catch (const std::exception& e) {
@@ -1076,19 +1083,44 @@ void JustifyStageDetails(std::map<std::pair<int, int>, StageDetails>& details) {
 				sd.clockwise = dist(rng);
 			}
 
-			if (!sd.patrolRange.has_value()) {
-				int maxPatrolRange = 0;
-				switch (*sd.clockwise) {
-				case 0: maxPatrolRange = pos.second; break;              // ←要整合
-				case 1: maxPatrolRange = width - 1 - pos.first; break;   // ←要整合
-				case 2: maxPatrolRange = height - 1 - pos.second; break; // ←要整合
-				case 3: maxPatrolRange = pos.first; break;
-				}
-				if (maxPatrolRange < 0) maxPatrolRange = 0;
+			int maxPatrolRange = 0;
 
+			// pos = (x,y)
+			const int x = pos.first;
+			const int y = pos.second;
+
+			switch (*sd.clockwise) {
+			case 0:
+				// AdjustPatrolRange: min(range, y+1)
+				maxPatrolRange = y + 1;
+				break;
+			case 1:
+				// min(range, sideSize - x)
+				maxPatrolRange = width - x;
+				break;
+			case 2:
+				// min(range, verticalSize - y)
+				maxPatrolRange = height - y;
+				break;
+			case 3:
+				// min(range, x+1)
+				maxPatrolRange = x + 1;
+				break;
+			default:
+				maxPatrolRange = 0;
+				break;
+			}
+
+			if (maxPatrolRange < 0) maxPatrolRange = 0;
+			if (!sd.patrolRange.has_value()) {
 				std::uniform_int_distribution<int> dist(0, maxPatrolRange);
 				sd.patrolRange = dist(rng);
 			}
+			else {
+				sd.patrolRange = std::min(maxPatrolRange, *sd.patrolRange);
+			}
+			
+
 
 			if (!sd.speed.has_value()) {
 				std::uniform_real_distribution<float> dist(0.0f, 100.0f);
@@ -1311,11 +1343,127 @@ void GPTMenu::PollCreateStageResult() {
 	}
 
 	if (result) {
+		ApplyToStage(*result);
 		Print << U"Success CreateStage";
+		EndGPTMenu_CreateStage();
 		return;
 	}
 
 
+}
+
+void GPTMenu::ApplyToStage(const GeneratedResult& result) {
+	auto& layout = result.layout;
+	if (result.details) {
+		// ステージのリセット
+		mCreateStage->GetStage()->DeleteAllStageObjects();
+		std::map<std::pair<int, int>, StageDetails>& details = result.details->cell_details;
+		std::map<std::pair<float, float>, float>& candles = result.details->candles;
+
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				StageObject::Attribute attribute = AttributeMap.at(layout[y][x]);
+				if (attribute == StageObject::Attribute::None) {
+					continue;
+				}
+				mCreateStage->GetStage()->SetNewStageObject_Attribute(y, x, attribute);
+				const auto& ds = details[std::make_pair(x, y)];
+				// material
+				if (ds.material.has_value()) {
+					StageObject::Material mt;
+					if (*ds.material == "Wood") {
+						mt = StageObject::Material::Wood;
+					}
+					else if(*ds.material=="Grass"){  
+						mt = StageObject::Material::Grass;
+					}
+					else {
+						mt = StageObject::Material::Stone;
+					}
+					mCreateStage->GetStage()->GetStageObjects()[y][x]->SetMaterial(mt);
+				}
+				// clockwise
+				if (ds.clockwise.has_value()) {
+					mCreateStage->GetStage()->GetStageObjects()[y][x]->SetClockwise(*ds.clockwise);
+				}
+				// patrol Range
+				if (ds.patrolRange.has_value()) {
+					mCreateStage->GetStage()->GetStageObjects()[y][x]->SetPatrolRange(*ds.patrolRange);
+				}
+
+				// BatterySize
+				if (ds.batterySize.has_value()) {
+					StageObject::BatterySize bs;
+					if (*ds.batterySize == "Small") {
+						bs = StageObject::BatterySize::Small;
+					}
+					else if (*ds.batterySize == "Medium") {
+						bs = StageObject::BatterySize::Mid;
+					}
+					else if (*ds.batterySize == "Large") {
+						bs = StageObject::BatterySize::Big;
+					}
+					else {
+						bs = StageObject::BatterySize::Zero;
+					}
+
+					mCreateStage->GetStage()->GetStageObjects()[y][x]->SetBatterySize(bs);
+				}
+				// treasure
+				if (ds.treasure.has_value()) {
+					StageObject::Treasure ts;
+					if (*ds.treasure == "Battery") {
+						ts = StageObject::Treasure::TreasureBattery;
+					}
+					else if (*ds.treasure == "Key") {
+						ts = StageObject::Treasure::TreasureKey;
+					}else{
+						ts = StageObject::Treasure::Empty;
+					}
+					mCreateStage->GetStage() -> GetStageObjects()[y][x]->SetTreasure(ts);
+				}
+				// speed
+				if (ds.speed.has_value()) {
+					mCreateStage->GetStage()->GetStageObjects()[y][x]->SetSpeed(*ds.speed);
+				}
+				// iteration
+				mCreateStage->GetStage()->GetStageObjects()[y][x]->SetIteration(std::make_pair(y, x));
+			}
+		}
+
+		// candle
+		for (const auto& candle : candles) {
+			auto pos = candle.first;
+
+			float x = (float)mCreateStage->GetStage()->GetLeft()
+				+ (float)pos.first / 100.0f * mCreateStage->GetStage()->GetWidth();
+			float y = (float)mCreateStage->GetStage()->GetUp()
+				- (float)pos.second / 100.0f * mCreateStage->GetStage()->GetHeight();
+
+			Candle* c = new Candle(
+				Vec2(0, 0),
+				mCreateStage->GetStage()->GetRectWidth() / 3,
+				mCreateStage->GetStage()->GetRectHeight() / 3,
+				mCreateStage->GetStage()->GetRectHeight() / 6
+			);
+			c->InitializeStageObject_CreateStage(mCreateStage);
+
+			c->SetPosition(Vec2(x, y));
+			c->SetLightRad(
+				c->GetMinLightRad()
+				+ (float)candle.second / 100.0f * (c->GetMaxLightRad() - c->GetMinLightRad())
+			);
+
+			mCreateStage->GetStage()->SetNewCandle(c); // ステージが所有する想定
+		}
+
+		mCreateStage->GetStageMenu()->DeleteMenuPlayers();
+
+	}
+	else {
+		Print << U"Error: No OutputDetails";
+		return;
+	}
 }
 
 void GPTMenu::CancelOrJoinWorker() {

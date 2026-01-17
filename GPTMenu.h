@@ -79,8 +79,10 @@ private:
 	void StartCreateStageAsync();
 	void PollCreateStageResult();
 	void CancelOrJoinWorker();
-
 	bool CreateStage();
+
+	void ApplyToStage(const GeneratedResult& result);
+
 	std::array<DrawFunc,3> mFuncs;
 	Font mLoadingFont{ ConvertToInt((float)0.07f * GetScreenHeight()),Typeface::Black };
 	Font mExplainFont{ ConvertToInt((float)0.04f * GetScreenHeight()),Typeface::Black };

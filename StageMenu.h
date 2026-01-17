@@ -40,7 +40,8 @@ public:
 	
 
 	class Brock*& GetBrock() { return mBrock; }
-
+	void DeleteMenuPlayers(); 
+	
 	RectF GetViewStageMenuRect();
 
 private:
@@ -83,6 +84,9 @@ private:
 	float mGPTMenuHeight;
 	RectF mGPTMenuRect;
 	bool mIsGPTMenuOver;
+
+	// playerがstageに配置されているかのチェック
+	std::vector<bool> CheckIsPlayersInStage();
 
 	int mObjectNum; //Objectの種類数
 	float mObjectEachWidth;
