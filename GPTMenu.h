@@ -134,16 +134,38 @@ private:
 		float lineHeight) const;
 	size_t FindNearestIndexInLine(const LayoutResult& L, int line, float targetX) const;
 
-	void StartCreateStageAsync();
+	void StartCreateStageAsync(std::string userPromptUtf8);
 	void PollCreateStageResult();
 	void CancelOrJoinWorker();
-	bool CreateStage();
+	bool CreateStage(const String& userPrompt);
 
 	void ApplyToStage(const GeneratedResult& result);
 
-	std::array<DrawFunc,3> mFuncs;
+
+	// ロード中のミニゲーム
+	void InitializeMiniGame();
+	void UpdateMiniGame(float deltaTime);
+	void DrawMiniGame();
+	// ball
+	float mBallRadius; //半径
+	float mBallSpeed;
+	float mBallPos;
+	std::array<DrawFunc, 3> mFuncs;
 	Font mLoadingFont{ ConvertToInt((float)0.07f * GetScreenHeight()),Typeface::Black };
 	Font mExplainFont{ ConvertToInt((float)0.04f * GetScreenHeight()),Typeface::Black };
+	String LoadText;
+	String ExplainText;
+	// load
+	Array<Vec2> mLoadBrickPos;
+	SizeF mLoadBrickSize;
+	Array<String> mLoadTexts;
+	Array<int> mLoadCounter;
+	// explain
+	Array<Vec2> mExplainBrickPos;
+	Array<String> mExplainTexts;
+	Array<int> mExplainCounter;
+	SizeF mExplainBrickSize;
+
 
 	
 	int mLoadIndex = 0;

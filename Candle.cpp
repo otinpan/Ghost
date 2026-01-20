@@ -27,7 +27,7 @@ void Candle::InitializeStageObject_CreateStage(class CreateStage* createStage) {
 	cc->InitializeDrawing_CreateStage();
 	cc->SetCenter(GetPosition());
 	cc->SetRadius(GetLightRad());
-	cc->SetColor(ColorF(1, 1, float(202 / 255),0.5));
+	cc->SetColor(ColorF(1, 1, float(220 / 255),0.3));
 }
 
 void Candle::UpdateStageObject_CreateStage(float deltaTime) {

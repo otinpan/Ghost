@@ -114,7 +114,7 @@ void GPTMenu::Initialize_CreateStage(class CreateStage* createStage) {
 	ValidInput.insert('_');
 	ValidInput.insert('-');
 
-	fontSize = 0.07f * GetScreenHeight();
+	fontSize = 0.06f * GetScreenHeight();
 	FontAsset::Register(U"text", FontMethod::MSDF, fontSize, Typeface::Medium);
 
 }
@@ -127,9 +127,7 @@ void GPTMenu::Update(float deltaTime) {
 	// 結果回収
 	PollCreateStageResult();
 	if (mIsCreating.load()) {
-		if (inputDecision.down()) {
-			mLoadIndex = (mLoadIndex + 1) % mFuncs.size();
-		}
+		UpdateMiniGame(deltaTime);
 		return;
 	}
 
@@ -158,7 +156,7 @@ void GPTMenu::Update(float deltaTime) {
 		break;
 	case SelectedButton::SEND:
 		if (inputDecision.down()) {
-			CreateStage();
+			CreateStage(mText);
 		}
 		if (inputLeft.down()||KeyLeft.down()) {
 			mSelectedButton = SelectedButton::CLOSE;
@@ -181,7 +179,7 @@ void GPTMenu::Update(float deltaTime) {
 
 
 	if (sendRect.leftClicked()) {
-		CreateStage();
+		CreateStage(mText);
 		// to do: GPTへ送信
 	}
 	if (closeRect.leftClicked()) {
@@ -367,32 +365,7 @@ bool GPTMenu::EndGPTMenu_CreateStage() {
 	return true;
 }
 
-static void DrawLoading(
-	const Vec2& pos,
-	float radius,
-	int num,
-	float speed,
-	const GPTMenu::DrawFunc& func
-)
-{
-	const float dNum = static_cast<float>(num);
-	const float dif = Math::TwoPiF / dNum;
 
-	for (int i = 0; i < num; ++i)
-	{
-		const float radian = i * dif;
-		const Vec2 tPos = pos + Circular(radius*3.0f, radian);
-
-
-		const float phase =
-			static_cast<float>(Scene::Time()) * (-speed) + radian * 0.5f;
-
-		const float t = 0.5f + 0.5f * std::sin(phase); // 0..1
-		float tRadius = radius*(0.7+0.3*t);
-		ColorF color = ColorF(t * 1.0f);
-		func(tPos, tRadius, radian,color);
-	}
-}
 
 
 
@@ -402,15 +375,7 @@ void GPTMenu::Draw()  {
 
 	// 作成中であることの表示
 	if (mIsCreating.load()) {
-		mLoadingFont(U"ステージを作成しています").draw(Arg::center(ConvertToView(Vec2(0.0f, 0.6f))), ColorF(0.0f));
-		mExplainFont(U"あなたが思っている2倍の時間がかかります").draw(Arg::center(ConvertToView(Vec2(0.0f, 0.2f))), ColorF(0.0f));
-		DrawLoading(
-			Vec2(0.0f, -0.2f),
-			0.05f,
-			10,
-			1.0f,
-			getFunc(mLoadIndex)
-		);
+		DrawMiniGame();
 		return;
 	}
 
@@ -864,9 +829,6 @@ static json BuildStageSchema() {
 
 
 
-
-
-
 static std::string BuildPrompt(int w, int h) {
 	std::ostringstream p;
 	p <<
@@ -925,7 +887,19 @@ Do not include explanations, comments, or extra keys.
 	return p.str();
 }
 
+static std::string BuildPromptWithUserText(int w, int h, const std::string& userPromptUtf8)
+{
+	std::ostringstream p;
+	p << BuildPrompt(w, h);
 
+	// ユーザーの要望を追加（ルールより後、出力形式より前に入れるのがオススメ）
+	// ※ルールが最優先であることを明示しておく
+	p << "\n\n[USER REQUEST]\n";
+	p << "The following is a user's request for the stage. Follow it ONLY if it does not violate any ABSOLUTE REQUIREMENTS.\n";
+	p << userPromptUtf8 << "\n";
+
+	return p.str();
+}
 
 static json AnyOfEnumOrNull(const json& enumVals) {
 	return json{
@@ -1004,7 +978,9 @@ static std::vector<std::tuple<int, int, char>> CollectNonDotCells(const std:: ve
 	return out;
 }
 
-static std::string BuildDetaislPrompt(const std::vector<std::string>& layout) {
+
+
+static std::string BuildDetailsPrompt(const std::vector<std::string>& layout) {
 	auto nonDots = CollectNonDotCells(layout);
 
 	std::ostringstream p;
@@ -1086,6 +1062,20 @@ Design the map to support both chase and confrontation, not only hiding.
 - Return ONLY JSON that matches the schema.
 - Use null for non-applicable fields. Never omit required keys.
 )";
+	return p.str();
+}
+
+static std::string BuildDetailsPromptWithUserText(const std::vector<std::string>& layout, const std::string& userPromptUtf8)
+{
+	std::ostringstream p;
+	p << BuildDetailsPrompt(layout);
+
+	// ユーザーの要望を追加（ルールより後、出力形式より前に入れるのがオススメ）
+	// ※ルールが最優先であることを明示しておく
+	p << "\n\n[USER REQUEST]\n";
+	p << "The following is a user's request for the stage. Follow it ONLY if it does not violate any ABSOLUTE REQUIREMENTS.\n";
+	p << userPromptUtf8 << "\n";
+
 	return p.str();
 }
 
@@ -1222,7 +1212,7 @@ static bool TryFixPlayers(std::vector<std::string>& g, int tries) {
 
 
 
-std::vector<std::string> GenerateStageLayout(int maxRetries = 5) {
+std::vector<std::string> GenerateStageLayout(const std::string& userPrompt, int maxRetries = 5) {
 	std::string apiKey = readApiKey();
 
 	if (apiKey == "error") {
@@ -1235,7 +1225,7 @@ std::vector<std::string> GenerateStageLayout(int maxRetries = 5) {
 	json req;
 	req["model"] = model;
 	req["instructions"] = "You are a professional game level designer. Output JSON only.";
-	req["input"] = NormalizePromptToSafeAscii(BuildPrompt(width,height)); // UTF8に変換
+	req["input"] = NormalizePromptToSafeAscii(BuildPromptWithUserText(width,height,userPrompt)); // UTF8に変換
 	 
 	// Structured Outputs: text.format (json_schema)
 	// docs: text: { format: { type: "json_schema", strict: true, schema: ... } } :contentReference[oaicite:2]{index=2}
@@ -1277,7 +1267,7 @@ std::vector<std::string> GenerateStageLayout(int maxRetries = 5) {
 			std::ostringstream fb;
 			fb << "\n\nThe previous layout was invalid: " << e.what()
 				<< "\nRegenerate a new layout satisfying all rules strictly.";
-			req["input"] = NormalizePromptToSafeAscii(BuildPrompt(width,height) + fb.str());
+			req["input"] = NormalizePromptToSafeAscii(BuildPromptWithUserText(width,height,userPrompt) + fb.str());
 		}
 	}
 
@@ -1557,7 +1547,9 @@ std::map<std::pair<float, float>, float> CreateStagePosAndCandles(std::vector<Ca
 
 DetailsOutput GenerateStageDetailsAndCandles(
 	std::vector < std:: string > & layout,
-	int maxRetries = 5) {
+	const std::string& userPrompt,
+	int maxRetries = 5
+) {
 	std::string apiKey = readApiKey();
 
 	if (apiKey == "error") {
@@ -1572,7 +1564,7 @@ DetailsOutput GenerateStageDetailsAndCandles(
 	req["max_output_tokens"] = 6000; // 足りない場合がある
 	req["temperature"] = 0.0;
 	req["instructions"] = "You are a professional game level designer. Output JSON only.";
-	req["input"] = NormalizePromptToSafeAscii(BuildDetaislPrompt(layout));
+	req["input"] = NormalizePromptToSafeAscii(BuildDetailsPromptWithUserText(layout,userPrompt));
 
 
 	req["text"] = {
@@ -1618,7 +1610,7 @@ DetailsOutput GenerateStageDetailsAndCandles(
 			std::ostringstream fb;
 			fb << "\n\nThe previous details was invalid: " << e.what()
 				<< "\nRegenerate a new details satisfying all rules strictly.";
-			req["input"] = NormalizePromptToSafeAscii(BuildDetaislPrompt(layout) + fb.str());
+			req["input"] = NormalizePromptToSafeAscii(BuildDetailsPromptWithUserText(layout,userPrompt) + fb.str());
 		}
 
 	}
@@ -1627,12 +1619,13 @@ DetailsOutput GenerateStageDetailsAndCandles(
 
 }
 
-bool GPTMenu::CreateStage() {
-	StartCreateStageAsync();
+bool GPTMenu::CreateStage(const String& userPrompt) {
+	std::string promptUtf8 = Unicode::ToUTF8(userPrompt);
+	StartCreateStageAsync(promptUtf8);
 	return true;
 }
 
-void GPTMenu::StartCreateStageAsync() {
+void GPTMenu::StartCreateStageAsync(std::string userPromptUtf8) {
 	if (mIsCreating.load())return;
 
 	CancelOrJoinWorker();
@@ -1645,12 +1638,12 @@ void GPTMenu::StartCreateStageAsync() {
 
 	mIsCreating.store(true);
 
-	mWorker = std::thread([this]() {
+	mWorker = std::thread([this,userPromptUtf8=std::move(userPromptUtf8)]() mutable{
 		try {
 			curl_global_init(CURL_GLOBAL_DEFAULT);
 
-			auto layout = GenerateStageLayout(5);
-			auto details = GenerateStageDetailsAndCandles(layout, 2);
+			auto layout = GenerateStageLayout(userPromptUtf8 , 5);
+			auto details = GenerateStageDetailsAndCandles(layout, userPromptUtf8 ,2);
 
 			auto out = std::make_unique<DetailsOutput>(std::move(details));
 
@@ -1825,6 +1818,101 @@ void GPTMenu::CancelOrJoinWorker() {
 	if (mWorker.joinable()) {
 		mWorker.join();
 	}
+}
+
+
+// mini game /////////////////////////////////////////////////////////////////////////////////////////////////
+void GPTMenu::InitializeMiniGame() {
+	// bricks
+	LoadText = U"ステージを作成しています";
+	ExplainText = U"あなたが思っている2倍の時間がかかります";
+	Vec2 loadCenter = Vec2(0.0f, 0.6f);
+	Vec2 explainCenter = Vec2(0.0f,0.2f);
+	const int loadNum = LoadText.size();
+	const int explainNum = ExplainText.size();
+	mLoadBrickSize = SizeF(0.14f,1.4f);
+	mExplainBrickSize = SizeF(0.08f, 0.08f);
+
+	Vec2 leftPos = Vec2(
+		(float)loadCenter.x + (float)mLoadBrickSize.x/2.0f - (float)((loadNum / 2) * mLoadBrickSize.x),
+		loadCenter.y);
+	for (int i = 0; i < loadNum; i++) {
+		Vec2 pos = Vec2(leftPos.x + (float)i * mLoadBrickSize.x, leftPos.y);
+		mLoadBrickPos.emplace_back(pos);
+		mLoadCounter.emplace_back(3);
+		mLoadTexts.emplace_back(s3d::String{ LoadText[i] });
+	}
+
+	leftPos = Vec2(
+		(float)explainCenter.x + (float)mExplainBrickSize.x / 2.0f - (float)((loadNum / 2) * mExplainBrickSize.x),
+		explainCenter.y);
+	for (int i = 0; i < explainNum; i++) {
+		Vec2 pos = Vec2(leftPos.x + (float)i * mExplainBrickSize.x, leftPos.y);
+		mExplainBrickPos.emplace_back(pos);
+		mExplainCounter.emplace_back(3);
+		mExplainTexts.emplace_back(s3d::String{ ExplainText[i] });
+	}
+
+	// ball
+	mBallRadius = 0.03f;
+	mBallSpeed = 0.1f;
+
+}
+
+
+void GPTMenu::UpdateMiniGame(float deltaTime) {
+	if (inputDecision.down()) {
+		mLoadIndex = (mLoadIndex + 1) % mFuncs.size();
+	}
+}
+
+static void DrawLoading(
+	const Vec2& pos,
+	float radius,
+	int num,
+	float speed,
+	const GPTMenu::DrawFunc& func
+)
+{
+	const float dNum = static_cast<float>(num);
+	const float dif = Math::TwoPiF / dNum;
+
+	for (int i = 0; i < num; ++i)
+	{
+		const float radian = i * dif;
+		const Vec2 tPos = pos + Circular(radius * 3.0f, radian);
+
+
+		const float phase =
+			static_cast<float>(Scene::Time()) * (-speed) + radian * 0.5f;
+
+		const float t = 0.5f + 0.5f * std::sin(phase); // 0..1
+		float tRadius = radius * (0.7 + 0.3 * t);
+		ColorF color = ColorF(t * 1.0f);
+		func(tPos, tRadius, radian, color);
+	}
+}
+
+void GPTMenu::DrawMiniGame() {
+	/*const int loadNum = LoadText.size();
+	const int explainNum = ExplainText.size();
+
+	for (int i = 0; i < loadNum; i++) {
+		mLoadingFont(mLoadTexts[i]).draw(Arg::center(ConvertToView(mLoadBrickPos[i]), mLoadBrickSize), ColorF(0.0f));
+	}
+	for (int i = 0; i < explainNum; i++) {
+		mExplainFont(mExplainTexts[i]).draw(Arg::center(ConvertToView(mExplainBrickPos[i]), mExplainBrickSize), ColorF(0.0f));
+	}*/
+	//mLoadingFont(LoadText).draw(Arg::center(ConvertToView(Vec2(0.0f, 0.6f))), ColorF(0.0f));
+	//mExplainFont(ExplainText).draw(Arg::center(ConvertToView(Vec2(0.0f, 0.2f))), ColorF(0.0f));
+	DrawLoading(
+		Vec2(0.0f, -0.2f),
+		0.05f,
+		10,
+		1.0f,
+		getFunc(mLoadIndex)
+	);
+	return; 
 }
 
 
