@@ -27,11 +27,13 @@ int width = 22;
 int height = 15;
 
 
+
 GPTMenu::GPTMenu()
 	:mCreateStage(nullptr)
 	, mWidth(0)
 	, mHeight(0)
 	, mIsCreating(false)
+	, mTimerNotEditing(StartImmediately::Yes)
 {
 
 }
@@ -71,8 +73,8 @@ void GPTMenu::Initialize_CreateStage(class CreateStage* createStage) {
 	inputLeft = KeyA;
 	inputDecision = KeySpace | KeyEnter;
 
-	int FontSize = 0.09 * GetScreenHeight();
-	selectFont = Font{ FontMethod::MSDF,FontSize / 2,Typeface::Light };
+	int loadFontSize = 0.09 * GetScreenHeight();
+	selectFont = Font{ FontMethod::MSDF,loadFontSize / 2,Typeface::Light };
 
 	// load
 	mFuncs = {
@@ -90,6 +92,31 @@ void GPTMenu::Initialize_CreateStage(class CreateStage* createStage) {
 		}
 
 	};
+
+	// text入力
+	mIsTextMode = true;
+	mTextRectPos = Vec2(0.0f, 0.15f);
+	mTextRectWidth = (float)1.6f;
+	mTextRectHeight = (float)1.4f;
+	mTextRectColor = ColorF(1);
+	mTextColor = ColorF(0.0f);
+	mCursorWidth = 0.005;
+	mCursorColor = ColorF(0.0);
+	EditingTextColor = ColorF(0.3f);
+	EditingTextBgColor = ColorF{ Palette::Blue,0.8 };
+	MaxTextSize = 100;
+
+	for (int i = 0; i < 26; i++) {
+		ValidInput.insert((char)('a' + i));
+		ValidInput.insert((char)('A' + i));
+		ValidInput.insert((char)('0' + (i % 10)));
+	}
+	ValidInput.insert('_');
+	ValidInput.insert('-');
+
+	fontSize = 0.07f * GetScreenHeight();
+	FontAsset::Register(U"text", FontMethod::MSDF, fontSize, Typeface::Medium);
+
 }
 
 const GPTMenu::DrawFunc& GPTMenu::getFunc(size_t index)const {
@@ -105,7 +132,13 @@ void GPTMenu::Update(float deltaTime) {
 		}
 		return;
 	}
-	
+
+	// カーソルの更新
+	if (mIsTextMode) {
+		UpdateTextCursor();
+		return;
+	}
+
 	RectF sendRect = RectF(Arg::center(ConvertToView(mSendRectPos)),
 		mSelectRectWidth * GetScreenWidth() / 2.0f,
 		mSelectRectHeight * GetScreenHeight() / 2.0f);
@@ -116,10 +149,10 @@ void GPTMenu::Update(float deltaTime) {
 
 	switch (mSelectedButton) {
 	case SelectedButton::NONE:
-		if (inputLeft.down()) {
+		if (inputLeft.down()||KeyLeft.down()) {
 			mSelectedButton = SelectedButton::CLOSE;
 		}
-		if (inputRight.down()) {
+		if (inputRight.down()||KeyRight.down()) {
 			mSelectedButton = SelectedButton::SEND;
 		}
 		break;
@@ -127,7 +160,7 @@ void GPTMenu::Update(float deltaTime) {
 		if (inputDecision.down()) {
 			CreateStage();
 		}
-		if (inputLeft.down()) {
+		if (inputLeft.down()||KeyLeft.down()) {
 			mSelectedButton = SelectedButton::CLOSE;
 		}
 		break;
@@ -136,10 +169,14 @@ void GPTMenu::Update(float deltaTime) {
 			EndGPTMenu_CreateStage();
 			return;
 		}
-		if (inputRight.down()) {
+		if (inputRight.down()||KeyRight.down()) {
 			mSelectedButton = SelectedButton::SEND;
 		}
 		break;
+	}
+
+	if (KeyUp.down()) {
+		mIsTextMode = true;
 	}
 
 
@@ -153,6 +190,177 @@ void GPTMenu::Update(float deltaTime) {
 
 	return;
 }
+static int CursorLineFromLayout(const LayoutResult& L, size_t cursorPos)
+{
+	// そのcursorPosがどの行区間に入るか
+	for (int li = 0; li < static_cast<int>(L.lineBegin.size()); ++li) {
+		const size_t b = L.lineBegin[li];
+		const size_t e = L.lineEnd[li];
+		if (b <= cursorPos && cursorPos <= e) return li;
+	}
+	return static_cast<int>(L.lineBegin.size()) - 1;
+}
+
+size_t GPTMenu::FindNearestIndexInLine(const LayoutResult& L, int line, float targetX) const
+{
+	const size_t b = L.lineBegin[line];
+	const size_t e = L.lineEnd[line];
+
+	// 行が空（例えば "\n\n" の間）なら行頭
+	if (b >= e) return b;
+
+	// その行に属するCharPosを見て最も近いものを取る
+	size_t best = b;
+	double bestDist = 1e100;
+
+	for (const auto& c : L.chars) {
+		if (c.index < b || c.index >= e) continue;
+		const float d = Abs(c.pos.x - targetX);
+		if (d < bestDist) {
+			bestDist = d;
+			best = c.index;
+		}
+	}
+
+	// 行末側（最後の文字の“後ろ”）に行きたい場合のため、
+	// targetX が行の最後より右なら e にする、など拡張も可能
+	return best;
+}
+
+
+
+void GPTMenu::UpdateTextCursor()
+{
+	const bool isComposing = static_cast<bool>(TextInput::GetEditingText());
+
+	// IME編集中は、自前カーソル移動で IME と喧嘩しやすいので止めるのが安定
+	if (!isComposing)
+	{
+		if (KeyLeft.down())  mCursorPos = (mCursorPos == 0) ? 0 : (mCursorPos - 1);
+		if (KeyRight.down()) mCursorPos = Min(mCursorPos + 1, mText.size());
+
+		if (KeyHome.down()) mCursorPos = 0;
+		if (KeyEnd.down())  mCursorPos = mText.size();
+
+		// Up/Down の行移動も「確定済み」状態だけでやる
+		if (KeyUp.down() || KeyDown.down())
+		{
+			const Vec2 start = ConvertToView(Vec2(
+				mTextRectPos.x - mTextRectWidth / 2.1,
+				mTextRectPos.y + mTextRectHeight / 2.0
+			));
+			const float lineHeight = fontSize * 1.2f;
+			const float boxWidth = mTextRectWidth * 0.9f * GetScreenWidth() / 2.0f;
+			const float boxHeight = mTextRectHeight * 0.9f * GetScreenHeight() / 2.0f;
+
+			// 確定済み mText でレイアウト
+			const auto layout = BuildLayoutForText(mText, mCursorPos, start, boxWidth, boxHeight, lineHeight);
+
+			const int curLine = CursorLineFromLayout(layout, mCursorPos);
+			const double x = layout.cursorPos.x;
+
+			if (KeyUp.down()) {
+				const int nextLine = Max(0, curLine - 1);
+				mCursorPos = FindNearestIndexInLine(layout, nextLine, x);
+			}
+			else {
+				const int lastLine = static_cast<int>(layout.lineBegin.size()) - 1;
+				if (curLine == lastLine) {
+					mIsTextMode = false;
+					return;
+				}
+				const int nextLine = Min(curLine + 1, lastLine);
+				mCursorPos = FindNearestIndexInLine(layout, nextLine, x);
+			}
+		}
+	}
+
+	// ここが「Enterで確定 → 確定されたら mText に反映」の要。
+	// TextInput::UpdateText が “確定された分” を mText に入れてくれます（毎フレーム呼ぶ）
+	mCursorPos = TextInput::UpdateText(mText, mCursorPos, TextInputMode::AllowBackSpaceDelete);
+
+	// 改行は「IME編集中ではない」時だけ
+	if (!TextInput::GetEditingText() && KeyEnter.down())
+	{
+		if (mText.size() < MaxTextSize) {
+			mText.insert(mCursorPos, U"\n");
+			++mCursorPos;
+		}
+	}
+
+	if (mText.size() > MaxTextSize) {
+		mText.resize(MaxTextSize);
+		mCursorPos = Min(mCursorPos, mText.size());
+	}
+
+	// スクロール追従
+	{
+		Vec2 start = ConvertToView(Vec2(
+			mTextRectPos.x - mTextRectWidth / 2.1,
+			mTextRectPos.y + mTextRectHeight / 2.0
+		));
+
+		const float lineHeight = fontSize * 1.1f;
+		const float boxWidth = mTextRectWidth * 0.95f * GetScreenWidth() / 2.0f;
+		const float boxHeight = mTextRectHeight * 0.9f * GetScreenHeight() / 2.0f;
+
+		// displayText / visualCursorPos を描画と揃える
+		auto editingOpt = TextInput::GetEditingText();
+		String displayText = mText;
+		size_t visualCursorPos = mCursorPos;
+		if (editingOpt) {
+			const String& editing = editingOpt;
+			displayText.insert(mCursorPos, editing);
+			visualCursorPos = mCursorPos + editing.size();
+		}
+
+		// 描画側は start.y -= mScrollY なので合わせる
+		start.y -= static_cast<float>(mScrollY);
+
+		const auto layout = BuildLayoutForText(displayText, visualCursorPos, start, boxWidth, boxHeight, lineHeight);
+
+		// start は “スクロール適用後” を渡してるので、比較のために同じ start を渡す
+		EnsureCursorVisible(layout, start, boxHeight, lineHeight);
+	}
+
+	// 最大長制限
+	if (mText.size() > MaxTextSize) {
+		mText.resize(MaxTextSize);
+		mCursorPos = Min(mCursorPos, mText.size());
+	}
+}
+
+void GPTMenu::EnsureCursorVisible(const LayoutResult& layout, const Vec2& start, float boxHeight, float lineHeight)
+{
+	// 文章全体の高さ（だいたい line数 * lineHeight）
+	const int lineCount = static_cast<int>(layout.lineBegin.size());
+	const float contentHeight = Max(0, lineCount) * lineHeight;
+
+	const float maxScroll = Max(0.0f, contentHeight - boxHeight);
+
+	// 表示中の上端/下端（スクロール込み）
+	const float viewTop = start.y + mScrollY;
+	const float viewBottom = viewTop + boxHeight;
+
+	// カーソルのY（layoutは start - scroll で作るので、スクロール補正して比較する）
+	// 重要：layout.cursorPos は「描画座標（scroll適用後）」なので、比較用に +mScrollY で“論理座標”に戻す
+	const float cursorTop = layout.cursorPos.y + mScrollY;
+	const float cursorBottom = cursorTop + lineHeight;
+
+	// 上に出たら上へ
+	if (cursorTop < viewTop) {
+		mScrollY = Max(0.0f, mScrollY - (viewTop - cursorTop));
+	}
+	// 下に出たら下へ
+	else if (cursorBottom > viewBottom) {
+		mScrollY = Min(maxScroll, mScrollY + (cursorBottom - viewBottom));
+	}
+
+	// 念のため clamp
+	mScrollY = Clamp(mScrollY, 0.0f, maxScroll);
+}
+
+
 
 bool GPTMenu::EndGPTMenu_CreateStage() {
 	mCreateStage->SetShouldCloseGPTMenu(true);
@@ -188,7 +396,7 @@ static void DrawLoading(
 
 
 
-void GPTMenu::Draw() const {
+void GPTMenu::Draw()  {
 	DrawRoundRect(mBackgroundRectPos, mBackgroundRectWidth, mBackgroundRectHeight, mBackgroundRectWidth / 50.0,
 		ColorF(0.7f));
 
@@ -218,11 +426,157 @@ void GPTMenu::Draw() const {
 		DrawRect(p, mSelectRectWidth, mSelectRectHeight, ColorF(1.0f));
 		selectFont(text[mode]).drawAt(ConvertToView(p), ColorF(0.0f));
 	}
-	DrawRectFrame(pos[mSelectedButton], mSelectRectWidth, mSelectRectHeight, 0.005f, 0.005, ColorF(1.0f, 1.0f, 0.0f));
+	if (!mIsTextMode) {
+		DrawRectFrame(pos[mSelectedButton], mSelectRectWidth, mSelectRectHeight, 0.005f, 0.005, ColorF(1.0f, 1.0f, 0.0f));
+	}
 
-
+	// text menuの描画
+	DrawTextMenu();
 
 }
+
+void GPTMenu::DrawTextMenu()
+{
+	DrawRect(mTextRectPos, mTextRectWidth, mTextRectHeight, mTextRectColor);
+
+	Vec2 start = ConvertToView(Vec2(
+		mTextRectPos.x - mTextRectWidth / 2.1,
+		mTextRectPos.y + mTextRectHeight / 2.0
+	));
+
+	const float lineHeight = fontSize * 1.1f;
+	const Vec2 boxCenter = ConvertToView(mTextRectPos);
+	const float boxWidth = mTextRectWidth * 0.95f * GetScreenWidth() / 2.0f;
+	const float boxHeight = mTextRectHeight * 0.9f * GetScreenHeight() / 2.0f;
+
+	const RectF clipRect(Arg::center(boxCenter), boxWidth*1.3f, boxHeight*1.1f);
+
+	const ScopedViewport2D scissor{ clipRect.asRect()};
+
+	start.y -= static_cast<float>(mScrollY);
+
+	const auto editingOpt = TextInput::GetEditingText();
+
+	String displayText = mText;
+	size_t visualCursorPos = mCursorPos;
+
+	if (editingOpt) {
+		const String& editing = editingOpt;
+		displayText.insert(mCursorPos, editing);
+		visualCursorPos = mCursorPos + editing.size(); // “編集中カーソルは末尾”扱い
+	}
+
+
+	const auto layout = BuildLayoutForText(displayText, visualCursorPos, start, boxWidth, boxHeight, lineHeight);
+
+	{
+		const ScopedCustomShader2D shader{ Font::GetPixelShader(textboxFont().method()) };
+
+		// displayText を描画
+		const auto glyphs = textboxFont().getGlyphs(displayText);
+		for (const auto& c : layout.chars) {
+			const auto& glyph = glyphs[c.index];
+			glyph.texture.draw(c.pos + glyph.getOffset(), mTextColor);
+		}
+	}
+
+	if (editingOpt)
+	{
+		const size_t compBegin = mCursorPos;
+		const size_t compEnd = mCursorPos + editingOpt.size();
+		const auto glyphs = textboxFont().getGlyphs(displayText);
+
+		for (const auto& c : layout.chars)
+		{
+			if (c.index < compBegin || c.index >= compEnd) continue;
+
+			const auto& g = glyphs[c.index];
+			const float x0 = c.pos.x;
+			const float x1 = c.pos.x + g.xAdvance;
+			const float y = c.pos.y + lineHeight * 0.95f; 
+
+			Line{ Vec2(x0, y), Vec2(x1, y) }.draw(2.0, EditingTextColor);
+		}
+	}
+
+	// カーソル（displayText 上の位置）
+	Line{ layout.cursorPos, layout.cursorPos.movedBy(0, lineHeight) }
+	.draw(mCursorWidth * GetScreenWidth(), mCursorColor);
+
+	ClearPrint();
+}
+
+
+
+LayoutResult GPTMenu::BuildLayoutForText(
+	const String& text,
+	size_t cursorPos,
+	const Vec2& startPos,
+	float boxWidth,
+	float boxHeight,
+	float lineHeight
+) const
+{
+	LayoutResult R;
+
+	Vec2 pen = startPos;
+	int line = 0;
+
+	R.lineBegin << 0;
+
+	const auto glyphs = textboxFont().getGlyphs(text);
+
+	if (cursorPos == 0) {
+		R.cursorPos = pen;
+	}
+
+	for (size_t i = 0; i < glyphs.size(); ++i) {
+		const char32 ch = text[i];
+		const auto& g = glyphs[i];
+
+		if (ch == U'\n') {
+			if (cursorPos == i) R.cursorPos = pen;
+			R.lineEnd << i;
+			pen.x = startPos.x;
+			pen.y += lineHeight;
+			++line;
+			R.lineBegin << (i + 1);
+			continue;
+		}
+
+		const float nextX = pen.x + g.xAdvance;
+		if ((nextX - startPos.x) > boxWidth) {
+			if (cursorPos == i) R.cursorPos = pen;
+			R.lineEnd << i;
+			pen.x = startPos.x;
+			pen.y += lineHeight;
+			++line;
+			R.lineBegin << i;
+		}
+
+		// 文字配置
+		R.chars << CharPos{ i, pen, line };
+
+		if (cursorPos == i) {
+			R.cursorPos = pen;
+		}
+
+		pen.x += g.xAdvance;
+	}
+
+	R.lineEnd << text.size();
+
+	if (cursorPos == text.size()) {
+		R.cursorPos = pen;
+	}
+
+	return R;
+}
+
+
+
+
+
 
 
 // CreateStage /////////////////////////////////////////////////////////////////////////////////////////

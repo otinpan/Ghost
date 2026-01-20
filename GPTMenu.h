@@ -9,6 +9,19 @@
 
 struct DetailsOutput;
 
+struct CharPos {
+	size_t index;   // mText内の文字index
+	Vec2 pos;       // その文字の描画基準位置（penPos）
+	int line;       // 行番号
+};
+
+struct LayoutResult {
+	Array<CharPos> chars;
+	Array<size_t> lineBegin; // 各行の先頭index（mTextのindex）
+	Array<size_t> lineEnd;   // 各行の末尾の次（[begin,end)）
+	Vec2 cursorPos;          // カーソル描画位置
+};
+
 class GPTMenu {
 public:
 	GPTMenu();
@@ -27,9 +40,11 @@ public:
 	void Initialize_CreateStage(class CreateStage* createStage);
 
 	void Update(float deltaTime);
-	void Draw() const;
+	void Draw() ;
 
 	const DrawFunc& getFunc(size_t index) const;
+
+	bool editing() const { return TextInput::GetEditingText() || mTimerNotEditing.sF() < 0.5f; }
 	
 
 private:
@@ -51,11 +66,46 @@ private:
 	Font selectFont;
 
 	// 入力
+	bool mIsTextMode;
 	Input inputUp;
 	Input inputDown;
 	Input inputRight;
 	Input inputLeft;
 	InputGroup inputDecision;
+
+	// text入力領域
+	Vec2 mTextRectPos;
+	float mTextRectWidth;
+	float mTextRectHeight;
+	// text入力色
+	ColorF mTextRectColor;
+	ColorF mTextColor;
+	ColorF mCursorColor;
+	ColorF EditingTextColor;
+	ColorF EditingTextBgColor;
+	// カーソル
+	float mCursorWidth;
+	size_t mCursorPos;
+	size_t MaxTextSize;
+	bool mIsTextDecide;
+	String mText;
+	std::set<char> ValidInput;
+	Stopwatch mTimerNotEditing;
+	// スクロール
+	float mScrollY = 0.0f; //スクロール量
+	bool mWasComposed = false;
+	bool mSwallowEnterOnce = false;
+	void EnsureCursorVisible(const LayoutResult& layout, const Vec2& start, float boxHeight, float lineHeight);
+
+	FontAsset textboxFont()const {
+		return FontAsset(U"text");
+	}
+	int fontSize;
+
+	void UpdateTextCursor();
+	void DrawTextMenu();
+	
+
 
 	// selected button
 	SelectedButton mSelectedButton = SelectedButton::CLOSE;
@@ -75,6 +125,14 @@ private:
 	mutable std::mutex mResultMutex;
 	std::optional<GeneratedResult> mPendingResult;
 	std::optional<std::string> mPendingError;
+	LayoutResult BuildLayoutForText(
+		const String& text,
+		size_t cursorPos,
+		const Vec2& startPos,
+		float boxWidth,
+		float boxHeight,
+		float lineHeight) const;
+	size_t FindNearestIndexInLine(const LayoutResult& L, int line, float targetX) const;
 
 	void StartCreateStageAsync();
 	void PollCreateStageResult();
@@ -86,6 +144,7 @@ private:
 	std::array<DrawFunc,3> mFuncs;
 	Font mLoadingFont{ ConvertToInt((float)0.07f * GetScreenHeight()),Typeface::Black };
 	Font mExplainFont{ ConvertToInt((float)0.04f * GetScreenHeight()),Typeface::Black };
+
 	
 	int mLoadIndex = 0;
 
