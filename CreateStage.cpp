@@ -123,6 +123,7 @@ void CreateStage::draw() {
 	for (auto circle : mCircles) {
 		circle->Draw();
 	}*/
+
 	for (auto& drawing : mDrawings_Back) {
 		drawing->Draw();
 	}
@@ -132,6 +133,7 @@ void CreateStage::draw() {
 	for (auto& drawing : mDrawings_Unaffected) {
 		drawing->Draw();
 	}
+	
 
 	mStage->DrawForward_CreateStage();
 	if (mTextMenu)mTextMenu->Draw(40*GetScreenWidth()/960);

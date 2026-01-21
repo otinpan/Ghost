@@ -20,8 +20,8 @@ Parent::Parent()
 {
 	//mMainMenu = new MainMenu();
 	//mSubMenu = new SubMenu();
-	//mRegisterController = new RegisterController();
-	mStageSelect=new StageSelect(false);
+	mRegisterController = new RegisterController();
+	//mStageSelect=new StageSelect(false);
 	//mGame = new Game();
 	//mCreateStage = new CreateStage();
 	//mGameResult = new GameResult();

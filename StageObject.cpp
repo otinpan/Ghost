@@ -286,7 +286,7 @@ void StageObject::InitializeActor_Game(class Game* game) {
 		break;
 	case Attribute::Door:
 		sqc->SetColor(ColorF(0, 0, 0));
-		sc->SetTexture(TextureAsset(U"Door_front"));
+		sc->SetTexture(TextureAsset(U"door_front"));
 		break;
 	case Attribute::Patrol:
 		sqc->SetColor(ColorF(0, (float)102 / 255, 0));

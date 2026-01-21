@@ -71,9 +71,20 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 	mHeartDrawCC = new CircleComponent(this, 100, DrawingComponent::DrawingState::UNAFFECTED);
 	mHeartDrawCC->InitializeDrawing_Game();
 	mHeartDrawCC->SetCenter(GetPosition());
-	mHeartDrawCC->SetRadius(mRadius * 1.5f);
+	mHeartDrawCC->SetRadius(mRadius * 0.5f);
 	mHeartDrawCC->SetIsDraw(false);
 	mHeartDrawCC->SetColor(ColorF(1.0f, (float)102 / 255.0f, 1.0f));
+
+	// Key
+	mKeySC = new SpriteComponent(this, 100, DrawingComponent::DrawingState::UNAFFECTED);
+	mKeySC->SetTexture(TextureAsset(U"key"));
+	keyOffset = Vec2(mRadius, mRadius);
+	mKeySC->InitializeDrawing_Game(
+		mPos + keyOffset,
+		GetGame()->GetStage()->GetRectWidth(),
+		GetGame()->GetStage()->GetRectHeight()
+	);
+	mKeySC->SetIsDraw(false);
 
 
 }
@@ -115,7 +126,14 @@ void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 	mHeartMidCC->SetCenter(GetPosition());
 	mHeartSmallCC->SetCenter(GetPosition());
 	mHeartDrawCC->SetCenter(GetPosition());
-
+	//key
+	mKeySC->SetCenter(GetPosition() + keyOffset);
+	if (mIsKey && GetIsAlive()) {
+		mKeySC->SetIsDraw(true);
+	}
+	else {
+		mKeySC->SetIsDraw(false);
+	}
 }
 
 void Escapee_Game::UpdateFlashlight_Game(float deltaTime) {

@@ -53,6 +53,9 @@ private:
 
 	//Key
 	bool mIsKey;
+	class SpriteComponent* mKeySC;
+	Vec2 keyOffset;
+
 
 	//Treasure
 	StageObject::Treasure mTreasure;
@@ -65,10 +68,11 @@ private:
 	float mItemInavailableLimitTime;
 	float mItemInavailableTime;
 
-	//Flashlight
+	//Flashlight 描画はflashlightの方で実装
 	void UpdateFlashlight_Game(float deltaTime);
 	void UpdateIntersectGhost_Game(float deltaTime);
 	void UpdateIntersectEscapee_Game(float deltaTime);
+
 
 
 	void UpdateItemAvailable(float deltaTime);
