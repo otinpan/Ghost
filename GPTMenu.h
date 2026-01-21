@@ -149,10 +149,15 @@ private:
 	// ball
 	float mBallRadius; //半径
 	float mBallSpeed;
-	float mBallPos;
+	Vec2 mBallVelocity;
+	Vec2 mBallPos;
+	// padle
+	SizeF mPaddleSize;
+	Vec2 mPaddlePos;
+	// load
 	std::array<DrawFunc, 3> mFuncs;
-	Font mLoadingFont{ ConvertToInt((float)0.07f * GetScreenHeight()),Typeface::Black };
-	Font mExplainFont{ ConvertToInt((float)0.04f * GetScreenHeight()),Typeface::Black };
+	Font mLoadingFont{ ConvertToInt((float)0.08f * GetScreenHeight()),Typeface::Black };
+	Font mExplainFont{ ConvertToInt((float)0.05f * GetScreenHeight()),Typeface::Black };
 	String LoadText;
 	String ExplainText;
 	// load

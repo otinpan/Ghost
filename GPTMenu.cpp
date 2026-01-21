@@ -117,6 +117,7 @@ void GPTMenu::Initialize_CreateStage(class CreateStage* createStage) {
 	fontSize = 0.06f * GetScreenHeight();
 	FontAsset::Register(U"text", FontMethod::MSDF, fontSize, Typeface::Medium);
 
+	InitializeMiniGame();
 }
 
 const GPTMenu::DrawFunc& GPTMenu::getFunc(size_t index)const {
@@ -1830,32 +1831,45 @@ void GPTMenu::InitializeMiniGame() {
 	Vec2 explainCenter = Vec2(0.0f,0.2f);
 	const int loadNum = LoadText.size();
 	const int explainNum = ExplainText.size();
-	mLoadBrickSize = SizeF(0.14f,1.4f);
-	mExplainBrickSize = SizeF(0.08f, 0.08f);
+	mLoadBrickSize = SizeF(0.13f,1.3f);
+	mExplainBrickSize = SizeF(0.07f, 0.07f);
+
+	mLoadBrickPos.resize(loadNum);
+	mLoadCounter.resize(loadNum);
+	mLoadTexts.resize(loadNum);
+	mExplainCounter.resize(explainNum);
+	mExplainBrickPos.resize(explainNum);
+	mExplainTexts.resize(explainNum);
 
 	Vec2 leftPos = Vec2(
 		(float)loadCenter.x + (float)mLoadBrickSize.x/2.0f - (float)((loadNum / 2) * mLoadBrickSize.x),
 		loadCenter.y);
 	for (int i = 0; i < loadNum; i++) {
 		Vec2 pos = Vec2(leftPos.x + (float)i * mLoadBrickSize.x, leftPos.y);
-		mLoadBrickPos.emplace_back(pos);
-		mLoadCounter.emplace_back(3);
-		mLoadTexts.emplace_back(s3d::String{ LoadText[i] });
+		mLoadBrickPos[i]=pos;
+		mLoadCounter[i]=3;
+		mLoadTexts[i]=s3d::String{ LoadText[i] };
 	}
 
 	leftPos = Vec2(
-		(float)explainCenter.x + (float)mExplainBrickSize.x / 2.0f - (float)((loadNum / 2) * mExplainBrickSize.x),
+		(float)explainCenter.x + (float)mExplainBrickSize.x / 2.0f - (float)((explainNum / 2) * mExplainBrickSize.x),
 		explainCenter.y);
 	for (int i = 0; i < explainNum; i++) {
 		Vec2 pos = Vec2(leftPos.x + (float)i * mExplainBrickSize.x, leftPos.y);
-		mExplainBrickPos.emplace_back(pos);
-		mExplainCounter.emplace_back(3);
-		mExplainTexts.emplace_back(s3d::String{ ExplainText[i] });
+		mExplainBrickPos[i]=pos;
+		mExplainCounter[i]=3;
+		mExplainTexts[i]=s3d::String{ ExplainText[i] };
 	}
 
 	// ball
-	mBallRadius = 0.03f;
-	mBallSpeed = 0.1f;
+	mBallRadius = 0.04f;
+	mBallVelocity = { 0.6f,0.6f };
+	mBallPos = Vec2(0.0f, -0.5f);
+	mBallSpeed = mBallVelocity.length();
+
+	// paddle
+	mPaddlePos = Vec2(0.0f, mBackgroundRectPos.y - mBackgroundRectHeight / 2.0f+0.1f);
+	mPaddleSize = SizeF(0.3f, 0.07f);
 
 }
 
@@ -1864,6 +1878,96 @@ void GPTMenu::UpdateMiniGame(float deltaTime) {
 	if (inputDecision.down()) {
 		mLoadIndex = (mLoadIndex + 1) % mFuncs.size();
 	}
+
+	// 入力
+	float paddleSpeed = 0.6f;
+	if (inputLeft.pressed() || KeyLeft.pressed()) {
+		mPaddlePos.x -= (paddleSpeed * deltaTime);
+	}
+	if (inputRight.pressed() || KeyRight.pressed()) {
+		mPaddlePos.x += (paddleSpeed * deltaTime);
+	}
+
+	// ボールの移動
+	mBallPos += mBallVelocity * deltaTime;
+	const Circle ball = Circle(mBallPos, mBallRadius);
+
+	// ブロックのチェック
+	// load
+	const int loadNum = LoadText.size();
+	for (int i = 0; i < loadNum; i++) {
+		if (mLoadCounter[i] <= 0)continue;
+		const RectF brick = RectF(mLoadBrickPos[i], mLoadBrickSize);
+		if (brick.intersects(ball)) {
+			if (brick.bottom().intersects(ball) || brick.top().intersects(ball)) {
+				mBallVelocity.y *= -1.0f;
+				mLoadCounter[i]--;
+			}
+			else if (brick.right().intersects(ball) || brick.left().intersects(ball)) {
+				mBallVelocity.x *= -1.0f;
+				mLoadCounter[i]--;
+			}
+			break;
+		}
+	}
+	// explain
+	const int explainNum = ExplainText.size();
+	for (int i = 0; i < explainNum; i++) {
+		if (mExplainCounter[i] <= 0)continue;
+		const RectF brick = RectF(mExplainBrickPos[i], mExplainBrickSize);
+		if (brick.intersects(ball)) {
+			if (brick.bottom().intersects(ball) || brick.top().intersects(ball)) {
+				mBallVelocity.y *= -1.0f;
+				mExplainCounter[i]--;
+			}
+			else if (brick.right().intersects(ball) || brick.left().intersects(ball)) {
+				mBallVelocity.x *= -1.0f;
+				mExplainCounter[i]--;
+			}
+			break;
+		}
+	}
+
+	// パドル
+	RectF paddle = RectF(Arg::center(mPaddlePos), mPaddleSize);
+	if (paddle.intersects(ball) && (mBallVelocity.y < 0.0f)) {
+		// 位置に応じて跳ね返る速度を変える
+		mBallVelocity = Vec2{
+			(ball.x - mPaddlePos.x) / mPaddleSize.x * 2.0f,
+			mBallVelocity.y * -1.0f
+		}.setLength(mBallSpeed);
+	}
+
+	// 枠
+	float up = mBackgroundRectPos.y + mBackgroundRectHeight / 2.0f;
+	float down = mBackgroundRectPos.y - mBackgroundRectHeight / 2.0f;
+	float right = mBackgroundRectPos.x + mBackgroundRectWidth / 2.0f;
+	float left = mBackgroundRectPos.x - mBackgroundRectWidth / 2.0f;
+
+	if ((mBallPos.x < left) && (mBallVelocity.x < 0.0f)) {
+		mBallVelocity.x *= -1.0f;
+	}
+
+	if ((mBallPos.x > right) && (mBallVelocity.x > 0.0f)) {
+		mBallVelocity.x *= -1.0f;
+	}
+
+	if ((mBallPos.y > up) && (mBallVelocity.y > 0.0f)) {
+		mBallVelocity.y *= -1.0f;
+	}
+
+	if ((mBallPos.y < down) && (mBallVelocity.y < 0.0f)) {
+		// ゲームオーバー
+		InitializeMiniGame();
+	}
+
+	if ((mPaddlePos.x + mPaddleSize.x/2.0f) > right) {
+		mPaddlePos.x = right - mPaddleSize.x / 2.0f;
+	}
+	if ((mPaddlePos.x - mPaddleSize.x / 2.0f) < left) {
+		mPaddlePos.x = left + mPaddleSize.x / 2.0f;
+	}
+
 }
 
 static void DrawLoading(
@@ -1880,34 +1984,71 @@ static void DrawLoading(
 	for (int i = 0; i < num; ++i)
 	{
 		const float radian = i * dif;
-		const Vec2 tPos = pos + Circular(radius * 3.0f, radian);
+		const float aspect = GetScreenWidth() / GetScreenHeight();
+
+		Vec2 tPos = pos + Vec2(
+			std::cos(radian) * radius * 1.0f,
+			std::sin(radian) * radius * 1.0f * aspect
+		);
+
 
 
 		const float phase =
 			static_cast<float>(Scene::Time()) * (-speed) + radian * 0.5f;
 
 		const float t = 0.5f + 0.5f * std::sin(phase); // 0..1
-		float tRadius = radius * (0.7 + 0.3 * t);
+		float tRadius = radius * (0.3 + 0.3 * t);
 		ColorF color = ColorF(t * 1.0f);
 		func(tPos, tRadius, radian, color);
 	}
 }
 
 void GPTMenu::DrawMiniGame() {
-	/*const int loadNum = LoadText.size();
+	const int loadNum = LoadText.size();
 	const int explainNum = ExplainText.size();
 
+	DrawRect(mPaddlePos, mPaddleSize.x,mPaddleSize.y, ColorF(1.0f));
+
 	for (int i = 0; i < loadNum; i++) {
-		mLoadingFont(mLoadTexts[i]).draw(Arg::center(ConvertToView(mLoadBrickPos[i]), mLoadBrickSize), ColorF(0.0f));
+		switch (mLoadCounter[i]) {
+		case 0:
+			break;
+		case 1:
+			mLoadingFont(mLoadTexts[i]).drawAt(ConvertToView(mLoadBrickPos[i]), ColorF(0.0f));
+			break;
+		case 2:
+			mLoadingFont(mLoadTexts[i]).drawAt(ConvertToView(mLoadBrickPos[i]), ColorF(0.2f));
+			break;
+		case 3:
+			mLoadingFont(mLoadTexts[i]).drawAt(ConvertToView(mLoadBrickPos[i]), ColorF(0.4f));
+			break;
+		default:
+			break;
+		}
+
+		
 	}
+
 	for (int i = 0; i < explainNum; i++) {
-		mExplainFont(mExplainTexts[i]).draw(Arg::center(ConvertToView(mExplainBrickPos[i]), mExplainBrickSize), ColorF(0.0f));
-	}*/
-	//mLoadingFont(LoadText).draw(Arg::center(ConvertToView(Vec2(0.0f, 0.6f))), ColorF(0.0f));
-	//mExplainFont(ExplainText).draw(Arg::center(ConvertToView(Vec2(0.0f, 0.2f))), ColorF(0.0f));
+		switch (mExplainCounter[i]) {
+		case 0:
+			break;
+		case 1:
+			mExplainFont(mExplainTexts[i]).drawAt(ConvertToView(mExplainBrickPos[i]), ColorF(0.0f));
+			break;
+		case 2:
+			mExplainFont(mExplainTexts[i]).drawAt(ConvertToView(mExplainBrickPos[i]), ColorF(0.2f));
+			break;
+		case 3:
+			mExplainFont(mExplainTexts[i]).drawAt(ConvertToView(mExplainBrickPos[i]), ColorF(0.4f));
+			break;
+		default:
+			break;
+		}
+	}
 	DrawLoading(
-		Vec2(0.0f, -0.2f),
-		0.05f,
+		mBallPos,
+		mBallRadius-0.01f,
 		10,
 		1.0f,
 		getFunc(mLoadIndex)
