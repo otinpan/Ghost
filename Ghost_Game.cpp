@@ -84,8 +84,9 @@ void Ghost_Game::UpdatePlayer_Game(float deltaTime) {
 	}
 
 	UpdatePos_Game(deltaTime);
+	UpdateTransparent();
 	//Clone
-	UpdateClone_Game(deltaTime);
+	//UpdateClone_Game(deltaTime);
 }
 
 void Ghost_Game::UpdateClone_Game(float deltaTime) {
@@ -116,6 +117,34 @@ void Ghost_Game::UpdateClone_Game(float deltaTime) {
 	}
 }
 
+void Ghost_Game::UpdateTransparent() {
+
+	bool isTransparent = false;
+	if (GetInputComponent_Keyboard() != nullptr) {
+		if (GetInputComponent_Keyboard()->GetInputR().pressed()) {
+			// 透明化
+			isTransparent = true;
+		}
+	}
+
+	if (GetInputComponent_JoyCon() != nullptr) {
+		if (GetInputComponent_JoyCon()->GetInputR().pressed()) {
+			//透明化
+			isTransparent = true;
+		}
+	}
+
+	if (isTransparent) {
+		if (GetCircleComponent()->GetDrawingState() != DrawingComponent::DrawingState::BACK) {
+			GetCircleComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::BACK,GetGame());
+		}
+	}
+	else {
+		if (GetCircleComponent()->GetDrawingState() != DrawingComponent::DrawingState::UNAFFECTED) {
+			GetCircleComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::UNAFFECTED, GetGame());
+		}
+	}
+}
 
 
 // 照らされているとき

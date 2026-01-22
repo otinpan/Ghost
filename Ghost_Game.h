@@ -35,7 +35,8 @@ private:
 	float mCloneTime;
 	float CloneLimitTime;
 
-	//Flashlight
+	// 透明化
+	void UpdateTransparent();
 
 	//Stop
 	bool mIsStop;
