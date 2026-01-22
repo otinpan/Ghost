@@ -535,9 +535,11 @@ void Game::CheckIsGameEnd() {
 		mJudgement = Parent::GameJudgement::ESCAPEES_WIN;
 	}
 	// Escapeeの負け
-	else if ((mEscapee1 != nullptr && !mEscapee1->GetIsAlive()) &&
-		(mEscapee2 != nullptr && !mEscapee2->GetIsAlive()) &&
-		(mEscapee3 != nullptr && !mEscapee3->GetIsAlive())) {
+	else if (!(
+		(mEscapee1&&mEscapee1->GetIsAlive())||
+		(mEscapee2&&mEscapee2->GetIsAlive())||
+		(mEscapee3&&mEscapee3->GetIsAlive())
+		)) {
 		mIsGameEnd = true;
 		mJudgement = Parent::GameJudgement::GHOST_WIN;
 

@@ -34,10 +34,6 @@ Stage::Stage(float width, float height)
 	,mDeleteRectWidth(0.0f)
 	,mDeleteRectHeight(0.0f)
 	,mIsSaveError(false)
-	,mGameTime(0.0f)
-	,GameLimitTime(180.0f)
-	,GoalTime(1.0f)
-	,mIsGoal(false)
 {
 	mRectWidth = mWidth / mSideSize;
 	mRectHeight = mHeight / mVerticalSize;
@@ -837,27 +833,9 @@ void Stage::Initialize_Game(class Game* game, FilePath fileName) {
 	
 }
 
-
-//Gameの終了判定
-void Stage::Update_Game(float deltaTime) {
-	mGameTime += deltaTime;
-    bool mIsEscapeesAlive = true;
-	/*for (auto player : GetGame()->GetPlayers()) {
-		if (player->GetIsAlive()) {
-			mIsEscapeesAlive = true;
-		}
-	}*/
-
-	if (mGameTime > GoalTime) {
-		mIsGoal = true;
-	}
-	if (mGameTime > GameLimitTime) {
-		GetGame()->Shutdown();
-	}
-	if (!mIsEscapeesAlive) {
-		GetGame()->Shutdown();
-	}
+void Stage::Update_Game(float deltaTime){
 }
+
 
 void Stage::Draw_Game() {
 	DrawRect(Vec2{ mLeft + mWidth / 2,mUp - mHeight / 2 }, mWidth, mHeight, ColorF(0, 0, 0));

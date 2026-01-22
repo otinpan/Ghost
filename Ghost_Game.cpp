@@ -12,7 +12,7 @@ Ghost_Game::Ghost_Game(Vec2 pos, float speed,Controller::ControllerType controll
 	, mCanMakeClone(true)
 	, mIsClone(false)
 	, mCloneTime(0.0f)
-	, CloneLimitTime(7.0f)
+	, CloneLimitTime(10.0f)
 	, mIsInvincible(false)
 	, mInvincibleTime(0.0f)
 	, mCanCapture(true)

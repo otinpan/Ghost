@@ -40,23 +40,23 @@ void Player::InitializeActor_Game(class Game* game) {
 
 	switch (GetAttribute()) {
 	case Attribute::Ghost:
-		cc = new CircleComponent(this, 170, DrawingComponent::DrawingState::UNAFFECTED);
+		cc = new CircleComponent(this, 70, DrawingComponent::DrawingState::UNAFFECTED);
 		cc->SetColor(mGhostColor);
 		break;
 	case Attribute::GhostClone:
-		cc = new CircleComponent(this, 170, DrawingComponent::DrawingState::BACK);
+		cc = new CircleComponent(this, 70, DrawingComponent::DrawingState::BACK);
 		cc->SetColor(mGhostColor);
 		break;
 	case Attribute::Escapee1:
-		cc = new CircleComponent(this, 170, DrawingComponent::DrawingState::BACK);
+		cc = new CircleComponent(this, 70, DrawingComponent::DrawingState::BACK);
 		cc->SetColor(mEscapee1Color);
 		break;
 	case Attribute::Escapee2:
-		cc = new CircleComponent(this, 170, DrawingComponent::DrawingState::BACK);
+		cc = new CircleComponent(this, 70, DrawingComponent::DrawingState::BACK);
 		cc->SetColor(mEscapee2Color);
 		break;
 	case Attribute::Escapee3:
-		cc = new CircleComponent(this, 170, DrawingComponent::DrawingState::BACK);
+		cc = new CircleComponent(this, 70, DrawingComponent::DrawingState::BACK);
 		cc->SetColor(mEscapee3Color);
 		break;
 	}
@@ -110,8 +110,8 @@ void Player::UpdatePos_Game(float deltaTime) {
 		mPos.x = GetGame()->GetStage()->GetRight() - mRadius-offset;
 	if (mPos.x - mRadius < GetGame()->GetStage()->GetLeft())
 		mPos.x = GetGame()->GetStage()->GetLeft() + mRadius+offset;
-	if (mPos.y + mRadius*2.0f > GetGame()->GetStage()->GetUp())
-		mPos.y = GetGame()->GetStage()->GetUp() - mRadius*2.0f-offset;
+	if (mPos.y + mRadius*3.0f > GetGame()->GetStage()->GetUp())
+		mPos.y = GetGame()->GetStage()->GetUp() - mRadius*3.0f-offset;
 	if (mPos.y - mRadius*3.0f < GetGame()->GetStage()->GetDown())
 		mPos.y = GetGame()->GetStage()->GetDown() + mRadius*3.0f+offset;
 

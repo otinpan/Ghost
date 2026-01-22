@@ -50,7 +50,6 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 	mFlashlight->Initialize_Game();
 
 
-
 	float mRadius = GetRadius();
 	mHeartLargeCC = new CircleComponent(this, 170, DrawingComponent::DrawingState::BACK);
 	mHeartLargeCC->InitializeDrawing_Game();
@@ -76,16 +75,32 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 	mHeartDrawCC->SetColor(ColorF(1.0f, (float)102 / 255.0f, 1.0f));
 
 	// Key
-	mKeySC = new SpriteComponent(this, 100, DrawingComponent::DrawingState::UNAFFECTED);
-	mKeySC->SetTexture(TextureAsset(U"key"));
+	mKeySPC = new SpriteComponent(this, 110, DrawingComponent::DrawingState::UNAFFECTED);
+	mKeySPC->SetTexture(TextureAsset(U"key"));
 	keyOffset = Vec2(mRadius, mRadius);
-	mKeySC->InitializeDrawing_Game(
+	mKeySPC->InitializeDrawing_Game(
 		mPos + keyOffset,
 		GetGame()->GetStage()->GetRectWidth(),
 		GetGame()->GetStage()->GetRectHeight()
 	);
-	mKeySC->SetIsDraw(false);
+	mKeySPC->SetIsDraw(false);
 
+	// unalive
+	maxUnaliveRadius = GetGame()->GetStage()->GetRectWidth()/3.0f;
+	lightedOffset = Vec2(0, maxUnaliveRadius*2.0f);
+	mLightedCC = new CircleComponent(this, 105, DrawingComponent::DrawingState::UNAFFECTED);
+	mLightedCC->InitializeDrawing_Game();
+	mLightedCC->SetColor(ColorF(1.0f, (float)105.0f / 255.0f, (float)180.0f / 255.0f));
+	mLightedCC->SetRadius(0.0f);
+	mLightedCC->SetCenter(GetPosition() + lightedOffset);
+	mLightedCC->SetIsDraw(false);
+
+	mLightedFrameCC = new CircleComponent(this, 103, DrawingComponent::DrawingState::UNAFFECTED);
+	mLightedFrameCC->InitializeDrawing_Game();
+	mLightedFrameCC->SetRadius(maxUnaliveRadius);
+	mLightedFrameCC->SetCenter(GetPosition() + lightedOffset);
+	mLightedFrameCC->SetColor(ColorF(0.7f));
+	mLightedFrameCC->SetIsDraw(false);
 
 }
 
@@ -127,12 +142,12 @@ void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 	mHeartSmallCC->SetCenter(GetPosition());
 	mHeartDrawCC->SetCenter(GetPosition());
 	//key
-	mKeySC->SetCenter(GetPosition() + keyOffset);
+	mKeySPC->SetCenter(GetPosition() + keyOffset);
 	if (mIsKey && GetIsAlive()) {
-		mKeySC->SetIsDraw(true);
+		mKeySPC->SetIsDraw(true);
 	}
 	else {
-		mKeySC->SetIsDraw(false);
+		mKeySPC->SetIsDraw(false);
 	}
 }
 
@@ -282,6 +297,8 @@ void Escapee_Game::UpdateHeartbeat(float deltaTime) {
 }
 
 void Escapee_Game::UpdateUnAlive(float deltaTime) {
+	mLightedCC->SetIsDraw(false);
+	mLightedFrameCC->SetIsDraw(false);
 	if (GetIsAlive())return;
 
 	// 生還
@@ -293,6 +310,15 @@ void Escapee_Game::UpdateUnAlive(float deltaTime) {
 	else {
 		if (GetIsLighted()) {
 			SetLightedTime(GetLightedTime() + deltaTime);
+			// 割合
+			float ratio = GetLightedTime() / 5.0f;
+			// 表示
+			mLightedCC->SetIsDraw(true);
+			mLightedFrameCC->SetIsDraw(true);
+			mLightedCC->SetRadius(ratio * maxUnaliveRadius);
+			mLightedCC->SetCenter(GetPosition() + lightedOffset);
+			mLightedFrameCC->SetCenter(GetPosition() + lightedOffset);
+
 		}
 	}
 	//1度照らされただけでも照らされ続ける、といったことをなくす

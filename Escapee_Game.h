@@ -4,7 +4,7 @@
 
 class Escapee_Game :public Player {
 public:
-	Escapee_Game(Vec2 pos,float speed,int num,Controller::ControllerType controller);
+	Escapee_Game(Vec2 pos, float speed, int num, Controller::ControllerType controller);
 	~Escapee_Game();
 
 	void InitializePlayer_Game(class Game* game)override;
@@ -17,10 +17,10 @@ public:
 
 
 
-	void SetIsAlive_Game(bool isAlive,Game* game) override;
+	void SetIsAlive_Game(bool isAlive, Game* game) override;
 
 
-	class Flashlight* &GetFlashlight() { return mFlashlight; }
+	class Flashlight*& GetFlashlight() { return mFlashlight; }
 
 	// 鼓動の更新
 	void UpdateHeartbeat(float deltaTime);
@@ -53,15 +53,13 @@ private:
 
 	//Key
 	bool mIsKey;
-	class SpriteComponent* mKeySC;
+	class SpriteComponent* mKeySPC;
 	Vec2 keyOffset;
-
 
 	//Treasure
 	StageObject::Treasure mTreasure;
 	StageObject::BatterySize mBatterySize;
-	std::pair<int,int> mIteration;
-
+	std::pair<int, int> mIteration;
 
 	//Item
 	bool mIsItemAvailable;
@@ -74,9 +72,14 @@ private:
 	void UpdateIntersectEscapee_Game(float deltaTime);
 
 
-
 	void UpdateItemAvailable(float deltaTime);
 	void UpdateUnAlive(float deltaTime);
+
+	// Unalive
+	float maxUnaliveRadius;
+	Vec2 lightedOffset;
+	class CircleComponent* mLightedCC;
+	class CircleComponent* mLightedFrameCC;
 
 
 	//intersect
