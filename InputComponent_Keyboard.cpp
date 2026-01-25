@@ -75,9 +75,13 @@ void InputComponent_Keyboard::ProcessInput() {
 		rad = M_PI;
 		dir = Actor::Direction::DIR_LEFT;
 	}
-	else {
+	else if(ySpeed>0&&xSpeed<0){
 		rad = M_PI * 3.0f / 4.0f;
 		dir = Actor::Direction::DIR_UPLEFT;
+	}
+	else {
+		rad = M_PI / 2.0f;
+		dir = Actor::Direction::DIR_UP;
 	}
 	Vec2 v{ xSpeed,ySpeed };
 	if (v.lengthSq() > 0) {

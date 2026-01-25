@@ -153,6 +153,7 @@ void Game::draw() {
 	renderTextureLight.clear(ColorF(0));
 
 
+
 	// 描画する領域を指定
 	{
 		const ScopedRenderTarget2D target{ renderTextureLight };
@@ -162,7 +163,6 @@ void Game::draw() {
 
 	}
 	renderTextureLight. draw(Vec2(0,0));
-
 
 	// 影響を受けないActorの描画
 	{

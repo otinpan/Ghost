@@ -9,6 +9,13 @@ public:
 	GameResult(Parent::GameJudgement judge);
 	~GameResult();
 
+	enum ResultSelect {
+		STAGE_SELECT,
+		CONTROLLER_SELECT,
+		MAIN_MENU,
+		CREATE_STAGE,
+	};
+
 	void update(class Parent*);
 	void draw();
 
@@ -22,10 +29,17 @@ private:
 	void ProcessInput();
 	void UpdateGameResult();
 
+	ResultSelect mResultSelect;
+	bool IsJumpToGame; // stageselectでgameかcreatestageか
+
 	Parent::GameJudgement mGameJudgement;
 
 	Parent::SeqID mSeqID;
 	bool mIsRunning;
 
-	std::unique_ptr<TextMenu> mTextMenu;
+	InputGroup inputLeft;
+	InputGroup inputRight;
+	InputGroup inputL;
+	InputGroup inputR;
+	InputGroup inputDecision;
 };

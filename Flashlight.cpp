@@ -22,9 +22,8 @@ void Flashlight::Initialize_Game() {
 	SetLightPos1();
 	SetLightPos2();
 	mLightTri->InitializeDrawing_Game(mPos0,mPos1,mPos2);
-	mLightTri->SetColor0(ColorF(1, 1, 1));
-	mLightTri->SetColor1(ColorF(245.0f / 255.0f, 1, 87.0f / 255.0f));
-	mLightTri->SetColor2(ColorF(245.0f / 255.0f, 1, 87.0f / 255.0f));
+	mLightTri->SetColor1(ColorF(1, 1, float(220 / 255), 0.2));
+	mLightTri->SetColor2(ColorF(1, 1, 1, 0.2));
 }
 
 void Flashlight::Initialize_CreateStage() {

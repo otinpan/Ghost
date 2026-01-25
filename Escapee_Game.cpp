@@ -234,11 +234,15 @@ void Escapee_Game::UpdateIntersectGhost_Game(float deltaTime) {
 		&&GetGame()->GetGhost()->GetCanCapture()) {
 		SetIsAlive_Game(false,GetGame());
 		GetGame()->SetHitstop(1.0f);
+		mLightedCC->SetCenter(GetPosition() + lightedOffset);
+		mLightedFrameCC->SetCenter(GetPosition() + lightedOffset);
 	}
 	if (GetGame()->GetGhost()->GetGhostClone()
 		&& IsIntersect_CC(GetCircleComponent(), GetGame()->GetGhost()->GetGhostClone()->GetCircleComponent())) {
-		SetIsAlive_Game(false,GetGame());
+		SetIsAlive_Game(false, GetGame());
 		GetGame()->SetHitstop(1.0f);
+		mLightedCC->SetCenter(GetPosition() + lightedOffset);
+		mLightedFrameCC->SetCenter(GetPosition() + lightedOffset);
 	}
 	
 	
@@ -333,8 +337,6 @@ void Escapee_Game::UpdateUnAlive(float deltaTime) {
 			mLightedCC->SetIsDraw(true);
 			mLightedFrameCC->SetIsDraw(true);
 			mLightedCC->SetRadius(ratio * maxUnaliveRadius);
-			mLightedCC->SetCenter(GetPosition() + lightedOffset);
-			mLightedFrameCC->SetCenter(GetPosition() + lightedOffset);
 
 		}
 	}
