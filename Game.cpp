@@ -217,8 +217,6 @@ void Game::LoadData() {
 	TextureAsset::Load(U"borck_grass");
 	TextureAsset::Load(U"borck_wood");
 	TextureAsset::Load(U"candle");
-	TextureAsset::Load(U"door_front");
-	TextureAsset::Load(U"door_side");
 	TextureAsset::Load(U"key");
 	TextureAsset::Load(U"treasure");
 	TextureAsset::Load(U"battery");
@@ -377,8 +375,6 @@ void Game::UnloadData() {
 	TextureAsset::Release(U"brock_grass");
 	TextureAsset::Release(U"brock_wood");
 	TextureAsset::Release(U"candle");
-	TextureAsset::Release(U"door_front");
-	TextureAsset::Release(U"door_side");
 	TextureAsset::Release(U"key");
 	TextureAsset::Release(U"treasure");
 	TextureAsset::Release(U"battery");

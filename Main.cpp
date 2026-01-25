@@ -17,8 +17,10 @@ void Main()
 	TextureAsset::Register(U"brock_grass", U"StageObject/brock_grass.png");
 	TextureAsset::Register(U"brock_wood", U"StageObject/brock_wood.png");
 	TextureAsset::Register(U"candle", U"StageObject/candle.png");
-	TextureAsset::Register(U"door_front", U"StageObject/door_front.png");
-	TextureAsset::Register(U"door_side", U"StageObject/door_side.png");
+	TextureAsset::Register(U"door_up", U"StageObject/door_up.png");
+	TextureAsset::Register(U"door_left", U"StageObject/door_left.png");
+	TextureAsset::Register(U"door_down", U"StageObject/door_down.png");
+	TextureAsset::Register(U"door_right", U"StageObject/door_right.png");
 	TextureAsset::Register(U"key", U"StageObject/key_yellow.png");
 	TextureAsset::Register(U"treasure", U"StageObject/treasure.png");
 	TextureAsset::Register(U"battery", U"StageObject/battery.png");

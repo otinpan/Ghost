@@ -27,6 +27,9 @@ private:
 	class CircleComponent* mMidCC;
 	class CircleComponent* mBigCC;
 
+	class SpriteComponent* scBattery;
+	class SpriteComponent* scKey;
+
 	float mMidBatteryRad;
 
 	Vec2 mNonePos;

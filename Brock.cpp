@@ -96,7 +96,7 @@ void Brock::InitializeStageMenu_CreateStage() {
 	scGrass->SetTexture(TextureAsset(U"brock_grass"));
 	scWood->SetTexture(TextureAsset(U"brock_wood"));
 
-	SetMaterial(Material::Stone);
+	//SetMaterial(Material::Stone);
 }
 
 void Brock::UpdateStageMenu_CreateStage(float deltaTime) {

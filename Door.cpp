@@ -31,7 +31,7 @@ void Door::UpdateStageObject_CreateStage(float deltaTime) {
 	GetSquareComponent()->SetCenter(GetDoorCenter());
 	GetSquareComponent()->SetWidth(GetDoorWidth());
 	GetSquareComponent()->SetHeight(GetDoorHeight());
-	GetSquareComponent()->SetColor(ColorF(0, 1, 1));
+
 }
 
 void Door::InitializeStageMenu_CreateStage() {
@@ -173,7 +173,6 @@ void Door::InitializeStage_Game() {
 	GetSquareComponent()->SetCenter(GetDoorCenter());
 	GetSquareComponent()->SetWidth(GetDoorWidth());
 	GetSquareComponent()->SetHeight(GetDoorHeight());
-	GetSquareComponent()->SetColor(ColorF(0, 1, 1));
 
 
 	SetObjectLeft(GetDoorCenter().x - GetDoorWidth() / 2.0f);

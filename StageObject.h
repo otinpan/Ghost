@@ -174,7 +174,7 @@ private:
 	float mLightRadRange;
 	std::pair<int, int> mIteration;//stageにある場合stageのどこにあるかを保存
 	int mCandleIteration;
-	int mClockwise;
+	int mClockwise; // up right down left
 
 	// Brock
 	Material mMaterial;

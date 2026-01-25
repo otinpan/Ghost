@@ -4,6 +4,8 @@
 
 TreasureChest::TreasureChest(Vec2 pos, float width, float height)
 	:StageObject(pos, width, height)
+	,scKey(nullptr)
+	,scBattery(nullptr)
 {
 	SetAttribute(Attribute::TreasureChest);
 }
@@ -31,6 +33,8 @@ void TreasureChest::InitializeStageMenu_CreateStage() {
 	mNoneSC = new SquareComponent(this,200, DrawingComponent::DrawingState::UNAFFECTED);
 	mBatterySC = new SquareComponent(this,200, DrawingComponent::DrawingState::UNAFFECTED);
 	mKeySC = new SquareComponent(this,200,DrawingComponent::DrawingState::UNAFFECTED);
+	mBatterySC->SetIsDraw(false);
+	mKeySC->SetIsDraw(false);
 
 	mMidPos = Vec2(
 		(GetCreateStage()->GetStageMenu()->GetMenuLeft() + GetCreateStage()->GetStageMenu()->GetMenuRight()) / 2.0f,
@@ -81,6 +85,14 @@ void TreasureChest::InitializeStageMenu_CreateStage() {
 	);
 	mBigCC->SetRadius(mMidBatteryRad*1.2f);
 	mBigCC->SetColor(ColorF(0, 0, 0));
+
+	scKey = new SpriteComponent(this, 200, DrawingComponent::DrawingState::UNAFFECTED);
+	scKey->InitializeDrawing_CreateStage(mMidPos, mRectWidth, mRectHeight);
+	scKey->SetTexture(TextureAsset(U"key"));
+	scBattery = new SpriteComponent(this, 200, DrawingComponent::DrawingState::UNAFFECTED);
+	scBattery ->InitializeDrawing_CreateStage(Vec2(mMidPos.x, mMidPos.y - mEachHeight * 2.0f / 3.0f - mRectHeight / 2.0f),
+		mRectWidth, mRectHeight);
+	scBattery->SetTexture(TextureAsset(U"battery"));
 
 }
 
@@ -181,6 +193,8 @@ void TreasureChest::ShutdownStageMenu_CreateStage() {
 	delete mSmallCC;
 	delete mMidCC;
 	delete mBigCC;
+	delete scKey;
+	delete scBattery;
 }
 
 void TreasureChest::InitializeStageObject_Game(class Game* game) {

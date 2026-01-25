@@ -222,6 +222,7 @@ void Stage::SetNewStageObject(int i, int j, StageObject* stageObject) {
 		mStageObjects[i][j] = new Escapee_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
 		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight,3);
 	}
+	mStageObjects[i][j]->SetMaterial(stageObject->GetMaterial());
 	mStageObjects[i][j]->SetSpeed(stageObject->GetSpeed());
 	mStageObjects[i][j]->SetClockwise(stageObject->GetClockwise());
 	mStageObjects[i][j]->SetPatrolRange(stageObject->GetPatrolRange());
@@ -273,6 +274,7 @@ void Stage::SetNewStageObject_Attribute(int i, int j, StageObject::Attribute att
 		mStageObjects[i][j] = new Escapee_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
 		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight, 3);
 	}
+
 	mStageObjects[i][j]->SetIsInStage(true);
 	mStageObjects[i][j]->SetIteration(std::pair{ i,j });
 	if (mGame)mStageObjects[i][j]->InitializeStageObject_Game(mGame);

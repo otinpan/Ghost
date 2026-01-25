@@ -63,9 +63,8 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 		sc->SetTexture(TextureAsset(U"brock_stone"));
 		break;
 	case Attribute::Door:
-		sqc->SetColor(ColorF(0, 0, 0));
-		sqc->SetIsDraw(false);
-		sc->SetTexture(TextureAsset(U"door_front"));
+		sqc->SetColor(ColorF((float)139/255, (float)69.0f/255.0f, (float)19.0f/255.0f));
+		sc->SetIsDraw(false);
 		break;
 	case Attribute::Patrol:
 		sqc->SetColor(ColorF(0, (float)102 / 255, 0));
@@ -267,10 +266,12 @@ void StageObject::InitializeActor_Game(class Game* game) {
 	switch (mAttribute) {
 	case Attribute::Wall:
 		sqc->SetColor(ColorF(0.5f));
+		sqc->SetIsDraw(false);
 		sc->SetTexture(TextureAsset(U"brock_stone"));
 		break;
 	case Attribute::Brock:
 		sqc->SetColor(ColorF(1, 1, 1));
+		sqc->SetIsDraw(false);
 		switch (mMaterial) {
 		case Material::Stone:
 			sc->SetTexture(TextureAsset(U"brock_stone"));
@@ -285,26 +286,30 @@ void StageObject::InitializeActor_Game(class Game* game) {
 		sc->SetTexture(TextureAsset(U"brock_stone"));
 		break;
 	case Attribute::Door:
-		sqc->SetColor(ColorF(0, 0, 0));
-		sc->SetTexture(TextureAsset(U"door_front"));
+		sqc->SetColor(ColorF((float)139 / 255, (float)69.0f / 255.0f, (float)19.0f / 255.0f));
+		sc->SetIsDraw(false);
 		break;
 	case Attribute::Patrol:
 		sqc->SetColor(ColorF(0, (float)102 / 255, 0));
 		sc->SetIsDraw(false);
 		break;
 	case Attribute::Key:
+		sqc->SetIsDraw(false);
 		sqc->SetColor(ColorF((float)76 / 255, (float)0, (float)153 / 255));
 		sc->SetTexture(TextureAsset(U"key"));
 		break;
 	case Attribute::Battery:
+		sqc->SetIsDraw(false);
 		sqc->SetColor(ColorF(0, 1, 128.0f / 255.0f));
 		sc->SetTexture(TextureAsset(U"battery"));
 		break;
 	case Attribute::TreasureChest:
+		sqc->SetIsDraw(false);
 		sqc->SetColor(ColorF(1, 1, 0));
 		sc->SetTexture(TextureAsset(U"treasure"));
 		break;
 	case Attribute::Candle:
+		sqc->SetIsDraw(false);
 		sqc->SetColor(ColorF(1, 1, 1));
 		sc->SetTexture(TextureAsset(U"candle"));
 		break;
