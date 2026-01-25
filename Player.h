@@ -47,7 +47,6 @@ public:
 	void SetLightedLimitTime(float lightedLimitTime) { mLightedLimitTime=lightedLimitTime; }
 	Controller::ControllerType GetControllerType() { return mControllerType; }
 	void SetControllerType(Controller::ControllerType controllerType) { mControllerType = controllerType; }
-
 	class InputComponent_Keyboard*& GetInputComponent_Keyboard() { return icKeyboard; }
 	class InputComponent_JoyCon*& GetInputComponent_JoyCon() { return icJoyCon; }
 

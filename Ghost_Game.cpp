@@ -121,7 +121,7 @@ void Ghost_Game::UpdateTransparent() {
 
 	bool isTransparent = false;
 	if (GetInputComponent_Keyboard() != nullptr) {
-		if (GetInputComponent_Keyboard()->GetInputR().pressed()) {
+		if (GetInputComponent_Keyboard()->GetInputR().pressed()||MouseL.pressed()) {
 			// 透明化
 			isTransparent = true;
 		}

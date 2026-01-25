@@ -24,8 +24,22 @@ public:
 		EDead
 	};
 
+
 	Actor();
 	virtual ~Actor();
+
+	enum Direction
+	{
+		DIR_UP,
+		DIR_UPRIGHT,
+		DIR_RIGHT,
+		DIR_DOWNRIGHT, 
+		DIR_DOWN,     
+		DIR_DOWNLEFT,  
+		DIR_LEFT,
+		DIR_UPLEFT,
+	};
+
 
 	void Initialize_Game(class Game* game);
 	void Initialize_CreateStage(class CreateStage* createstage);
@@ -59,6 +73,10 @@ public:
 	void SetIsDead(bool isDead) { mIsDead = isDead; }
 	float GetSpeed() { return mSpeed; }
 	void SetSpeed(float speed) { mSpeed = speed; }
+	bool GetIsSlide() { return mIsSlide; }
+	void SetIsSlide(bool isSlide) { mIsSlide = isSlide; }
+	Direction GetDirection() { return mDirection; }
+	void SetDirection(Direction dir) { mDirection = dir; }
 
 	Vec2 GetForward() const { return Vec2(Math::Cos(mRotation), -Math::Sin(mRotation)); }
 
@@ -84,7 +102,12 @@ private:
 
 	bool mIsDead;
 
+	// flashlightを押している間はスライドする
+	bool mIsSlide=false;
+	Direction mDirection=Direction::DIR_UP;
+
 	std::vector<class Component*> mComponents;
 	class Game* mGame;
 	class CreateStage* mCreateStage;
+
 };

@@ -6,7 +6,7 @@ Flashlight::Flashlight(class Escapee_Game* owner)
 	,Pi(3.141592)
 {
 	mHandRange = owner->GetCircleComponent()->GetRadius()*1.5f;
-	mLightRad = (float)25.0f / 180.0f * Pi;
+	mLightRad = (float)22.0f / 180.0f * Pi;
 }
 
 Flashlight::~Flashlight() {

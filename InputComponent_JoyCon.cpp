@@ -1,5 +1,7 @@
 ﻿#include"InputComponent_JoyCon.h"
-
+#include"Actor.h"
+#define _USE_MATH_DEFINES
+#include<math.h>
 InputComponent_JoyCon::InputComponent_JoyCon(class Actor* owner, Controller::ControllerType type)
 	:Controller(owner, type)
 {
@@ -61,36 +63,54 @@ InputComponent_JoyCon::~InputComponent_JoyCon() {
 void InputComponent_JoyCon::ProcessInput(){
 	float xSpeed = 0.0f;
 	float ySpeed = 0.0f;
+	float rad = 0.0f;
+	Actor::Direction dir=Actor::Direction::DIR_UP;
 	if (joy.has_value()) {
 		if (auto d = joy->povD8()) {
 			switch (*d) {
 			case 0:
 				ySpeed += GetMaxYSpeed();
+				rad = M_PI / 2.0f;
+				dir = Actor::Direction::DIR_UP;
 				break;
 			case 1:
 				xSpeed += GetMaxXSpeed();
 				ySpeed += GetMaxYSpeed();
+				rad = M_PI/4.0f;
+				dir = Actor::Direction::DIR_UPRIGHT;
 				break;
 			case 2:
 				xSpeed += GetMaxXSpeed();
+				rad = 0.0f;
+				dir = Actor::Direction::DIR_RIGHT;
 				break;
 			case 3:
 				xSpeed += GetMaxXSpeed();
 				ySpeed -= GetMaxYSpeed();
+				rad = M_PI * 7.0f / 4.0f;
+				dir = Actor::Direction::DIR_DOWNRIGHT;
 				break;
 			case 4:
 				ySpeed -= GetMaxYSpeed();
+				rad = (M_PI * 3.0f / 2.0f);
+				dir = Actor::Direction::DIR_DOWN;
 				break;
 			case 5:
 				xSpeed -= GetMaxXSpeed();
 				ySpeed -= GetMaxYSpeed();
+				rad = M_PI * 5.0f / 4.0f;
+				dir = Actor::Direction::DIR_DOWNLEFT;
 				break;
 			case 6:
 				xSpeed -= GetMaxXSpeed();
+				rad = M_PI;
+				dir = Actor::Direction::DIR_LEFT;
 				break;
 			case 7:
 				xSpeed -= GetMaxXSpeed();
 				ySpeed += GetMaxYSpeed();
+				rad = M_PI * 3.0f / 4.0f;
+				dir = Actor::Direction::DIR_UPLEFT;
 				break;
 			default:
 				break;
@@ -104,6 +124,10 @@ void InputComponent_JoyCon::ProcessInput(){
 	}
 	SetXSpeed(v.x);
 	SetYSpeed(v.y);
+	if (!GetOwner()->GetIsSlide()) {
+		GetOwner()->SetRotation(rad);
+		GetOwner()->SetDirection(dir);
+	}
 }
 
 

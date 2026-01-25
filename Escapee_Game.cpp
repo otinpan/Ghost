@@ -153,7 +153,7 @@ void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 
 void Escapee_Game::UpdateFlashlight_Game(float deltaTime) {
 	if (GetInputComponent_Keyboard() != nullptr) {
-		if (GetInputComponent_Keyboard()->GetInputR().pressed()) {
+		if (GetInputComponent_Keyboard()->GetInputR().pressed()||MouseL.pressed()) {
 			if (mBattery > 0.0) {
 				mIsLightOn = true;
 			}
@@ -163,6 +163,14 @@ void Escapee_Game::UpdateFlashlight_Game(float deltaTime) {
 		}
 		else {
 			mIsLightOn = false;
+		}
+
+
+		if (GetInputComponent_Keyboard()->GetInputL().pressed()||MouseR.pressed()) {
+			SetIsSlide(true);
+		}
+		else {
+			SetIsSlide(false);
 		}
 	}
 	if (GetInputComponent_JoyCon() != nullptr) {
@@ -177,7 +185,16 @@ void Escapee_Game::UpdateFlashlight_Game(float deltaTime) {
 		else {
 			mIsLightOn = false;
 		}
+
+		if (GetInputComponent_JoyCon()->GetInputA().pressed()) {
+			SetIsSlide(true);
+		}
+		else {
+			SetIsSlide(false);
+		}
 	}
+
+	
 
 
 	if (mIsLightOn) {
