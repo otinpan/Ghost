@@ -210,6 +210,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 
 
 	if (mIsGrap) {
+		sc->SetTexture(TextureAsset(U"cursor_hand"));
 		if (!inputGrap.pressed()) {
 			mGrapping->SetIsGripen(false);
 			//Candle
