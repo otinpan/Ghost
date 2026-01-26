@@ -106,6 +106,8 @@ void Player::InitializeActor_Game(class Game* game) {
 
 	mVerticalSize = GetGame()->GetStage()->GetVerticalSize();
 	mSideSize = GetGame()->GetStage()->GetSideSize();
+
+	SetRotation(M_PI / 2.0f);
 }
 
 void Player::InitializePlayer_Game(class Game* game) {

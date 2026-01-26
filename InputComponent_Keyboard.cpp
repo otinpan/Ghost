@@ -32,13 +32,13 @@ void InputComponent_Keyboard::Initialize() {
 	SetInputR(KeyRight);
 	SetInputPlus(KeyP);
 	SetInputMinus(KeyO);
-	
+
 }
 
 void InputComponent_Keyboard::ProcessInput() {
 	float xSpeed = 0.0f;
-	float rad = 0.0f;
-	Actor::Direction dir=Actor::Direction::DIR_UP;
+	float rad = GetOwner()->GetRotation();
+	Actor::Direction dir = GetOwner()->GetDirection();
 
 	if (inputRight.pressed())xSpeed += GetMaxXSpeed();
 	if (inputLeft. pressed())xSpeed -= GetMaxXSpeed();
@@ -78,10 +78,6 @@ void InputComponent_Keyboard::ProcessInput() {
 	else if(ySpeed>0&&xSpeed<0){
 		rad = M_PI * 3.0f / 4.0f;
 		dir = Actor::Direction::DIR_UPLEFT;
-	}
-	else {
-		rad = M_PI / 2.0f;
-		dir = Actor::Direction::DIR_UP;
 	}
 	Vec2 v{ xSpeed,ySpeed };
 	if (v.lengthSq() > 0) {

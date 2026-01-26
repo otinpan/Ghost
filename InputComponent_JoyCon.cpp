@@ -63,8 +63,8 @@ InputComponent_JoyCon::~InputComponent_JoyCon() {
 void InputComponent_JoyCon::ProcessInput(){
 	float xSpeed = 0.0f;
 	float ySpeed = 0.0f;
-	float rad = 0.0f;
-	Actor::Direction dir=Actor::Direction::DIR_UP;
+	float rad = GetOwner()->GetRotation();
+	Actor::Direction dir=GetOwner()->GetDirection();
 	if (joy.has_value()) {
 		if (auto d = joy->povD8()) {
 			switch (*d) {

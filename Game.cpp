@@ -230,6 +230,7 @@ void Game::LoadData() {
 	mStage = new Stage(1.85f,1.85f);
 
 	const FilePath path = U"Stage/" + mSelectedStageName + U"/Data.bin";
+	mControllers = { Controller::ControllerType::KEYBOARD,Controller::ControllerType::KEYBOARD };
 	mStage->Initialize_Game(this,path);
 	// todo playerのコンストラクタの引数にコントローラーを渡す
 	if (mControllers.size() >= 1) {
