@@ -49,6 +49,8 @@ private:
 	class InputComponent_Keyboard* ic;
 	class StageObject* mGrapping;
 	class StageObject* mChoosing;
+	class SpriteComponent* sc;
+	Vec2 cursorOffset;
 
 	float StandardSpeed;
 

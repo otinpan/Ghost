@@ -10,7 +10,7 @@
 #include"Door.h"
 #include"StageMenu.h"
 #include"SquareComponent.h"
-#include"CircleComponent.h"
+#include"SpriteComponent.h"
 
 Hand::Hand()
 	:StandardSpeed(0.3f)
@@ -40,7 +40,7 @@ void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 	cc->SetRadius(0.003f);
 	cc->SetColor({ 1.0,0.0,0.0 });
 
-	
+
 	inputGrap = KeyEnter;
 	inputBack = KeyK;
 	inputR = KeyRight;
@@ -62,10 +62,18 @@ void Hand::InitializeActor_CreateStage(CreateStage* createstage) {
 	ic->SetMaxYSpeed(StandardSpeed);
 
 
-
-
 	dx = { -1,1,1,-1 };
 	dy = { 1,1,-1,-1 };
+
+	sc = new SpriteComponent(this, 250, DrawingComponent::DrawingState::UNAFFECTED);
+	float w = GetCreateStage()->GetStage()->GetRectWidth()*0.8f;
+	sc->InitializeDrawing_CreateStage(
+		GetPosition(),
+		w,
+		w
+	);
+	cursorOffset = Vec2(w * 0.1f, -w * 0.3f);
+	sc->SetTexture(TextureAsset(U"cursor_arrow"));
 
 }
 
@@ -77,12 +85,16 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 	if (nowPos.y > 0.95)nowPos.y = 0.95;
 	SetPosition(nowPos);
 	cc->SetCenter(nowPos);
-
+	// カーソル
+	sc->SetTexture(TextureAsset(U"cursor_arrow"));
+	sc->SetCenter(nowPos+cursorOffset);
 	if (!mIsGrap && !mIsExpand && !mIsDelete) {
 		for (auto& stageObject : GetCreateStage()->GetStageObjects()) {
 			if (stageObject->GetSquareComponent()->GetRect().
 				contains(cc->GetCircle()) &&
 				stageObject->GetAttribute() != StageObject::Attribute::Wall) {
+				// カーソル変更
+				sc->SetTexture(TextureAsset(U"cursor_hand"));
 				//stageの中にある場合拡大可能
 				if (stageObject->GetIsInStage() && !mIsDelete) {
 					//Brockは拡大可能

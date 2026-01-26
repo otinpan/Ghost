@@ -37,6 +37,8 @@ private:
 	Parent::SeqID mSeqID;
 	bool mIsRunning;
 
+	Font resultFont;
+
 	InputGroup inputLeft;
 	InputGroup inputRight;
 	InputGroup inputL;

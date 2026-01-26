@@ -1658,6 +1658,8 @@ void GPTMenu::StartCreateStageAsync(std::string userPromptUtf8) {
 			{
 				std::lock_guard<std::mutex> lock(mResultMutex);
 				mPendingError = std::string(e.what());
+				Print << U"Error: failed to create";  
+				
 			}
 
 			curl_global_cleanup();

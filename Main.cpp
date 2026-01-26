@@ -25,11 +25,14 @@ void Main()
 	TextureAsset::Register(U"treasure", U"StageObject/treasure.png");
 	TextureAsset::Register(U"battery", U"StageObject/battery.png");
 	TextureAsset::Register(U"keyboard", U"Keyboard.png");
+	TextureAsset::Register(U"cursor_arrow", U"cursor_arrow.png");
+	TextureAsset::Register(U"cursor_hand", U"cursor_hand.png");
 
 
 	Scene::SetBackground({ 1,1,1 });
 
 	while (System::Update()) {
+		Cursor::RequestStyle(CursorStyle::Hidden);
 		if (!mParent) {
 			mParent = new Parent;
 		}

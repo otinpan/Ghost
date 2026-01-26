@@ -149,10 +149,10 @@ void CreateStage::LoadData() {
 	TextureAsset::Load(U"key");
 	TextureAsset::Load(U"treasure");
 	TextureAsset::Load(U"battery");
+	TextureAsset::Load(U"cursor_arrow");
+	TextureAsset::Load(U"cursor_hand");
 
 
-	mHand = new Hand();
-	mHand->InitializeActor_CreateStage(this);
 	mStage = new Stage(1.6f, 1.5f);
 	if (mSelectedStageName == U"") {
 		mStage->Initialize_CreateStage(this);
@@ -163,6 +163,9 @@ void CreateStage::LoadData() {
 		mStage->Initialize_CreateStage(this, path);
 		mStageName = mSelectedStageName;
 	}
+	mHand = new Hand();
+	mHand->InitializeActor_CreateStage(this);
+
 	mStageMenu = new StageMenu();
 	mStageMenu->Initialize_CreateStage(this);
 	mShouldCloseTextMenu = false;
@@ -181,6 +184,8 @@ void CreateStage::UnloadData() {
 	TextureAsset::Release(U"key");
 	TextureAsset::Release(U"treasure");
 	TextureAsset::Release(U"battery");
+	TextureAsset::Release(U"cursor_arrow");
+	TextureAsset::Release(U"cursor_hand");
 }
 
 
