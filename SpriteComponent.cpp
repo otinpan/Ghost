@@ -2,6 +2,7 @@
 #include "Actor.h"
 
 
+
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder, DrawingComponent::DrawingState drawState)
 	:DrawingComponent(owner, drawOrder, drawState)
 	, mTexture()
@@ -38,7 +39,7 @@ void SpriteComponent::Draw() {
 
 
 	mTexture.resized(WritingWidth, WritingHeight).
-		scaled(mScale).rotated(mRotation).
+		scaled(mScale).rotated(-GetRotation()).
 		drawAt(ConvertToView(mCenter));
 }
 

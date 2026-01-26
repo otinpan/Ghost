@@ -220,6 +220,10 @@ void Game::LoadData() {
 	TextureAsset::Load(U"key");
 	TextureAsset::Load(U"treasure");
 	TextureAsset::Load(U"battery");
+	TextureAsset::Load(U"ghost");
+	TextureAsset::Load(U"escapee1");
+	TextureAsset::Load(U"escapee2");
+	TextureAsset::Load(U"escapee3");
 
 
 
@@ -378,6 +382,10 @@ void Game::UnloadData() {
 	TextureAsset::Release(U"key");
 	TextureAsset::Release(U"treasure");
 	TextureAsset::Release(U"battery");
+	TextureAsset::Release(U"ghost");
+	TextureAsset::Release(U"escapee1");
+	TextureAsset::Release(U"escapee3");
+	TextureAsset::Release(U"escapee2");
 }
 
 

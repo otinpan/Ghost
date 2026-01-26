@@ -52,6 +52,7 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 	sc = new SpriteComponent(this, 70, DrawingComponent::DrawingState::UNAFFECTED);
 	sc->InitializeDrawing_CreateStage(mCenter, mWidth, mHeight);
 
+
 	switch (mAttribute) {
 	case Attribute::Wall:
 		sqc->SetColor(ColorF(0.5f));
@@ -92,7 +93,9 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 		break;
 	case Attribute::Ghost:
 		sqc->SetColor(ColorF(76.0f / 255.0f, 0, 204.0f / 255.0f));
-		sc->SetIsDraw(false);
+		sqc->SetIsDraw(false);
+		sc->SetTexture(TextureAsset(U"ghost"));
+		//sc->SetIsDraw(false);
 		break;
 	case Attribute::Escapee1:
 		sqc->SetColor(ColorF(204.0f / 255.0f, 0, 204.0f/255.0f));
@@ -104,6 +107,7 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 		break;
 	case Attribute::Escapee3:
 		sqc->SetColor(ColorF(153.0f / 255.0f, 1.0f,153.0f / 255.0f));
+		sc->SetIsDraw(false);
 		break;
 	}
 
@@ -315,17 +319,25 @@ void StageObject::InitializeActor_Game(class Game* game) {
 		break;
 	case Attribute::Ghost:
 		sqc->SetColor(ColorF(76.0f / 255.0f, 0, 204.0f / 255.0f));
+		sqc->SetIsDraw(false);
+		sc->SetTexture(TextureAsset(U"ghost"));
 		break;
 	case Attribute::Escapee1:
 		sqc->SetColor(ColorF(204.0f / 255.0f, 0, 204.0f / 255.0f));
+		sqc->SetIsDraw(false);
+		sc->SetTexture(TextureAsset(U"escapee1"));
 		break;
 	case Attribute::Escapee2:
 		sqc->SetColor(ColorF(102.0f / 255.0f, 178.0f / 255.0f, 1));
+		sc->SetTexture(TextureAsset(U"escapee2"));
 		break;
 	case Attribute::Escapee3:
 		sqc->SetColor(ColorF(153.0f / 255.0f, 1.0f, 153.0f / 255.0f));
+		sc->SetTexture(TextureAsset(U"escapee2"));
 		break;
 	}
+
+	sqc->SetIsDraw(false);
 
 	if (mAttribute == Attribute::Door) {
 		mObjectLeft = GetDoorCenter().x - GetDoorWidth() / 2.0f;

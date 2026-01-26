@@ -24,9 +24,13 @@ public:
 	DrawingState GetDrawingState() const{ return mDrawingState; }
 	void SetIsDraw(bool isDraw) { mIsDraw = isDraw; }
 	bool GetIsDraw() const{ return mIsDraw; }
+	void SetRotation(float rot) { mRotation = rot; }
+	float GetRotation() { return mRotation; }
 
 private:
 	int mDrawOrder;
 	bool mIsDraw;
 	DrawingState mDrawingState;
+
+	float mRotation = 0.0;
 };

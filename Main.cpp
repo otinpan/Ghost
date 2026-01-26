@@ -27,6 +27,10 @@ void Main()
 	TextureAsset::Register(U"keyboard", U"Keyboard.png");
 	TextureAsset::Register(U"cursor_arrow", U"cursor_arrow.png");
 	TextureAsset::Register(U"cursor_hand", U"cursor_hand.png");
+	TextureAsset::Register(U"ghost", U"ghost.png");
+	TextureAsset::Register(U"escapee1", U"escapee1.png");
+	TextureAsset::Register(U"escapee2", U"escapee2.png");
+	TextureAsset::Register(U"escapee3", U"escapee3.png");
 
 
 	Scene::SetBackground({ 1,1,1 });

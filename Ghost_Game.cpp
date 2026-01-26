@@ -40,7 +40,6 @@ void Ghost_Game::InitializePlayer_Game(class Game* game) {
 
 void Ghost_Game::UpdatePlayer_Game(float deltaTime) {
 	// pause
-	// pause
 	if (GetInputComponent_JoyCon() != nullptr && GetInputComponent_JoyCon()->GetInputPlus().down()) {
 		if (!(GetGame()->GetIsPaused())) {
 			GetGame()->SetIsPaused(true);
@@ -134,14 +133,13 @@ void Ghost_Game::UpdateTransparent() {
 		}
 	}
 
+	
+	GetSpriteComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::UNAFFECTED, GetGame());
+	
+
 	if (isTransparent) {
 		if (GetCircleComponent()->GetDrawingState() != DrawingComponent::DrawingState::BACK) {
-			GetCircleComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::BACK,GetGame());
-		}
-	}
-	else {
-		if (GetCircleComponent()->GetDrawingState() != DrawingComponent::DrawingState::UNAFFECTED) {
-			GetCircleComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::UNAFFECTED, GetGame());
+			GetSpriteComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::BACK,GetGame());
 		}
 	}
 }
@@ -269,11 +267,11 @@ void Ghost_Game::UpdatePlayerPos_Game(float deltaTime) {
 void Ghost_Game::UpdateIsDraw(float deltaTime) {
 	if (mIsInvincible) {
 		if (mDrawAccumulator < 0.2f) {
-			GetCircleComponent()->SetIsDraw(true);
+			GetSpriteComponent()->SetIsDraw(true);
 			mDrawAccumulator += deltaTime;
 		}
 		else if (mDrawAccumulator < 0.4f) {
-			GetCircleComponent()->SetIsDraw(false);
+			GetSpriteComponent()->SetIsDraw(false);
 			mDrawAccumulator += deltaTime;
 		}
 		else {
@@ -281,6 +279,6 @@ void Ghost_Game::UpdateIsDraw(float deltaTime) {
 		}
 	}
 	else {
-		GetCircleComponent()->SetIsDraw(true);
+		GetSpriteComponent()->SetIsDraw(true);
 	}
 }

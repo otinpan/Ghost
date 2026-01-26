@@ -2,6 +2,9 @@
 #include"Stage.h"
 #include"InputComponent_JoyCon.h"
 #include"InputComponent_Keyboard.h"
+#include"SpriteComponent.h"
+#define _USE_MATH_DEFINES
+#include<math.h>
 
 Player::Player(Vec2 pos, float speed,Controller::ControllerType controller)
 	:cc(nullptr)
@@ -37,25 +40,40 @@ void Player::InitializeActor_Game(class Game* game) {
 	Initialize_Game(game);
 	GetGame()->AddPlayer(this);
 
-
+	sc = new SpriteComponent(this, 70, DrawingComponent::DrawingState::UNAFFECTED);
+	sc->InitializeDrawing_Game(
+		GetPosition(),
+		game->GetStage()->GetRectWidth(),
+		game->GetStage()->GetRectHeight()
+	);
 	switch (GetAttribute()) {
 	case Attribute::Ghost:
+		sc->SetTexture(TextureAsset(U"ghost"));
+		sc->SetDrawingState_Game(DrawingComponent::DrawingState::UNAFFECTED, game);
 		cc = new CircleComponent(this, 70, DrawingComponent::DrawingState::UNAFFECTED);
 		cc->SetColor(mGhostColor);
 		break;
 	case Attribute::GhostClone:
+		sc->SetIsDraw(false);
+		sc->SetDrawingState_Game(DrawingComponent::DrawingState::BACK,game);
 		cc = new CircleComponent(this, 70, DrawingComponent::DrawingState::BACK);
 		cc->SetColor(mGhostColor);
 		break;
 	case Attribute::Escapee1:
+		sc->SetTexture(TextureAsset(U"escapee1"));
+		sc->SetDrawingState_Game(DrawingComponent::DrawingState::BACK, game);
 		cc = new CircleComponent(this, 70, DrawingComponent::DrawingState::BACK);
 		cc->SetColor(mEscapee1Color);
 		break;
 	case Attribute::Escapee2:
+		sc->SetTexture(TextureAsset(U"escapee2"));
+		sc->SetDrawingState_Game(DrawingComponent::DrawingState::BACK, game);
 		cc = new CircleComponent(this, 70, DrawingComponent::DrawingState::BACK);
 		cc->SetColor(mEscapee2Color);
 		break;
 	case Attribute::Escapee3:
+		sc->SetTexture(TextureAsset(U"escapee3"));
+		sc->SetDrawingState_Game(DrawingComponent::DrawingState::BACK, game);
 		cc = new CircleComponent(this, 70, DrawingComponent::DrawingState::BACK);
 		cc->SetColor(mEscapee3Color);
 		break;
@@ -65,6 +83,7 @@ void Player::InitializeActor_Game(class Game* game) {
 	cc->SetCenter(GetPosition());
 	mRadius = GetGame()->GetStage()->GetRectWidth() * 2.0f / 5.0f;
 	cc->SetRadius(mRadius);
+	cc->SetIsDraw(false);
 
 	// controller
 	if (mControllerType == Controller::ControllerType::KEYBOARD) {
@@ -107,16 +126,19 @@ void Player::UpdatePos_Game(float deltaTime) {
 	float offset = 0.008f;
 	//端
 	if (mPos.x + mRadius > GetGame()->GetStage()->GetRight())
-		mPos.x = GetGame()->GetStage()->GetRight() - mRadius-offset;
+		mPos.x = GetGame()->GetStage()->GetRight() - mRadius - offset;
 	if (mPos.x - mRadius < GetGame()->GetStage()->GetLeft())
-		mPos.x = GetGame()->GetStage()->GetLeft() + mRadius+offset;
-	if (mPos.y + mRadius*3.0f > GetGame()->GetStage()->GetUp())
-		mPos.y = GetGame()->GetStage()->GetUp() - mRadius*3.0f-offset;
-	if (mPos.y - mRadius*3.0f < GetGame()->GetStage()->GetDown())
-		mPos.y = GetGame()->GetStage()->GetDown() + mRadius*3.0f+offset;
+		mPos.x = GetGame()->GetStage()->GetLeft() + mRadius + offset;
+	if (mPos.y + mRadius * 3.0f > GetGame()->GetStage()->GetUp())
+		mPos.y = GetGame()->GetStage()->GetUp() - mRadius * 3.0f - offset;
+	if (mPos.y - mRadius * 3.0f < GetGame()->GetStage()->GetDown())
+		mPos.y = GetGame()->GetStage()->GetDown() + mRadius * 3.0f + offset;
 
 	SetPosition(mPos);
 	cc->SetCenter(mPos);
+	sc->SetCenter(mPos);
+	// 元の画像に合わせる
+	sc->SetRotation(-M_PI/2.0f+GetRotation());
 }
 
 

@@ -49,6 +49,7 @@ public:
 	void SetControllerType(Controller::ControllerType controllerType) { mControllerType = controllerType; }
 	class InputComponent_Keyboard*& GetInputComponent_Keyboard() { return icKeyboard; }
 	class InputComponent_JoyCon*& GetInputComponent_JoyCon() { return icJoyCon; }
+	class SpriteComponent* GetSpriteComponent() { return sc; }
 
 
 
@@ -58,6 +59,7 @@ private:
 	ColorF mEscapee1Color;
 	ColorF mEscapee2Color;
 	ColorF mEscapee3Color;
+	class SpriteComponent* sc;
 
 	class InputComponent_Keyboard* icKeyboard;
 	class InputComponent_JoyCon* icJoyCon;

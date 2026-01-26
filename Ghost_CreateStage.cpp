@@ -1,6 +1,10 @@
 ﻿#include"Ghost_CreateStage.h"
 #include"StageMenu.h"
+#include"CreateStage.h"
+#include"Stage.h"
 #include"Hand.h"
+#include"SpriteComponent.h"
+
 
 Ghost_CreateStage::Ghost_CreateStage(Vec2 pos, float width, float height)
 	:StageObject(pos,width,height)
@@ -34,11 +38,13 @@ void Ghost_CreateStage::InitializeStageMenu_CreateStage() {
 		mBarMin + mBarHeight * GetSpeed() / 100.0f
 	);
 
-	mBarSC_CreateStage = new SquareComponent(this,200, DrawingComponent::DrawingState::UNAFFECTED);
+	mBarSC_CreateStage = new SquareComponent(this,10, DrawingComponent::DrawingState::UNAFFECTED);
 	mBarSC_CreateStage->InitializeDrawing_CreateStage(mBarPos,
 		GetCreateStage()->GetStageMenu()->GetMenuWidth() / 6.0f,
 		mBarHeight / 25.0f);
 	mBarSC_CreateStage->SetColor(ColorF(0, 0, 0));
+	mBarSC_CreateStage->SetIsDraw(false);
+
 }
 
 void Ghost_CreateStage::UpdateStageMenu_CreateStage(float deltaTime) {
@@ -59,6 +65,7 @@ void Ghost_CreateStage::UpdateStageMenu_CreateStage(float deltaTime) {
 		SetSpeed(ConvertToSpeed(mBarMin,mBarHeight,mBarPos.y));
 	}
 	mBarSC_CreateStage->SetCenter(mBarPos);
+	//sc->SetCenter(mBarPos);
 }
 
 void Ghost_CreateStage::DrawStageMenu_CreateStage() {
