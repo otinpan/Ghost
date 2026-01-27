@@ -155,6 +155,7 @@ void CreateStage::LoadData() {
 	TextureAsset::Load(U"escapee1");
 	TextureAsset::Load(U"escapee2");
 	TextureAsset::Load(U"escapee3");
+	TextureAsset::Load(U"patrol");
 
 
 	mStage = new Stage(1.6f, 1.5f);
@@ -194,6 +195,7 @@ void CreateStage::UnloadData() {
 	TextureAsset::Release(U"escapee1");
 	TextureAsset::Release(U"escapee3");
 	TextureAsset::Release(U"escapee2");
+	TextureAsset::Release(U"patrol");
 }
 
 

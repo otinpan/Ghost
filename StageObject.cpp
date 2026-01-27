@@ -69,7 +69,8 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 		break;
 	case Attribute::Patrol:
 		sqc->SetColor(ColorF(0, (float)102 / 255, 0));
-		sc -> SetIsDraw(false);
+		sqc->SetIsDraw(false);
+		sc->SetTexture(TextureAsset(U"patrol"));
 		break;
 	case Attribute::Key:
 		sqc->SetColor(ColorF((float)76 / 255, (float)0, (float)153 / 255));
@@ -295,7 +296,8 @@ void StageObject::InitializeActor_Game(class Game* game) {
 		break;
 	case Attribute::Patrol:
 		sqc->SetColor(ColorF(0, (float)102 / 255, 0));
-		sc->SetIsDraw(false);
+		sqc->SetIsDraw(false);
+		sc->SetTexture(TextureAsset(U"patrol"));
 		break;
 	case Attribute::Key:
 		sqc->SetIsDraw(false);

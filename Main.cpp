@@ -31,6 +31,7 @@ void Main()
 	TextureAsset::Register(U"escapee1", U"escapee1.png");
 	TextureAsset::Register(U"escapee2", U"escapee2.png");
 	TextureAsset::Register(U"escapee3", U"escapee3.png");
+	TextureAsset::Register(U"patrol", U"StageObject/patrol.png");
 
 
 	Scene::SetBackground({ 1,1,1 });

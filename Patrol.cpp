@@ -26,9 +26,25 @@ Patrol::Patrol(Vec2 pos, float width, float height)
 
 void Patrol::InitializeStageObject_CreateStage(class CreateStage* createStage) {
 	InitializeActor_CreateStage(createStage);
+
+	
 }
 
 void Patrol::UpdateStageObject_CreateStage(float deltaTime) {
+	// 回転
+	switch (GetClockwise()) {
+	case 0:
+		GetSpriteComponent()->SetRotation(0.0f);
+		break;
+	case 1:
+		GetSpriteComponent()->SetRotation(-M_PI / 2.0f);
+		break;
+	case 2:
+		GetSpriteComponent()->SetRotation(M_PI);
+		break;
+	case 3:
+		GetSpriteComponent()->SetRotation(M_PI / 2.0f);
+	}
 }
 
 Patrol::~Patrol() {
@@ -143,6 +159,8 @@ void Patrol::InitializeStageMenu_CreateStage() {
 	mPlusLastTime = 0.03;
 	mMinusLastTime = 0.03;
 
+	GetSpriteComponent()->SetRotation(M_PI / 2.0f);
+
 	
 }
 
@@ -216,6 +234,8 @@ void Patrol::UpdateStageMenu_CreateStage(float deltaTime) {
 		}
 	}
 	AdjustPatrolRange();
+
+
 }
 
 void Patrol::DrawStageMenu_CreateStage() {
@@ -332,6 +352,7 @@ void Patrol::InitializeStage_Game() {
 		mVelocity = Vec2(-GetSpeed(),0);
 		break;
 	}
+	GetSpriteComponent()->SetRotation(-M_PI / 2.0f + GetRotation());
 	mMoveC = new MoveComponent(this);
 	mMoveC->SetXSpeed(mVelocity.x);
 	mMoveC->SetYSpeed(mVelocity.y);
@@ -341,6 +362,8 @@ void Patrol::InitializeStage_Game() {
 
 
 	MicroRad = (float)M_PI / TurnLimitTime;
+
+
 
 }
 
@@ -484,6 +507,7 @@ void Patrol::UpdatePos_Game(float deltaTime) {
 	mMoveC->SetXSpeed(mVelocity.x);
 	mMoveC->SetYSpeed(mVelocity.y);
 	GetSquareComponent()->SetCenter(GetPosition());
+	GetSpriteComponent()->SetCenter(GetPosition());
 }
 
 
@@ -511,6 +535,7 @@ void Patrol::UpdateTurn_Game(float deltaTime) {
 		mTurnTime = 0.0f;
 		SetIsTurn(false);
 	}
+	GetSpriteComponent()->SetRotation(-M_PI / 2.0f + GetRotation());
 }
 
 void Patrol::UpdateIntersectGhost_Game(float deltaTime) {

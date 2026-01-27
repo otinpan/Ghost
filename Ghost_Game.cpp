@@ -118,6 +118,7 @@ void Ghost_Game::UpdateClone_Game(float deltaTime) {
 
 void Ghost_Game::UpdateTransparent() {
 
+
 	bool isTransparent = false;
 	if (GetInputComponent_Keyboard() != nullptr) {
 		if (GetInputComponent_Keyboard()->GetInputR().pressed()||MouseL.pressed()) {
@@ -135,8 +136,11 @@ void Ghost_Game::UpdateTransparent() {
 
 	
 	GetSpriteComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::UNAFFECTED, GetGame());
-	
 
+	// 照らされている間は透明化できない
+	if (GetIsLighted()) {
+		return;
+	}
 	if (isTransparent) {
 		if (GetCircleComponent()->GetDrawingState() != DrawingComponent::DrawingState::BACK) {
 			GetSpriteComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::BACK,GetGame());
