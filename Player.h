@@ -53,6 +53,7 @@ public:
 
 
 
+
 private:
 	class CircleComponent* cc;
 	ColorF mGhostColor;

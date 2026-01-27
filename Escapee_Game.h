@@ -45,7 +45,7 @@ private:
 	float HeartbeatLimitTime;
 	float mHeartLastingTime;
 	bool mIsHeartLasting;
-	class CircleComponent* mHeartDrawCC;
+	class SpriteComponent* scHeart;
 
 	//Flashlight
 	bool mIsLightOn;

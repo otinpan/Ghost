@@ -225,13 +225,21 @@ void Game::LoadData() {
 	TextureAsset::Load(U"escapee2");
 	TextureAsset::Load(U"escapee3");
 	TextureAsset::Load(U"patrol");
+	TextureAsset::Load(U"escapee1_heart");
+	TextureAsset::Load(U"escapee2_heart");
+	TextureAsset::Load(U"escapee3_heart");
 
 
 
 	mStage = new Stage(1.85f,1.85f);
 
 	const FilePath path = U"Stage/" + mSelectedStageName + U"/Data.bin";
-	mControllers = { Controller::ControllerType::KEYBOARD,Controller::ControllerType::KEYBOARD };
+	mControllers = {
+		Controller::ControllerType::KEYBOARD,
+		Controller::ControllerType::KEYBOARD,
+		Controller::ControllerType::KEYBOARD,
+		Controller::ControllerType::KEYBOARD
+	};
 	mStage->Initialize_Game(this,path);
 	// todo playerのコンストラクタの引数にコントローラーを渡す
 	if (mControllers.size() >= 1) {
@@ -389,6 +397,9 @@ void Game::UnloadData() {
 	TextureAsset::Release(U"escapee3");
 	TextureAsset::Release(U"escapee2");
 	TextureAsset::Release(U"patrol");
+	TextureAsset::Release(U"escapee1_heart");
+	TextureAsset::Release(U"escapee2_heart");
+	TextureAsset::Release(U"escapee3_heart");
 }
 
 

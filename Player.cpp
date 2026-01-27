@@ -46,6 +46,8 @@ void Player::InitializeActor_Game(class Game* game) {
 		game->GetStage()->GetRectWidth(),
 		game->GetStage()->GetRectHeight()
 	);
+
+	
 	switch (GetAttribute()) {
 	case Attribute::Ghost:
 		sc->SetTexture(TextureAsset(U"ghost"));
@@ -81,7 +83,7 @@ void Player::InitializeActor_Game(class Game* game) {
 
 	cc->InitializeDrawing_Game();
 	cc->SetCenter(GetPosition());
-	mRadius = GetGame()->GetStage()->GetRectWidth() * 2.0f / 5.0f;
+	mRadius = GetGame()->GetStage()->GetRectWidth() * 4.0f / 9.0f;
 	cc->SetRadius(mRadius);
 	cc->SetIsDraw(false);
 

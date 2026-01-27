@@ -8,6 +8,7 @@
 #include"StageObject.h"
 #include"InputComponent_Keyboard.h"
 #include"InputComponent_JoyCon.h"
+#include"DrawingComponent.h"
 
 Escapee_Game::Escapee_Game(Vec2 pos, float speed, int num,Controller::ControllerType controller)
 	:Player(pos, speed,controller)
@@ -67,12 +68,11 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 	mHeartSmallCC->SetRadius(mRadius * 10.0f);
 	mHeartSmallCC->SetIsDraw(false);
 
-	mHeartDrawCC = new CircleComponent(this, 100, DrawingComponent::DrawingState::UNAFFECTED);
-	mHeartDrawCC->InitializeDrawing_Game();
-	mHeartDrawCC->SetCenter(GetPosition());
-	mHeartDrawCC->SetRadius(mRadius * 0.5f);
-	mHeartDrawCC->SetIsDraw(false);
-	mHeartDrawCC->SetColor(ColorF(1.0f, (float)102 / 255.0f, 1.0f));
+
+	scHeart = new SpriteComponent(this, 100, DrawingComponent::DrawingState::UNAFFECTED);
+	scHeart->InitializeDrawing_Game(GetPosition(),mRadius*1.2f,mRadius*1.2f);
+	scHeart->SetIsDraw(false);
+	
 
 	// Key
 	mKeySPC = new SpriteComponent(this, 110, DrawingComponent::DrawingState::UNAFFECTED);
@@ -102,11 +102,48 @@ void Escapee_Game::InitializePlayer_Game(class Game* game) {
 	mLightedFrameCC->SetColor(ColorF(0.7f));
 	mLightedFrameCC->SetIsDraw(false);
 
+	switch (GetAttribute()) {
+	case Attribute::Escapee1:
+		scHeart->SetTexture(TextureAsset(U"escapee1_heart"));
+		mLightedCC->SetColor(ColorF(204.0f / 255.0f, 0, 204.0f / 255.0f));
+		break;
+	case Attribute::Escapee2:
+		scHeart->SetTexture(TextureAsset(U"escapee2_heart"));
+		mLightedCC->SetColor(ColorF(102.0f / 255.0f, 178.0f / 255.0f, 1));
+		break;
+	case Attribute::Escapee3:
+		scHeart->SetTexture(TextureAsset(U"escapee3_heart"));
+		mLightedCC->SetColor(ColorF(153.0f / 255.0f, 1.0f, 153.0f / 255.0f));
+		break;
+	default:
+		break;
+	}
+
+
 }
 
 void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 	mFlashlight->Update_Game(deltaTime);
-
+	ClearPrint();
+	switch (GetAttribute()) {
+	case StageObject::Attribute::Escapee1:
+		Print(1);
+		scHeart->SetTexture(TextureAsset(U"escapee1_heart"));
+		mLightedCC->SetColor(ColorF(204.0f / 255.0f, 0, 204.0f / 255.0f));
+		break;
+	case StageObject::Attribute::Escapee2:
+		Print(2);
+		scHeart->SetTexture(TextureAsset(U"escapee2_heart"));
+		mLightedCC->SetColor(ColorF(102.0f / 255.0f, 178.0f / 255.0f, 1));
+		break;
+	case StageObject::Attribute::Escapee3:
+		scHeart->SetTexture(TextureAsset(U"escapee3_heart"));
+		mLightedCC->SetColor(ColorF(153.0f / 255.0f, 1.0f, 153.0f / 255.0f));
+		break;
+	default:
+		Print(0);
+		break;
+	}
 	// pause
 	if (GetInputComponent_JoyCon() != nullptr && GetInputComponent_JoyCon()->GetInputPlus().down()) {
 		if (!(GetGame()->GetIsPaused())) {
@@ -140,7 +177,7 @@ void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 	mHeartLargeCC->SetCenter(GetPosition());
 	mHeartMidCC->SetCenter(GetPosition());
 	mHeartSmallCC->SetCenter(GetPosition());
-	mHeartDrawCC->SetCenter(GetPosition());
+	scHeart->SetCenter(GetPosition());
 	//key
 	mKeySPC->SetCenter(GetPosition() + keyOffset);
 	if (mIsKey && GetIsAlive()) {
@@ -233,6 +270,8 @@ void Escapee_Game::UpdateIntersectGhost_Game(float deltaTime) {
 	if (IsIntersect_CC(GetGame()->GetGhost()->GetCircleComponent(), GetCircleComponent())
 		&&GetGame()->GetGhost()->GetCanCapture()) {
 		SetIsAlive_Game(false,GetGame());
+		GetSpriteComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::UNAFFECTED,GetGame());
+		mLightedFrameCC->SetIsDraw(true);
 		GetGame()->SetHitstop(1.0f);
 		mLightedCC->SetCenter(GetPosition() + lightedOffset);
 		mLightedFrameCC->SetCenter(GetPosition() + lightedOffset);
@@ -240,6 +279,8 @@ void Escapee_Game::UpdateIntersectGhost_Game(float deltaTime) {
 	if (GetGame()->GetGhost()->GetGhostClone()
 		&& IsIntersect_CC(GetCircleComponent(), GetGame()->GetGhost()->GetGhostClone()->GetCircleComponent())) {
 		SetIsAlive_Game(false, GetGame());
+		GetSpriteComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::UNAFFECTED, GetGame());
+		mLightedFrameCC->SetIsDraw(true);
 		GetGame()->SetHitstop(1.0f);
 		mLightedCC->SetCenter(GetPosition() + lightedOffset);
 		mLightedFrameCC->SetCenter(GetPosition() + lightedOffset);
@@ -307,11 +348,11 @@ void Escapee_Game::UpdateHeartbeat(float deltaTime) {
 		if (mHeartbeatTime > HeartbeatLimitTime) {
 			mHeartbeatTime = 0.0f;
 			mIsHeartLasting = true;
-			mHeartDrawCC->SetIsDraw(true);
+			scHeart->SetIsDraw(true);
 		}
 		else {
 			mHeartbeatTime += deltaTime;
-			mHeartDrawCC->SetIsDraw(false);
+			scHeart->SetIsDraw(false);
 		}
 	}
 
@@ -319,12 +360,12 @@ void Escapee_Game::UpdateHeartbeat(float deltaTime) {
 
 void Escapee_Game::UpdateUnAlive(float deltaTime) {
 	mLightedCC->SetIsDraw(false);
-	mLightedFrameCC->SetIsDraw(false);
 	if (GetIsAlive())return;
-
+	
 	// 生還
 	if (GetLightedTime() > 5.0f) {
 		SetIsAlive_Game(true,GetGame());
+		GetSpriteComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::BACK, GetGame());
 		SetLightedTime(0.0f);
 		return;
 	}
@@ -335,7 +376,6 @@ void Escapee_Game::UpdateUnAlive(float deltaTime) {
 			float ratio = GetLightedTime() / 5.0f;
 			// 表示
 			mLightedCC->SetIsDraw(true);
-			mLightedFrameCC->SetIsDraw(true);
 			mLightedCC->SetRadius(ratio * maxUnaliveRadius);
 
 		}
@@ -457,10 +497,10 @@ void Escapee_Game::UpdateItemAvailable(float deltaTime){
 
 void Escapee_Game::SetIsAlive_Game(bool isAlive,Game* game) {
 	if (isAlive) {
-		mHeartDrawCC->SetIsDraw(true);
+		scHeart->SetIsDraw(true);
 	}
 	else {
-		mHeartDrawCC->SetIsDraw(false);
+		scHeart->SetIsDraw(false);
 	}
 	Player::SetIsAlive_Game(isAlive,game);
 }

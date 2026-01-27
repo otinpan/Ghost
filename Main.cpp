@@ -32,6 +32,9 @@ void Main()
 	TextureAsset::Register(U"escapee2", U"escapee2.png");
 	TextureAsset::Register(U"escapee3", U"escapee3.png");
 	TextureAsset::Register(U"patrol", U"StageObject/patrol.png");
+	TextureAsset::Register(U"escapee1_heart", U"escapee1_heart.png");
+	TextureAsset::Register(U"escapee2_heart", U"escapee2_heart.png");
+	TextureAsset::Register(U"escapee3_heart", U"escapee3_heart.png");
 
 
 	Scene::SetBackground({ 1,1,1 });
