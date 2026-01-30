@@ -19,6 +19,7 @@ void TreasureChest::InitializeStageObject_CreateStage(class CreateStage* createS
 	mNoneSC = 0;
 	mBatterySC = 0;
 	mKeySC = 0;
+	SetBatterySize(StageObject::BatterySize::Small);
 }
 
 void TreasureChest::UpdateStageObject_CreateStage(float deltaTime) {
@@ -94,13 +95,14 @@ void TreasureChest::InitializeStageMenu_CreateStage() {
 		mRectWidth, mRectHeight);
 	scBattery->SetTexture(TextureAsset(U"battery"));
 
+
 }
 
 void TreasureChest::InitializeStage_CreateStage() {
 }
 
 void TreasureChest::UpdateStageMenu_CreateStage(float deltaTime) {
-	if (GetCreateStage()->GetHand()->GetInputChoose().down()) {
+	if (GetCreateStage()->GetHand()->GetInputChoose().down()||MouseL.down()) {
 		if (IsIntersect_SC(mNoneSC, GetCreateStage()->GetHand()->GetCircleComponent())) {
 			SetTreasure(StageObject::Treasure::Empty);
 		}
@@ -134,7 +136,7 @@ void TreasureChest::UpdateStageMenu_CreateStage(float deltaTime) {
 				SetBatterySize(StageObject::BatterySize::Mid);
 			}
 		}
-		if (GetBatterySize() == StageObject::BatterySize::Mid) {
+		else if (GetBatterySize() == StageObject::BatterySize::Mid) {
 			if (GetCreateStage()->GetHand()->GetInputMinus().down()) {
 				SetBatterySize(StageObject::BatterySize::Small);
 			}
@@ -142,11 +144,12 @@ void TreasureChest::UpdateStageMenu_CreateStage(float deltaTime) {
 				SetBatterySize(StageObject::BatterySize::Big);
 			}
 		}
-		if (GetBatterySize() == StageObject::BatterySize::Big) {
+		else if (GetBatterySize() == StageObject::BatterySize::Big) {
 			if (GetCreateStage()->GetHand()->GetInputMinus().down()) {
 				SetBatterySize(StageObject::BatterySize::Mid);
 			}
 		}
+		
 	}
 
 	if (GetBatterySize() == StageObject::BatterySize::Small) {

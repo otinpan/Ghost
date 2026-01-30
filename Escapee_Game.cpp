@@ -250,7 +250,7 @@ void Escapee_Game::UpdateFlashlight_Game(float deltaTime) {
 
 
 	if (mIsLightOn) {
-		//mBattery -= deltaTime * 60.0f / 6.0f;
+		mBattery -= deltaTime * 60.0f / 7.0f;
 	}
 
 	mBattery =std:: max(0.0f, mBattery);
@@ -374,6 +374,7 @@ void Escapee_Game::UpdateHeartbeat(float deltaTime) {
 void Escapee_Game::UpdateUnAlive(float deltaTime) {
 	mLightedCC->SetIsDraw(false);
 	mLightedFrameCC->SetIsDraw(false);
+	GetSpriteComponent()->SetIsDraw(false);
 	if (GetIsAlive())return;
 	
 	// 生還
@@ -381,6 +382,7 @@ void Escapee_Game::UpdateUnAlive(float deltaTime) {
 		SetIsAlive_Game(true,GetGame());
 		GetSpriteComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::BACK, GetGame());
 		SetLightedTime(0.0f);
+		GetSpriteComponent()->SetIsDraw(true);
 		return;
 	}
 	else {
@@ -390,6 +392,7 @@ void Escapee_Game::UpdateUnAlive(float deltaTime) {
 			float ratio = GetLightedTime() / 5.0f;
 			// 表示
 			mLightedCC->SetIsDraw(true);
+			GetSpriteComponent()->SetIsDraw(true);
 			mLightedCC->SetRadius(ratio * maxUnaliveRadius);
 			mLightedFrameCC->SetIsDraw(true);
 

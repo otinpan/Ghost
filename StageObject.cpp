@@ -100,15 +100,21 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 		break;
 	case Attribute::Escapee1:
 		sqc->SetColor(ColorF(204.0f / 255.0f, 0, 204.0f/255.0f));
-		sc->SetIsDraw(false);
+		sc->SetIsDraw(true);
+		sc->SetTexture(TextureAsset(U"escapee1"));
+		sqc->SetIsDraw(false);
 		break;
 	case Attribute::Escapee2:
 		sqc->SetColor(ColorF(102.0f / 255.0f, 178.0f/255.0f, 1));
-		sc->SetIsDraw(false);
+		sc->SetIsDraw(true);
+		sc->SetTexture(TextureAsset(U"escapee2"));
+		sqc->SetIsDraw(false);
 		break;
 	case Attribute::Escapee3:
 		sqc->SetColor(ColorF(153.0f / 255.0f, 1.0f,153.0f / 255.0f));
-		sc->SetIsDraw(false);
+		sc->SetTexture(TextureAsset(U"escapee3"));
+		sc->SetIsDraw(true);
+		sqc->SetIsDraw(false);
 		break;
 	}
 
@@ -118,6 +124,9 @@ void StageObject::InitializeActor_CreateStage(class CreateStage* createstage){
 		cc[i]->InitializeDrawing_CreateStage();
 		cc[i]->SetRadius((float)mWidth / 7.0f);
 		cc[i]->SetColor(ColorF(0, 0, 1));
+		if (mAttribute != StageObject::Attribute::Brock) {
+			cc[i]->SetIsDraw(false);
+		}
 	}
 
 	float dw = (float)mWidth / 2.0f - cc[0]->GetRadius();
@@ -292,6 +301,7 @@ void StageObject::InitializeActor_Game(class Game* game) {
 		break;
 	case Attribute::Door:
 		sqc->SetColor(ColorF((float)139 / 255, (float)69.0f / 255.0f, (float)19.0f / 255.0f));
+		sqc->SetIsDraw(true);
 		sc->SetIsDraw(false);
 		break;
 	case Attribute::Patrol:
@@ -332,14 +342,16 @@ void StageObject::InitializeActor_Game(class Game* game) {
 	case Attribute::Escapee2:
 		sqc->SetColor(ColorF(102.0f / 255.0f, 178.0f / 255.0f, 1));
 		sc->SetTexture(TextureAsset(U"escapee2"));
+		sqc->SetIsDraw(false);
 		break;
 	case Attribute::Escapee3:
 		sqc->SetColor(ColorF(153.0f / 255.0f, 1.0f, 153.0f / 255.0f));
+		sqc->SetIsDraw(false);
 		sc->SetTexture(TextureAsset(U"escapee2"));
 		break;
 	}
 
-	sqc->SetIsDraw(false);
+	
 
 	if (mAttribute == Attribute::Door) {
 		mObjectLeft = GetDoorCenter().x - GetDoorWidth() / 2.0f;

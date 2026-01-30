@@ -100,7 +100,7 @@ void Brock::InitializeStageMenu_CreateStage() {
 }
 
 void Brock::UpdateStageMenu_CreateStage(float deltaTime) {
-	if (GetCreateStage()->GetHand()->GetInputChoose().down()) {
+	if (GetCreateStage()->GetHand()->GetInputChoose().down()||MouseL.down()) {
 		if (GetCreateStage()->GetHand()->GetCircleComponent()->GetCircle()
 			.intersects(WoodSC->GetRect())) {
 			SetMaterial(Material::Wood);

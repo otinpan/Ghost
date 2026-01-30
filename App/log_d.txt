@@ -6174,3 +6174,1192 @@ attempt: 1
   },
   "user": null
 }
+attempt: 1
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1769773045,
+  "created_at": 1769772985,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0ba50ddf5fd6890900697c97b9193881948d2ac90197de448d",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": 6000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"candles\": [\n    {\"radius\": 10, \"x\": 34, \"y\": 67},\n    {\"radius\": 20, \"x\": 12, \"y\": 45},\n    {\"radius\": 15, \"x\": 78, \"y\": 22},\n    {\"radius\": 25, \"x\": 56, \"y\": 89},\n    {\"radius\": 30, \"x\": 90, \"y\": 10}\n  ],\n  \"cell_overrides\": [\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 11, \"y\": 0},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": 5, \"speed\": 1, \"treasure\": null, \"x\": 4, \"y\": 1},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 9, \"y\": 1},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 18, \"y\": 1},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 21, \"y\": 1},\n    {\"batterySize\": \"Large\", \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 0, \"y\": 2},\n    {\"batterySize\": \"Medium\", \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 4, \"y\": 2},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": \"Key\", \"x\": 18, \"y\": 2},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 5, \"y\": 3},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 7, \"y\": 3},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": 3, \"speed\": 1, \"treasure\": null, \"x\": 9, \"y\": 3},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 13, \"y\": 3},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": \"Key\", \"x\": 18, \"y\": 3},\n    {\"batterySize\": \"Small\", \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 4, \"y\": 4},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": 5, \"speed\": 1, \"treasure\": null, \"x\": 7, \"y\": 4},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 12, \"y\": 4},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 5, \"y\": 5},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 8, \"y\": 5},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 11, \"y\": 5},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 2, \"y\": 6},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 4, \"y\": 6},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 6, \"y\": 6},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": \"Key\", \"x\": 9, \"y\": 6},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 13, \"y\": 6},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": 5, \"speed\": 1, \"treasure\": null, \"x\": 16, \"y\": 6},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": \"Battery\", \"x\": 19, \"y\": 6},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 17, \"y\": 7},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 4, \"y\": 8},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": 5, \"speed\": 1, \"treasure\": null, \"x\": 9, \"y\": 8},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": \"Key\", \"x\": 14, \"y\": 8},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 20, \"y\": 8},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": 5, \"speed\": 1, \"treasure\": null, \"x\": 2, \"y\": 9},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": 5, \"speed\": 1, \"treasure\": null, \"x\": 4, \"y\": 9},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": \"Key\", \"x\": 18, \"y\": 9},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 2, \"y\": 10},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 3, \"y\": 10},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 8, \"y\": 10},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 10, \"y\": 10},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 13, \"y\": 10},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": 5, \"speed\": 1, \"treasure\": null, \"x\": 15, \"y\": 10},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": 5, \"speed\": 1, \"treasure\": null, \"x\": 21, \"y\": 10},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": 5, \"speed\": 1, \"treasure\": null, \"x\": 6, \"y\": 11},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 9, \"y\": 11},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 4, \"y\": 12},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 15, \"y\": 12},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": \"Battery\", \"x\": 16, \"y\": 12},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": \"Key\", \"x\": 0, \"y\": 13},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": 5, \"speed\": 1, \"treasure\": null, \"x\": 4, \"y\": 13},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 7, \"y\": 13},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 12, \"y\": 13},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": \"Battery\", \"x\": 16, \"y\": 13},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Wood\", \"patrolRange\": null, \"speed\": null, \"treasure\": \"Key\", \"x\": 21, \"y\": 13},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 9, \"y\": 14},\n    {\"batterySize\": null, \"canBeGone\": null, \"clockwise\": null, \"material\": \"Stone\", \"patrolRange\": null, \"speed\": null, \"treasure\": null, \"x\": 11, \"y\": 14}\n  ]\n}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0ba50ddf5fd6890900697c97b95ca08194ac0a8d439a59c2c9",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 0.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_details",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "candles": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "radius": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "x": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "y": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "radius"
+              ],
+              "type": "object"
+            },
+            "maxItems": 12,
+            "type": "array"
+          },
+          "cell_overrides": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "batterySize": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "Small",
+                        "Medium",
+                        "Large"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "canBeGone": {
+                  "anyOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "clockwise": {
+                  "anyOf": [
+                    {
+                      "maximum": 3,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "material": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "Stone",
+                        "Wood",
+                        "Grass"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "patrolRange": {
+                  "anyOf": [
+                    {
+                      "maximum": 22,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "speed": {
+                  "anyOf": [
+                    {
+                      "maximum": 100.0,
+                      "minimum": 0.0,
+                      "type": "number"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "treasure": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "Empty",
+                        "Battery",
+                        "Key"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "x": {
+                  "maximum": 21,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "y": {
+                  "maximum": 14,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "material",
+                "clockwise",
+                "patrolRange",
+                "batterySize",
+                "treasure",
+                "speed",
+                "canBeGone"
+              ],
+              "type": "object"
+            },
+            "maxItems": 100,
+            "type": "array"
+          }
+        },
+        "required": [
+          "cell_overrides",
+          "candles"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 1605,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 3174,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 4779
+  },
+  "user": null
+}
+attempt: 1
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1769776734,
+  "created_at": 1769776592,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0355f7a8bae0585c00697ca5d0c8648196854eb8ecf72140af",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": 6000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"candles\": [\n    {\n      \"radius\": 15,\n      \"x\": 34,\n      \"y\": 12\n    },\n    {\n      \"radius\": 20,\n      \"x\": 78,\n      \"y\": 45\n    },\n    {\n      \"radius\": 10,\n      \"x\": 12,\n      \"y\": 67\n    },\n    {\n      \"radius\": 25,\n      \"x\": 56,\n      \"y\": 23\n    },\n    {\n      \"radius\": 30,\n      \"x\": 90,\n      \"y\": 10\n    }\n  ],\n  \"cell_overrides\": [\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 0\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 5,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 9,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 20,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 2,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 5,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 9,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 14,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 18,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 5,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": 5,\n      \"speed\": 1,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 19,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": \"Large\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 5,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 5,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 11,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": \"Large\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 15,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 2,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 6,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 11,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 20,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 6,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 9,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 15,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 19,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 2,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 6,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 9,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 6,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 15,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 18,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 2,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 17,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 19,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 2,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 9,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 18,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 3,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 6,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 18,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 13\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 1,\n      \"y\": 13\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 6,\n      \"y\": 13\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 9,\n      \"y\": 13\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Grass\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 13\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 17,\n      \"y\": 13\n    },\n    {\n      \"batterySize\": \"Large\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 19,\n      \"y\": 13\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 11,\n      \"y\": 14\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": true,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 14\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 14\n    }\n  ]\n}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0355f7a8bae0585c00697ca5d1972c8196b3e34b0368eebc84",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 0.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_details",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "candles": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "radius": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "x": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "y": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "radius"
+              ],
+              "type": "object"
+            },
+            "maxItems": 12,
+            "type": "array"
+          },
+          "cell_overrides": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "batterySize": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "Small",
+                        "Medium",
+                        "Large"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "canBeGone": {
+                  "anyOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "clockwise": {
+                  "anyOf": [
+                    {
+                      "maximum": 3,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "material": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "Stone",
+                        "Wood",
+                        "Grass"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "patrolRange": {
+                  "anyOf": [
+                    {
+                      "maximum": 22,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "speed": {
+                  "anyOf": [
+                    {
+                      "maximum": 100.0,
+                      "minimum": 0.0,
+                      "type": "number"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "treasure": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "Empty",
+                        "Battery",
+                        "Key"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "x": {
+                  "maximum": 21,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "y": {
+                  "maximum": 14,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "material",
+                "clockwise",
+                "patrolRange",
+                "batterySize",
+                "treasure",
+                "speed",
+                "canBeGone"
+              ],
+              "type": "object"
+            },
+            "maxItems": 100,
+            "type": "array"
+          }
+        },
+        "required": [
+          "cell_overrides",
+          "candles"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 1761,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 4932,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 6693
+  },
+  "user": null
+}
+attempt: 1
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": null,
+  "created_at": 1769776997,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_028a7e387665885b00697ca7653f288190b7ed29cadb60ea29",
+  "incomplete_details": {
+    "reason": "max_output_tokens"
+  },
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": 6000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"candles\": [\n    {\"radius\": 15, \"x\": 34, \"y\": 78},\n    {\"radius\": 20, \"x\": 67, \"y\": 45},\n    {\"radius\": 10, \"x\": 12, \"y\": 22},\n    {\"radius\": 25, \"x\": 88, \"y\": 11},\n    {\"radius\": 30, \"x\": 50, \"y\": 60}\n  ],\n  \"cell_overrides\": [\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 14,\n      \"y\": 0\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 20,\n      \"y\": 0\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 3,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 3,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 7,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 3,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 7,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 9,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 11,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 15,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 18,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 5,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 12,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 3,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 7,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 12,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 19,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 4,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 11,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 14,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 18,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 2,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 14,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 17,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 18,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 5,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 9,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 12,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 18,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 2,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 5,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 5,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 14,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 17,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 20,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 6,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 12,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 15,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 18,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 3,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 6,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 17,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 20,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 13\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_028a7e387665885b00697ca765a3548190a8ce01c07669825e",
+      "role": "assistant",
+      "status": "incomplete",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "incomplete",
+  "store": true,
+  "temperature": 0.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_details",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "candles": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "radius": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "x": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "y": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "radius"
+              ],
+              "type": "object"
+            },
+            "maxItems": 12,
+            "type": "array"
+          },
+          "cell_overrides": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "batterySize": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "Small",
+                        "Medium",
+                        "Large"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "canBeGone": {
+                  "anyOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "clockwise": {
+                  "anyOf": [
+                    {
+                      "maximum": 3,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "material": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "Stone",
+                        "Wood",
+                        "Grass"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "patrolRange": {
+                  "anyOf": [
+                    {
+                      "maximum": 22,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "speed": {
+                  "anyOf": [
+                    {
+                      "maximum": 100.0,
+                      "minimum": 0.0,
+                      "type": "number"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "treasure": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "Empty",
+                        "Battery",
+                        "Key"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "x": {
+                  "maximum": 21,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "y": {
+                  "maximum": 14,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "material",
+                "clockwise",
+                "patrolRange",
+                "batterySize",
+                "treasure",
+                "speed",
+                "canBeGone"
+              ],
+              "type": "object"
+            },
+            "maxItems": 100,
+            "type": "array"
+          }
+        },
+        "required": [
+          "cell_overrides",
+          "candles"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 1998,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 6000,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 7998
+  },
+  "user": null
+}
+attempt: 2
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": null,
+  "created_at": 1769777126,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_014a2f51e960929a00697ca7e6683481938ab7beac49d45ebf",
+  "incomplete_details": {
+    "reason": "max_output_tokens"
+  },
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": 6000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"candles\": [\n    {\n      \"radius\": 15,\n      \"x\": 34,\n      \"y\": 78\n    },\n    {\n      \"radius\": 20,\n      \"x\": 67,\n      \"y\": 45\n    },\n    {\n      \"radius\": 10,\n      \"x\": 12,\n      \"y\": 88\n    },\n    {\n      \"radius\": 25,\n      \"x\": 90,\n      \"y\": 12\n    },\n    {\n      \"radius\": 30,\n      \"x\": 50,\n      \"y\": 60\n    }\n  ],\n  \"cell_overrides\": [\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 14,\n      \"y\": 0\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 20,\n      \"y\": 0\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 3,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 3,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 7,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 3,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 7,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 9,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 11,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 15,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 18,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 5,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 12,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 3,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 7,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 12,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 19,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 4,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 11,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 14,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 18,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 2,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 14,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 17,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 18,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 5,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 9,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 12,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 18,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 2,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 5,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 5,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 14,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 17,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 20,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 6,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 12,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 15,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 18,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 3,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 6,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 17,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 20,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 13\n    },\n    {\n      \"batterySize\": null,\n      \"",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_014a2f51e960929a00697ca7e6b8c881939f2287a7d9f96e31",
+      "role": "assistant",
+      "status": "incomplete",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "incomplete",
+  "store": true,
+  "temperature": 0.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_details",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "candles": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "radius": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "x": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "y": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "radius"
+              ],
+              "type": "object"
+            },
+            "maxItems": 12,
+            "type": "array"
+          },
+          "cell_overrides": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "batterySize": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "Small",
+                        "Medium",
+                        "Large"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "canBeGone": {
+                  "anyOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "clockwise": {
+                  "anyOf": [
+                    {
+                      "maximum": 3,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "material": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "Stone",
+                        "Wood",
+                        "Grass"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "patrolRange": {
+                  "anyOf": [
+                    {
+                      "maximum": 22,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "speed": {
+                  "anyOf": [
+                    {
+                      "maximum": 100.0,
+                      "minimum": 0.0,
+                      "type": "number"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "treasure": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "Empty",
+                        "Battery",
+                        "Key"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "x": {
+                  "maximum": 21,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "y": {
+                  "maximum": 14,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "material",
+                "clockwise",
+                "patrolRange",
+                "batterySize",
+                "treasure",
+                "speed",
+                "canBeGone"
+              ],
+              "type": "object"
+            },
+            "maxItems": 100,
+            "type": "array"
+          }
+        },
+        "required": [
+          "cell_overrides",
+          "candles"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 2056,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 6000,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 8056
+  },
+  "user": null
+}
+attempt: 1
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1769777400,
+  "created_at": 1769777311,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0b01956c44e06cbb00697ca89f60fc819089e0dd49b0f01100",
+  "incomplete_details": null,
+  "instructions": "You are a professional game level designer. Output JSON only.",
+  "max_output_tokens": 6000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "response",
+  "output": [
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"candles\": [\n    {\n      \"radius\": 15,\n      \"x\": 34,\n      \"y\": 12\n    },\n    {\n      \"radius\": 20,\n      \"x\": 78,\n      \"y\": 45\n    },\n    {\n      \"radius\": 10,\n      \"x\": 12,\n      \"y\": 67\n    },\n    {\n      \"radius\": 25,\n      \"x\": 56,\n      \"y\": 23\n    },\n    {\n      \"radius\": 30,\n      \"x\": 89,\n      \"y\": 11\n    }\n  ],\n  \"cell_overrides\": [\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 4,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": \"Small\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 1\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": null,\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": \"Key\",\n      \"x\": 2,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 6,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": null,\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 12,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": \"Battery\",\n      \"x\": 21,\n      \"y\": 2\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 2,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 6,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 12,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 20,\n      \"y\": 3\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 4,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 12,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 14,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 4\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 3,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 5,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 15,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 5\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 6,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 15,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 6\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 4,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 11,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": null,\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": \"Key\",\n      \"x\": 16,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 7\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 4,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 10,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 14,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": null,\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 8\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 9,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": null,\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 16,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 9\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 1,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 5,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 12,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": \"Medium\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 15,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 10\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 2,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 11,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": \"Large\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 15,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 11\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 2,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 7,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 11,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": null,\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 15,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 20,\n      \"y\": 12\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 0,\n      \"y\": 13\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 4,\n      \"y\": 13\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 8,\n      \"y\": 13\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 20,\n      \"y\": 13\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": null,\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": \"Key\",\n      \"x\": 2,\n      \"y\": 14\n    },\n    {\n      \"batterySize\": \"Large\",\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 4,\n      \"y\": 14\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Wood\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 9,\n      \"y\": 14\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 11,\n      \"y\": 14\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 13,\n      \"y\": 14\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 18,\n      \"y\": 14\n    },\n    {\n      \"batterySize\": null,\n      \"canBeGone\": null,\n      \"clockwise\": null,\n      \"material\": \"Stone\",\n      \"patrolRange\": null,\n      \"speed\": null,\n      \"treasure\": null,\n      \"x\": 21,\n      \"y\": 14\n    }\n  ]\n}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0b01956c44e06cbb00697ca8a07cd4819084dd8e1fd749d251",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "reasoning": {
+    "effort": null,
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 0.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "stage_details",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "candles": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "radius": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "x": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "y": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "radius"
+              ],
+              "type": "object"
+            },
+            "maxItems": 12,
+            "type": "array"
+          },
+          "cell_overrides": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "batterySize": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "Small",
+                        "Medium",
+                        "Large"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "canBeGone": {
+                  "anyOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "clockwise": {
+                  "anyOf": [
+                    {
+                      "maximum": 3,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "material": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "Stone",
+                        "Wood",
+                        "Grass"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "patrolRange": {
+                  "anyOf": [
+                    {
+                      "maximum": 22,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "speed": {
+                  "anyOf": [
+                    {
+                      "maximum": 100.0,
+                      "minimum": 0.0,
+                      "type": "number"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "treasure": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "Empty",
+                        "Battery",
+                        "Key"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "x": {
+                  "maximum": 21,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "y": {
+                  "maximum": 14,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "material",
+                "clockwise",
+                "patrolRange",
+                "batterySize",
+                "treasure",
+                "speed",
+                "canBeGone"
+              ],
+              "type": "object"
+            },
+            "maxItems": 100,
+            "type": "array"
+          }
+        },
+        "required": [
+          "cell_overrides",
+          "candles"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 1.0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 1744,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 4838,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 6582
+  },
+  "user": null
+}

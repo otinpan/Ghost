@@ -222,6 +222,10 @@ void Game::draw() {
 	if (mIsPaused) {
 		DrawPause();
 	}
+
+	if (mIsRule) {
+		DrawRule();
+	}
 	/*for (auto& drawing : mDrawings_Front) {
 		drawing->Draw();
 	}
@@ -253,6 +257,12 @@ void Game::LoadData() {
 	TextureAsset::Load(U"escapee1_heart");
 	TextureAsset::Load(U"escapee2_heart");
 	TextureAsset::Load(U"escapee3_heart");
+	// rule
+	TextureAsset::Load(U"rule_game");
+	TextureAsset::Load(U"rule_escapee1");
+	TextureAsset::Load(U"rule_escapee2");
+	TextureAsset::Load(U"rule_ghost1");
+	TextureAsset::Load(U"rule_object");
 
 
 
@@ -309,9 +319,23 @@ void Game::LoadData() {
 		mEscapee3->InitializePlayer_Game(this);
 	}
 
+	// rule
+	mRuleTextures.emplace_back(TextureAsset(U"rule_game"));
+	mRuleTextures.emplace_back(TextureAsset(U"rule_escapee1"));
+	mRuleTextures.emplace_back(TextureAsset(U"rule_escapee2"));
+	mRuleTextures.emplace_back(TextureAsset(U"rule_ghost1"));
+	mRuleTextures.emplace_back(TextureAsset(U"rule_object"));
+	mRuleSize = mRuleTextures.size();
+
+
 }
 
 void Game::UpdatePause(float deltaTime) {
+	// rule
+	if (mIsRule) {
+		UpdateRule();
+	}
+
 	// Gameに戻る
 	if (inputPause.down()||inputBack.down()) {
 		mIsPaused = false;
@@ -361,6 +385,7 @@ void Game::UpdatePause(float deltaTime) {
 			break;
 		}
 		if (inputDecision.down()) {
+			mIsRule = true;
 			break;
 		}
 		break;
@@ -369,9 +394,31 @@ void Game::UpdatePause(float deltaTime) {
 	}
 }
 
+void Game::UpdateRule() {
+	if (KeyLeft.down() || KeyA.down()) {
+		if (mRuleIteration != 0) {
+			mRuleIteration--;
+		}
+	}
+
+	if (KeyRight.down() || KeyD.down()) {
+		if (mRuleIteration < mRuleSize-1 ) {
+			mRuleIteration++;
+		}
+	}
+
+	if (inputBack.down()) {
+		mIsRule = false;
+		mRuleIteration = 0;
+	}
+
+	return;
+}
+
 
 
 void Game::DrawPause() {
+
 	std::map<Game::PauseSelectedMode, Vec2> pos;
 	std::map<Game::PauseSelectedMode, String> text;
 	float width = 1.5f;
@@ -405,6 +452,32 @@ void Game::DrawPause() {
 	
 }
 
+void Game::DrawRule() {
+
+	std::vector<float> ruleCircleX(mRuleSize);
+	float left = -0.5f;
+	float right = 0.5f;
+	float eachCircleWidth = (float)(right - left) / mRuleSize;
+	float radius = 0.01f;
+	DrawTexture(mRuleTextures[mRuleIteration], Vec2(0, 0), 0.9f, 0.9f, 0.0f);
+	for (int i = 0; i < mRuleSize; i++) {
+		ColorF color=ColorF(1.0f);
+		if (mRuleIteration == i)color = ColorF(1.0f,1.0f,102.0f/255.0f);
+		// circle
+		DrawCircle(
+			Vec2(left + eachCircleWidth * i + eachCircleWidth / 2.0f, -(1.7f / 2.0f)),
+			radius * 1.2f,
+			ColorF(0.0f)
+		);
+		DrawCircle(
+			Vec2(left + eachCircleWidth * i + eachCircleWidth / 2.0f, -(1.7f / 2.0f)),
+			radius,
+			color
+		);
+		
+	}
+}
+
 void Game::UnloadData() {
 	while (!mActors.empty()) {
 		delete mActors.back();
@@ -425,6 +498,12 @@ void Game::UnloadData() {
 	TextureAsset::Release(U"escapee1_heart");
 	TextureAsset::Release(U"escapee2_heart");
 	TextureAsset::Release(U"escapee3_heart");
+	// rule
+	TextureAsset::Release(U"rule_game");
+	TextureAsset::Release(U"rule_escapee1");
+	TextureAsset::Release(U"rule_escapee2");
+	TextureAsset::Release(U"rule_ghost1");
+	TextureAsset::Release(U"rule_object");
 }
 
 

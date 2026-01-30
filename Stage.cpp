@@ -208,19 +208,19 @@ void Stage::SetNewStageObject(int i, int j, StageObject* stageObject) {
 	}
 	else if (stageObject->GetAttribute() == StageObject::Ghost) {
 		mStageObjects[i][j] = new Ghost_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth/3.0f, mRectHeight);
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth, mRectHeight);
 	}
 	else if (stageObject->GetAttribute() == StageObject::Escapee1) {
 		mStageObjects[i][j] = new Escapee_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight,1);
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth , mRectHeight,1);
 	}
 	else if (stageObject->GetAttribute() == StageObject::Escapee2) {
 		mStageObjects[i][j] = new Escapee_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight,2);
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth , mRectHeight,2);
 	}
 	else if (stageObject->GetAttribute() == StageObject::Escapee3) {
 		mStageObjects[i][j] = new Escapee_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight,3);
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth , mRectHeight,3);
 	}
 	mStageObjects[i][j]->SetMaterial(stageObject->GetMaterial());
 	mStageObjects[i][j]->SetSpeed(stageObject->GetSpeed());
@@ -260,19 +260,19 @@ void Stage::SetNewStageObject_Attribute(int i, int j, StageObject::Attribute att
 	}
 	else if (attribute == StageObject::Ghost) {
 		mStageObjects[i][j] = new Ghost_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight);
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth , mRectHeight);
 	}
 	else if (attribute == StageObject::Escapee1) {
 		mStageObjects[i][j] = new Escapee_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight, 1);
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth , mRectHeight, 1);
 	}
 	else if (attribute == StageObject::Escapee2) {
 		mStageObjects[i][j] = new Escapee_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight, 2);
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth , mRectHeight, 2);
 	}
 	else if (attribute == StageObject::Escapee3) {
 		mStageObjects[i][j] = new Escapee_CreateStage(Vec2({ (float)mLeft + j * mRectWidth + mRectWidth / 2,
-		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth / 3.0f, mRectHeight, 3);
+		(float)mUp - (i + 1) * mRectHeight + mRectHeight / 2 }), mRectWidth , mRectHeight, 3);
 	}
 
 	mStageObjects[i][j]->SetIsInStage(true);

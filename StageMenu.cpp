@@ -102,33 +102,33 @@ void StageMenu::Initialize_CreateStage(CreateStage* createStage) {
 		mMenuPos.x,
 		(mMenuDown - 1.0) / 3.0f
 	);
-	mPlayerRectWidth = mCreateStage->GetStage()->GetRectWidth() / 3.0f;
+	mPlayerRectWidth = mCreateStage->GetStage()->GetRectWidth()/3.0f ;
 	mPlayerRectHeight = mCreateStage->GetStage()->GetRectHeight();
 
 	// stageの中にすでにplayerがいるかチェック
 	std::vector<bool> isInStage = CheckIsPlayersInStage();
 	if (!isInStage[0]) {
 		mGhost = new Ghost_CreateStage(Vec2(mPlayerPos.x,
-			mPlayerPos.y + 2 * mPlayerRectHeight), mPlayerRectWidth, mPlayerRectHeight
+			mPlayerPos.y + 2 * mPlayerRectHeight), mPlayerRectWidth*3.0f, mPlayerRectHeight
 		);
 		mGhost->InitializeStageObject_CreateStage(mCreateStage);
 		mGhost->SetIsInObjectMenu(true);
 	}
 	if (!isInStage[1]) {
 		mEscapee1 = new Escapee_CreateStage(Vec2(mPlayerPos.x - mPlayerRectWidth * 5.0f,
-			mPlayerPos.y), mPlayerRectWidth, mPlayerRectHeight, 1);
+			mPlayerPos.y), mPlayerRectWidth*3.0f, mPlayerRectHeight, 1);
 		mEscapee1->InitializeStageObject_CreateStage(mCreateStage);
 		mEscapee1->SetIsInObjectMenu(true);
 	}
 	if (!isInStage[2]) {
 		mEscapee2 = new Escapee_CreateStage(Vec2(mPlayerPos.x,
-			mPlayerPos.y), mPlayerRectWidth, mPlayerRectHeight, 2);
+			mPlayerPos.y), mPlayerRectWidth*3.0f, mPlayerRectHeight, 2);
 		mEscapee2->InitializeStageObject_CreateStage(mCreateStage);
 		mEscapee2->SetIsInObjectMenu(true);
 	}
 	if (!isInStage[3]) {
 		mEscapee3 = new Escapee_CreateStage(Vec2(mPlayerPos.x + mPlayerRectWidth * 5.0f,
-			mPlayerPos.y), mPlayerRectWidth, mPlayerRectHeight, 3);
+			mPlayerPos.y), mPlayerRectWidth*3.0f, mPlayerRectHeight, 3);
 		mEscapee3->InitializeStageObject_CreateStage(mCreateStage);
 		mEscapee3->SetIsInObjectMenu(true);
 	}
@@ -172,7 +172,7 @@ void StageMenu::Draw_CreateStage() {
 	else {
 		DrawRect(mGPTMenuPos, mGPTMenuWidth, mGPTMenuHeight, ColorF(1, 1, 1));
 	}
-	mGPTFont(U"GPT Assist").draw(Arg::center(ConvertToView(mGPTMenuPos)), ColorF(0, 0, 0));
+	mGPTFont(U"AI Assist").draw(Arg::center(ConvertToView(mGPTMenuPos)), ColorF(0, 0, 0));
 
 	// End
 	DrawRectFrame(mEndPos, mEndRectWidth, mEndRectHeight, 0, 0.003, ColorF(0, 0, 0));
@@ -258,26 +258,26 @@ void StageMenu::RemakePlayer(class StageObject* stageObject){
 	switch (stageObject->GetAttribute()) {
 	case StageObject::Attribute::Ghost:
 		mGhost = new Ghost_CreateStage(Vec2(mPlayerPos.x,
-			mPlayerPos.y + 2*mPlayerRectHeight), mPlayerRectWidth, mPlayerRectHeight
+			mPlayerPos.y + 2*mPlayerRectHeight), mPlayerRectWidth*3.0f, mPlayerRectHeight
 		);
 		mGhost->InitializeStageObject_CreateStage(mCreateStage);
 		mGhost->SetIsInObjectMenu(true);
 		break;
 	case StageObject::Attribute::Escapee1:
 		mEscapee1 = new Escapee_CreateStage(Vec2(mPlayerPos.x - mPlayerRectWidth * 5.0f,
-			mPlayerPos.y), mPlayerRectWidth, mPlayerRectHeight, 1);
+			mPlayerPos.y), mPlayerRectWidth*3.0f, mPlayerRectHeight, 1);
 		mEscapee1->InitializeStageObject_CreateStage(mCreateStage);
 		mEscapee1->SetIsInObjectMenu(true);
 		break;
 	case StageObject::Attribute::Escapee2:
 		mEscapee2 = new Escapee_CreateStage(Vec2(mPlayerPos.x,
-			mPlayerPos.y), mPlayerRectWidth, mPlayerRectHeight, 2);
+			mPlayerPos.y), mPlayerRectWidth*3.0f, mPlayerRectHeight, 2);
 		mEscapee2->InitializeStageObject_CreateStage(mCreateStage);
 		mEscapee2->SetIsInObjectMenu(true);
 		break;
 	case StageObject::Attribute::Escapee3:
 		mEscapee3 = new Escapee_CreateStage(Vec2(mPlayerPos.x + mPlayerRectWidth * 5.0f,
-			mPlayerPos.y), mPlayerRectWidth, mPlayerRectHeight, 3);
+			mPlayerPos.y), mPlayerRectWidth*3.0f, mPlayerRectHeight, 3);
 		mEscapee3->InitializeStageObject_CreateStage(mCreateStage);
 		mEscapee3->SetIsInObjectMenu(true);
 		break;

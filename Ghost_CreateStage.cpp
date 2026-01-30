@@ -43,20 +43,20 @@ void Ghost_CreateStage::InitializeStageMenu_CreateStage() {
 		GetCreateStage()->GetStageMenu()->GetMenuWidth() / 6.0f,
 		mBarHeight / 25.0f);
 	mBarSC_CreateStage->SetColor(ColorF(0, 0, 0));
-	mBarSC_CreateStage->SetIsDraw(false);
+
 
 }
 
 void Ghost_CreateStage::UpdateStageMenu_CreateStage(float deltaTime) {
 	if (!mIsBarGripen) {
 		if (IsIntersect_SC(mBarSC_CreateStage, GetCreateStage()->GetHand()->GetCircleComponent())) {
-			if (GetCreateStage()->GetHand()->GetInputChoose().pressed()) {
+			if (GetCreateStage()->GetHand()->GetInputChoose().pressed()||MouseL.pressed()) {
 				mIsBarGripen = true;
 			}
 		}
 	}
 	else {
-		if (!GetCreateStage()->GetHand()->GetInputChoose().pressed()) {
+		if (!(GetCreateStage()->GetHand()->GetInputChoose().pressed()||MouseL.pressed())) {
 			mIsBarGripen = false;
 		}
 		mBarPos.y = GetCreateStage()->GetHand()->GetPosition().y;

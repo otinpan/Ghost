@@ -40,6 +40,7 @@ void CreateStage::update(Parent* parent) {
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 		}
+		
 		ProcessInput();
 		UpdateGame();
 		draw();

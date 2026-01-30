@@ -139,7 +139,6 @@ void GameResult::DrawResult(const Parent* parent) {
 	// test
 	/*mGameJudgement = Parent::GameJudgement::ESCAPEES_WIN;
 	n = 4;*/
-
 	String res;
 	if (mGameJudgement == Parent::GameJudgement::GHOST_WIN) {
 		res = U"GHOST WIN";
@@ -198,6 +197,7 @@ void GameResult::moveTo(Parent* parent, Parent::SeqID id) {
 	if (id == Parent::SEQ_STAGESELECT) {
 		parent->setStageSelectGame(IsJumpToGame);
 		parent->moveTo(Parent::SEQ_STAGESELECT, Parent::SEQ_GAMERESULT);
+		parent->setControllers(parent->getControllers());
 	}
 	if (id == Parent::SEQ_REGISTERCONTROLLER)parent->moveTo(Parent::SEQ_REGISTERCONTROLLER, Parent::SEQ_GAMERESULT);
 	if (id == Parent::SEQ_CREATESTAGE)parent->moveTo(Parent::SEQ_CREATESTAGE, Parent::SEQ_GAMERESULT);

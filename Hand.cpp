@@ -104,7 +104,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 							i++) {
 							if (stageObject->GetCircleComponents()[i]
 								->GetCircle().contains(cc->GetCircle()) &&
-								inputGrap.pressed()) {
+								(inputGrap.pressed()||MouseR.pressed())) {
 								DeleteChoosing();//Chooseを消す
 								mIsExpand = true;
 								//支点となるItertionをstageが保存
@@ -121,7 +121,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 				}
 				//Grap
 				if (!mIsExpand && !mIsDelete) {
-					if (inputGrap.pressed()) {
+					if (inputGrap.pressed()||MouseR.pressed()) {
 						stageObject->SetIsGripen(true);
 						mIsGrap = true;
 						DeleteChoosing();
@@ -131,7 +131,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 				}
 
 				//Choose
-				if (inputChoose.down() && stageObject->GetIsInStage()) {
+				if ((inputChoose.down()||MouseL.down()) && stageObject->GetIsInStage()) {
 					InitChoosing(stageObject);
 					return;
 				}
@@ -141,7 +141,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 
 		//End CreateStage
 		if (GetCreateStage()->GetStage()->GetIsSaveError()) {
-			if (inputChoose.down()) {
+			if (inputChoose.down()||MouseL.down()) {
 				GetCreateStage()->GetStage()->SetIsSaveError(false);
 			}
 		}
@@ -150,7 +150,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 				GetCreateStage()->GetStageMenu()->GetEndRectWidth(),
 				GetCreateStage()->GetStageMenu()->GetEndRectHeight()))) {
 			GetCreateStage()->GetStageMenu()->SetIsEndOver(true);
-			if (inputChoose.down()) {
+			if (inputChoose.down()||MouseL.down()) {
 				GetCreateStage()->OpenTextMenu();
 			}
 		}
@@ -164,7 +164,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 				GetCreateStage()->GetStageMenu()->GetGPTMenuWidth(),
 				GetCreateStage()->GetStageMenu()->GetGPTMenuHeight()))) {
 			GetCreateStage()->GetStageMenu()->SetIsGPTMenuOver(true);
-			if (inputChoose.down()) {
+			if (inputChoose.down()||MouseL.down()) {
 				GetCreateStage()->OpenGPTMenu();
 			}
 		}
@@ -185,7 +185,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 	if (mIsChoose) {
 		mChoosing->UpdateStageMenu_CreateStage(deltaTime);
 		//stage外でChooseが押された場合mCooseが選択されていない状態にする
-		if (inputChoose.down()) {
+		if (inputChoose.down()||MouseL.down()) {
 			if (!(GetCreateStage()->GetStageMenu()->GetViewStageMenuRect().
 				contains(cc->GetViewCircle()))) {
 				DeleteChoosing();
@@ -194,7 +194,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 	}
 	if (mIsExpand) {
 		//拡大の解除
-		if (!inputGrap.pressed()) {
+		if (!(inputGrap.pressed()||MouseR.pressed())) {
 			GetCreateStage()->GetStage()->RemakeStageObjects();
 			mIsExpand = false;
 		}
@@ -211,7 +211,7 @@ void Hand::UpdateActor_CreateStage(float deltaTime) {
 
 	if (mIsGrap) {
 		sc->SetTexture(TextureAsset(U"cursor_hand"));
-		if (!inputGrap.pressed()) {
+		if (!(inputGrap.pressed()||MouseR.pressed())) {
 			mGrapping->SetIsGripen(false);
 			//Candle
 			if (mGrapping->GetAttribute() == StageObject::Attribute::Candle) {

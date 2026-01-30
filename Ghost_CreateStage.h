@@ -24,5 +24,5 @@ private:
 	bool mIsBarGripen;
 
 	//Font
-	const Font mStageMenuFont{ ConvertToInt(GetScreenHeight() * 0.05) };
+	const Font mStageMenuFont{ ConvertToInt(GetScreenHeight() * 0.03) };
 };

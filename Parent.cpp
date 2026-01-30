@@ -20,11 +20,11 @@ Parent::Parent()
 {
 	//mMainMenu = new MainMenu();
 	//mSubMenu = new SubMenu();
-	//mRegisterController = new RegisterController();
+	mRegisterController = new RegisterController();
 	//mStageSelect=new StageSelect(false);
 	//mGame = new Game();
 	//mCreateStage = new CreateStage();
-	mGameResult = new GameResult(Parent::GameJudgement::DRAW);
+	//mGameResult = new GameResult(Parent::GameJudgement::DRAW);
 	//mChangeWindowSize=new ChangeWindowSize();
 }
 

@@ -35,6 +35,15 @@ void Main()
 	TextureAsset::Register(U"escapee1_heart", U"escapee1_heart.png");
 	TextureAsset::Register(U"escapee2_heart", U"escapee2_heart.png");
 	TextureAsset::Register(U"escapee3_heart", U"escapee3_heart.png");
+	// rule
+	TextureAsset::Register(U"rule_game", U"Rule/game.png");
+	TextureAsset::Register(U"rule_escapee1", U"Rule/escapee1.png");
+	TextureAsset::Register(U"rule_escapee2", U"Rule/escapee2.png");
+	TextureAsset::Register(U"rule_ghost1", U"Rule/ghost1.png");
+	TextureAsset::Register(U"rule_object", U"Rule/object.png");
+	TextureAsset::Register(U"rule_create", U"Rule/create.png");
+	TextureAsset::Register(U"rule_AI_create", U"Rule/AI_create.png");
+	TextureAsset::Register(U"rule_minigame", U"Rule/minigame.png");
 
 
 	Scene::SetBackground({ 1,1,1 });

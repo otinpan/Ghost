@@ -893,9 +893,7 @@ static std::string BuildPromptWithUserText(int w, int h, const std::string& user
 	std::ostringstream p;
 	p << BuildPrompt(w, h);
 
-	// ユーザーの要望を追加（ルールより後、出力形式より前に入れるのがオススメ）
-	// ※ルールが最優先であることを明示しておく
-	p << "\n\n[USER REQUEST]\n";
+	p << "\n\n[USER REQUEST — HIGH PRIORITY]\n";
 	p << "The following is a user's request for the stage. Follow it ONLY if it does not violate any ABSOLUTE REQUIREMENTS.\n";
 	p << userPromptUtf8 << "\n";
 
@@ -1027,7 +1025,7 @@ COUNT=)";
   Target: <= 15 non-null fields total.
 
 [FIELD GUIDELINES BY TILE]
-- B (Brock): material may be set (often "Stone"), others null.
+- B (Block): material may be set (often "Stone"), others null.
 - D (Door): material may be set, canBeGone may be set, others null.
 - P (Patrol): patrolRange and speed may be set; clockwise may be set; others null.
 - T (TreasureChest): treasure and batterySize may be set; others null.
@@ -1071,9 +1069,7 @@ static std::string BuildDetailsPromptWithUserText(const std::vector<std::string>
 	std::ostringstream p;
 	p << BuildDetailsPrompt(layout);
 
-	// ユーザーの要望を追加（ルールより後、出力形式より前に入れるのがオススメ）
-	// ※ルールが最優先であることを明示しておく
-	p << "\n\n[USER REQUEST]\n";
+	p << "\n\n[USER REQUEST — HIGH PRIORITY]\n";
 	p << "The following is a user's request for the stage. Follow it ONLY if it does not violate any ABSOLUTE REQUIREMENTS.\n";
 	p << userPromptUtf8 << "\n";
 
@@ -1694,7 +1690,6 @@ void GPTMenu::PollCreateStageResult() {
 
 	if (result) {
 		ApplyToStage(*result);
-		Print << U"Success CreateStage";
 		EndGPTMenu_CreateStage();
 		return;
 	}

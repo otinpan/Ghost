@@ -6,6 +6,7 @@ Battery::Battery(Vec2 pos, float width, float height)
 	:StageObject(pos, width, height)
 {
 	SetAttribute(StageObject::Attribute::Battery);
+	SetBatterySize(StageObject::BatterySize::Small);
 }
 
 Battery::~Battery() {
@@ -41,7 +42,7 @@ void Battery::InitializeStageMenu_CreateStage() {
 		(GetCreateStage()->GetStageMenu()->GetMenuRight() + GetCreateStage()->GetStageMenu()->GetMenuLeft()) / 2.0f,
 		(GetCreateStage()->GetStageMenu()->GetMenuUp() + GetCreateStage()->GetStageMenu()->GetMenuDown()) * 3.0f / 4.0f
 	);
-	mMidRad = GetCreateStage()->GetStageMenu()->GetMenuWidth() / 4.0f;
+	mMidRad = GetCreateStage()->GetStageMenu()->GetMenuWidth() / 4.5f;
 	mSmallRad = mMidRad / 1.5f;
 	mBigRad = mMidRad * 1.5f;
 	mSmallCC = new CircleComponent(this,200,DrawingComponent::DrawingState::UNAFFECTED);
@@ -85,7 +86,7 @@ void Battery::UpdateStageMenu_CreateStage(float deltaTime) {
 		}
 	}
 
-	if (GetCreateStage()->GetHand()->GetInputChoose().down()) {
+	if (GetCreateStage()->GetHand()->GetInputChoose().down()||MouseL.pressed()) {
 		if (IsIntersect_CC(mBigCC, GetCreateStage()->GetHand()->GetCircleComponent())) {
 			SetBatterySize(StageObject::BatterySize::Big);
 		}

@@ -78,13 +78,13 @@ void Candle::UpdateStageMenu_CreateStage(float deltaTime) {
 
 	if (!mIsBarGripen) {
 		if (IsIntersect_SC(mBarSC_CreateStage, GetCreateStage()->GetHand()->GetCircleComponent())) {
-			if (GetCreateStage()->GetHand()->GetInputChoose().pressed()) {
+			if (GetCreateStage()->GetHand()->GetInputChoose().pressed()||MouseL.pressed()) {
 				mIsBarGripen = true;
 			}
 		}
 	}
 	else {
-		if (!GetCreateStage()->GetHand()->GetInputChoose().pressed()) {
+		if (!GetCreateStage()->GetHand()->GetInputChoose().pressed()||MouseL.pressed()) {
 			mIsBarGripen = false;
 		}
 		mBarPos.y = GetCreateStage()->GetHand()->GetPosition().y;

@@ -167,13 +167,13 @@ void Patrol::InitializeStageMenu_CreateStage() {
 void Patrol::UpdateStageMenu_CreateStage(float deltaTime) {
 	if (!mIsBarGripen) {
 		if (IsIntersect_SC(mBarSC_CreateStage, GetCreateStage()->GetHand()->GetCircleComponent())) {
-			if (GetCreateStage()->GetHand()->GetInputChoose().pressed()) {
+			if (GetCreateStage()->GetHand()->GetInputChoose().pressed()||MouseL.pressed()) {
 				mIsBarGripen = true;
 			}
 		}
 	}
 	else {
-		if (!GetCreateStage()->GetHand()->GetInputChoose().pressed()) {
+		if (!(GetCreateStage()->GetHand()->GetInputChoose().pressed()||MouseL.pressed())) {
 			mIsBarGripen = false;
 		}
 		mBarPos.x = GetCreateStage()->GetHand()->GetPosition().x;
@@ -196,7 +196,7 @@ void Patrol::UpdateStageMenu_CreateStage(float deltaTime) {
 		SetClockwise(3);
 	}
 
-	if (GetCreateStage()->GetHand()->GetInputChoose().down()) {
+	if (GetCreateStage()->GetHand()->GetInputChoose().down()||MouseL.down()) {
 		if (IsIntersect_CC(GetCreateStage()->GetHand()->GetCircleComponent(), mUpCC)) {
 			SetClockwise(0);
 		}
@@ -215,21 +215,21 @@ void Patrol::UpdateStageMenu_CreateStage(float deltaTime) {
 		AddDeltaTime(mIsPlusLasting, mPlusTime, mPlusLastTime, deltaTime);
 	}
 	else {
-		if (GetCreateStage()->GetHand()->GetInputPlus().down() ||
-			(IsIntersect_CC(mPlusCC, GetCreateStage()->GetHand()->GetCircleComponent()) &&
-				GetCreateStage()->GetHand()->GetInputChoose().down())) {
-			AddPatrolRange(true);
-			mIsPlusLasting = true;
+		if (GetCreateStage()->GetHand()->GetInputMinus().down() ||
+			(IsIntersect_CC(mMinusCC, GetCreateStage()->GetHand()->GetCircleComponent()) &&
+			(GetCreateStage()->GetHand()->GetInputChoose().down() || MouseL.down()))){
+			AddPatrolRange(false);
+			mIsMinusLasting = true;
 		}
 	}
 	if (mIsMinusLasting) {
 		AddDeltaTime(mIsMinusLasting, mMinusTime, mMinusLastTime, deltaTime);
 	}
 	else {
-		if (GetCreateStage()->GetHand()->GetInputMinus().down() ||
-			(IsIntersect_CC(mMinusCC, GetCreateStage()->GetHand()->GetCircleComponent()) &&
-				GetCreateStage()->GetHand()->GetInputChoose().down())) {
-			AddPatrolRange(false);
+		if (GetCreateStage()->GetHand()->GetInputPlus().down() ||
+			(IsIntersect_CC(mPlusCC, GetCreateStage()->GetHand()->GetCircleComponent()) &&
+			(GetCreateStage()->GetHand()->GetInputChoose().down() || MouseL.down()))){
+			AddPatrolRange(true);
 			mIsMinusLasting = true;
 		}
 	}

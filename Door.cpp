@@ -104,7 +104,7 @@ void Door::UpdateStageMenu_CreateStage(float deltaTime) {
 		SetClockwise(3);
 	}
 
-	if (GetCreateStage()->GetHand()->GetInputChoose().down()) {
+	if (GetCreateStage()->GetHand()->GetInputChoose().down()||MouseL.down()) {
 		if (IsIntersect_CC(GetCreateStage()->GetHand()->GetCircleComponent(), mUpCC)) {
 			SetClockwise(0);
 		}

@@ -140,6 +140,14 @@ private:
 	void DrawPause();
 	Font pauseFont;
 
+	// rule
+	bool mIsRule = false;
+	void UpdateRule();
+	void DrawRule();
+	std::vector<TextureAsset> mRuleTextures;
+	int mRuleIteration=0;
+	int mRuleSize;
+
 	// 終了判定
 	void CheckIsGameEnd();
 	bool mIsGameEnd = false;
