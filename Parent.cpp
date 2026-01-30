@@ -18,9 +18,9 @@ Parent::Parent()
 	,mStageSelect(0)
 	, mNext(SEQ_NONE)
 {
-	//mMainMenu = new MainMenu();
+	mMainMenu = new MainMenu();
 	//mSubMenu = new SubMenu();
-	mRegisterController = new RegisterController();
+	//mRegisterController = new RegisterController();
 	//mStageSelect=new StageSelect(false);
 	//mGame = new Game();
 	//mCreateStage = new CreateStage();

@@ -9,7 +9,8 @@ MainMenu::MainMenu()
 }
 
 MainMenu::~MainMenu() {
-
+	TextureAsset::Release(U"main_game");
+	TextureAsset::Release(U"main_stage");
 }
 
 void MainMenu::Initialize() {
@@ -22,7 +23,7 @@ void MainMenu::Initialize() {
 	inputBack = KeyBackspace;
 
 	mCenterCirclePos = Vec2(0, 0);
-	mCenterCircleRadius = 0.2f;
+	mCenterCircleRadius = 0.25f;
 	mSelectHeight = 0.6f;
 	mSelectWidth = 0.6f;
 	mGameRectCenter = Vec2((float)mCenterCirclePos.x - mCenterCircleRadius - mSelectWidth / 1.8f, mCenterCircleRadius);
@@ -39,6 +40,9 @@ void MainMenu::Initialize() {
 	fs *= (float)1.02;
 	fontSize = (int32)fs;
 	FontAsset::Register(U"LageFont_MainMenu", fontSize, Typeface::Bold);
+
+	TextureAsset::Load(U"main_game");
+	TextureAsset::Load(U"main_stage");
 }
 
 void MainMenu::update(Parent* parent) {
@@ -106,10 +110,22 @@ void MainMenu::UpdateMainMenu() {
 }
 
 void MainMenu::draw() {
+	
+	
+
 	DrawCircle(mCenterCirclePos, mCenterCircleRadius, ColorF(1, 1, 1));
 	DrawRoundRect(mGameRectCenter, mSelectWidth, mSelectHeight, mRectRound, mGameRectColor);
 	DrawRoundRect(mCreateStageRectCenter, mSelectWidth, mSelectHeight, mRectRound, mCreateStageRectColor);
 	DrawRoundRect(mSubMenuRectCenter, mSelectWidth, mSelectHeight, mRectRound, mSubMenuRectColor);
+
+	if (mSelect == MainSelect::SELECT_GAME) {
+		DrawTexture(TextureAsset(U"main_game"), Vec2(0.0f, 0.0f),
+			mCenterCircleRadius*0.9f, mCenterCircleRadius*0.9f, 0.0f);
+	}
+	else if (mSelect == MainSelect::SELECT_CREATESTAGE) {
+		DrawTexture(TextureAsset(U"main_stage"),Vec2(0.0f,0.0f),
+			mCenterCircleRadius*0.9f , mCenterCircleRadius*0.9f , 0.0f);
+	}
 
 	switch (mSelect) {
 	case MainSelect::SELECT_GAME:
@@ -123,12 +139,12 @@ void MainMenu::draw() {
 		break;
 	}
 
-	FontAsset(U"LargeFont_MainMenu")(U"あそぶ").draw(Arg::center(ConvertToView(mGameRectCenter)), ColorF(0));
-	FontAsset(U"SmallFont_MainMenu")(U"あそぶ").draw(Arg::center(ConvertToView(mGameRectCenter)), ColorF(1));
-	FontAsset(U"LargeFont_MainMenu")(U"ステージ").draw(Arg::center(ConvertToView(mCreateStageRectCenter)), ColorF(0));
-	FontAsset(U"SmallFont_MainMenu")(U"ステージ").draw(Arg::center(ConvertToView(mCreateStageRectCenter)), ColorF(1));
-	FontAsset(U"LargeFont_MainMenu")(U"メニュー").draw(Arg::center(ConvertToView(mSubMenuRectCenter)), ColorF(0));
-	FontAsset(U"SmallFont_MainMenu")(U"メニュー").draw(Arg::center(ConvertToView(mSubMenuRectCenter)), ColorF(1));
+	FontAsset(U"LargeFont_MainMenu")(U"Play").draw(Arg::center(ConvertToView(mGameRectCenter)), ColorF(0));
+	FontAsset(U"SmallFont_MainMenu")(U"Play").draw(Arg::center(ConvertToView(mGameRectCenter)), ColorF(1));
+	FontAsset(U"LargeFont_MainMenu")(U"Stage").draw(Arg::center(ConvertToView(mCreateStageRectCenter)), ColorF(0));
+	FontAsset(U"SmallFont_MainMenu")(U"Stage").draw(Arg::center(ConvertToView(mCreateStageRectCenter)), ColorF(1));
+	FontAsset(U"LargeFont_MainMenu")(U"Rule").draw(Arg::center(ConvertToView(mSubMenuRectCenter)), ColorF(0));
+	FontAsset(U"SmallFont_MainMenu")(U"Rule").draw(Arg::center(ConvertToView(mSubMenuRectCenter)), ColorF(1));
 
 }
 

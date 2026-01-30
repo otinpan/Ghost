@@ -9,6 +9,8 @@ public:
 
 	enum SubSelect {
 		SelectChangeWindowSize,
+		SelectGameRule,
+		SelectCreateRule,
 	};
 
 	void update(class Parent*);
@@ -24,7 +26,6 @@ private:
 	void ProcessInput();
 	void UpdateSubMenu();
 
-	Vec2 mChangeWindowSizeRectCenter;
 	float mSelectRectWidth;
 	float mSelectRectHeight;
 	float mSelectRectRound;
@@ -48,6 +49,20 @@ private:
 	InputGroup inputLeft;
 	InputGroup inputDecision;
 	InputGroup inputBack;
+
+	// Rule
+	std::vector<TextureAsset> mGameRuleTextures;
+	std::vector<TextureAsset> mCreateRuleTextures;
+	int mGameRuleIteration = 0;
+	int mCreateRuleIteration = 0;
+	int mGameRuleSize;
+	int mCreateRuleSize;
+	bool mIsGameRule=false;
+	bool mIsCreateRule = false;
+	void UpdateGameRule();
+	void UpdateCreateRule();
+	void DrawGameRule();
+	void DrawCreateRule();
 
 	bool mIsRunning;
 

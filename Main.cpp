@@ -44,6 +44,9 @@ void Main()
 	TextureAsset::Register(U"rule_create", U"Rule/create.png");
 	TextureAsset::Register(U"rule_AI_create", U"Rule/AI_create.png");
 	TextureAsset::Register(U"rule_minigame", U"Rule/minigame.png");
+	// mainmenu
+	TextureAsset::Register(U"main_game", U"game.png");
+	TextureAsset::Register(U"main_stage", U"create_stage.png");
 
 
 	Scene::SetBackground({ 1,1,1 });

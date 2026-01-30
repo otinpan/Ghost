@@ -22,9 +22,6 @@ void ChangeWindowSize::Initialize() {
 
 void ChangeWindowSize::update(Parent* parent) {
 	if (mIsRunning) {
-		ClearPrint();
-		Print << Scene::Size();
-		Print << Window::GetState().virtualSize;
 		if (mSeqID != Parent::SEQ_NONE) {
 			moveTo(parent, mSeqID);
 			return;
