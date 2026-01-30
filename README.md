@@ -1,0 +1,7 @@
+![](App/Rule/game.png)
+![](App/Rule/escapee1.png)
+![](App/Rule/escapee2.png)
+![](App/Rule/ghost1.png)
+![](App/Rule/create.png)
+![](App/Rule/AI_create.png)
+![](App/Rule/minigame.png)
