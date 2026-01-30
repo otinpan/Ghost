@@ -459,6 +459,7 @@ void Game::DrawRule() {
 	float right = 0.5f;
 	float eachCircleWidth = (float)(right - left) / mRuleSize;
 	float radius = 0.01f;
+	DrawRect(Vec2(0.0f, 0.0f), 1.85f, 1.85f,ColorF(0.0f));
 	DrawTexture(mRuleTextures[mRuleIteration], Vec2(0, 0), 0.9f, 0.9f, 0.0f);
 	for (int i = 0; i < mRuleSize; i++) {
 		ColorF color=ColorF(1.0f);
