@@ -33,12 +33,18 @@ private:
 
 	// 描画
 	std::vector<Vec2> mControllersPos;
+	std::vector<Vec2> mPlayersPos;
 	float eachWidth;
 	float drawSize;
 	bool mIsAccepted; //登録人数が正しいか
 	void DrawKeyboard(Vec2 pos);
 	void DrawJoyCon(Controller::ControllerType type,Vec2 pos);
+	void DrawPlayers();
 	Effect effect;
+
+	// font
+	Font mHelpFont{ ConvertToInt((float)0.03 * GetScreenHeight()),Typeface::Black,FontStyle::Bitmap };
+	Font mStartFont{ ConvertToInt((float)0.1 * GetScreenHeight()),Typeface::Bold,FontStyle::Bitmap };
 
 	Parent::SeqID mSeqID;
 	bool mIsRunning;

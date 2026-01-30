@@ -10,23 +10,31 @@ RegisterController::RegisterController()
 
 
 RegisterController::~RegisterController() {
-
+	TextureAsset::Release(U"keyboard");
+	TextureAsset::Release(U"escapee1");
+	TextureAsset::Release(U"escapee2");
+	TextureAsset::Release(U"escapee3");
 }
 
 
 void RegisterController::Initialize() {
 	Scene::SetBackground(ColorF(0.7f));
 
-
 	mControllersPos.resize(4);
+	mPlayersPos.resize(4);
 	eachWidth = 1.8f / 4;
 	for (int i = 0; i < 4; i++) {
 		mControllersPos[i] = Vec2(-0.9+eachWidth*(i+0.5f), -0.5f);
+		mPlayersPos[i] = Vec2(-0.9 + eachWidth * (i + 0.5f), 0.4f);
 	}
 
 	drawSize = eachWidth *0.95;
 
 	TextureAsset::Load(U"keyboard");
+	TextureAsset::Load(U"ghost");
+	TextureAsset::Load(U"escapee1");
+	TextureAsset::Load(U"escapee2");
+	TextureAsset::Load(U"escapee3");
 
 	mControllers.emplace_back(Controller::ControllerType::JOYCON_L2);
 }
@@ -297,17 +305,7 @@ void RegisterController::DeleteCanceledController()
 }
 
 
-
-
 void RegisterController::draw() {
-	if (mIsAccepted) {
-		Print << U"Press Space to Start";
-	}
-	Print << mControllers.size();
-	for (auto x : mControllers) {
-		Print << x;
-	}
-
 	if (mIsAccepted) {
 		// todo
 		// 登録完了OK表示
@@ -326,8 +324,48 @@ void RegisterController::draw() {
 		
 	}
 
+	DrawPlayers();
+
+	mHelpFont(U"★Register, JoyCon: R+L    Keyboard: Enter  ★Deregister, JoyCon: plus    Keyboard: Del").
+		drawAt(ConvertToView(Vec2(0.0f, 0.9f)), ColorF(0.0f));
+	
+	// 準備が出来たら
+	if (mControllers.size() >= 2) {
+		DrawRect(Vec2(0.0f, 0.0f), 2.0f, 0.2f, ColorF(0.0f));
+		mStartFont(U"Press Space!").drawAt(ConvertToView(Vec2(0.0f, 0.0f)), ColorF(1.0f));
+	}
+
 	effect.update();
 
+}
+
+void RegisterController::DrawPlayers() {
+	float writingWidth = (float)eachWidth / 2.0f * GetScreenWidth();
+	float writingHeight = (float)0.5f / 2.0f * GetScreenHeight();
+	if (mControllers.size() >= 1) {
+		Texture(TextureAsset(U"ghost")).
+			resized(writingWidth, writingHeight).
+			scaled(1.0f).
+			rotated(0.0f).drawAt(ConvertToView(mPlayersPos[0]));
+	}
+	if (mControllers.size() >= 2) {
+		Texture(TextureAsset(U"escapee1")).
+			resized(writingWidth, writingHeight).
+			scaled(1.0f).rotated(0.0f).
+			drawAt(ConvertToView(mPlayersPos[1]));
+	}
+	if (mControllers.size() >= 3) {
+		Texture(TextureAsset(U"escapee2")).
+			resized(writingWidth, writingHeight).
+			scaled(1.0f).rotated(0.0f).
+			drawAt(ConvertToView(mPlayersPos[2]));
+	}
+	if (mControllers.size() >= 4) {
+		Texture(TextureAsset(U"escapee3")).
+			resized(writingWidth, writingHeight).
+			scaled(1.0f).rotated(0.0f).
+			drawAt(ConvertToView(mPlayersPos[3]));
+	}
 }
 
 void RegisterController::DrawKeyboard(Vec2 pos) {
@@ -356,6 +394,7 @@ void RegisterController::DrawKeyboard(Vec2 pos) {
 		}
 	}
 }
+
 
 void RegisterController::DrawJoyCon(Controller::ControllerType type, Vec2 pos) {
 	float angle = 0_deg;
