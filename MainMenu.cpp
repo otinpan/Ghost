@@ -107,6 +107,10 @@ void MainMenu::UpdateMainMenu() {
 			mSeqID = Parent::SEQ_SUBMENU;
 		}
 	}
+
+	if (inputBack.down()) {
+		SetSeqID(Parent::SeqID::SEQ_TITLE);
+	}
 }
 
 void MainMenu::draw() {
@@ -155,6 +159,7 @@ void MainMenu::Shutdown() {
 
 
 void MainMenu::moveTo(Parent* parent, Parent::SeqID id) {
+	if (id == Parent::SEQ_TITLE)parent->moveTo(Parent::SEQ_TITLE, Parent::SEQ_MAINMENU);
 	if (id == Parent::SEQ_MAINMENU)parent->moveTo(Parent::SEQ_MAINMENU, Parent::SEQ_MAINMENU);
 	if (id == Parent::SEQ_STAGESELECT)parent->moveTo(Parent::SEQ_STAGESELECT, Parent::SEQ_MAINMENU);
 	if (id == Parent::SEQ_REGISTERCONTROLLER)parent->moveTo(Parent::SEQ_REGISTERCONTROLLER, Parent::SEQ_MAINMENU);

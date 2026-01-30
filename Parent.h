@@ -6,6 +6,7 @@
 class Parent {
 public:
 	enum SeqID {
+		SEQ_TITLE,
 		SEQ_MAINMENU,
 		SEQ_SUBMENU,
 		SEQ_REGISTERCONTROLLER,
@@ -49,6 +50,7 @@ public:
 
 
 private:
+	class Title* mTitle;
 	class MainMenu* mMainMenu;
 	class SubMenu* mSubMenu;
 	class RegisterController* mRegisterController;

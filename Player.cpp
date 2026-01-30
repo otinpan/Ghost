@@ -36,6 +36,7 @@ Player::~Player() {
 	}
 }
 
+
 void Player::InitializeActor_Game(class Game* game) {
 	Initialize_Game(game);
 	GetGame()->AddPlayer(this);

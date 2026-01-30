@@ -7,6 +7,7 @@
 #include"GameResult.h"
 #include"ChangeWindowSize.h"
 #include"SubMenu.h"
+#include"Title.h";
 
 Parent::Parent()
 	:mGame(0)
@@ -18,7 +19,8 @@ Parent::Parent()
 	,mStageSelect(0)
 	, mNext(SEQ_NONE)
 {
-	mMainMenu = new MainMenu();
+	mTitle = new Title();
+	//mMainMenu = new MainMenu();
 	//mSubMenu = new SubMenu();
 	//mRegisterController = new RegisterController();
 	//mStageSelect=new StageSelect(false);
@@ -29,6 +31,7 @@ Parent::Parent()
 }
 
 Parent::~Parent() {
+	if (mTitle)delete mTitle;
 	if (mMainMenu)delete mMainMenu;
 	if (mSubMenu)delete mSubMenu;
 	if (mStageSelect)delete mStageSelect;
@@ -41,6 +44,10 @@ Parent::~Parent() {
 
 void Parent::update() {
 	switch (mNext) {
+	case SEQ_TITLE:
+		SafeDelete();
+		mTitle = new Title();
+		break;
 	case SEQ_MAINMENU:
 		SafeDelete();
 		mMainMenu = new MainMenu();
@@ -77,6 +84,7 @@ void Parent::update() {
 	
 	mNext = SEQ_NONE;
 
+	if (mTitle)mTitle->update(this);
 	if (mMainMenu)mMainMenu->update(this);
 	if (mSubMenu)mSubMenu->update(this);
 	if (mRegisterController) mRegisterController->update(this);
@@ -89,6 +97,10 @@ void Parent::update() {
 }
 
 void Parent::SafeDelete() {
+	if (mTitle) {
+		delete mTitle;
+		mTitle = nullptr;
+	}
 	if (mMainMenu) {
 		delete mMainMenu;
 		mMainMenu = nullptr;
