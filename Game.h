@@ -5,7 +5,7 @@
 
 class Game {
 public:
-	Game(String selectedStageName,std::vector<Controller::ControllerType> controllers);
+	Game(String selectedStageName, std::vector<Controller::ControllerType> controllers);
 	~Game();
 	void update(class Parent*);
 	void draw();
@@ -38,12 +38,12 @@ public:
 	void UpdateHitstop(float deltaTime);
 
 	//class getter
-	class Stage* &GetStage() { return mStage; }
-	class Ghost_Game* &GetGhost() { return mGhost; }
+	class Stage*& GetStage() { return mStage; }
+	class Ghost_Game*& GetGhost() { return mGhost; }
 	class Escapee_Game*& GetEscapee1() { return mEscapee1; }
 	class Escapee_Game*& GetEscapee2() { return mEscapee2; }
 	class Escapee_Game*& GetEscapee3() { return mEscapee3; }
-	std::vector<class Player*> &GetPlayers() { return mPlayers; }
+	std::vector<class Player*>& GetPlayers() { return mPlayers; }
 
 	//Sequence
 	void moveTo(Parent* paretn, Parent::SeqID id);
@@ -64,8 +64,8 @@ public:
 
 private:
 	void ProcessInput();
-    void UpdateGame();
-    void LoadData();
+	void UpdateGame();
+	void LoadData();
 	void UnloadData();
 
 	// All the actors in the game
@@ -142,8 +142,13 @@ private:
 
 	// 終了判定
 	void CheckIsGameEnd();
-	bool mIsGameEnd=false;
+	bool mIsGameEnd = false;
 	Parent::GameJudgement mJudgement;
+
+	// ghost hp font
+	Font mHpFont{ ConvertToInt((float)0.04 * GetScreenHeight()),Typeface::Black,FontStyle::Bitmap };
+	Font mSmallHpFont{ ConvertToInt((float)0.03 * GetScreenHeight()),Typeface::Black,FontStyle::Bitmap };
+
 
 	InputGroup inputUp;
 	InputGroup inputDown;

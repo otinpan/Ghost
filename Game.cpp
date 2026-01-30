@@ -194,6 +194,18 @@ void Game::draw() {
 	mTimerFont(timeStr)
 		.draw(Arg::center(ConvertToView(Vec2(0.0f, 0.93f))), ColorF(1.0f));
 
+	// Ghostの体力の表示
+	int hp=GetGhost()->GetHP();
+	mHpFont(hp).draw(Arg::center(ConvertToView(Vec2(-0.85f, 0.93f))), ColorF(1.0f));
+	Texture(TextureAsset(U"ghost")).
+		scaled(0.9f).rotated(0.0f).
+		drawAt(ConvertToView(Vec2( - 0.93f, 0.93f)));
+	if (GetGhost() && GetGhost()->GetIsLighted()) {
+		Vec2 offset = Vec2(0.0f, GetStage()->GetRectHeight());
+		mSmallHpFont(hp).draw(Arg::center(ConvertToView(GetGhost()->GetPosition() + offset)));
+	}
+
+
 	if (mIsPaused) {
 		DrawPause();
 	}
@@ -234,12 +246,12 @@ void Game::LoadData() {
 	mStage = new Stage(1.85f,1.85f);
 
 	const FilePath path = U"Stage/" + mSelectedStageName + U"/Data.bin";
-	mControllers = {
+	/*mControllers = {
 		Controller::ControllerType::KEYBOARD,
 		Controller::ControllerType::KEYBOARD,
 		Controller::ControllerType::KEYBOARD,
 		Controller::ControllerType::KEYBOARD
-	};
+	};*/
 	mStage->Initialize_Game(this,path);
 	// todo playerのコンストラクタの引数にコントローラーを渡す
 	if (mControllers.size() >= 1) {
