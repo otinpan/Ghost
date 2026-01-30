@@ -34,6 +34,7 @@ public:
 
 	void setGameJudgement(GameJudgement judge) { mGameJudgement = judge; }
 	void setControllers(const std::vector<Controller::ControllerType> controllers) { mControllers = controllers; }
+	const std::vector<Controller::ControllerType>& getControllers() const { return mControllers; }
 
 	class MainMenu*& GetMainMenu() { return mMainMenu; }
 	class SubMenu*& GetSubMenu() { return mSubMenu; }
@@ -91,6 +92,7 @@ void DrawTriangle_pos(Vec2 pos0, Vec2 pos1, Vec2 pos2,ColorF color0,ColorF color
 void AddDeltaTime(bool&mIsLasting,float &mTime,float mLastTime,float deltaTime);
 void DrawPlus(float hegiht, float width, Vec2 pos, float angle, ColorF color);
 void DrawGradiationRect(Vec2 pos, float width, float height, ColorF top, ColorF bottom);
+void DrawTexture(TextureAsset texture,Vec2 pos,float width,float height,float rot);
 RectF GetViewRect(Vec2 pos, float width, float height);
 Circle GetViewCircle(Vec2 pos, float rad);
 int ConvertToInt(float f);

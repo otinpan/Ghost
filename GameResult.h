@@ -17,7 +17,7 @@ public:
 	};
 
 	void update(class Parent*);
-	void draw();
+	void draw(const class Parent* parent);
 
 	void Initialize();
 	void Shutdown();
@@ -37,7 +37,11 @@ private:
 	Parent::SeqID mSeqID;
 	bool mIsRunning;
 
-	Font resultFont;
+	Font selectFont;
+
+	// result
+	void DrawResult(const class Parent* parent);
+	Font resultFont{ ConvertToInt((float)0.2 * GetScreenHeight()),Typeface::Black,FontStyle::Bitmap };
 
 	InputGroup inputLeft;
 	InputGroup inputRight;

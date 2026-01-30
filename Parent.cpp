@@ -20,11 +20,11 @@ Parent::Parent()
 {
 	//mMainMenu = new MainMenu();
 	//mSubMenu = new SubMenu();
-	mRegisterController = new RegisterController();
+	//mRegisterController = new RegisterController();
 	//mStageSelect=new StageSelect(false);
 	//mGame = new Game();
 	//mCreateStage = new CreateStage();
-	//mGameResult = new GameResult(Parent::GameJudgement::DRAW);
+	mGameResult = new GameResult(Parent::GameJudgement::DRAW);
 	//mChangeWindowSize=new ChangeWindowSize();
 }
 
@@ -235,6 +235,10 @@ void DrawGradiationRect(Vec2 pos, float width, float height, ColorF top, ColorF 
 	RectF(Arg::center(ConvertToView(pos)),
 		GetScreenWidth() * width / 2,
 		GetScreenHeight() * height / 2).draw(Arg::top (top),Arg::bottom (bottom));
+}
+
+void DrawTexture(TextureAsset texture, Vec2 pos, float width, float height, float rot = 0.0) {
+	Texture(texture).resized(width * GetScreenWidth(), height * GetScreenHeight()).rotated(rot).drawAt(ConvertToView(pos));
 }
 
 void AddDeltaTime(bool &mIsLasting, float &mTime, float mLastTime, float deltaTime) {
