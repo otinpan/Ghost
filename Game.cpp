@@ -152,7 +152,7 @@ void Game::draw() {
 	renderTexture.clear(ColorF(0));
 	renderTextureLight.clear(ColorF(0));
 
-
+	ClearPrint();
 
 	// 描画する領域を指定
 	{
@@ -196,16 +196,29 @@ void Game::draw() {
 
 	// Ghostの体力の表示
 	int hp=GetGhost()->GetHP();
+	Vec2 offset = Vec2(0.0f, GetStage()->GetRectHeight());
 	mHpFont(hp).draw(Arg::center(ConvertToView(Vec2(-0.85f, 0.93f))), ColorF(1.0f));
-	Texture(TextureAsset(U"ghost")).
-		scaled(0.9f).rotated(0.0f).
+	Texture(TextureAsset(U"ghost")).resized(0.05 * GetScreenWidth(), 0.05 * GetScreenHeight()).
+		rotated(0.0f).
 		drawAt(ConvertToView(Vec2( - 0.93f, 0.93f)));
 	if (GetGhost() && GetGhost()->GetIsLighted()) {
-		Vec2 offset = Vec2(0.0f, GetStage()->GetRectHeight());
 		mSmallHpFont(hp).draw(Arg::center(ConvertToView(GetGhost()->GetPosition() + offset)));
 	}
 
+	// Escapeeのhelp表示
+	if (mEscapee1 && !(mEscapee1->GetIsAlive()) && !mEscapee1->GetIsLighted()) {
+		mEscapeeHelpFont(U"HELP").draw(Arg::center(ConvertToView(GetEscapee1()->GetPosition() + offset)));
+	}
+	if (mEscapee2 && !(mEscapee2->GetIsAlive()) && !mEscapee2->GetIsLighted()) {
+		mEscapeeHelpFont(U"HELP").draw(Arg::center(ConvertToView(GetEscapee2()->GetPosition() + offset)));
+	}
+	if (mEscapee3 && !(mEscapee3->GetIsAlive()) && !mEscapee3->GetIsLighted()) {
+		mEscapeeHelpFont(U"HELP").draw(Arg::center(ConvertToView(GetEscapee3()->GetPosition() + offset)));
+	}
 
+	// helpの表示
+	mGameHelpFont(U"★Keyboard, move:AWSD,  unique action:→ or mouseL, slide: ← or mouseR").drawAt(ConvertToView(Vec2(0.0f, -0.95f)), ColorF(0.0f));
+	mGameHelpFont(U"★JoyCon, move:stick,  unique action:R ,slide: A ").drawAt(ConvertToView(Vec2(0.5f, 0.95f)), ColorF(0.0f));
 	if (mIsPaused) {
 		DrawPause();
 	}

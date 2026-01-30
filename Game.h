@@ -149,6 +149,12 @@ private:
 	Font mHpFont{ ConvertToInt((float)0.04 * GetScreenHeight()),Typeface::Black,FontStyle::Bitmap };
 	Font mSmallHpFont{ ConvertToInt((float)0.03 * GetScreenHeight()),Typeface::Black,FontStyle::Bitmap };
 
+	// escapee help font
+	Font mEscapeeHelpFont{ ConvertToInt((float)0.03 * GetScreenHeight()),Typeface::Black,FontStyle::Bitmap };
+
+	// game help font
+	Font mGameHelpFont{ ConvertToInt((float)0.03 * GetScreenHeight()),Typeface::Black,FontStyle::Bitmap };
+
 
 	InputGroup inputUp;
 	InputGroup inputDown;

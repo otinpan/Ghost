@@ -161,8 +161,23 @@ void Escapee_Game::UpdatePlayer_Game(float deltaTime) {
 	if (!GetIsAlive()) {
 		mFlashlight->SetIsLightOn(false);
 		UpdateUnAlive(deltaTime);
+		// 動かないように固定
+		if (GetInputComponent_Keyboard() != nullptr) {
+			GetInputComponent_Keyboard()->SetIsMove(false);
+		}
+		if (GetInputComponent_JoyCon() != nullptr) {
+			GetInputComponent_JoyCon()->SetIsMove(false);
+		}
 		return;
 	}
+
+	if (GetInputComponent_Keyboard() != nullptr) {
+		GetInputComponent_Keyboard()->SetIsMove(true);
+	}
+	if (GetInputComponent_JoyCon() != nullptr) {
+		GetInputComponent_JoyCon()->SetIsMove(true);
+	}
+
 	UpdateItemAvailable(deltaTime);
 	//heartbeat
 	UpdateHeartbeat(deltaTime);
@@ -271,7 +286,6 @@ void Escapee_Game::UpdateIntersectGhost_Game(float deltaTime) {
 		&&GetGame()->GetGhost()->GetCanCapture()) {
 		SetIsAlive_Game(false,GetGame());
 		GetSpriteComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::UNAFFECTED,GetGame());
-		mLightedFrameCC->SetIsDraw(true);
 		GetGame()->SetHitstop(1.0f);
 		mLightedCC->SetCenter(GetPosition() + lightedOffset);
 		mLightedFrameCC->SetCenter(GetPosition() + lightedOffset);
@@ -280,7 +294,6 @@ void Escapee_Game::UpdateIntersectGhost_Game(float deltaTime) {
 		&& IsIntersect_CC(GetCircleComponent(), GetGame()->GetGhost()->GetGhostClone()->GetCircleComponent())) {
 		SetIsAlive_Game(false, GetGame());
 		GetSpriteComponent()->SetDrawingState_Game(DrawingComponent::DrawingState::UNAFFECTED, GetGame());
-		mLightedFrameCC->SetIsDraw(true);
 		GetGame()->SetHitstop(1.0f);
 		mLightedCC->SetCenter(GetPosition() + lightedOffset);
 		mLightedFrameCC->SetCenter(GetPosition() + lightedOffset);
@@ -360,6 +373,7 @@ void Escapee_Game::UpdateHeartbeat(float deltaTime) {
 
 void Escapee_Game::UpdateUnAlive(float deltaTime) {
 	mLightedCC->SetIsDraw(false);
+	mLightedFrameCC->SetIsDraw(false);
 	if (GetIsAlive())return;
 	
 	// 生還
@@ -377,6 +391,7 @@ void Escapee_Game::UpdateUnAlive(float deltaTime) {
 			// 表示
 			mLightedCC->SetIsDraw(true);
 			mLightedCC->SetRadius(ratio * maxUnaliveRadius);
+			mLightedFrameCC->SetIsDraw(true);
 
 		}
 	}
